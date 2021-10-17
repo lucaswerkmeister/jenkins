@@ -52,13 +52,6 @@ THE SOFTWARE.
 
   </table>
 
-  <span id="parent">
-    <button id="myButton">Poor Willow</button>
-  </span>
-  <br></br>
-  <br></br>
-  <button tooltip="Drove the car into the garden">Poor Willow</button>
-
   <!-- merge fragments from the actions -->
   <j:forEach var="a" items="${it.allActions}">
     <st:include page="jobMain.jelly" it="${a}" optional="true" />
