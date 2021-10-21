@@ -1,0 +1,71 @@
+.jenkins-test {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  grid-gap: 2rem;
+}
+
+.jenkins-side-nav {
+  &__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+    z-index: 0;
+    font-weight: 600!important;
+    font-size: 0.9rem;
+    margin-left: -0.75rem;
+    color: var(--text-color)!important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: var(--text-color);
+      border-radius: 10px;
+      opacity: 0;
+      transition: 0.2s ease;
+      z-index: -1;
+    }
+
+    &:hover {
+      color: var(--text-color);
+      text-decoration: none;
+
+      &::before {
+        opacity: 0.05;
+      }
+    }
+
+    &:active, &:focus {
+      &::before {
+        opacity: 0.1;
+      }
+    }
+
+    div, &__icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      height: 20px;
+      margin-right: 1rem;
+
+      svg, img {
+        width: 20px!important;
+        height: 20px!important;
+      }
+    }
+
+    &--selected {
+      &::before {
+        opacity: 0.1;
+      }
+    }
+  }
+}
