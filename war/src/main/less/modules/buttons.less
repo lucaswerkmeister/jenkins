@@ -10,16 +10,16 @@
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
   font-weight: 500;
-  text-decoration: none!important;
+  text-decoration: none !important;
   background: transparent;
-  color: var(--text-color)!important;
+  color: var(--text-color) !important;
   z-index: 0;
   border-radius: 6px;
   cursor: pointer;
   min-height: 35px;
-  text-shadow: 0 1px 0 var(--background);
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: "";
     position: absolute;
     top: 0;
@@ -27,7 +27,7 @@
     bottom: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.075;
+    opacity: 0.05;
     border-radius: inherit;
     transition: 0.2s ease;
   }
@@ -37,7 +37,6 @@
   }
 
   &::after {
-    border-bottom: 2px solid currentColor;
     box-shadow: 0 0 0 10px transparent;
   }
 
@@ -47,7 +46,8 @@
     }
   }
 
-  &:active, &:focus {
+  &:active,
+  &:focus {
     &::before {
       opacity: 0.15;
     }
@@ -65,11 +65,12 @@
 }
 
 .jenkins-button--primary {
-  color: var(--button-foreground--primary)!important;
+  color: var(--button-foreground--primary) !important;
   font-weight: 600;
   text-shadow: none;
 
-  &::before, &::after {
+  &::before,
+  &::after {
     color: var(--primary);
   }
 
@@ -87,7 +88,8 @@
     }
   }
 
-  &:active, &:focus {
+  &:active,
+  &:focus {
     &::before {
       opacity: 0.8;
     }
@@ -101,7 +103,9 @@
   &::after {
     color: transparent;
   }
-  &:hover, &:active, &:focus {
+  &:hover,
+  &:active,
+  &:focus {
     &::after {
       color: currentColor;
     }
@@ -111,7 +115,7 @@
 @variants: {
   green: #31c048;
   red: #fc2125;
-}
+};
 
 each(@variants, {
   .jenkins-button--@{key} {
@@ -126,20 +130,20 @@ each(@variants, {
 
 .jenkins-buttons-row {
   display: flex;
-  
+
   .jenkins-button {
-    margin-left: 0!important;
-    margin-right: 0.5rem!important;
+    margin-left: 0 !important;
+    margin-right: 0.5rem !important;
   }
-  
+
   &--invert {
     justify-content: flex-end;
-    
+
     .jenkins-button {
-      margin-left: 0.5rem!important;
-      margin-right: 0!important;
+      margin-left: 0.5rem !important;
+      margin-right: 0 !important;
     }
-  }  
+  }
 }
 
 // YUI backwards compat
