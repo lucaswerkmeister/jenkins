@@ -1,3 +1,33 @@
+.jenkins-icon-badge-wrapper {
+  position: relative;
+
+  .jenkins-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(30%, -30%);
+  }
+}
+
+.jenkins-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fc2125;
+  min-width: 20px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 0 rgba(black, 0.1);
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(black, 0.2);
+  padding: 2px 5px;
+
+  &:empty {
+    display: none;
+  }
+}
 
 .am-badge,
 .plugin-manager__category-label:link,

@@ -85,7 +85,6 @@ THE SOFTWARE.
                     <dl>
                       <dt>${m.displayName}</dt>
                       <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
                     </dl>
                   </l:confirmationLink>
                 </j:when>
@@ -105,29 +104,30 @@ THE SOFTWARE.
                     <dl>
                       <dt>${m.displayName}</dt>
                       <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
                     </dl>
                   </f:link>
                 </j:when>
                 <j:otherwise>
                   <a href="${m.urlName}" class="jenkins-button jenkins-button--transparent">
-                    <j:choose>
-                      <j:when test="${iconMetadata != null}">
-                        <l:icon class="${iconMetadata.classSpec}"
-                                alt="[${%alt}]"/>
-                      </j:when>
-                      <j:otherwise>
-                        <l:icon src="${iconUrl}"
-                                class="icon"
-                                alt="[${%alt}]" />
-                      </j:otherwise>
-                    </j:choose>
+                    <div class="jenkins-icon-badge-wrapper">
+                      <j:choose>
+                        <j:when test="${iconMetadata != null}">
+                          <l:icon class="${iconMetadata.classSpec}"
+                                  alt="[${%alt}]"/>
+                        </j:when>
+                        <j:otherwise>
+                          <l:icon src="${iconUrl}"
+                                  class="icon"
+                                  alt="[${%alt}]" />
+                        </j:otherwise>
+                      </j:choose>
+                      <span class="jenkins-badge" tooltip="${m.updatesAvailable()} updates available">
+                        ${m.updatesAvailable()}
+                      </span>
+                    </div>
                     <dl>
                       <dt>${m.displayName}</dt>
                       <dd><j:out value="${m.description}"/></dd>
-                      <j:if test="${m.hasUpdates()}">
-                        <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                      </j:if>
                     </dl>
                   </a>
                 </j:otherwise>
