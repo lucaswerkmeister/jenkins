@@ -493,7 +493,7 @@ function fireEvent(element,event){
 }
 
 // shared tooltip object
-var tooltip;
+// var tooltip;
 
 
 
@@ -900,9 +900,9 @@ function rowvgStartEachRow(recursive,f) {
 
 (function () {
     var p = 20;
-    Behaviour.specify("BODY", "body", ++p, function() {
-        tooltip = new YAHOO.widget.Tooltip("tt", {context:[], zindex:999});
-    });
+    // Behaviour.specify("BODY", "body", ++p, function() {
+    //     tooltip = new YAHOO.widget.Tooltip("tt", {context:[], zindex:999});
+    // });
 
     Behaviour.specify("TABLE.sortable", "table-sortable", ++p, function(e) {// sortable table
         e.sortable = new Sortable.Sortable(e);
@@ -1141,9 +1141,9 @@ function rowvgStartEachRow(recursive,f) {
 
     // hook up tooltip.
     //   add nodismiss="" if you'd like to display the tooltip forever as long as the mouse is on the element.
-    Behaviour.specify("[tooltip]", "-tooltip-", ++p, function(e) {
-        applyTooltip(e,e.getAttribute("tooltip"));
-    });
+    // Behaviour.specify("[tooltip]", "-tooltip-", ++p, function(e) {
+    //     applyTooltip(e,e.getAttribute("tooltip"));
+    // });
 
     Behaviour.specify("TR.optional-block-start,DIV.tr.optional-block-start", "tr-optional-block-start-div-tr-optional-block-start", ++p, function(e) { // see optionalBlock.jelly
         // set start.ref to checkbox in preparation of row-set-end processing
@@ -1469,19 +1469,19 @@ var hudsonRules = {}; // legacy name
 // now empty, but plugins can stuff things in here later:
 Behaviour.register(hudsonRules);
 
-function applyTooltip(e,text) {
-        // copied from YAHOO.widget.Tooltip.prototype.configContext to efficiently add a new element
-        // event registration via YAHOO.util.Event.addListener leaks memory, so do it by ourselves here
-        e.onmouseover = function(ev) {
-            var delay = this.getAttribute("nodismiss")!=null ? 99999999 : 5000;
-            tooltip.cfg.setProperty("autodismissdelay",delay);
-            return tooltip.onContextMouseOver.call(this,YAHOO.util.Event.getEvent(ev),tooltip);
-        }
-        e.onmousemove = function(ev) { return tooltip.onContextMouseMove.call(this,YAHOO.util.Event.getEvent(ev),tooltip); }
-        e.onmouseout  = function(ev) { return tooltip.onContextMouseOut .call(this,YAHOO.util.Event.getEvent(ev),tooltip); }
-        e.title = text;
-        e = null; // avoid memory leak
-}
+// function applyTooltip(e,text) {
+//         // copied from YAHOO.widget.Tooltip.prototype.configContext to efficiently add a new element
+//         // event registration via YAHOO.util.Event.addListener leaks memory, so do it by ourselves here
+//         e.onmouseover = function(ev) {
+//             var delay = this.getAttribute("nodismiss")!=null ? 99999999 : 5000;
+//             tooltip.cfg.setProperty("autodismissdelay",delay);
+//             return tooltip.onContextMouseOver.call(this,YAHOO.util.Event.getEvent(ev),tooltip);
+//         }
+//         e.onmousemove = function(ev) { return tooltip.onContextMouseMove.call(this,YAHOO.util.Event.getEvent(ev),tooltip); }
+//         e.onmouseout  = function(ev) { return tooltip.onContextMouseOut .call(this,YAHOO.util.Event.getEvent(ev),tooltip); }
+//         e.title = text;
+//         e = null; // avoid memory leak
+// }
 
 var Path = {
   tail : function(p) {
