@@ -17,27 +17,40 @@
     }
     
     li {
-      width: 32px;
+      width: 35px;
       margin-right: 0.2rem;
-      
-      .yui-button {
+
+      .jenkins-button {
         margin: 0!important;
         padding: 0!important;
-        width: 32px!important;
-        height: 32px!important;
+        width: 35px!important;
+        height: 35px!important;
         min-width: 0!important;
       }
     }
     
     .jenkins-icon-size__items-item {
-      height: 32px;
-      width: 32px;
-      border-radius: 4px;
-      line-height: 32px;
+      position: relative;
+      height: 35px;
+      width: 35px;
+      border-radius: 6px;
+      line-height: 35px;
       background: var(--btn-link-bg--hover);
       text-align: center;
-      font-weight: var(--btn-link-font-weight);
+      font-weight: 500;
       font-size: var(--btn-font-size);
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        border-bottom: 2px solid var(--text-color);
+        border-radius: inherit;
+        opacity: 0.1;
+      }
     }
     
     & > * {
