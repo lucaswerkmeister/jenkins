@@ -57,6 +57,32 @@ THE SOFTWARE.
   <t:setIconSize/>
   <div class="dashboard">
 
+    <div class="jenkins-command-centre__backdrop">
+      <div class="jenkins-command-centre">
+        <div>
+          <input placeholder="Search"/>
+          <div class="keyboard-shortcuts">
+            <span class="shortcut">CMD</span>
+            <span class="shortcut-and">+</span>
+            <span class="shortcut">K</span>
+          </div>
+        </div>
+        <div class="jenkins-command-centre__results">
+          <h2 class="heading">Popular</h2>
+          <a>Search item</a>
+          <a>Search item</a>
+          <a>Search item</a>
+          <a>Search item</a>
+
+          <h2 class="heading">Recent</h2>
+          <a>Search item</a>
+          <a>Search item</a>
+          <a>Search item</a>
+          <a>Search item</a>
+        </div>
+      </div>
+    </div>
+
     <j:if test="${columnExtensions==null}">
         <j:invokeStatic var="columnExtensions" className="hudson.model.ListView" method="getDefaultColumns"/>
     </j:if>

@@ -1,0 +1,115 @@
+.jenkins-command-centre__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(black, 0.8);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+  overflow-y: scroll;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(white, 0.1);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+.jenkins-command-centre {
+  position: relative;
+  width: 50vw;
+  min-width: 400px;
+  max-width: 650px;
+  color: var(--text-color);
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 15px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 10px;
+    background: var(--background);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 30px 60px 0, 0 0 0 10px transparent;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    transition: 0.2s ease;
+
+    &:active, &:focus {
+      box-shadow: rgba(0, 0, 0, 0.1) 0 30px 60px 0, 0 0 0 5px var(--focus-input-glow);
+    }
+  }
+
+  ::placeholder {
+    color: var(--text-color-secondary);
+    opacity: 1; /* Firefox */
+  }
+
+  .keyboard-shortcuts {
+    position: absolute;
+    top: 13px;
+    right: 20px;
+    display: flex;
+
+    .shortcut {
+      background: #efefef;
+      color: #000000;
+      border-radius: 4px;
+      padding: 2px 8px;
+      min-width: 18px;
+    }
+
+    .shortcut-and {
+      margin: 0 7px;
+    }
+  }
+
+  &__results {
+    display: flex;
+    flex-direction: column;
+    padding: 7.5px;
+    border-radius: 10px;
+    background: var(--background);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 30px 60px 0px;
+
+    .heading {
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0;
+      padding: 12.5px;
+      color: var(--text-color-secondary);
+
+      &:not(:first-of-type) {
+        padding-top: 30px;
+      }
+    }
+
+    a {
+      display: block;
+      background: transparent;
+      padding: 12.5px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text-color);
+
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+}
