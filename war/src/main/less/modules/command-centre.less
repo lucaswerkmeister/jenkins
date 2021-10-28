@@ -32,23 +32,44 @@
   max-width: 650px;
   color: var(--text-color);
 
+  &__search {
+    background: var(--background);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 30px 60px 0, 0 0 0 10px transparent;
+    margin-bottom: 20px;
+    display: flex;
+    border-radius: 10px;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      margin-top: 16px;
+      margin-left: 16px;
+      overflow: hidden;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    &:focus-within {
+      box-shadow: rgba(0, 0, 0, 0.1) 0 30px 60px 0, 0 0 0 5px var(--focus-input-glow);
+    }
+  }
+
   input {
     width: 100%;
     border: none;
     outline: none;
-    padding: 15px 20px;
+    padding: 15px 20px 15px 15px;
     font-size: 0.9rem;
     font-weight: 500;
-    border-radius: 10px;
-    background: var(--background);
-    box-shadow: rgba(0, 0, 0, 0.1) 0 30px 60px 0, 0 0 0 10px transparent;
-    margin-bottom: 20px;
     color: var(--text-color);
     transition: 0.2s ease;
-
-    &:active, &:focus {
-      box-shadow: rgba(0, 0, 0, 0.1) 0 30px 60px 0, 0 0 0 5px var(--focus-input-glow);
-    }
+    background: transparent;
   }
 
   ::placeholder {
@@ -98,7 +119,9 @@
     }
 
     a {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
       background: transparent;
       padding: 12.5px;
       border-radius: 6px;
@@ -109,6 +132,22 @@
 
       &:hover {
         background: #eee;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        margin-right: 1ch;
+        overflow: hidden;
+        pointer-events: none;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
       }
     }
   }
