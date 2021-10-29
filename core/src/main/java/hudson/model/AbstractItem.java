@@ -42,6 +42,8 @@ import hudson.model.listeners.SaveableListener;
 import hudson.model.queue.SubTask;
 import hudson.model.queue.Tasks;
 import hudson.model.queue.WorkUnit;
+import hudson.search.SearchItemCategory;
+import hudson.search.SearchItemIcon;
 import hudson.security.ACL;
 import hudson.security.ACLContext;
 import hudson.security.AccessControlled;
@@ -80,6 +82,7 @@ import jenkins.util.xml.XMLUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.taskdefs.Copy;
 import org.apache.tools.ant.types.FileSet;
+import org.jenkins.ui.icon.IconSet;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.args4j.Argument;
@@ -585,6 +588,21 @@ public abstract class AbstractItem extends Actionable implements Item, HttpDelet
     @Override
     public String getSearchUrl() {
         return getShortUrl();
+    }
+
+    @Override
+    public String getSearchDescription() {
+        return getDescription();
+    }
+
+    @Override
+    public SearchItemCategory getSearchItemCategory() {
+        return SearchItemCategory.PROJECT;
+    }
+
+    @Override
+    public SearchItemIcon getSearchItemIcon() {
+        return new SearchItemIcon(IconSet.getIonicon("journal-outline", null));
     }
 
     @Override

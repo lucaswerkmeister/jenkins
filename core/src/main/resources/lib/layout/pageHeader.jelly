@@ -43,7 +43,7 @@
             </a>
         </div>
 
-        <div class="searchbox hidden-xs">
+        <div class="searchbox hidden-xs" style="display: none;">
             <!-- search box -->
             <j:set var="searchURL" value="${h.searchURL}"/>
             <form action="${searchURL}" method="get" style="position:relative;" class="no-json" name="search" role="search">

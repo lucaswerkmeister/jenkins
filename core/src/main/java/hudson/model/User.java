@@ -40,6 +40,8 @@ import hudson.init.InitMilestone;
 import hudson.init.Initializer;
 import hudson.model.Descriptor.FormException;
 import hudson.model.listeners.SaveableListener;
+import hudson.search.SearchItemCategory;
+import hudson.search.SearchItemIcon;
 import hudson.security.ACL;
 import hudson.security.AccessControlled;
 import hudson.security.SecurityRealm;
@@ -77,6 +79,7 @@ import jenkins.security.UserDetailsCache;
 import jenkins.util.SystemProperties;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.jenkins.ui.icon.IconSet;
 import org.jenkinsci.Symbol;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -273,6 +276,16 @@ public class User extends AbstractModelObject implements AccessControlled, Descr
     @Override
     public @NonNull String getSearchUrl() {
         return "/user/" + Util.rawEncode(idStrategy().keyFor(id));
+    }
+
+    @Override
+    public SearchItemCategory getSearchItemCategory() {
+        return SearchItemCategory.USER;
+    }
+
+    @Override
+    public SearchItemIcon getSearchItemIcon() {
+        return new SearchItemIcon(IconSet.getIonicon("person-circle-outline", null));
     }
 
     /**

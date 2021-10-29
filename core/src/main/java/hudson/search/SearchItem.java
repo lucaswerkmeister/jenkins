@@ -52,6 +52,21 @@ public interface SearchItem {
      */
     String getSearchUrl();
 
+    default String getSearchDescription() {
+        return null;
+    }
+
+    // TODO
+    default SearchItemCategory getSearchItemCategory() {
+        return SearchItemCategory.OTHER;
+    }
+
+    // TODO
+    // Overrides the icon from search item category
+    default SearchItemIcon getSearchItemIcon() {
+        return null;
+    }
+
     /**
      * Returns the {@link SearchIndex} to further search sub items inside this item.
      *

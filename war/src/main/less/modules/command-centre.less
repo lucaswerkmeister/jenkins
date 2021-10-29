@@ -1,28 +1,46 @@
+:root {
+  --spotlight-backdrop: rgba(125, 125, 125, 0.9);
+  --spotlight-background: rgba(255, 255, 255, 0.8);
+  --spotlight-focus-color: var(--primary);
+  --spotlight-drop-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
+  --spotlight-inset-shadow: inset 0 0 2px 2px rgba(white, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --spotlight-backdrop: rgba(24, 24, 28, 0.95);
+    --spotlight-background: rgba(50, 50, 56, 0.7);
+    --spotlight-focus-color: rgba(83, 193, 255, 0.5);
+    --spotlight-drop-shadow: 0 0 60px rgba(0, 0, 10, 0.4);
+    --spotlight-inset-shadow: inset 0 0 2px 2px rgba(240, 240, 255, 0.025);
+  }
+}
+
 .jenkins-command-centre__backdrop {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(black, 0.8);
+  background: var(--spotlight-backdrop);
+  z-index: 999;
+  visibility: hidden;
+  backdrop-filter: saturate(2) blur(2px);
+}
+
+.jenkins-command-centre__wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   z-index: 1000;
   display: flex;
   justify-content: center;
   padding-top: 15vh;
   padding-bottom: 15vh;
   overflow-y: scroll;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(white, 0.1);
-    pointer-events: none;
-    z-index: -1;
-  }
+  visibility: hidden;
 }
 
 .jenkins-command-centre {
@@ -31,22 +49,25 @@
   min-width: 400px;
   max-width: 650px;
   color: var(--text-color);
+  filter: drop-shadow(var(--spotlight-drop-shadow));
 
   &__search {
-    background: var(--background);
-    box-shadow: rgba(0, 0, 0, 0.1) 0 30px 60px 0, 0 0 0 10px transparent;
+    background: var(--spotlight-background);
+    box-shadow: 0 0 0 20px transparent, var(--spotlight-inset-shadow);
     margin-bottom: 20px;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     border-radius: 10px;
+    transition: 0.2s ease;
+    z-index: 10;
+    backdrop-filter: saturate(2) blur(10px);
 
     .icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 18px;
-      height: 18px;
-      margin-top: 16px;
-      margin-left: 16px;
+      width: 52px;
+      height: 100%;
       overflow: hidden;
 
       svg {
@@ -55,44 +76,84 @@
       }
     }
 
+    input {
+      appearance: none;
+      width: 100%;
+      margin: 0;
+      border: none;
+      outline: none;
+      padding: 15px 20px 15px 0;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-color);
+      transition: 0.2s ease;
+      background: transparent;
+
+      // Safari adds unwanted padding - let's remove it
+      &::-webkit-search-decoration {
+        -webkit-appearance: none;
+      }
+
+      // Hide the clear button
+      &::-webkit-search-cancel-button {
+        display: none;
+      }
+    }
+
+    ::placeholder {
+      color: var(--text-color-secondary);
+      opacity: 1; /* Firefox */
+    }
+
+    .keyboard-shortcuts {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+
+      .shortcut {
+        position: relative;
+        color: var(--text-color);
+        border-radius: 6px;
+        padding: 3px 10px 4px 10px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          background: var(--text-color);
+          opacity: 0.1;
+          border-radius: inherit;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          border-bottom: 2px solid var(--text-color);
+          opacity: 0.1;
+          border-radius: inherit;
+        }
+      }
+
+      svg {
+        width: 14px;
+        height: 14px;
+        margin: 0 7px;
+      }
+    }
+
     &:focus-within {
-      box-shadow: rgba(0, 0, 0, 0.1) 0 30px 60px 0, 0 0 0 5px var(--focus-input-glow);
-    }
-  }
-
-  input {
-    width: 100%;
-    border: none;
-    outline: none;
-    padding: 15px 20px 15px 15px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-color);
-    transition: 0.2s ease;
-    background: transparent;
-  }
-
-  ::placeholder {
-    color: var(--text-color-secondary);
-    opacity: 1; /* Firefox */
-  }
-
-  .keyboard-shortcuts {
-    position: absolute;
-    top: 13px;
-    right: 20px;
-    display: flex;
-
-    .shortcut {
-      background: #efefef;
-      color: #000000;
-      border-radius: 4px;
-      padding: 2px 8px;
-      min-width: 18px;
-    }
-
-    .shortcut-and {
-      margin: 0 7px;
+      box-shadow: 0 0 0 5px var(--spotlight-focus-color), var(--spotlight-inset-shadow);
     }
   }
 
@@ -101,8 +162,9 @@
     flex-direction: column;
     padding: 7.5px;
     border-radius: 10px;
-    background: var(--background);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 30px 60px 0px;
+    background: var(--spotlight-background);
+    backdrop-filter: saturate(2) blur(10px);
+    box-shadow: var(--spotlight-inset-shadow);
 
     .heading {
       font-weight: 700;
@@ -119,6 +181,7 @@
     }
 
     a {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -129,9 +192,46 @@
       cursor: pointer;
       text-decoration: none;
       color: var(--text-color);
+      transition: 0.2s ease;
+      box-shadow: 0 0 0 10px transparent;
+      z-index: 0;
+
+      &::before, &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: -1;
+        opacity: 0;
+        border-radius: inherit;
+        transition: 0.2s ease;
+      }
+
+      &::before {
+        background: currentColor;
+      }
+
+      &::after {
+        box-shadow: 0 0 0 10px transparent;
+      }
 
       &:hover {
-        background: #eee;
+        &::before {
+          opacity: 0.12;
+        }
+      }
+
+      &:active, &:focus {
+        &::before {
+          opacity: 0.15;
+        }
+
+        &::after {
+          box-shadow: 0 0 0 5px currentColor;
+          opacity: 0.075;
+        }
       }
 
       div {
@@ -140,9 +240,10 @@
         justify-content: center;
         width: 18px;
         height: 18px;
-        margin-right: 1ch;
+        margin-right: 12.5px;
         overflow: hidden;
         pointer-events: none;
+        color: var(--primary);
 
         svg {
           width: 18px;
@@ -151,4 +252,9 @@
       }
     }
   }
+}
+
+.jenkins-command-centre__item__description {
+  opacity: 0.5;
+  margin-left: 1ch;
 }

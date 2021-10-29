@@ -23,7 +23,7 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:u="jelly:org.jenkins.ui.icon.IconTagLibrary" xmlns:x="jelly:xml" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+<j:jelly xmlns:j="jelly:core" xmlns:x="jelly:xml" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
          xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <st:documentation>
     Renders a list of jobs and their key information.
@@ -56,75 +56,6 @@ THE SOFTWARE.
 
   <t:setIconSize/>
   <div class="dashboard">
-
-    <div class="jenkins-command-centre__backdrop">
-      <div class="jenkins-command-centre">
-        <div class="jenkins-command-centre__search">
-          <div class="icon">
-            <u:ionicon name="search-outline" />
-          </div>
-          <input placeholder="Search"/>
-          <div class="keyboard-shortcuts">
-            <span class="shortcut">CMD</span>
-            <span class="shortcut-and">+</span>
-            <span class="shortcut">K</span>
-          </div>
-        </div>
-        <div class="jenkins-command-centre__results">
-          <h2 class="heading">Popular</h2>
-          <a>
-            <div>
-              <u:ionicon name="play-outline" />
-            </div>
-            Search item
-          </a>
-          <a>
-            <div>
-              <u:ionicon name="play-outline" />
-            </div>
-            Search item
-          </a>
-          <a>
-            <div>
-              <u:ionicon name="play-outline" />
-            </div>
-            Search item
-          </a>
-          <a>
-            <div>
-              <u:ionicon name="play-outline" />
-            </div>
-            Search item
-          </a>
-
-          <h2 class="heading">Recent</h2>
-          <a>
-            <div>
-              <u:ionicon name="play-outline" />
-            </div>
-            Search item
-          </a>
-          <a>
-            <div>
-              <u:ionicon name="play-outline" />
-            </div>
-            Search item
-          </a>
-          <a>
-            <div>
-              <u:ionicon name="play-outline" />
-            </div>
-            Search item
-          </a>
-          <a>
-            <div>
-              <u:ionicon name="play-outline" />
-            </div>
-            Search item
-          </a>
-        </div>
-      </div>
-    </div>
 
     <j:if test="${columnExtensions==null}">
         <j:invokeStatic var="columnExtensions" className="hudson.model.ListView" method="getDefaultColumns"/>

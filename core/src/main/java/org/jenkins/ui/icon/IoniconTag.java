@@ -21,8 +21,7 @@ public class IoniconTag extends TagSupport {
     @Override
     public void doTag(XMLOutput output) throws JellyTagException {
         try {
-            IconSet iconSet = new IconSet();
-            output.writeCDATA(iconSet.getIonicon(name, title));
+            output.writeCDATA(IconSet.getIonicon(name, title));
         } catch (SAXException e) {
             // ignore
         }

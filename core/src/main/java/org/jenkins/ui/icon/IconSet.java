@@ -48,7 +48,7 @@ public class IconSet {
     private Map<String, Icon> iconsByUrl  = new ConcurrentHashMap<>();
     private Map<String, Icon> iconsByClassSpec = new ConcurrentHashMap<>();
     private Map<String, Icon> coreIcons = new ConcurrentHashMap<>();
-    private Map<String, String> ionicons = new ConcurrentHashMap<>();
+    private static Map<String, String> ionicons = new ConcurrentHashMap<>();
 
     private static final Icon NO_ICON = new Icon("_", "_", "_");
 
@@ -63,7 +63,7 @@ public class IconSet {
         context.setVariable("icons", icons);
     }
 
-    public String getIonicon(String name, String title) {
+    public static String getIonicon(String name, String title) {
         if (ionicons.containsKey(name)) {
             return ionicons.get(name);
         }
