@@ -43,7 +43,7 @@ import hudson.scm.ChangeLogSet;
 import hudson.search.CollectionSearchIndex;
 import hudson.search.SearchIndexBuilder;
 import hudson.search.SearchItemCategory;
-import hudson.search.SearchItemIcon;
+import hudson.search.Icon;
 import hudson.security.ACL;
 import hudson.security.AccessControlled;
 import hudson.security.Permission;
@@ -107,7 +107,6 @@ import net.sf.json.JSONObject;
 import org.apache.commons.jelly.JellyContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tools.ant.filters.StringInputStream;
-import org.jenkins.ui.icon.Icon;
 import org.jenkins.ui.icon.IconSet;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.DoNotUse;
@@ -569,8 +568,8 @@ public abstract class View extends AbstractModelObject implements AccessControll
     }
 
     @Override
-    public SearchItemIcon getSearchItemIcon() {
-        return new SearchItemIcon(IconSet.getIonicon("albums-outline", null));
+    public Icon getSearchItemIcon() {
+        return Icon.fromSvg(IconSet.getIonicon("albums-outline", null));
     }
 
     /**
@@ -1142,7 +1141,7 @@ public abstract class View extends AbstractModelObject implements AccessControll
             if (StringUtils.isNotBlank(iconClassName)) {
                 metadata.put("iconClassName", iconClassName);
                 if (ctx != null) {
-                    Icon icon = IconSet.icons
+                    org.jenkins.ui.icon.Icon icon = IconSet.icons
                             .getIconByClassSpec(StringUtils.join(new String[]{iconClassName, iconStyle}, " "));
                     if (icon != null) {
                         metadata.put("iconQualifiedUrl", icon.getQualifiedUrl(ctx));

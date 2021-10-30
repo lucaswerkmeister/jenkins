@@ -41,7 +41,7 @@ import hudson.init.Initializer;
 import hudson.model.Descriptor.FormException;
 import hudson.model.listeners.SaveableListener;
 import hudson.search.SearchItemCategory;
-import hudson.search.SearchItemIcon;
+import hudson.search.Icon;
 import hudson.security.ACL;
 import hudson.security.AccessControlled;
 import hudson.security.SecurityRealm;
@@ -275,7 +275,7 @@ public class User extends AbstractModelObject implements AccessControlled, Descr
 
     @Override
     public @NonNull String getSearchUrl() {
-        return "/user/" + Util.rawEncode(idStrategy().keyFor(id));
+        return getAbsoluteUrl();
     }
 
     @Override
@@ -284,8 +284,8 @@ public class User extends AbstractModelObject implements AccessControlled, Descr
     }
 
     @Override
-    public SearchItemIcon getSearchItemIcon() {
-        return new SearchItemIcon(IconSet.getIonicon("person-circle-outline", null));
+    public Icon getSearchItemIcon() {
+        return Icon.fromSvg(IconSet.getIonicon("person-circle-outline", null));
     }
 
     /**

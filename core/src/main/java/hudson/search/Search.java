@@ -206,7 +206,7 @@ public class Search implements StaplerProxy {
         @Exported
         public String description;
         @Exported
-        public SearchItemIcon icon;
+        public Icon icon;
         @Exported
         public SearchItemCategory group;
 
@@ -220,7 +220,7 @@ public class Search implements StaplerProxy {
             this.group = group;
         }
 
-        public Item(String name, String description, String url, SearchItemIcon icon, SearchItemCategory group) {
+        public Item(String name, String description, String url, Icon icon, SearchItemCategory group) {
             this.name = name;
             this.description = description;
             this.url = url;

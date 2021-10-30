@@ -40,6 +40,7 @@ import hudson.model.labels.LabelAtom;
 import hudson.model.queue.CauseOfBlockage;
 import hudson.remoting.Callable;
 import hudson.remoting.VirtualChannel;
+import hudson.search.Icon;
 import hudson.security.ACL;
 import hudson.security.AccessControlled;
 import hudson.slaves.Cloud;
@@ -65,6 +66,7 @@ import jenkins.model.Jenkins;
 import jenkins.util.SystemProperties;
 import jenkins.util.io.OnMaster;
 import net.sf.json.JSONObject;
+import org.jenkins.ui.icon.IconSet;
 import org.jvnet.localizer.Localizable;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.ProtectedExternally;
@@ -120,6 +122,11 @@ public abstract class Node extends AbstractModelObject implements Reconfigurable
             return c.getUrl();
         }
         return "computer/" + Util.rawEncode(getNodeName());
+    }
+
+    @Override
+    public Icon getSearchItemIcon() {
+        return Icon.fromSvg(IconSet.getIonicon("tv-outline", null));
     }
 
     public boolean isHoldOffLaunchUntilSave() {

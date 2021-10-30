@@ -1,7 +1,7 @@
 <!--
 The MIT License
 
-??????????
+Copyright (c) 2021, Jenkins contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,59 +43,7 @@ THE SOFTWARE.
                     <span class="shortcut">K</span>
                 </div>
             </div>
-            <div id="search-results" class="jenkins-command-centre__results">
-                <h2 class="heading">Popular</h2>
-                <a>
-                    <div>
-                        <u:ionicon name="play-outline"/>
-                    </div>
-                    Search item
-                </a>
-                <a>
-                    <div>
-                        <u:ionicon name="play-outline"/>
-                    </div>
-                    Search item
-                </a>
-                <a>
-                    <div>
-                        <u:ionicon name="play-outline"/>
-                    </div>
-                    Search item
-                </a>
-                <a>
-                    <div>
-                        <u:ionicon name="play-outline"/>
-                    </div>
-                    Search item
-                </a>
-
-                <h2 class="heading">Recent</h2>
-                <a>
-                    <div>
-                        <u:ionicon name="play-outline"/>
-                    </div>
-                    Search item
-                </a>
-                <a>
-                    <div>
-                        <u:ionicon name="play-outline"/>
-                    </div>
-                    Search item
-                </a>
-                <a>
-                    <div>
-                        <u:ionicon name="play-outline"/>
-                    </div>
-                    Search item
-                </a>
-                <a>
-                    <div>
-                        <u:ionicon name="play-outline"/>
-                    </div>
-                    Search item
-                </a>
-            </div>
+            <div id="search-results" class="jenkins-command-centre__results" />
         </div>
     </div>
 

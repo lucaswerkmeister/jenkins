@@ -43,7 +43,7 @@ import hudson.model.queue.SubTask;
 import hudson.model.queue.Tasks;
 import hudson.model.queue.WorkUnit;
 import hudson.search.SearchItemCategory;
-import hudson.search.SearchItemIcon;
+import hudson.search.Icon;
 import hudson.security.ACL;
 import hudson.security.ACLContext;
 import hudson.security.AccessControlled;
@@ -601,8 +601,8 @@ public abstract class AbstractItem extends Actionable implements Item, HttpDelet
     }
 
     @Override
-    public SearchItemIcon getSearchItemIcon() {
-        return new SearchItemIcon(IconSet.getIonicon("journal-outline", null));
+    public Icon getSearchItemIcon() {
+        return Icon.fromSvg(IconSet.getIonicon("journal-outline", null));
     }
 
     @Override

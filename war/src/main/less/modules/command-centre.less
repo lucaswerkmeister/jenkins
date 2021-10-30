@@ -17,6 +17,7 @@
 }
 
 .jenkins-command-centre__backdrop {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -24,23 +25,22 @@
   right: 0;
   background: var(--spotlight-backdrop);
   z-index: 999;
-  visibility: hidden;
   backdrop-filter: saturate(2) blur(2px);
 }
 
 .jenkins-command-centre__wrapper {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   z-index: 1000;
-  display: flex;
+  align-items: flex-start;
   justify-content: center;
   padding-top: 15vh;
   padding-bottom: 15vh;
   overflow-y: scroll;
-  visibility: hidden;
 }
 
 .jenkins-command-centre {
@@ -50,6 +50,7 @@
   max-width: 650px;
   color: var(--text-color);
   filter: drop-shadow(var(--spotlight-drop-shadow));
+  pointer-events: auto;
 
   &__search {
     background: var(--spotlight-background);
@@ -166,7 +167,11 @@
     backdrop-filter: saturate(2) blur(10px);
     box-shadow: var(--spotlight-inset-shadow);
 
-    .heading {
+    &:empty {
+      display: none;
+    }
+
+    &__heading {
       font-weight: 700;
       font-size: 0.7rem;
       letter-spacing: 2px;
@@ -180,7 +185,7 @@
       }
     }
 
-    a {
+    &__item {
       position: relative;
       display: flex;
       align-items: center;
@@ -190,8 +195,7 @@
       border-radius: 6px;
       font-weight: 600;
       cursor: pointer;
-      text-decoration: none;
-      color: var(--text-color);
+      color: var(--text-color)!important;
       transition: 0.2s ease;
       box-shadow: 0 0 0 10px transparent;
       z-index: 0;
@@ -218,6 +222,8 @@
       }
 
       &:hover {
+        text-decoration: none;
+
         &::before {
           opacity: 0.12;
         }
@@ -234,7 +240,7 @@
         }
       }
 
-      div {
+      &__icon {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -245,16 +251,16 @@
         pointer-events: none;
         color: var(--primary);
 
-        svg {
+        svg, img {
           width: 18px;
           height: 18px;
         }
       }
+
+      &__description {
+        opacity: 0.5;
+        margin-left: 1ch;
+      }
     }
   }
-}
-
-.jenkins-command-centre__item__description {
-  opacity: 0.5;
-  margin-left: 1ch;
 }

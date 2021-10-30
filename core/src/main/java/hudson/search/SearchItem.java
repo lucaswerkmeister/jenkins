@@ -63,7 +63,7 @@ public interface SearchItem {
 
     // TODO
     // Overrides the icon from search item category
-    default SearchItemIcon getSearchItemIcon() {
+    default Icon getSearchItemIcon() {
         return null;
     }
 

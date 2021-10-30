@@ -53,7 +53,7 @@ import hudson.model.UpdateCenter.DownloadJob;
 import hudson.model.UpdateCenter.InstallationJob;
 import hudson.model.UpdateSite;
 import hudson.search.SearchItemCategory;
-import hudson.search.SearchItemIcon;
+import hudson.search.Icon;
 import hudson.security.ACL;
 import hudson.security.ACLContext;
 import hudson.security.Permission;
@@ -1291,8 +1291,8 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
     }
 
     @Override
-    public SearchItemIcon getSearchItemIcon() {
-        return new SearchItemIcon(IconSet.getIonicon("extension-puzzle-outline", null));
+    public Icon getSearchItemIcon() {
+        return Icon.fromSvg(IconSet.getIonicon("extension-puzzle-outline", null));
     }
 
     /**

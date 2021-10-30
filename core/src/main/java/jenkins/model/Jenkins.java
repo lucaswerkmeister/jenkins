@@ -146,8 +146,12 @@ import hudson.remoting.VirtualChannel;
 import hudson.scm.RepositoryBrowser;
 import hudson.scm.SCM;
 import hudson.search.CollectionSearchIndex;
+import hudson.search.DefaultSearchItems;
 import hudson.search.SearchIndexBuilder;
 import hudson.search.SearchItem;
+import hudson.search.SearchItemCategory;
+import hudson.search.Icon;
+import hudson.search.SearchItems;
 import hudson.security.ACL;
 import hudson.security.ACLContext;
 import hudson.security.AccessControlled;
@@ -215,6 +219,8 @@ import java.io.InterruptedIOException;
 import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
@@ -287,6 +293,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.jelly.JellyException;
 import org.apache.commons.jelly.Script;
 import org.apache.commons.logging.LogFactory;
+import org.jenkins.ui.icon.IconSet;
 import org.jvnet.hudson.reactor.Executable;
 import org.jvnet.hudson.reactor.Milestone;
 import org.jvnet.hudson.reactor.Reactor;
@@ -2345,11 +2352,35 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     @Override
     public SearchIndexBuilder makeSearchIndex() {
         SearchIndexBuilder builder = super.makeSearchIndex();
+
+        // Add Manage Jenkins pages
         if (hasPermission(ADMINISTER)) {
-                builder.add("configure", "config", "configure")
-                    .add("manage")
-                    .add("log");
+            for (List<ManagementLink> items: getCategorizedManagementLinks().values()) {
+                for (ManagementLink item : items) {
+
+                    String icon = IconSet.toNormalizedIconNameClass(item.getIconFileName());
+                    System.out.println(icon);
+
+                    try {
+                        icon = IconSet.icons.getIconByClassSpec(icon + " icon-xlg").getUrl();
+                    } catch (Exception ignored) {
+
+                    }
+
+                    System.out.println(getRootUrl() + icon);
+
+                    builder.add(SearchItems.create(
+                            item.getDisplayName(),
+                            getRootUrl() + item.getUrlName(),
+                            null,
+                            Icon.fromUrl(getRootUrl() + "images/" + icon),
+                            SearchItemCategory.SETTING));
+                }
+            }
+
+            builder.add(DefaultSearchItems.manageJenkinsSearchItem);
         }
+
         builder.add(new CollectionSearchIndex<TopLevelItem>() {
                     @Override
                     protected SearchItem get(String key) { return getItemByFullName(key, TopLevelItem.class); }
