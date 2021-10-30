@@ -36,14 +36,18 @@ THE SOFTWARE.
                 <div class="icon">
                     <u:ionicon name="search-outline"/>
                 </div>
-                <input id="command-bar" placeholder="Search" type="search" />
+                <input id="command-bar" placeholder="Search" type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
                 <div class="keyboard-shortcuts">
-                    <span class="shortcut">⌘</span>
+                    <span id="command-centre-shortcut-modifier" class="shortcut">⌘</span>
                     <u:ionicon name="add-outline"/>
                     <span class="shortcut">K</span>
                 </div>
             </div>
-            <div id="search-results" class="jenkins-command-centre__results" />
+            <div id="search-results-container" class="jenkins-command-centre__results-container">
+                <div id="search-results" class="jenkins-command-centre__results">
+
+                </div>
+            </div>
         </div>
     </div>
 

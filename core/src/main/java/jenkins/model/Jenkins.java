@@ -2357,17 +2357,13 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
         if (hasPermission(ADMINISTER)) {
             for (List<ManagementLink> items: getCategorizedManagementLinks().values()) {
                 for (ManagementLink item : items) {
-
                     String icon = IconSet.toNormalizedIconNameClass(item.getIconFileName());
-                    System.out.println(icon);
 
                     try {
                         icon = IconSet.icons.getIconByClassSpec(icon + " icon-xlg").getUrl();
                     } catch (Exception ignored) {
 
                     }
-
-                    System.out.println(getRootUrl() + icon);
 
                     builder.add(SearchItems.create(
                             item.getDisplayName(),

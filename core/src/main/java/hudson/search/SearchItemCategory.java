@@ -9,5 +9,6 @@ public enum SearchItemCategory {
 	PROJECT,
 	BUILD,
 	USER,
+	NODE,
 	OTHER
 }
