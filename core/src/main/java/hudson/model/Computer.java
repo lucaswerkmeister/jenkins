@@ -1128,7 +1128,7 @@ public /*transient*/ abstract class Computer extends Actionable implements Acces
 
     @Override
     public SearchItemCategory getSearchItemCategory() {
-        return SearchItemCategory.NODE;
+        return SearchItemCategory.NODES;
     }
 
     @Override

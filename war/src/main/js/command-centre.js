@@ -107,7 +107,7 @@ commandBarInput.addEventListener("keyup", function(event) {
                     selectedIndex --
                 }
 
-                updateSelectedItem(selectedIndex)
+                updateSelectedItem(selectedIndex, selectedIndex + 1 >= maxLength)
             }
             return false
         case 'ArrowDown':
@@ -118,7 +118,7 @@ commandBarInput.addEventListener("keyup", function(event) {
                     selectedIndex ++
                 }
 
-                updateSelectedItem(selectedIndex)
+                updateSelectedItem(selectedIndex, selectedIndex + 1 >= maxLength)
             }
             return false
     }
@@ -133,7 +133,7 @@ function itemMouseEnter(item) {
     item.target.classList.add(hoverClass)
 }
 
-function updateSelectedItem(index) {
+function updateSelectedItem(index, scrollIntoView = false) {
     const maxLength = searchResults.getElementsByTagName("a").length
     const hoveredItem = document.querySelector("." + hoverClass)
 
@@ -142,6 +142,11 @@ function updateSelectedItem(index) {
     }
 
     if (index < maxLength) {
-        [...searchResults.getElementsByTagName("a")][index].classList.add(hoverClass)
+       const element = [...searchResults.getElementsByTagName("a")][index]
+        element.classList.add(hoverClass)
+
+        if (scrollIntoView) {
+            element.scrollIntoView();
+        }
     }
 }

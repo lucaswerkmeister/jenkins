@@ -564,7 +564,7 @@ public abstract class View extends AbstractModelObject implements AccessControll
 
     @Override
     public SearchItemCategory getSearchItemCategory() {
-        return SearchItemCategory.VIEW;
+        return SearchItemCategory.VIEWS;
     }
 
     @Override

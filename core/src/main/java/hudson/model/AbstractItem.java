@@ -587,7 +587,7 @@ public abstract class AbstractItem extends Actionable implements Item, HttpDelet
 
     @Override
     public String getSearchUrl() {
-        return getShortUrl();
+        return getAbsoluteUrl();
     }
 
     @Override
@@ -597,12 +597,12 @@ public abstract class AbstractItem extends Actionable implements Item, HttpDelet
 
     @Override
     public SearchItemCategory getSearchItemCategory() {
-        return SearchItemCategory.PROJECT;
+        return SearchItemCategory.PROJECTS;
     }
 
     @Override
     public Icon getSearchItemIcon() {
-        return Icon.fromSvg(IconSet.getIonicon("journal-outline", null));
+        return Icon.fromSvg(IconSet.getIonicon("folder-open-outline", null));
     }
 
     @Override

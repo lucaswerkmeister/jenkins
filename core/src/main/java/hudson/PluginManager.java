@@ -1287,7 +1287,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
 
     @Override
     public SearchItemCategory getSearchItemCategory() {
-        return SearchItemCategory.PAGE;
+        return SearchItemCategory.PAGES;
     }
 
     @Override

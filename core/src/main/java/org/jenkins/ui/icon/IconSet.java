@@ -63,6 +63,15 @@ public class IconSet {
         context.setVariable("icons", icons);
     }
 
+    public static String getSvg(String name) {
+        // Load icon if it exists
+        try {
+            return new String(Files.readAllBytes(Paths.get("war/src/main/webapp/images/svgs/" + name + ".svg")));
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     public static String getIonicon(String name, String title) {
         if (ionicons.containsKey(name)) {
             return ionicons.get(name);

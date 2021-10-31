@@ -280,7 +280,7 @@ public class User extends AbstractModelObject implements AccessControlled, Descr
 
     @Override
     public SearchItemCategory getSearchItemCategory() {
-        return SearchItemCategory.USER;
+        return SearchItemCategory.PEOPLE;
     }
 
     @Override
