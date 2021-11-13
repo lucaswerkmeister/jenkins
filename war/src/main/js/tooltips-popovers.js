@@ -1,16 +1,24 @@
-// import tippy from 'tippy.js';
+import tippy from 'tippy.js'
 
 function combinePath(a,b) {
-    var qs;
-    var i = a.indexOf('?');
-    if (i>=0)  { qs=a.substring(i); a=a.substring(0,i); }
-    else        qs="";
+    var qs
+    var i = a.indexOf('?')
+    if (i >= 0) {
+        qs=a.substring(i);
+        a=a.substring(0, i)
+    } else {
+        qs=""
+    }
 
-    i=a.indexOf('#');
-    if (i>=0)   a=a.substring(0,i);
+    i = a.indexOf('#')
+    if (i >= 0) {
+        a=a.substring(0, i)
+    }
 
-    if (a.endsWith('/'))    return a+b+qs;
-    return a+'/'+b+qs;
+    if (a.endsWith('/')) {
+        return a + b + qs
+    }
+    return a + '/' + b + qs
 }
 
 tippy('[popover]', {
@@ -23,7 +31,7 @@ tippy('[popover]', {
     theme: 'popover',
     offset: [0, 0],
     animation: 'popover'
-});
+})
 
 tippy('li.children, #menuSelector', {
     content: "Loading...",
@@ -36,37 +44,36 @@ tippy('li.children, #menuSelector', {
     offset: [0, 0],
     animation: 'popover',
     onShow(instance) {
-        const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href');
-        const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu';
+        const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
+        const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu'
 
         fetch(combinePath(href, contextMenuSuffix))
             .then((response) => response.json())
             .then((json) => {
-                console.log(json)
                 let content = json.items.map(function (x) {
                     return `<a class="jenkins-popover__item" href="${x.url}">
                                 ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
                                 ${x.displayName}
-                            </a>`;
-                }).join('');
-                instance.setContent(content);
+                            </a>`
+                }).join('')
+                instance.setContent(content)
             })
             .catch((error) => {
                 // Fallback if the network request failed
-                instance.setContent(`Request failed. ${error}`);
-            });
+                instance.setContent(`Request failed. ${error}`)
+            })
     },
     onHidden(instance) {
-        instance.setContent('Loading...');
+        instance.setContent('Loading...')
     },
-});
+})
 
 tippy('[tooltip]', {
     content: element => element.getAttribute('tooltip'),
     arrow: false,
     theme: 'tooltip',
     animation: 'tooltip'
-});
+})
 
 tippy('[html-tooltip]', {
     content: element => element.getAttribute('html-tooltip'),
@@ -74,4 +81,4 @@ tippy('[html-tooltip]', {
     arrow: false,
     theme: 'tooltip',
     animation: 'tooltip'
-});
+})
