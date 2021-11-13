@@ -22,6 +22,7 @@ tippy('[popover]', {
     arrow: false,
     theme: 'popover',
     offset: [0, 0],
+    animation: 'popover'
 });
 
 tippy('li.children, #menuSelector', {
@@ -33,6 +34,7 @@ tippy('li.children, #menuSelector', {
     arrow: false,
     theme: 'popover',
     offset: [0, 0],
+    animation: 'popover',
     onShow(instance) {
         const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href');
         const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu';
@@ -63,6 +65,7 @@ tippy('[tooltip]', {
     content: element => element.getAttribute('tooltip'),
     arrow: false,
     theme: 'tooltip',
+    animation: 'tooltip'
 });
 
 tippy('[html-tooltip]', {
@@ -70,4 +73,5 @@ tippy('[html-tooltip]', {
     allowHTML: true,
     arrow: false,
     theme: 'tooltip',
+    animation: 'tooltip'
 });

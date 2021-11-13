@@ -55,17 +55,32 @@
 }
 
 // Animations
-.tippy-box[data-state='hidden'] {
+.tippy-box[data-animation='tooltip'][data-state='hidden'] {
+  opacity: 0;
+  transform: scale(0.995);
+
+  &[data-placement^="top"] {
+    transform-origin: bottom;
+    transform: translateY(2px) scale(0.995);
+  }
+
+  &[data-placement^="bottom"] {
+    transform-origin: top;
+    transform: translateY(-2px) scale(0.995);
+  }
+}
+
+.tippy-box[data-animation='popover'][data-state='hidden'] {
   opacity: 0;
   transform: scale(0.975);
 
   &[data-placement^="top"] {
-    transform-origin: center bottom;
+    transform-origin: bottom;
     transform: translateY(10px) scale(0.975);
   }
 
   &[data-placement^="bottom"] {
-    transform-origin: center top;
+    transform-origin: top;
     transform: translateY(-10px) scale(0.975);
   }
 }
@@ -75,10 +90,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: var(--popover-foreground)!important;
+    color: var(--popover-foreground) !important;
     padding: 0.6rem 2rem 0.6rem 0.85rem;
     border-radius: 6px;
-    text-decoration: none!important;
+    text-decoration: none !important;
     font-weight: 500;
     font-size: 0.8rem;
     transition: var(--standard-transition);
@@ -86,12 +101,12 @@
 
     &:hover {
       background: var(--popover-item-background--hover);
-      color: var(--popover-item-foreground--hover)!important;
+      color: var(--popover-item-foreground--hover) !important;
     }
 
     &:active, &:focus {
       background: var(--popover-item-background--active);
-      color: var(--popover-item-foreground--active)!important;
+      color: var(--popover-item-foreground--active) !important;
     }
 
     &__icon {
