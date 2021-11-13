@@ -2290,53 +2290,9 @@ var toggleCheckboxes = function(toggle) {
     }
 };
 
-var hoverNotification = (function() {
-    var msgBox;
-    var body;
-
-    // animation effect that automatically hide the message box
-    var effect = function(overlay, dur) {
-        var o = YAHOO.widget.ContainerEffect.FADE(overlay, dur);
-        o.animateInCompleteEvent.subscribe(function() {
-            window.setTimeout(function() {
-                msgBox.hide()
-            }, 1500);
-        });
-        return o;
-    }
-
-    function init() {
-        if(msgBox!=null)  return;   // already initialized
-
-        var div = document.createElement("DIV");
-        document.body.appendChild(div);
-        div.innerHTML = "<div id=hoverNotification class='jenkins-tooltip'><div class=bd></div></div>";
-        body = $('hoverNotification');
-        
-        msgBox = new YAHOO.widget.Overlay(body, {
-          visible:false,
-          zIndex:1000,
-          effect:{
-            effect:effect,
-            duration:0.25
-          }
-        });
-        msgBox.render();
-    }
-
-    return function(title, anchor, offset) {
-        if (typeof offset === 'undefined') {
-            offset = 48;
-        }
-        init();
-        body.innerHTML = title;
-        var xy = YAHOO.util.Dom.getXY(anchor);
-        xy[0] += offset;
-        xy[1] += anchor.offsetHeight;
-        msgBox.cfg.setProperty("xy",xy);
-        msgBox.show();
-    };
-})();
+function hoverNotification(text, element) {
+    alert(text)
+}
 
 /**
  * Loads the script specified by the URL.
