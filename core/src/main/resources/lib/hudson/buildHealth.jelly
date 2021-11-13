@@ -39,7 +39,7 @@ THE SOFTWARE.
         <x:attribute name="data">${buildHealth.score}</x:attribute>
         <x:attribute name="html-tooltip">
             <j:if test="${!empty(healthReports)}">
-                <table border="0">
+                <table class="jenkins-table">
                     <thead>
                         <tr>
                             <th align="left">W</th>
