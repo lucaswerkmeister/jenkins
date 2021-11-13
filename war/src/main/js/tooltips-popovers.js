@@ -34,7 +34,7 @@ tippy('[popover]', {
 })
 
 tippy('li.children, #menuSelector', {
-    content: "Loading...",
+    content: "<p class='jenkins-spinner'></p>",
     interactive: true,
     trigger: 'click',
     allowHTML: true,
@@ -64,7 +64,7 @@ tippy('li.children, #menuSelector', {
             })
     },
     onHidden(instance) {
-        instance.setContent('Loading...')
+        instance.setContent("<p className='jenkins-spinner'></p>")
     },
 })
 
