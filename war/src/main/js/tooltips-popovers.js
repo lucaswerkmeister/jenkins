@@ -44,24 +44,32 @@ tippy('li.children, #menuSelector', {
     offset: [0, 0],
     animation: 'popover',
     onShow(instance) {
-        const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
-        const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu'
 
-        fetch(combinePath(href, contextMenuSuffix))
-            .then((response) => response.json())
-            .then((json) => {
-                let content = json.items.map(function (x) {
-                    return `<a class="jenkins-popover__item" href="${x.url}">
-                                ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
-                                ${x.displayName}
-                            </a>`
-                }).join('')
-                instance.setContent(content)
-            })
-            .catch((error) => {
-                // Fallback if the network request failed
-                instance.setContent(`Request failed. ${error}`)
-            })
+        // console.log(instance.reference.target)
+        // console.log(instance.reference.target.items())
+
+        if (instance.reference.target.hasAttribute("items")) {
+            instance.setContent(instance.reference.target.items())
+        } else {
+            const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
+            const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu'
+
+            fetch(combinePath(href, contextMenuSuffix))
+                .then((response) => response.json())
+                .then((json) => {
+                    let content = json.items.map(function (x) {
+                        return `<a class="jenkins-popover__item" href="${x.url}">
+                                    ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
+                                    ${x.displayName}
+                                </a>`
+                    }).join('')
+                    instance.setContent(content)
+                })
+                .catch((error) => {
+                    // Fallback if the network request failed
+                    instance.setContent(`Request failed. ${error}`)
+                })
+        }
     },
     onHidden(instance) {
         instance.setContent("<p className='jenkins-spinner'></p>")
