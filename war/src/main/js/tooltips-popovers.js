@@ -74,7 +74,7 @@ tippy('li.children, #menuSelector', {
         }
     },
     onHidden(instance) {
-        instance.setContent("<p className='jenkins-spinner'></p>")
+        instance.setContent("<p class='jenkins-spinner'></p>")
     },
 })
 
