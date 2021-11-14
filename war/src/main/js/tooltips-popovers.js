@@ -44,12 +44,14 @@ tippy('li.children, #menuSelector', {
     offset: [0, 0],
     animation: 'popover',
     onShow(instance) {
-
-        // console.log(instance.reference.target)
-        // console.log(instance.reference.target.items())
-
-        if (instance.reference.target.hasAttribute("items")) {
-            instance.setContent(instance.reference.target.items())
+        // If the instance already has existing items, render those instead
+        if (instance.reference.target && instance.reference.target.items) {
+            let content = instance.reference.target.items().map(function (x) {
+                return `<a class="jenkins-popover__item" href="${x.url}">
+                            ${x.text}
+                        </a>`
+            }).join('')
+            instance.setContent(content)
         } else {
             const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
             const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu'
