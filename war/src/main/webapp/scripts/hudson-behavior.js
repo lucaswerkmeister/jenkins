@@ -1427,7 +1427,13 @@ function rowvgStartEachRow(recursive,f) {
             var bottomPos = Math.max(0, viewport.bottom - pos.bottom);
 
             sticker.style.bottom = bottomPos + "px"
-            sticker.style.left = Math.max(0,pos.left-viewport.left) + "px"
+            sticker.style.left = "calc(" + Math.max(0,pos.left-viewport.left) + "px" + " - 2rem)"
+
+            if (bottomPos === 0) {
+              sticker.classList.add("bottom-sticker-inner--shadow")
+            } else {
+              sticker.classList.remove("bottom-sticker-inner--shadow")
+            }
         }
 
         // react to layout change
