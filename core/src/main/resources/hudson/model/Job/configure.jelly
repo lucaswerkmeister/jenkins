@@ -31,8 +31,8 @@ THE SOFTWARE.
   <l:layout type="two-column" permission="${it.EXTENDED_READ}" title="${%Config(it.displayName)}">
     <j:set var="readOnlyMode" value="${!it.hasPermission(it.CONFIGURE)}" />
 
-    <l:js src="jsbundles/config-scrollspy.js" />
-    <l:css src="jsbundles/config-scrollspy.css" />
+<!--    <l:js src="jsbundles/config-scrollspy.js" />-->
+<!--    <l:css src="jsbundles/config-scrollspy.css" />-->
 
     <l:side-panel>
       <div class="jenkins-side-nav">
@@ -149,7 +149,7 @@ THE SOFTWARE.
           </f:bottomButtonBar>
         </j:if>
       </f:form>
-      
+
       <j:if test="${h.hasPermission(it,it.CONFIGURE)}">
         <st:adjunct includes="lib.form.confirm" />
       </j:if>
