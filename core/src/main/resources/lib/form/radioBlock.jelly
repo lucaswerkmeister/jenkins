@@ -56,13 +56,13 @@ THE SOFTWARE.
 
   <div class="radioBlock-container">
     <div class="tr help-sibling radio-block-start row-group-start ${attrs.inline?'':'row-set-start'}" hasHelp="${attrs.help!=null}"><!-- this ID marks the beginning -->
-      <div colspan="3">
+      <div class="jenkins-radio-help-wrapper">
         <div class="jenkins-radio">
           <input type="radio"
                  id="${name}-${value}"
                  name="${name}"
                  value="${value}"
-                 class="jenkins-radio__input"
+                 class="jenkins-radio__input radio-block-control block-control"
                  checked="${checked ? 'true' : null}"
                  disabled="${readOnlyMode ? 'true' : null}"
           />
