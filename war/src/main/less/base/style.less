@@ -459,8 +459,48 @@ label.attach-previous {
 }
 
 .bottom-sticker-inner {
+  position: relative;
+  padding: 1em 2rem;
+  z-index: 0;
+  backdrop-filter: blur(15px);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     background: var(--background);
-    padding: 1em 0;
+    opacity: 0.9;
+    z-index: -1;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -30px;
+    left: -1rem;
+    background: linear-gradient(rgba(black, 0), black 100%);
+    width: calc(var(--form-item-max-width) + 7rem);
+    height: 30px;
+    opacity: 0;
+    transition: var(--standard-transition);
+    mask-image: linear-gradient(to right, transparent, white 2rem, white calc(100% - 2rem), transparent);
+  }
+
+  &--shadow {
+    .bottom-sticker-inner {
+      &::after {
+        opacity: 0.05 !important;
+      }
+    }
+  }
+
+  .yui-button {
+    margin-left: 0;
+    margin-right: 0.5rem;
+  }
 }
 
 .top-sticker,

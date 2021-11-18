@@ -28,46 +28,129 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:f="/lib/form">
 
-  <l:layout type="one-column" permission="${it.EXTENDED_READ}" title="${%Config(it.displayName)}">
+  <l:layout type="two-column" permission="${it.EXTENDED_READ}" title="${%Config(it.displayName)}">
     <j:set var="readOnlyMode" value="${!it.hasPermission(it.CONFIGURE)}" />
 
     <l:js src="jsbundles/config-scrollspy.js" />
     <l:css src="jsbundles/config-scrollspy.css" />
 
+    <l:side-panel>
+      <div class="jenkins-side-nav">
+        <div class="jenkins-app-bar">
+          <div class="jenkins-app-bar__content">
+            <h1>Configuration</h1>
+          </div>
+        </div>
+
+        <a class="jenkins-side-nav__item jenkins-side-nav__item--selected">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+              <title>Settings</title>
+              <path
+                d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z"
+                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+            </svg>
+          </div>
+          General
+        </a>
+
+        <a class="jenkins-side-nav__item">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+              <title>Code</title>
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
+                    d="M160 368L32 256l128-112M352 368l128-112-128-112"/>
+            </svg>
+          </div>
+          Source code management
+        </a>
+
+        <a class="jenkins-side-nav__item">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+              <title>Sparkles</title>
+              <path
+                d="M259.92 262.91L216.4 149.77a9 9 0 00-16.8 0l-43.52 113.14a9 9 0 01-5.17 5.17L37.77 311.6a9 9 0 000 16.8l113.14 43.52a9 9 0 015.17 5.17l43.52 113.14a9 9 0 0016.8 0l43.52-113.14a9 9 0 015.17-5.17l113.14-43.52a9 9 0 000-16.8l-113.14-43.52a9 9 0 01-5.17-5.17zM108 68L88 16 68 68 16 88l52 20 20 52 20-52 52-20-52-20zM426.67 117.33L400 48l-26.67 69.33L304 144l69.33 26.67L400 240l26.67-69.33L496 144l-69.33-26.67z"
+                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+            </svg>
+          </div>
+          Build triggers
+        </a>
+
+        <a class="jenkins-side-nav__item">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+              <title>Planet</title>
+              <path
+                d="M413.48 284.46c58.87 47.24 91.61 89 80.31 108.55-17.85 30.85-138.78-5.48-270.1-81.15S.37 149.84 18.21 119c11.16-19.28 62.58-12.32 131.64 14.09"
+                fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
+              <circle cx="256" cy="256" r="160" fill="none" stroke="currentColor" stroke-miterlimit="10"
+                      stroke-width="32"/>
+            </svg>
+          </div>
+          Build environment
+        </a>
+
+        <a class="jenkins-side-nav__item">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+              <title>Play</title>
+              <path
+                d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z"
+                fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
+            </svg>
+          </div>
+          Build
+        </a>
+
+        <a class="jenkins-side-nav__item">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+              <title>Play Forward</title>
+              <path
+                d="M32 145.52v221c0 13.28 13 21.72 23.63 15.35l188.87-113c9.24-5.53 9.24-20.07 0-25.6l-188.87-113C45 123.8 32 132.24 32 145.52zM260.57 145.52v221c0 13.28 13 21.72 23.63 15.35l188.87-113c9.24-5.53 9.24-20.07 0-25.6l-188.87-113c-10.64-6.47-23.63 1.97-23.63 15.25z"
+                fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
+            </svg>
+          </div>
+          Post-build actions
+        </a>
+      </div>
+    </l:side-panel>
+
     <l:main-panel>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-offset-2 col-md-20">
-
-          <div class="behavior-loading"><l:spinner text="${%LOADING}"/></div>
-
-          <f:form method="post" action="configSubmit" name="config" tableClass="config-table scrollspy">
-            <j:set var="descriptor" value="${it.descriptor}" />
-            <j:set var="instance" value="${it}" />
-
-            <f:entry title="${%Description}" help="${app.markupFormatter.helpUrl}">
-              <f:textarea name="description" value="${it.description}" codemirror-mode="${app.markupFormatter.codeMirrorMode}" codemirror-config="${app.markupFormatter.codeMirrorConfig}" previewEndpoint="/markupFormatter/previewDescription"/>
-            </f:entry>
-
-            <f:descriptorList field="properties" descriptors="${h.getJobPropertyDescriptors(it)}" forceRowSet="true"/>
-
-            <!-- additional entries from derived classes -->
-            <st:include page="configure-entries.jelly" />
-
-            <j:if test="${h.hasPermission(it,it.CONFIGURE)}">
-              <f:bottomButtonBar>
-                <!--<input type="button" name="StructureTest" value="Test" onclick="buildFormTree(this.form)" />-->
-                <f:submit value="${%Save}" large="true"/>
-                <f:apply value="${%Apply}" large="true" />
-              </f:bottomButtonBar>
-            </j:if>
-          </f:form>
-          <j:if test="${h.hasPermission(it,it.CONFIGURE)}">
-            <st:adjunct includes="lib.form.confirm" />
-          </j:if>
+      <div class="jenkins-app-bar">
+        <div class="jenkins-app-bar__content">
+          <h1>General</h1>
         </div>
       </div>
-    </div>
+
+      <div class="behavior-loading"><l:spinner text="${%LOADING}"/></div>
+
+      <f:form method="post" action="configSubmit" name="config" tableClass="config-table scrollspy">
+        <j:set var="descriptor" value="${it.descriptor}" />
+        <j:set var="instance" value="${it}" />
+
+        <f:entry title="${%Description}" help="${app.markupFormatter.helpUrl}">
+          <f:textarea name="description" value="${it.description}" codemirror-mode="${app.markupFormatter.codeMirrorMode}" codemirror-config="${app.markupFormatter.codeMirrorConfig}" previewEndpoint="/markupFormatter/previewDescription"/>
+        </f:entry>
+
+        <f:descriptorList field="properties" descriptors="${h.getJobPropertyDescriptors(it)}" forceRowSet="true"/>
+
+        <!-- additional entries from derived classes -->
+        <st:include page="configure-entries.jelly" />
+
+        <j:if test="${h.hasPermission(it,it.CONFIGURE)}">
+          <f:bottomButtonBar>
+            <!--<input type="button" name="StructureTest" value="Test" onclick="buildFormTree(this.form)" />-->
+            <f:submit value="${%Save}" large="true"/>
+            <f:apply value="${%Apply}" large="true" />
+          </f:bottomButtonBar>
+        </j:if>
+      </f:form>
+
+      <j:if test="${h.hasPermission(it,it.CONFIGURE)}">
+        <st:adjunct includes="lib.form.confirm" />
+      </j:if>
     </l:main-panel>
   </l:layout>
 </j:jelly>
