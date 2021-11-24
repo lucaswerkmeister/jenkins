@@ -65,6 +65,7 @@
         &:first-of-type {
           border-radius: var(--table-body-radius) 0 0 var(--table-body-radius);
           padding-left: calc(var(--table-padding) * 2);
+          padding-right: var(--table-padding);
         }
 
         &:last-of-type {
@@ -155,6 +156,10 @@
     }
   }
 
+  &__button, &__link {
+    color: var(--link-color)!important;
+  }
+
   &__button, .sortheader, &__link {
     align-items: center;
     justify-content: center;
@@ -205,6 +210,14 @@
 
     &--green {
       color: var(--green)!important;
+    }
+
+    &--orange {
+      color: var(--orange)!important;
+    }
+
+    &--red {
+      color: var(--red)!important;
     }
   }
 

@@ -1,5 +1,5 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:u="jelly:org.jenkins.ui.icon.IconTagLibrary" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:i="jelly:fmt" xmlns:x="jelly:xml">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:i="jelly:fmt" xmlns:x="jelly:xml">
     <st:documentation>
         Generates the page header, along with its associated dynamic behaviours.
         This tag is used by l:layout and not expected to be used by anyone else,
@@ -45,7 +45,7 @@
 
         <div class="login page-header__hyperlinks">
             <button id="button-spotlight" class="model-link inside inverse">
-                <u:ionicon name="search-outline"/>
+                <l:ionicon name="search-outline"/>
                 <span class="jenkins-visually-hidden">${searchPlaceholder}</span>
             </button>
 
