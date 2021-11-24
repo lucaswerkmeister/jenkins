@@ -1,165 +1,66 @@
-import $ from 'jquery';
-import windowHandle from 'window-handle';
-import page from './util/page';
-import * as tabBarWidget from './widgets/config/tabbar';
+import $ from 'jquery'
+import page from './util/page'
 
-var isScrolling = false;
-var ignoreNextScrollEvent = false;
-var pageHeaderHeight = page.pageHeaderHeight();
-var breadcrumbBarHeight = page.breadcrumbBarHeight();
+const defaultIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`
 
 // Some stuff useful for testing.
-export var tabbars = [];
-export var scrollspeed = 500;
-// Used to set scrollspeed from the the test suite
-export function setScrollspeed(newScrollspeed) {
-    scrollspeed = newScrollspeed;
-}
-var eventListeners = [];
-export var on = function(listener) {
-    eventListeners.push(listener);
-};
-function notify(event) {
-    for (var i = 0; i < eventListeners.length; i++) {
-        eventListeners[i](event);
-    }
-}
+export var scrollSpeed = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 350
 
 $(function() {
-    tabBarWidget.addPageTabs('.config-table.scrollspy', function(tabBar) {
-        tabbars.push(tabBar);
+  const sideNav = document.querySelector(".jenkins-side-nav")
+  const headers = document.querySelectorAll("h2, .config-table > .jenkins-section > .jenkins-section__title")
 
-        tabBarWidget.addFinderToggle(tabBar);
-        tabBar.onShowSection(function() {
-            // Scroll to the section.
-            scrollTo(this, tabBar);
-            // Hook back into hudson-behavior.js
-            page.fireBottomStickerAdjustEvent();
-        });
+  // Create the sidebar links
+  headers.forEach(function(header, i) {
+    const textContent = header.textContent.replaceAll(" ", "")
+    header.id = textContent
 
-        autoActivateTabs(tabBar);
-        page.onWinScroll(function () {
-            autoActivateTabs(tabBar);
-        });
-        page.onWinScroll(function () {
-            stickTabbar(tabBar);
-        });
+    let item = document.createElement("button")
+    item.className = "jenkins-side-nav__item"
+    item.innerHTML = "<div>" + defaultIcon + "</div>" + header.textContent
+    item.setAttribute("section-id", textContent)
+    item.addEventListener("click", function () {
+      const headerToGoTo = document.querySelector("#" + textContent)
+      scrollTo(i === 0 ? 0 : (headerToGoTo.getBoundingClientRect().top + window.scrollY) - 40 - 30)
+    })
+    sideNav.appendChild(item)
+  })
 
-        // Manually trigger a repaint, otherwise Folder forms will not position
-        // the buttons correctly. This is caused by upgrading jQuery to 3.5.x,
-        // and probably has something to do with event listeners running in
-        // different order.
-        layoutUpdateCallback.call()
-    }, {trackSectionVisibility: true});
-});
+  page.onWinScroll(function () {
+    autoActivateTabs()
+  })
 
-function scrollTo(section, tabBar) {
-    var $header = section.headerRow;
-    var scrollTop = $header.offset().top - ($('#main-panel .jenkins-config-widgets').outerHeight() + 15);
+  autoActivateTabs()
+})
 
-    isScrolling = true;
-    $('html,body').animate({
-        scrollTop: scrollTop
-    }, scrollspeed, function() {
-        if (isScrolling) {
-            notify({
-                type: 'click_scrollto',
-                section: section
-            });
-            isScrolling = false;
-            ignoreNextScrollEvent = stickTabbar(tabBar);
-        }
-    });
+function scrollTo(yPosition) {
+  $('html,body').animate({
+    scrollTop: yPosition
+  }, scrollSpeed)
 }
 
 /**
- * Watch page scrolling, changing the active tab as needed.
- * @param tabBar The tabbar.
+ * Watch page scrolling, changing the active tab as needed
  */
-function autoActivateTabs(tabBar) {
-    if (isScrolling === true) {
-        // Ignore window scroll events while we are doing a scroll.
-        // See scrollTo function.
-        return;
+function autoActivateTabs() {
+  const winScrollTop = Math.max(page.winScrollTop(), 0)
+  const sections = document.querySelectorAll("h2, .config-table > .jenkins-section > .jenkins-section__title")
+
+  let selectedSection = null
+
+  // Calculate the top and height of each section to know where to switch the tabs
+  sections.forEach(function (section, i) {
+    const previousSection = i === 1 ? document.querySelector(".jenkins-section:first-of-type") : sections[Math.max(i - 1, 0)].parentNode
+    const viewportEntryOffset = i === 0 ? 0 : ((section.parentNode.getBoundingClientRect().top + window.scrollY) - (previousSection.offsetHeight / 2))
+
+    if (winScrollTop >= viewportEntryOffset) {
+      selectedSection = section
     }
-    if (ignoreNextScrollEvent === true) {
-        // Things like repositioning of the tabbar (see stickTabbar)
-        // can trigger scroll events that we want to ignore.
-        ignoreNextScrollEvent = false;
-        return;
-    }
+  })
 
-    var winScrollTop = page.winScrollTop();
-    var sections = tabBar.sections;
+  document.querySelectorAll(".jenkins-side-nav__item--selected").forEach(function(selected) {
+    selected.classList.remove("jenkins-side-nav__item--selected")
+  })
 
-    // calculate the top and height of each section to know where to switch the tabs...
-    $.each(sections, function (i, section) {
-        if (!section.isVisible()) {
-            return;
-        }
-
-        // each section enters the viewport at its distance down the page, less the height of
-        // the toolbar, which hangs down the page. Or it is zero if the section doesn't
-        // match or was removed...
-        var viewportEntryOffset = section.getViewportEntryOffset();
-        // height of this one is the top of the next, less the top of this one.
-        var sectionHeight = 0;
-        var nextSection = nextVisibleSection(section);
-        if (nextSection) {
-            sectionHeight = nextSection.getViewportEntryOffset() - viewportEntryOffset;
-        }
-
-        // the trigger point to change the tab happens when the scroll position passes below the height of the section...
-        // ...but we want to wait to advance the tab until the existing section is 75% off the top...
-        // ### < 75% ADVANCED
-        if (winScrollTop < (viewportEntryOffset + (0.75 * sectionHeight))) {
-            section.markAsActive();
-            notify({
-                type: 'manual_scrollto',
-                section: section
-            });
-            return false;
-        }
-    });
-}
-
-/**
- * Stick the scrollspy tabbar to the top of the visible area as the user
- * scrolls down the page.
- * @param tabBar The tabbar.
- */
-function stickTabbar(tabBar) {
-    var win = $(windowHandle.getWindow());
-    var winScrollTop = page.winScrollTop();
-    var widgetBox = tabBar.configWidgets;
-    var configTable = tabBar.configTable;
-    var configForm = tabBar.configForm;
-    var setWidth = function() {
-        widgetBox.width(configForm.outerWidth() - 2);
-    };
-
-    if (winScrollTop > pageHeaderHeight - 5) {
-        setWidth();
-        widgetBox.css({
-            'position': 'fixed',
-            'top': (breadcrumbBarHeight - 5 ) + 'px',
-            'margin': '0 auto !important'
-        });
-        configTable.css({'margin-top': widgetBox.outerHeight() + 'px'});
-        win.resize(setWidth);
-        return true;
-    } else {
-        widgetBox.removeAttr('style');
-        configTable.removeAttr('style');
-        win.unbind('resize', setWidth);
-        return false;
-    }
-}
-
-function nextVisibleSection(section) {
-    var next = section.getSibling(+1);
-    while (next && !next.isVisible()) {
-        next = next.getSibling(+1);
-    }
-    return next;
+  document.querySelector(".jenkins-side-nav__item[section-id='" + selectedSection.id + "']").classList.add("jenkins-side-nav__item--selected")
 }
