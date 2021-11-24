@@ -146,8 +146,12 @@ import hudson.remoting.VirtualChannel;
 import hudson.scm.RepositoryBrowser;
 import hudson.scm.SCM;
 import hudson.search.CollectionSearchIndex;
+import hudson.search.DefaultSearchItems;
 import hudson.search.SearchIndexBuilder;
 import hudson.search.SearchItem;
+import hudson.search.SearchItemCategory;
+import hudson.search.Icon;
+import hudson.search.SearchItems;
 import hudson.security.ACL;
 import hudson.security.ACLContext;
 import hudson.security.AccessControlled;
@@ -215,6 +219,8 @@ import java.io.InterruptedIOException;
 import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
@@ -287,6 +293,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.jelly.JellyException;
 import org.apache.commons.jelly.Script;
 import org.apache.commons.logging.LogFactory;
+import org.jenkins.ui.icon.IconSet;
 import org.jvnet.hudson.reactor.Executable;
 import org.jvnet.hudson.reactor.Milestone;
 import org.jvnet.hudson.reactor.Reactor;
@@ -2369,11 +2376,14 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     @Override
     public SearchIndexBuilder makeSearchIndex() {
         SearchIndexBuilder builder = super.makeSearchIndex();
+
+        // Add pages
         if (hasPermission(ADMINISTER)) {
-                builder.add("configure", "config", "configure")
-                    .add("manage")
-                    .add("log");
+            builder.add(DefaultSearchItems.manageJenkinsSearchItem);
+            builder.add(DefaultSearchItems.peopleSearchItem);
+            builder.add(DefaultSearchItems.buildHistorySearchItem);
         }
+
         builder.add(new CollectionSearchIndex<TopLevelItem>() {
                     @Override
                     protected SearchItem get(String key) { return getItemByFullName(key, TopLevelItem.class); }
@@ -2386,23 +2396,31 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
                     }
                 })
                 .add(getPrimaryView().makeSearchIndex())
-                .add(new CollectionSearchIndex() {// for computers
+                .add(new CollectionSearchIndex<Computer>() {// for computers
                     @Override
                     protected Computer get(String key) { return getComputer(key); }
                     @Override
                     protected Collection<Computer> all() { return computers.values(); }
                 })
-                .add(new CollectionSearchIndex() {// for users
+                .add(new CollectionSearchIndex<User>() {// for users
                     @Override
                     protected User get(String key) { return User.get(key,false); }
                     @Override
                     protected Collection<User> all() { return User.getAll(); }
                 })
-                .add(new CollectionSearchIndex() {// for views
+                .add(new CollectionSearchIndex<View>() {// for views
                     @Override
                     protected View get(String key) { return getView(key); }
                     @Override
                     protected Collection<View> all() { return getAllViews(); }
+                })
+                .add(new CollectionSearchIndex<ManagementLink>() {// for settings
+                    @Override
+                    protected ManagementLink get(String key) {
+                        return getManagementLinks().get(0);
+                    }
+                    @Override
+                    protected Collection<ManagementLink> all() { return getManagementLinks(); }
                 });
         return builder;
     }

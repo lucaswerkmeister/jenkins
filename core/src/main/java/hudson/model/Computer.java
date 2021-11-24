@@ -46,6 +46,7 @@ import hudson.model.queue.WorkUnit;
 import hudson.node_monitors.NodeMonitor;
 import hudson.remoting.Channel;
 import hudson.remoting.VirtualChannel;
+import hudson.search.SearchItemCategory;
 import hudson.security.ACL;
 import hudson.security.AccessControlled;
 import hudson.security.Permission;
@@ -1123,6 +1124,16 @@ public /*transient*/ abstract class Computer extends Actionable implements Acces
     @Override
     public String getSearchUrl() {
         return getUrl();
+    }
+
+    @Override
+    public SearchItemCategory getSearchItemCategory() {
+        return SearchItemCategory.NODES;
+    }
+
+    @Override
+    public hudson.search.Icon getSearchItemIcon() {
+        return hudson.search.Icon.fromSvg(IconSet.getIonicon("tv-outline", null));
     }
 
     /**

@@ -30,6 +30,8 @@ import org.apache.commons.jelly.JellyContext;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +53,7 @@ public class IconSet {
     private Map<String, Icon> iconsByUrl  = new ConcurrentHashMap<>();
     private Map<String, Icon> iconsByClassSpec = new ConcurrentHashMap<>();
     private Map<String, Icon> coreIcons = new ConcurrentHashMap<>();
+    private static Map<String, String> ionicons = new ConcurrentHashMap<>();
 
     private static final String PLACEHOLDER_SVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"ionicon\" viewBox=\"0 0 512 512\"><title>Ellipse</title><circle cx=\"256\" cy=\"256\" r=\"192\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"32\"/></svg>";
     private static final Icon NO_ICON = new Icon("_", "_", "_");
@@ -101,6 +104,15 @@ public class IconSet {
         IONICONS.put(name, ionicon);
 
         return prependTitleIfRequired(ionicon, title);
+    }
+        
+    public static String getSvg(String name) {
+        // Load icon if it exists
+        try {
+            return new String(Files.readAllBytes(Paths.get("war/src/main/webapp/images/svgs/" + name + ".svg")));
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     public IconSet addIcon(Icon icon) {

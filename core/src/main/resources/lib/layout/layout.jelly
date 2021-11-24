@@ -225,6 +225,8 @@ THE SOFTWARE.
       </div>
     </div>
 
+    <l:commandCentre />
+
     <j:if test="${layoutType!='full-screen'}">
     <footer class="page-footer">
       <div class="container-fluid">
