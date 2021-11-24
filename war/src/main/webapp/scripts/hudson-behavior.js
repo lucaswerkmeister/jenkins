@@ -682,53 +682,23 @@ function preventInputEe(event) {
 }
 
 /**
- * Wraps a <button> into YUI button.
+ * DEPRECATED: Wraps a <button> into YUI button.
+ *
+ * @deprecated Add the event listener to the button rather than call this method
  *
  * @param e
  *      button element
- * @param onclick
+ * @param onclickEvent
  *      onclick handler
  * @return
  *      YUI Button widget.
  */
-function makeButton(e,onclick) {
-    var h = e.onclick;
-    var clsName = e.className;
-    var n = e.name;
+function makeButton(e, onclickEvent) {
+    if (onclickEvent != null) {
+        e.addEventListener('click', onclickEvent);
+    }
 
-    var attributes = {};
-    // YUI Button class interprets value attribute of <input> as HTML
-    // similar to how the child nodes of a <button> are treated as HTML.
-    // in standard HTML, we wouldn't expect the former case, yet here we are!
-    if (e.tagName === 'INPUT') {
-        attributes.label = e.value.escapeHTML();
-    }
-    var btn = new YAHOO.widget.Button(e, attributes);
-    if(onclick!=null)
-        btn.addListener("click",onclick);
-    if(h!=null)
-        btn.addListener("click",h);
-    var be = btn.get("element");
-    var classesSeparatedByWhitespace = clsName.split(' ');
-    for (var i = 0; i < classesSeparatedByWhitespace.length; i++) {
-        var singleClass = classesSeparatedByWhitespace[i];
-        if (singleClass) {
-            be.classList.add(singleClass);
-        }
-    }
-    if(n) // copy the name
-        be.setAttribute("name",n);
-
-    // keep the data-* attributes from the source
-    var length = e.attributes.length;
-    for (var i = 0; i < length; i++) {
-        var attribute = e.attributes[i];
-        var attributeName = attribute.name;
-        if (attributeName.startsWith('data-')) {
-            btn._button.setAttribute(attributeName, attribute.value);
-        }
-    }
-    return btn;
+    return e;
 }
 
 /*
@@ -821,15 +791,6 @@ function sequencer(fs) {
 function progressBarOnClick() {
     var href = this.getAttribute("href");
     if(href!=null)      window.location = href;
-}
-
-function expandButton(e) {
-    var link = e.target;
-    while(!Element.hasClassName(link,"advancedLink"))
-        link = link.parentNode;
-    link.style.display = "none";
-    $(link).next().style.display="block";
-    layoutUpdateCallback.call();
 }
 
 function labelAttachPreviousOnClick() {
@@ -953,10 +914,6 @@ function rowvgStartEachRow(recursive,f) {
 
     Behaviour.specify("TABLE.progress-bar", "table-progress-bar", ++p, function(e) { // progressBar.jelly
         e.onclick = progressBarOnClick;
-    });
-
-    Behaviour.specify("INPUT.expand-button", "input-expand-button", ++p, function(e) {
-        makeButton(e, expandButton);
     });
 
     // <label> that doesn't use ID, so that it can be copied in <repeatable>
@@ -1198,14 +1155,6 @@ function rowvgStartEachRow(recursive,f) {
     // Behaviour.specify("[tooltip]", "-tooltip-", ++p, function(e) {
     //     applyTooltip(e,e.getAttribute("tooltip"));
     // });
-
-    Behaviour.specify("INPUT.submit-button", "input-submit-button", ++p, function(e) {
-        makeButton(e);
-    });
-
-    Behaviour.specify("INPUT.yui-button", "input-yui-button", ++p, function(e) {
-        makeButton(e);
-    });
 
     Behaviour.specify("TR.optional-block-start,DIV.tr.optional-block-start", "tr-optional-block-start-div-tr-optional-block-start", ++p, function(e) { // see optionalBlock.jelly
         // Get the `input` from the checkbox container
@@ -2357,8 +2306,7 @@ function loadScript(href,callback) {
 }
 
 // logic behind <f:validateButton />
-function safeValidateButton(yuiButton) {
-    var button = yuiButton._button;
+function safeValidateButton(button) {
     var descriptorUrl = button.getAttribute('data-validate-button-descriptor-url');
     var method = button.getAttribute('data-validate-button-method');
     var checkUrl = descriptorUrl + "/" + method;
@@ -2366,14 +2314,12 @@ function safeValidateButton(yuiButton) {
     // optional, by default = empty string
     var paramList = button.getAttribute('data-validate-button-with') || '';
     
-    validateButton(checkUrl, paramList, yuiButton);
+    validateButton(checkUrl, paramList, button);
 }
 
 // this method should not be called directly, only get called by safeValidateButton
 // kept "public" for legacy compatibility
 function validateButton(checkUrl,paramList,button) {
-  button = button._button;
-
   var parameters = {};
 
   paramList.split(',').each(function(name) {

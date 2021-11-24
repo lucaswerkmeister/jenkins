@@ -1,4 +1,4 @@
-Behaviour.specify("INPUT.apply-button", 'apply', 0, function (e) {
+Behaviour.specify("BUTTON.apply-button", 'apply', 0, function (e) {
         var id;
         var containerId = "container"+(iota++);
 
@@ -24,7 +24,7 @@ Behaviour.specify("INPUT.apply-button", 'apply', 0, function (e) {
             }
         }
 
-        makeButton(e,function (e) {
+    e.addEventListener('click', function(e) {
             var f = findAncestor(e.target, "FORM");
 
             // create a throw-away IFRAME to avoid back button from loading the POST result back
