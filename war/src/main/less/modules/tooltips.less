@@ -1,11 +1,126 @@
-.jenkins-tooltip {
-  position: absolute;
-  padding: 5px 10px;
-  border-radius: 6px;
-  background: var(--tooltip-background-color);
-  box-shadow: var(--tooltip-shadow);
-  color: var(--tooltip-foreground-color);
-  font-size: 0.8rem;
-  z-index: 40;
-  overflow: hidden;
+:root {
+  --tooltip-background: white;
+  --tooltip-foreground: black;
+
+  --popover-background: white;
+  --popover-foreground: black;
+
+  --popover-item-background--hover: rgb(235, 235, 235);
+  --popover-item-foreground--hover: black;
+
+  --popover-item-background--active: rgb(210, 210, 210);
+  --popover-item-foreground--active: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tooltip-background: rgb(50, 50, 55);
+    --tooltip-foreground: rgb(240, 240, 245);
+
+    --popover-background: rgb(42, 42, 44);
+    --popover-foreground: rgb(240, 240, 245);
+
+    --popover-item-background--hover: rgb(62, 62, 64);
+    --popover-item-foreground--hover: rgb(240, 240, 245);
+
+    --popover-item-background--active: rgb(72, 72, 74);
+    --popover-item-foreground--active: rgb(240, 240, 245);
+  }
+}
+
+.tippy-box[data-theme~='tooltip'] {
+  background: var(--tooltip-background);
+  color: var(--tooltip-foreground);
+  padding: 0.55rem 0.8rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 0 8px 2px rgba(0, 0, 0, 0.05), 0 15px 30px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 1.66;
+
+  .tippy-content {
+    padding: 0;
+  }
+}
+
+.tippy-box[data-theme~='popover'] {
+  background: var(--popover-background);
+  padding: 0.25rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 0 8px 2px rgba(0, 0, 0, 0.05), 0 15px 30px rgba(0, 0, 0, 0.15);
+
+  .tippy-content {
+    padding: 0;
+  }
+}
+
+// Animations
+.tippy-box[data-animation='tooltip'][data-state='hidden'] {
+  opacity: 0;
+  transform: scale(0.995);
+
+  &[data-placement^="top"] {
+    transform-origin: bottom;
+    transform: translateY(2px) scale(0.995);
+  }
+
+  &[data-placement^="bottom"] {
+    transform-origin: top;
+    transform: translateY(-2px) scale(0.995);
+  }
+}
+
+.tippy-box[data-animation='popover'][data-state='hidden'] {
+  opacity: 0;
+  transform: scale(0.975);
+
+  &[data-placement^="top"] {
+    transform-origin: bottom;
+    transform: translateY(10px) scale(0.975);
+  }
+
+  &[data-placement^="bottom"] {
+    transform-origin: top;
+    transform: translateY(-10px) scale(0.975);
+  }
+}
+
+.jenkins-popover {
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--popover-foreground) !important;
+    padding: 0.6rem 2rem 0.6rem 0.85rem;
+    border-radius: 6px;
+    text-decoration: none !important;
+    font-weight: 500;
+    font-size: 0.8rem;
+    transition: var(--standard-transition);
+    min-width: 180px;
+
+    &:hover {
+      background: var(--popover-item-background--hover);
+      color: var(--popover-item-foreground--hover) !important;
+    }
+
+    &:active, &:focus {
+      background: var(--popover-item-background--active);
+      color: var(--popover-item-foreground--active) !important;
+    }
+
+    &__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      margin-right: 0.85rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 }
