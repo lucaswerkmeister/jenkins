@@ -12,12 +12,13 @@ $(function() {
 
   // Create the sidebar links
   headers.forEach(function(header, i) {
-    const textContent = header.textContent.replaceAll(" ", "")
+    const icon = header.querySelector("svg") ? header.querySelector("svg").outerHTML : defaultIcon
+    const textContent = header.querySelector("span").textContent.replaceAll(" ", "")
     header.id = textContent
 
     let item = document.createElement("button")
     item.className = "jenkins-side-nav__item"
-    item.innerHTML = "<div>" + defaultIcon + "</div>" + header.textContent
+    item.innerHTML = "<div>" + icon + "</div>" + header.textContent
     item.setAttribute("section-id", textContent)
     item.addEventListener("click", function () {
       const headerToGoTo = document.querySelector("#" + textContent)

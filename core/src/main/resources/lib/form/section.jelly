@@ -31,6 +31,10 @@ THE SOFTWARE.
       The section header text.
       If null is given, the entire &lt;f:section> tag becomes no-op.
     </st:attribute>
+    <st:attribute name="ionicon">
+      Sets the icon on the sidebar item for the section anchor link
+      The icon isn't visible in the section itself
+    </st:attribute>
     <st:attribute name="name">
       Optional attribute to create a JSON object from this section.
     </st:attribute>
@@ -42,7 +46,13 @@ THE SOFTWARE.
     <div class="${attrs.title!=null ? 'jenkins-section' : ''}">
       <j:if test="${attrs.title!=null}">
         <div class="jenkins-section__title">
-          ${title}
+          <j:if test="${ionicon != null}">
+            <div class="jenkins-visually-hidden">
+              <!-- TODO - Refactor this to support any icon (eg any SVG or any bitmap) -->
+              <l:ionicon name="${ionicon}" />
+            </div>
+          </j:if>
+          <span>${title}</span>
         </div>
       </j:if>
       <d:invokeBody />
