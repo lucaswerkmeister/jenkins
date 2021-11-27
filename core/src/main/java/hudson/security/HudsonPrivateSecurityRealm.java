@@ -71,6 +71,8 @@ import jenkins.security.SecurityListener;
 import jenkins.security.seed.UserSeedProperty;
 import jenkins.util.SystemProperties;
 import net.sf.json.JSONObject;
+import org.jenkins.ui.icon.IconSet;
+import org.jenkins.ui.icon.NewIcon;
 import org.jenkinsci.Symbol;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -840,12 +842,15 @@ public class HudsonPrivateSecurityRealm extends AbstractPasswordBasedSecurityRea
      */
     @Extension @Symbol("localUsers")
     public static final class ManageUserLinks extends ManagementLink {
+
         @Override
-        public String getIconFileName() {
-            if(Jenkins.get().getSecurityRealm() instanceof HudsonPrivateSecurityRealm)
-                return "user.png";
-            else
-                return null;    // not applicable now
+        public NewIcon getIcon() {
+            if (Jenkins.get().getSecurityRealm() instanceof HudsonPrivateSecurityRealm) {
+                return NewIcon.fromSvg(IconSet.getIonicon("people-outline", null));
+            } else {
+                // not applicable now
+                return null;
+            }
         }
 
         @Override

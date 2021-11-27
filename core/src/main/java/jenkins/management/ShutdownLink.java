@@ -34,6 +34,8 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
+import org.jenkins.ui.icon.IconSet;
+import org.jenkins.ui.icon.NewIcon;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
@@ -46,8 +48,8 @@ public class ShutdownLink extends ManagementLink {
     private static final Logger LOGGER = Logger.getLogger(ShutdownLink.class.getName());
 
     @Override
-    public String getIconFileName() {
-        return "system-log-out.png";
+    public NewIcon getIcon() {
+        return NewIcon.fromSvg(IconSet.getIonicon("power-outline", null));
     }
 
     @Override

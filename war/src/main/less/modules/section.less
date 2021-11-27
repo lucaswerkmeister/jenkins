@@ -94,12 +94,36 @@
     min-height: 48px;
   }
 
-  .icon, .icon-xlg {
+  .iaetf {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem 0 0;
     width: 48px;
     height: 48px;
     pointer-events: none;
-    margin: 0 1rem 0 0;
+    flex-shrink: 0;
+    color: var(--text-color);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 100%;
+      background: currentColor;
+      opacity: 0.1;
+    }
+
+    img,
+    svg {
+      position: relative;
+      width: 24px;
+      color: currentColor;
+    }
   }
 
   dt {

@@ -29,6 +29,8 @@ import hudson.Extension;
 import hudson.model.ManagementLink;
 import hudson.security.Permission;
 import jenkins.model.Jenkins;
+import org.jenkins.ui.icon.IconSet;
+import org.jenkins.ui.icon.NewIcon;
 import org.jenkinsci.Symbol;
 
 /**
@@ -38,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class SystemInfoLink extends ManagementLink {
 
     @Override
-    public String getIconFileName() {
-        return "computer.png";
+    public NewIcon getIcon() {
+        return NewIcon.fromSvg(IconSet.getIonicon("server-outline", null));
     }
 
     @Override
