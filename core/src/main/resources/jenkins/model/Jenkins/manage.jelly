@@ -105,6 +105,9 @@ THE SOFTWARE.
                           <j:out value="${m.icon.svg}" />
                         </j:otherwise>
                       </j:choose>
+                      <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
+                        <div class="iaetf__badge">${m.getUpdateCount()}</div>
+                      </j:if>
                     </div>
                     <dl>
                       <dt>${m.displayName}</dt>
