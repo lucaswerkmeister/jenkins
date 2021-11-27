@@ -58,7 +58,7 @@ THE SOFTWARE.
                 <j:choose>
                 <j:when test="${m.requiresConfirmation}">
                   <l:confirmationLink href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
-                    <div class="iaetf" aria-hidden="true">
+                    <div class="jenkins-section__item__icon" aria-hidden="true">
                       <j:choose>
                         <j:when test="${m.icon.path != null}">
                           <img src="${rootURL}/${m.icon.path}" />
@@ -77,7 +77,7 @@ THE SOFTWARE.
                 </j:when>
                 <j:when test="${m.requiresPOST}">
                   <f:link href="${m.urlName}" post="${m.requiresPOST}">
-                    <div class="iaetf" aria-hidden="true">
+                    <div class="jenkins-section__item__icon" aria-hidden="true">
                       <j:choose>
                         <j:when test="${m.icon.path != null}">
                           <img src="${rootURL}/${m.icon.path}" />
@@ -96,7 +96,7 @@ THE SOFTWARE.
                 </j:when>
                 <j:otherwise>
                   <a href="${m.urlName}">
-                    <div class="iaetf" aria-hidden="true">
+                    <div class="jenkins-section__item__icon" aria-hidden="true">
                       <j:choose>
                         <j:when test="${m.icon.path != null}">
                           <img src="${rootURL}/${m.icon.path}" />
@@ -106,7 +106,7 @@ THE SOFTWARE.
                         </j:otherwise>
                       </j:choose>
                       <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
-                        <div class="iaetf__badge">${m.getUpdateCount()}</div>
+                        <div class="jenkins-section__item__icon__badge">${m.getUpdateCount()}</div>
                       </j:if>
                     </div>
                     <dl>

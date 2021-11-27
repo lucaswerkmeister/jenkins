@@ -72,8 +72,14 @@ public abstract class ManagementLink implements ExtensionPoint, Action {
         return null;
     }
 
+    /**
+     * @return
+     *      As a special case, return null to exclude this object from the management link.
+     *      This is useful for defining {@link ManagementLink} that only shows up under
+     *      certain circumstances.
+     */
     public @CheckForNull NewIcon getIcon() {
-        return NewIcon.fromFileName(getIconFileName());
+        return NewIcon.fromRelativePath(getIconFileName());
     }
 
     /**
