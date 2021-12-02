@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2004-2009, Sun Microsystems, Inc.
+ * Copyright 2015 CloudBees, Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package jenkins;
 
 import hudson.remoting.Which;
 import jenkins.model.Jenkins;
 import junit.framework.Test;
 import junit.framework.TestCase;
-import org.jvnet.hudson.test.JellyTestSuiteBuilder;
+import org.jvnet.hudson.test.PropertiesTestSuite;
 
 /**
- * Runs Jelly checks on core.
- *
- * @author Kohsuke Kawaguchi
+ * Runs checks on properties files in core.
  */
-public class CoreJellyTest extends TestCase {
+public class CorePropertiesTest extends TestCase {
+
     public static Test suite() throws Exception {
-        return JellyTestSuiteBuilder.build(Which.jarFile(Jenkins.class),true);
+        return new PropertiesTestSuite(Which.jarFile(Jenkins.class));
     }
+
 }

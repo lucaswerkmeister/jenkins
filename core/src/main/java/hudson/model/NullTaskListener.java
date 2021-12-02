@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 CloudBees, Inc.
+ * Copyright 2021 CloudBees, Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +22,21 @@
  * THE SOFTWARE.
  */
 
-import hudson.remoting.Which;
-import jenkins.model.Jenkins;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import org.jvnet.hudson.test.PropertiesTestSuite;
+package hudson.model;
+
+import java.io.PrintStream;
+import org.apache.commons.io.output.NullPrintStream;
 
 /**
- * Runs checks on properties files in core.
+ * @see TaskListener#NULL
  */
-public class CorePropertiesTest extends TestCase {
+class NullTaskListener implements TaskListener {
 
-    public static Test suite() throws Exception {
-        return new PropertiesTestSuite(Which.jarFile(Jenkins.class));
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public PrintStream getLogger() {
+        return new NullPrintStream();
     }
 
 }
