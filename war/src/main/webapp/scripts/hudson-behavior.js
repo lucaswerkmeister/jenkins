@@ -923,8 +923,11 @@ function updateVisibility() {
             e = e.rowVisibilityGroup.end; // the above call updates visibility up to e.rowVisibilityGroup.end inclusive
         } else {
             if (display) {
+                e.style.display = ""
                 e.classList.remove("form-container--hidden")
             } else {
+                // TODO remove display once tab bar (ConfigTableMetaData) is able to handle hidden tabs via class and not just display
+                e.style.display = "none"
                 e.classList.add("form-container--hidden")
             }
         }
@@ -2349,7 +2352,7 @@ var hoverNotification = (function() {
 // Decrease vertical padding for checkboxes
 window.addEventListener('load', function () {
     document.querySelectorAll(".jenkins-form-item").forEach(function (element) {
-        if (element.querySelector(":scope > .optionalBlock-container > .row-group-start input[type='checkbox'], :scope > .optional-block-start input[type='checkbox'], :scope > div > .jenkins-checkbox") != null) {
+        if (element.querySelector(".optionalBlock-container > .row-group-start input[type='checkbox'], .optional-block-start input[type='checkbox'], div > .jenkins-checkbox") != null) {
             element.classList.add("jenkins-form-item--tight")
         }
     });
