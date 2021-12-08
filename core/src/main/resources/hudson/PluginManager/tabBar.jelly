@@ -33,7 +33,7 @@ THE SOFTWARE.
   <l:tabBar>
     <l:tab name="${%Updates}" active="${page=='updates'}" href="." />
     <l:tab name="${%Available}" active="${page=='available'}" href="./available" />
-    <l:tab name="${%Installed}" active="${page=='installed'}" href="./installed" />
+    <l:tab name="${%Installed}" active="${page=='installed'}" href="./installed" tag="${app.updateCenter.updates.size()}" />
     <l:tab name="${%Advanced}" active="${page=='advanced'}" href="./advanced" />
   </l:tabBar>
 </j:jelly>
