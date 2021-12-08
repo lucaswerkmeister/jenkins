@@ -73,11 +73,5 @@ THE SOFTWARE.
       </div>
       ${%Advanced settings}
     </a>
-
-    <br></br><br></br>
-    <p>To be deprecated</p>
-    <a href="." class="jenkins-side-nav__item">
-      ${%Updates}
-    </a>
   </div>
 </j:jelly>
