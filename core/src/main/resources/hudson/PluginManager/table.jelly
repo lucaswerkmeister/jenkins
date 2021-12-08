@@ -36,26 +36,8 @@ THE SOFTWARE.
       If true, will hide all rows by default, and only the filter field will show them.
     </st:attribute>
   </st:documentation>
-  <l:layout title="${%Update Center} - ${%Plugin Manager}" permission="${app.SYSTEM_READ}">
-    <l:app-bar title="${%Plugin Manager}">
-      <div class="jenkins-search">
-        <input
-          class="jenkins-search__input"
-          type="search"
-          id="filter-box"
-          value="${request.getParameter('filter')}"
-          placeholder="${filtered == 'true' ? '%Search' : '%Filter'}"/>
-        <div class="jenkins-search__icon">
-          <l:ionicon name="search-outline"/>
-        </div>
-      </div>
-    </l:app-bar>
 
-    <l:side-panel>
-      <local:sidepanel xmlns:local="/hudson/PluginManager" />
-    </l:side-panel>
 
-    <l:main-panel>
       <st:adjunct includes="hudson.PluginManager._table"/>
 
       <form method="post" action="install">
@@ -331,12 +313,12 @@ THE SOFTWARE.
         </div>
         <d:invokeBody/>
       </form>
-    </l:main-panel>
+
     <div class="grey-anime-preload" style="display:none">
       <l:icon class="icon-grey-anime icon-md"/>
       <l:icon class="icon-blue icon-md"/>
       <l:icon class="icon-red icon-md"/>
       <l:icon class="icon-grey icon-md"/>
     </div>
-  </l:layout>
+
 </j:jelly>
