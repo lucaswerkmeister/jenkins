@@ -3,21 +3,19 @@
 .jenkins-side-nav {
   position: sticky;
   top: 55px;
-  padding: 1rem 1rem 0 2rem;
+  padding: 1rem 0 0 2rem;
 
   &__item {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
     padding: 0.8rem;
-    margin-bottom: 0.4rem;
     cursor: pointer;
     z-index: 0;
     font-weight: 600 !important;
     font-size: 0.9rem;
-    margin-left: -0.8rem;
+    margin: 0 0 0.4rem -0.8rem;
     color: var(--text-color) !important;
     background: transparent;
     outline: none;
@@ -75,7 +73,7 @@
       align-items: center;
       width: 20px;
       height: 20px;
-      margin-right: 1rem;
+      margin-right: 1.5ch;
 
       svg, img {
         width: 20px !important;
@@ -94,19 +92,19 @@
       color: currentColor;
       letter-spacing: 0;
       z-index: 0;
-      margin-left: 1ch;
-      min-width: 20px;
+      margin-left: auto;
+      min-width: 24px;
       text-align: center;
-      padding: 0 6px;
+      padding: 0 8px;
       line-height: 0.75rem;
       font-size: 0.75rem;
 
       &::before {
         content: "";
         position: absolute;
-        top: -4px;
+        top: -6px;
         left: 0;
-        bottom: -4px;
+        bottom: -6px;
         right: 0;
         background: currentColor;
         border-radius: 100px;

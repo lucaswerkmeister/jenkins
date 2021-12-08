@@ -33,6 +33,14 @@ THE SOFTWARE.
     </st:attribute>
   </st:documentation>
 
+  <!-- TODO - Remove this when all tasks are styled like this -->
+  <style>
+    #side-panel {
+      border-right: none;
+      padding-right: 0;
+    }
+  </style>
+
   <div class="jenkins-side-nav">
     <div class="jenkins-app-bar">
       <div class="jenkins-app-bar__content">

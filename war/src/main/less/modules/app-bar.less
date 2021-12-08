@@ -3,6 +3,9 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
+  // Vertical margins collapse and this can have adverse affects with keeping things lined up - so disable it
+  // in browsers that support it
+  -webkit-margin-collapse: separate;
 
   .jenkins-app-bar__content {
     display: flex;
