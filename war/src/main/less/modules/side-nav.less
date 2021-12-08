@@ -1,0 +1,118 @@
+// Potential replacement for Jenkins' tasks sidebar, needs more investigation
+
+.jenkins-side-nav {
+  position: sticky;
+  top: 55px;
+  padding: 1rem 1rem 0 2rem;
+
+  &__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 0.4rem;
+    cursor: pointer;
+    z-index: 0;
+    font-weight: 600 !important;
+    font-size: 0.9rem;
+    margin-left: -0.8rem;
+    color: var(--text-color) !important;
+    background: transparent;
+    outline: none;
+    border: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: var(--text-color);
+      border-radius: 10px;
+      opacity: 0;
+      transition: 0.2s ease;
+      z-index: -1;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 10px;
+      opacity: 0.05;
+      transition: 0.2s ease;
+      box-shadow: 0 0 0 10px transparent;
+    }
+
+    &:hover {
+      color: var(--text-color);
+      text-decoration: none;
+
+      &::before {
+        opacity: 0.05;
+      }
+    }
+
+    &:active,
+    &:focus {
+      &::before {
+        opacity: 0.1;
+      }
+      &::after {
+        box-shadow: 0 0 0 5px var(--text-color);
+      }
+    }
+
+    div, &__icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      height: 20px;
+      margin-right: 1rem;
+
+      svg, img {
+        width: 20px !important;
+        height: 20px !important;
+      }
+    }
+
+    &--selected {
+      &::before {
+        opacity: 0.1 !important;
+      }
+    }
+
+    &__badge {
+      position: relative;
+      color: currentColor;
+      letter-spacing: 0;
+      z-index: 0;
+      margin-left: 1ch;
+      min-width: 20px;
+      text-align: center;
+      padding: 0 6px;
+      line-height: 0.75rem;
+      font-size: 0.75rem;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -4px;
+        left: 0;
+        bottom: -4px;
+        right: 0;
+        background: currentColor;
+        border-radius: 100px;
+        z-index: -1;
+        opacity: 0.1;
+      }
+    }
+  }
+}

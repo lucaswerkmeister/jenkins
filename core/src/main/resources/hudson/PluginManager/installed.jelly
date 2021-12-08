@@ -45,7 +45,7 @@ THE SOFTWARE.
     </l:app-bar>
 
     <l:side-panel>
-      <local:sidepanel xmlns:local="/hudson/PluginManager" />
+      <local:sidepanel xmlns:local="/hudson/PluginManager" page="installed"/>
     </l:side-panel>
 
     <l:main-panel>

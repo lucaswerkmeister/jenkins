@@ -34,7 +34,7 @@ THE SOFTWARE.
         <l:app-bar title="${%Advanced settings}"/>
 
         <l:side-panel>
-          <local:sidepanel xmlns:local="/hudson/PluginManager" />
+          <local:sidepanel xmlns:local="/hudson/PluginManager" page="advanced" />
         </l:side-panel>
 
         <l:main-panel>

@@ -26,20 +26,50 @@ THE SOFTWARE.
   The sidepanel component for Plugins Manager
 -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
-  <div class="jenkins-app-bar">
-    <div class="jenkins-app-bar__content">
-      <h1>
-        Plugins
-      </h1>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+  <st:documentation>
+    <st:attribute name="page">
+      Adds the highlighted class to the current page item in the list
+    </st:attribute>
+  </st:documentation>
+
+  <div class="jenkins-side-nav">
+    <div class="jenkins-app-bar">
+      <div class="jenkins-app-bar__content">
+        <h1>
+          ${%Plugins}
+        </h1>
+      </div>
     </div>
+
+    <a href="./available" class="jenkins-side-nav__item ${page == 'available' ? 'jenkins-side-nav__item--selected' : ''}">
+      <div class="jenkins-side-nav__item__icon">
+        <l:ionicon name="bag-handle-outline" />
+      </div>
+      ${%Available plugins}
+    </a>
+
+    <a href="./installed" class="jenkins-side-nav__item ${page == 'installed' ? 'jenkins-side-nav__item--selected' : ''}">
+      <div class="jenkins-side-nav__item__icon">
+        <l:ionicon name="extension-puzzle-outline" />
+      </div>
+      ${%Installed and updates}
+      <span class="jenkins-side-nav__item__badge">
+        ${app.updateCenter.updates.size()}
+      </span>
+    </a>
+
+    <a href="./advanced" class="jenkins-side-nav__item ${page == 'advanced' ? 'jenkins-side-nav__item--selected' : ''}">
+      <div class="jenkins-side-nav__item__icon">
+        <l:ionicon name="settings-outline" />
+      </div>
+      ${%Advanced settings}
+    </a>
+
+    <br></br><br></br>
+    <p>To be deprecated</p>
+    <a href="." class="jenkins-side-nav__item">
+      ${%Updates}
+    </a>
   </div>
-
-  <l:tab name="${%Available}" active="${page=='available'}" href="./available" />
-  <l:tab name="${%Installed and updates}" active="${page=='installed'}" href="./installed" tag="${app.updateCenter.updates.size()}" />
-  <l:tab name="${%Advanced}" active="${page=='advanced'}" href="./advanced" />
-
-  <br></br><br></br>
-  <p>To be deprecated</p>
-  <l:tab name="${%Updates}" active="${page=='updates'}" href="." />
 </j:jelly>
