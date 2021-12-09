@@ -90,7 +90,7 @@ THE SOFTWARE.
                     <div>
                       <a href="${p.wiki}" class="jenkins-table__link" rel="noopener noreferrer" target="_blank">
                         <st:out value="${p.displayName}"/>
-                        <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">
+                        <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch; display: flex; justify-content: center; align-items: center;">
                           <span class="jenkins-visually-hidden">${%Version}</span>
                           <j:choose>
                             <j:when test="${p.installed.active}">
@@ -109,23 +109,6 @@ THE SOFTWARE.
                         </span>
                       </a>
                     </div>
-                    <j:if test="${!p.categories.isEmpty()}">
-                      <div class="app-plugin-manager__categories">
-                        <j:forEach var="label" items="${p.categories}">
-                          <j:if test="${!it.isMetaLabel(label)}">
-                            <a href="?filter=${app.updateCenter.getCategoryDisplayName(label)}"
-                               class="jenkins-table__link jenkins-table__badge">
-                              ${app.updateCenter.getCategoryDisplayName(label)}
-                            </a>
-                          </j:if>
-                        </j:forEach>
-                      </div>
-                    </j:if>
-                    <j:if test="${p.excerpt!=null}">
-                      <div>
-                        <j:out value="${p.excerpt}"/>
-                      </div>
-                    </j:if>
                     <j:if test="${!p.isCompatibleWithInstalledVersion()}">
                       <div class="alert alert-danger">${%compatWarning}
                         <j:if test="${p.hasIncompatibleParentPlugins()}">
@@ -219,69 +202,6 @@ THE SOFTWARE.
                   </td>
                 </tr>
               </j:forEach>
-
-              <j:if test="${isUpdates}">
-                <!-- TODO this might be nicer by going through the root list element and populating it in index.jelly -->
-                <j:forEach var="p" items="${unavailableList}">
-                  <j:if
-                    test="${!list.contains(p)}"><!-- only show entries for plugins not already in the real updates list -->
-                    <tr class="unavailable">
-                      <l:isAdmin>
-                        <td><!-- install --></td>
-                      </l:isAdmin>
-                      <td class="details"
-                          data="${h.xmlEscape(p.displayName)}"
-                          data-id="${h.xmlEscape(p.name+':'+p.version)}">
-                        <div>
-                          <a href="${p.wiki}" rel="noopener noreferrer" target="_blank">
-                            <st:out value="${p.displayName}"/>
-                            <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">
-                              <span class="jenkins-visually-hidden">${%Version}</span>
-                              ${p.latest}
-                            </span>
-                          </a>
-                          <span class="unavailable-label">${%unavailable}</span>
-                        </div>
-                        <j:if test="${!p.categories.isEmpty()}">
-                          <div class="app-plugin-manager__categories">
-                            <j:forEach var="label" items="${p.categories}">
-                              <j:if test="${!it.isMetaLabel(label)}">
-                                <a href="?filter=${app.updateCenter.getCategoryDisplayName(label)}"
-                                   class="jenkins-table__link jenkins-table__badge">
-                                  ${app.updateCenter.getCategoryDisplayName(label)}
-                                </a>
-                              </j:if>
-                            </j:forEach>
-                          </div>
-                        </j:if>
-                        <j:if test="${p.excerpt!=null}">
-                          <div>
-                            <j:out value="${p.excerpt}"/>
-                          </div>
-                        </j:if>
-                        <j:if test="${it.hasLatestVersionNewerThanOffered(p)}">
-                          <div class="alert alert-info">
-                            ${%newerVersionEntry(p.wiki)}
-                          </div>
-                        </j:if>
-                      </td>
-                      <td><!-- timestamp --></td>
-                      <td>
-                        <j:choose>
-                          <j:when test="${p.installed.active}">
-                            <st:out value="${p.installed.version}"/>
-                          </j:when>
-                          <j:otherwise>
-                            <span title="${%Inactive}">
-                              (<st:out value="${p.installed.version}"/>)
-                            </span>
-                          </j:otherwise>
-                        </j:choose>
-                      </td>
-                    </tr>
-                  </j:if>
-                </j:forEach>
-              </j:if>
             </j:when>
             <j:otherwise>
               <tr>
@@ -295,20 +215,6 @@ THE SOFTWARE.
           </j:choose>
         </table>
 
-        <div id="bottom-sticker">
-          <div class="bottom-sticker-inner">
-            <l:isAdmin>
-              <j:if test="${!empty(list)}">
-                <j:if test="${!isUpdates}">
-                  <f:submit value="${%Install without restart}" name="dynamicLoad"/>
-                  <span style="margin-left:2em;"></span>
-                </j:if>
-                <f:submit value="${%Download now and install after restart}"/>
-              </j:if>
-            </l:isAdmin>
-            <st:include page="check.jelly"/>
-          </div>
-        </div>
         <d:invokeBody/>
       </form>
 

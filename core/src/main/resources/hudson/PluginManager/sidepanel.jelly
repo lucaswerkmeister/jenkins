@@ -61,7 +61,7 @@ THE SOFTWARE.
       <div class="jenkins-side-nav__item__icon">
         <l:ionicon name="extension-puzzle-outline" />
       </div>
-      ${%Installed and updates}
+      ${%Updates and installed plugins}
       <span class="jenkins-side-nav__item__badge">
         ${app.updateCenter.updates.size()}
       </span>

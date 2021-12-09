@@ -30,20 +30,6 @@ THE SOFTWARE.
   <l:layout title="${%Installed and updates} - ${%Plugin Manager}" permission="${app.SYSTEM_READ}">
     <j:set var="readOnlyMode" value="${!app.hasPermission(app.ADMINISTER)}"/>
 
-    <l:app-bar title="${%Installed and updates}">
-      <div class="jenkins-search">
-        <input
-          class="jenkins-search__input"
-          type="search"
-          id="filter-box"
-          value="${request.getParameter('filter')}"
-          placeholder="${filtered == 'true' ? '%Search' : '%Filter'}"/>
-        <div class="jenkins-search__icon">
-          <l:ionicon name="search-outline"/>
-        </div>
-      </div>
-    </l:app-bar>
-
     <l:side-panel>
       <local:sidepanel xmlns:local="/hudson/PluginManager" page="installed"/>
     </l:side-panel>
@@ -67,26 +53,72 @@ THE SOFTWARE.
            data-detached-possible-dependents="${%detached-possible-dependents}"
       />
 
-      <h2>Updates</h2>
-      <local:table page="updates" list="${app.updateCenter.updates}" xmlns:local="/hudson/PluginManager">
-        <div style="margin-top:1em">
+      <j:choose>
+        <j:when test="${app.updateCenter.updates.size() == 0}">
+          <div class="jenkins-app-bar">
+            <div class="jenkins-app-bar__content">
+              <h2>${%Updates}</h2>
+            </div>
+          </div>
+          <div style="padding: 1rem; background: var(--table-background); border-radius: 10px;">
+            There aren't any updates available right now :(
+          </div>
+        </j:when>
+        <j:otherwise>
+          <div class="jenkins-app-bar">
+            <div class="jenkins-app-bar__content">
+              <h2>${app.updateCenter.updates.size()} ${%Updates}</h2>
+            </div>
+            <div class="jenkins-app-bar__controls">
+
+            </div>
+          </div>
+
+          <l:isAdmin>
+            <s:submit value="${%Install without restart}" name="dynamicLoad"/>
+            <s:submit value="${%Download now and install after restart}"/>
+          </l:isAdmin>
+
+          <st:include page="check.jelly"/>
+
+          <br></br>
+          <br></br>
+
           <l:isAdmin>
             ${%Select}: <a href="javascript:toggleCheckboxes(true);">${%All}</a>,
             <a href="javascript:checkPluginsWithoutWarnings();">${%Compatible}</a>,
             <a href="javascript:toggleCheckboxes(false);">${%None}</a><br/>
           </l:isAdmin>
-          ${%UpdatePageDescription}
+
           <j:if test="${!empty(app.updateCenter.jobs)}">
             <br/> ${%UpdatePageLegend(rootURL+'/updateCenter/')}
           </j:if>
+
+          <br></br>
+          <br></br>
+
+          <local:table page="updates" list="${app.updateCenter.updates}" xmlns:local="/hudson/PluginManager" />
+        </j:otherwise>
+      </j:choose>
+
+      <div class="jenkins-app-bar" style="padding-top: 4rem;">
+        <div class="jenkins-app-bar__content">
+          <h2>${%Installed plugins}</h2>
         </div>
-      </local:table>
-
-      <br></br>
-      <br></br>
-      <br></br>
-
-      <h2>Installed</h2>
+        <div class="jenkins-app-bar__controls">
+          <div class="jenkins-search">
+            <input
+              class="jenkins-search__input"
+              type="search"
+              id="filter-box"
+              value="${request.getParameter('filter')}"
+              placeholder="${filtered == 'true' ? '%Search' : '%Filter'}"/>
+            <div class="jenkins-search__icon">
+              <l:ionicon name="search-outline"/>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <table id="plugins" class="jenkins-table sortable">
         <j:choose>
