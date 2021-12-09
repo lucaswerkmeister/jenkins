@@ -35,6 +35,9 @@ THE SOFTWARE.
     <st:attribute name="href">
       Link destination URL.
     </st:attribute>
+    <st:attribute name="tooltip">
+      Link tooltip.
+    </st:attribute>
     <st:attribute name="post">
       If this must send a POST request.
     </st:attribute>
@@ -45,5 +48,5 @@ THE SOFTWARE.
 
   <st:adjunct includes="lib.form.link.link"/>
 
-  <a href="${attrs.href}" class="${attrs.post ? 'post' + (attrs.async ? '-async' : '') : (attrs.async ? 'async' : '')} ${attrs.clazz}"><d:invokeBody/></a>
+  <a href="${attrs.href}" tooltip="${attrs.tooltip}" class="${attrs.post ? 'post' + (attrs.async ? '-async' : '') : (attrs.async ? 'async' : '')} ${attrs.clazz}"><d:invokeBody/></a>
 </j:jelly>

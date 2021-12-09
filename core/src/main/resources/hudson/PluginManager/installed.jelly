@@ -69,35 +69,20 @@ THE SOFTWARE.
             <div class="jenkins-app-bar__content">
               <h2>${app.updateCenter.updates.size()} ${%Updates}</h2>
             </div>
-            <div class="jenkins-app-bar__controls">
-
+            <div class="jenkins-app-bar__controls jenkins-buttons-row jenkins-buttons-row--invert">
+              <button class="jenkins-button jenkins-button--primary" name="dynamicLoad">
+                <l:ionicon name="download-outline" />
+                ${%Update all}
+              </button>
+              <button class="jenkins-button jenkins-button--primary" name="dynamicLoad">
+                <l:ionicon name="download-outline" />
+                ${%Update selected}
+              </button>
+              <st:include page="check.jelly"/>
             </div>
           </div>
 
-          <l:isAdmin>
-            <s:submit value="${%Install without restart}" name="dynamicLoad"/>
-            <s:submit value="${%Download now and install after restart}"/>
-          </l:isAdmin>
-
-          <st:include page="check.jelly"/>
-
-          <br></br>
-          <br></br>
-
-          <l:isAdmin>
-            ${%Select}: <a href="javascript:toggleCheckboxes(true);">${%All}</a>,
-            <a href="javascript:checkPluginsWithoutWarnings();">${%Compatible}</a>,
-            <a href="javascript:toggleCheckboxes(false);">${%None}</a><br/>
-          </l:isAdmin>
-
-          <j:if test="${!empty(app.updateCenter.jobs)}">
-            <br/> ${%UpdatePageLegend(rootURL+'/updateCenter/')}
-          </j:if>
-
-          <br></br>
-          <br></br>
-
-          <local:table page="updates" list="${app.updateCenter.updates}" xmlns:local="/hudson/PluginManager" />
+          <local:updates page="updates" list="${app.updateCenter.updates}" xmlns:local="/hudson/PluginManager" />
         </j:otherwise>
       </j:choose>
 
