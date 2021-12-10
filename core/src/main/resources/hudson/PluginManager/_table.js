@@ -84,7 +84,17 @@ Behaviour.specify("#filter-box", '_table', 0, function(e) {
     Element.observe(window, "load", function() {        
         var pluginsTable = select('#plugins');
         var pluginTRs = selectAll('.plugin', pluginsTable);
-        
+
+        // TODO
+        document.querySelectorAll('button[id^=button-view-installed-information-]').forEach(button => {
+          button.addEventListener('click', () => {
+              var pluginRow = document.querySelector('tr[data-plugin-id="' + button.dataset.pluginId + '"]')
+              var y = pluginRow.getBoundingClientRect().top - 60;
+
+              window.scrollTo({top: y, behavior: 'smooth'});
+          });
+        });
+
         if (!pluginTRs) {
             return;
         }

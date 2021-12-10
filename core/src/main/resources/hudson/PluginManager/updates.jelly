@@ -40,7 +40,7 @@ THE SOFTWARE.
 
       <form method="post" action="install">
         <j:set var="isUpdates" value="${attrs.page=='updates'}"/>
-        <local:tabBar xmlns:local="/hudson/PluginManager" page="${attrs.page}"/>
+
         <table id="plugins" class="jenkins-table sortable">
           <thead>
             <tr>
@@ -202,7 +202,7 @@ THE SOFTWARE.
                   </td>
                   <td class="jenkins-table__cell--tight">
                     <div class="jenkins-table__cell__button-wrapper">
-                      <button type="button" class="jenkins-table__button" tooltip="${%View installed version}">
+                      <button id="button-view-installed-information-${p.name}" data-plugin-id="${p.name}" type="button" class="jenkins-table__button" tooltip="${%View installed version}">
                         <l:ionicon name="information-circle-outline" />
                       </button>
                     </div>
