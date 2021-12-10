@@ -182,7 +182,8 @@
     text-decoration: none!important;
     line-height: 1!important;
 
-    &::before {
+    &::before,
+    &::after {
       content: "";
       position: absolute;
       top: -7px;
@@ -190,10 +191,18 @@
       bottom: -7px;
       right: -10px;
       border-radius: 6px;
-      background: var(--text-color);
       z-index: -1;
+      transition: var(--standard-transition);
+    }
+
+    &::before {
+      background: var(--text-color);
       opacity: 0;
-      transition: 0.2s ease;
+    }
+
+    &::after {
+      opacity: 0.05;
+      box-shadow: 0 0 0 10px transparent;
     }
 
     &:hover {
@@ -209,6 +218,9 @@
         opacity: 0.1!important;
         border-radius: 5px;
         background: var(--text-color);
+      }
+      &::after {
+        box-shadow: 0 0 0 5px var(--text-color);
       }
     }
 
@@ -236,6 +248,13 @@
       border-radius: 13px;
       background: var(--link-color);
       opacity: 0.05;
+    }
+
+    &::after {
+      top: -5px;
+      left: -8px;
+      bottom: -5px;
+      right: -8px;
     }
   }
 }
