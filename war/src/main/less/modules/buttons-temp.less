@@ -119,6 +119,10 @@
   }
 }
 
+.jenkins-button--loading {
+  background: red;
+}
+
 @variants: {
   destructive: #fc2125;
 }
@@ -137,7 +141,7 @@ each(@variants, {
 .jenkins-buttons-row {
   display: flex;
 
-  .jenkins-button {
+  .jenkins-button, .jenkins-search {
     margin-left: 0 !important;
     margin-right: 1rem !important;
   }
@@ -145,7 +149,7 @@ each(@variants, {
   &--invert {
     justify-content: flex-end;
 
-    .jenkins-button {
+    .jenkins-button, .jenkins-search {
       margin-left: 1rem !important;
       margin-right: 0 !important;
     }

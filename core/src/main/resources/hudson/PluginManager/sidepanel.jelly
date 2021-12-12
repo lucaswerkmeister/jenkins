@@ -73,5 +73,16 @@ THE SOFTWARE.
       </div>
       ${%Advanced settings}
     </a>
+
+    <br/><br/><br/>
+
+    <st:include page="/hudson/model/UpdateCenter/body.jelly"/>
+
+    <a href="${rootURL}/updateCenter" class="jenkins-side-nav__item">
+      <div class="jenkins-side-nav__item__icon">
+        ?
+      </div>
+      ${%Progress}
+    </a>
   </div>
 </j:jelly>

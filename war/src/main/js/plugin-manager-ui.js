@@ -5,6 +5,7 @@ import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 
 var filterInput = document.getElementById('filter-box');
+var refreshServerButton = document.getElementById('button-refresh-server');
 
 function applyFilter(searchQuery) {
     // debounce reduces number of server side calls while typing
@@ -68,4 +69,13 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(function () {
         layoutUpdateCallback.call();
     }, 350)
+});
+
+refreshServerButton.addEventListener("click", function () {
+  refreshServerButton.classList.add("jenkins-button--loading");
+  refreshServerButton.disabled = true;
+  pluginManager.refreshServer(function() {
+    // No need to unset the class as we're reloading the page
+    location.reload();
+  });
 });

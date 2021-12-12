@@ -29,7 +29,7 @@ THE SOFTWARE.
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:f="/lib/form">
   <l:layout title="${%Available plugins} - ${%Plugin Manager}" permission="${app.SYSTEM_READ}">
     <l:app-bar title="${%Available plugins}">
-      <div class="jenkins-buttons-row">
+      <div class="jenkins-buttons-row jenkins-buttons-row--invert">
         <button class="jenkins-button jenkins-button--primary">
           <l:ionicon name="download-outline" />
           ${%Install selected}
@@ -45,6 +45,7 @@ THE SOFTWARE.
             <l:ionicon name="search-outline"/>
           </div>
         </div>
+        <st:include page="check.jelly"/>
       </div>
     </l:app-bar>
 
@@ -56,8 +57,7 @@ THE SOFTWARE.
       <script src="${resURL}/jsbundles/plugin-manager-ui.js" type="text/javascript"/>
 
       <form method="post" action="install">
-        <table id="plugins" class="jenkins-table sortable"
-               data-hasAdmin="${h.hasPermission(app.ADMINISTER)}">
+        <table id="plugins" class="jenkins-table sortable" data-hasAdmin="${h.hasPermission(app.ADMINISTER)}">
           <thead>
             <tr>
               <l:isAdmin>
@@ -65,24 +65,10 @@ THE SOFTWARE.
               </l:isAdmin>
               <th initialSortDir="down">${%Name}</th>
               <th>${%Released}</th>
-              <j:if test="${isUpdates}">
-                <th>${%Installed}</th>
-              </j:if>
             </tr>
           </thead>
           <tbody/>
         </table>
-
-<!--        <div id="bottom-sticker">-->
-<!--          <div class="bottom-sticker-inner">-->
-<!--            <l:isAdmin>-->
-<!--              <f:submit value="${%Install without restart}" name="dynamicLoad"/>-->
-<!--              <span style="margin-left:2em;"></span>-->
-<!--              <f:submit value="${%Download now and install after restart}"/>-->
-<!--            </l:isAdmin>-->
-<!--            <st:include page="check.jelly"/>-->
-<!--          </div>-->
-<!--        </div>-->
       </form>
     </l:main-panel>
   </l:layout>
