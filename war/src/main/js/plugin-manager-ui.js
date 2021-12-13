@@ -5,6 +5,8 @@ import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 
 var filterInput = document.getElementById('filter-box');
+var pluginsTable = document.getElementById('plugins');
+var spinner = document.getElementById('spinner');
 var installPluginsButton = document.getElementById('button-install-plugins');
 var refreshServerButton = document.getElementById('button-refresh-server');
 
@@ -19,6 +21,9 @@ function applyFilter(searchQuery) {
         filterInput.parentElement.classList.remove("jenkins-search--loading");
 
         function clearOldResults() {
+            spinner.style.display = "flex";
+            pluginsTable.style.opacity = "0";
+
             if (!admin) {
                 tbody.innerHTML = '';
             } else {
@@ -45,6 +50,9 @@ function applyFilter(searchQuery) {
         });
 
         tbody.insertAdjacentHTML('beforeend', rows);
+
+        spinner.style.display = "none";
+        pluginsTable.style.opacity = "1";
 
         addQuerySelectors();
 
@@ -76,6 +84,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 installPluginsButton.addEventListener("click", function () {
   const plugins = document.querySelectorAll('input[type=checkbox]:checked');
+
+  // Uncheck all checked plugins
+  plugins.forEach(el => {
+    el.checked = false;
+  })
+
   pluginManager.installPlugins([...plugins].map(x => x.name), function() {
     console.log([...plugins].map(x => x.name))
     console.log("Doing something")
@@ -97,11 +111,9 @@ function addQuerySelectors() {
 
   downloadButtons.forEach(button => {
     button.addEventListener('click', () => {
-      alert("Hello world")
       const pluginInstallId = button.dataset.pluginInstallId;
-      console.log({plugins: [pluginInstallId], dynamicLoad: true})
       pluginManager.installPlugins([pluginInstallId], function(e) {
-        console.log(e)
+        button.innerHTML = "Downloading";
       });
     });
   });

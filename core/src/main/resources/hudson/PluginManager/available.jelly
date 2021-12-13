@@ -58,10 +58,12 @@ THE SOFTWARE.
     </l:side-panel>
 
     <l:main-panel>
-      <script src="${resURL}/jsbundles/plugin-manager-ui.js" type="text/javascript"/>
-
       <form method="post" action="install">
-        <table id="plugins" class="jenkins-table sortable" data-hasAdmin="${h.hasPermission(app.ADMINISTER)}">
+        <l:spinner id="spinner" />
+
+        <script src="${resURL}/jsbundles/plugin-manager-ui.js" type="text/javascript"/>
+
+        <table id="plugins" class="jenkins-table sortable" data-hasAdmin="${h.hasPermission(app.ADMINISTER)}" style="opacity: 0;">
           <thead>
             <tr>
               <l:isAdmin>

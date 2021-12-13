@@ -29,8 +29,11 @@ THE SOFTWARE.
     <st:attribute name="text" use="optional">
       Text to use alongside the spinner
     </st:attribute>
+    <st:attribute name="id" use="optional">
+      ID to use for the spinner
+    </st:attribute>
   </st:documentation>
-  <p class="jenkins-spinner">
+  <p class="jenkins-spinner" id="${id}">
     ${text}
   </p>
 </j:jelly>
