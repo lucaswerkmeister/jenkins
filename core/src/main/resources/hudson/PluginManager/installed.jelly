@@ -55,7 +55,7 @@ THE SOFTWARE.
 
       <j:choose>
         <j:when test="${app.updateCenter.updates.size() == 0}">
-          <div class="jenkins-app-bar">
+          <div class="jenkins-app-bar jenkins-app-bar--sticky">
             <div class="jenkins-app-bar__content">
               <h2>${%Updates}</h2>
             </div>
@@ -65,7 +65,7 @@ THE SOFTWARE.
           </div>
         </j:when>
         <j:otherwise>
-          <div class="jenkins-app-bar">
+          <div class="jenkins-app-bar jenkins-app-bar--sticky">
             <div class="jenkins-app-bar__content">
               <h2>${app.updateCenter.updates.size()} ${%Updates}</h2>
             </div>
@@ -86,7 +86,7 @@ THE SOFTWARE.
         </j:otherwise>
       </j:choose>
 
-      <div class="jenkins-app-bar" style="padding-top: 4rem;">
+      <div class="jenkins-app-bar jenkins-app-bar--sticky" style="margin-top: 2rem;">
         <div class="jenkins-app-bar__content">
           <h2>${%Installed plugins}</h2>
         </div>

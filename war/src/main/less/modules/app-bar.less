@@ -7,6 +7,37 @@
   // in browsers that support it
   -webkit-margin-collapse: separate;
 
+  &--sticky {
+    position: sticky;
+    top: 40px;
+    padding-top: 2rem;
+    margin-top: -2rem;
+    z-index: 2;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -2rem;
+      bottom: -2rem;
+      right: -2rem;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    &::before {
+      backdrop-filter: blur(15px);
+      mask-image: linear-gradient(black 50%, transparent);
+    }
+
+    &::after {
+      background: var(--background);
+      mask-image: linear-gradient(black 70%, transparent);
+      opacity: 0.65;
+    }
+  }
+
   .jenkins-app-bar__content {
     display: flex;
     justify-content: center;
