@@ -45,6 +45,8 @@ function applyFilter(searchQuery) {
 
         tbody.insertAdjacentHTML('beforeend', rows);
 
+        addQuerySelectors();
+
         // @see JENKINS-64504 - Update the sticky buttons position after each search.
         requestAnimationFrame(() => {
             layoutUpdateCallback.call()
@@ -79,3 +81,26 @@ refreshServerButton.addEventListener("click", function () {
     location.reload();
   });
 });
+
+// TODO
+function addQuerySelectors() {
+  document.querySelectorAll('button[id^=button-install-plugin-plugin-]').forEach(button => {
+    button.addEventListener('click', () => {
+      const pluginInstallId = button.dataset.pluginInstallId;
+      console.log({plugins: [pluginInstallId], dynamicLoad: true})
+      pluginManager.installPlugins([pluginInstallId], function(e) {
+        console.log(e)
+      });
+    });
+  });
+
+  // document.querySelectorAll('button[id^=button-install-plugin-plugin-]').forEach(button => {
+  //   button.addEventListener('click', () => {
+  //     const pluginInstallId = button.dataset.pluginInstallId;
+  //     console.log({plugins: [pluginInstallId], dynamicLoad: true})
+  //     pluginManager.installPlugins([pluginInstallId], function(e) {
+  //       console.log(e)
+  //     });
+  //   });
+  // });
+}

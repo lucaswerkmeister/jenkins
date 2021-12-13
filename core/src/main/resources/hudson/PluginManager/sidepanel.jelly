@@ -62,9 +62,11 @@ THE SOFTWARE.
         <l:ionicon name="extension-puzzle-outline" />
       </div>
       ${%Updates and installed plugins}
-      <span class="jenkins-side-nav__item__badge">
-        ${app.updateCenter.updates.size()}
-      </span>
+      <j:if test="${app.updateCenter.updates.size() != 0}">
+        <span class="jenkins-side-nav__item__badge">
+          ${app.updateCenter.updates.size()}
+        </span>
+      </j:if>
     </a>
 
     <a href="./advanced" class="jenkins-side-nav__item ${page == 'advanced' ? 'jenkins-side-nav__item--selected' : ''}">
