@@ -30,7 +30,7 @@ THE SOFTWARE.
   <l:layout title="${%Available plugins} - ${%Plugin Manager}" permission="${app.SYSTEM_READ}">
     <l:app-bar title="${%Available plugins}">
       <div class="jenkins-buttons-row jenkins-buttons-row--invert">
-        <button class="jenkins-button jenkins-button--primary">
+        <button id="button-install-plugins" class="jenkins-button jenkins-button--primary">
           <l:ionicon name="download-outline" />
           ${%Install selected}
         </button>

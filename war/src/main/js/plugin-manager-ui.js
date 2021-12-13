@@ -5,6 +5,7 @@ import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 
 var filterInput = document.getElementById('filter-box');
+var installPluginsButton = document.getElementById('button-install-plugins');
 var refreshServerButton = document.getElementById('button-refresh-server');
 
 function applyFilter(searchQuery) {
@@ -73,6 +74,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 350)
 });
 
+installPluginsButton.addEventListener("click", function () {
+  const plugins = document.querySelectorAll('input[type=checkbox]:checked');
+  pluginManager.installPlugins([...plugins].map(x => x.name), function() {
+    console.log([...plugins].map(x => x.name))
+    console.log("Doing something")
+  });
+});
+
 refreshServerButton.addEventListener("click", function () {
   refreshServerButton.classList.add("jenkins-button--loading");
   refreshServerButton.disabled = true;
@@ -93,14 +102,4 @@ function addQuerySelectors() {
       });
     });
   });
-
-  // document.querySelectorAll('button[id^=button-install-plugin-plugin-]').forEach(button => {
-  //   button.addEventListener('click', () => {
-  //     const pluginInstallId = button.dataset.pluginInstallId;
-  //     console.log({plugins: [pluginInstallId], dynamicLoad: true})
-  //     pluginManager.installPlugins([pluginInstallId], function(e) {
-  //       console.log(e)
-  //     });
-  //   });
-  // });
 }
