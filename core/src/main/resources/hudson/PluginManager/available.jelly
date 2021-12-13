@@ -30,7 +30,7 @@ THE SOFTWARE.
   <l:layout title="${%Available plugins} - ${%Plugin Manager}" permission="${app.SYSTEM_READ}">
     <l:app-bar title="${%Available plugins}">
       <div class="jenkins-buttons-row jenkins-buttons-row--invert">
-        <button id="button-install-plugins" class="jenkins-button jenkins-button--primary">
+        <button id="button-install-plugins" class="jenkins-button jenkins-button--primary jenkins-app-bar__hidden-item">
           <l:ionicon name="download-outline" />
           ${%Install selected}
         </button>
@@ -40,7 +40,11 @@ THE SOFTWARE.
             type="search"
             id="filter-box"
             value="${request.getParameter('filter')}"
-            placeholder="${%Search}"/>
+            placeholder="${%Search}"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false" />
           <div class="jenkins-search__icon">
             <l:ionicon name="search-outline"/>
           </div>

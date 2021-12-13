@@ -93,13 +93,33 @@ refreshServerButton.addEventListener("click", function () {
 
 // TODO
 function addQuerySelectors() {
-  document.querySelectorAll('button[id^=button-install-plugin-plugin-]').forEach(button => {
+  const downloadButtons = document.querySelectorAll('button[id^=button-install-plugin-]')
+
+  downloadButtons.forEach(button => {
     button.addEventListener('click', () => {
+      alert("Hello world")
       const pluginInstallId = button.dataset.pluginInstallId;
       console.log({plugins: [pluginInstallId], dynamicLoad: true})
       pluginManager.installPlugins([pluginInstallId], function(e) {
         console.log(e)
       });
+    });
+  });
+
+  document.querySelectorAll('input[type=checkbox]').forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const checkedCheckboxesLength = document.querySelectorAll('input[type=checkbox]:checked').length
+      if (checkedCheckboxesLength > 0) {
+        installPluginsButton.classList.remove("jenkins-app-bar__hidden-item");
+        downloadButtons.forEach((el) => {
+          el.classList.add("jenkins-app-bar__hidden-item");
+        })
+      } else {
+        installPluginsButton.classList.add("jenkins-app-bar__hidden-item");
+        downloadButtons.forEach((el) => {
+          el.classList.remove("jenkins-app-bar__hidden-item");
+        })
+      }
     });
   });
 }
