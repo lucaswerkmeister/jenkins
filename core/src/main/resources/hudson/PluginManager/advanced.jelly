@@ -38,6 +38,13 @@ THE SOFTWARE.
         </l:side-panel>
 
         <l:main-panel>
+            <l:isAdmin>
+                <section class="jenkins-section">
+                    <h2 class="jenkins-section__title">${%Installations and updates}</h2>
+                    <a class="jenkins-button" href="${rootURL}/updateCenter">${%View installations and updates}</a>
+                </section>
+            </l:isAdmin>
+
             <section class="jenkins-section">
                 <h2 class="jenkins-section__title">${%HTTP Proxy Configuration}</h2>
                 <f:form method="post" action="proxyConfigure" name="proxyConfigure">
