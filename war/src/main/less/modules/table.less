@@ -105,6 +105,19 @@
     justify-content: center;
   }
 
+  &__cell--checkbox {
+    padding-top: calc(var(--table-padding) * 2) !important;
+    text-align: center !important;
+    white-space: nowrap;
+    vertical-align: top !important;
+    width: 22px;
+
+    & + td {
+      padding-top: calc(var(--table-padding) * 2) !important;
+      padding-bottom: calc(var(--table-padding) * 2) !important;
+    }
+  }
+
   &__cell--tight {
     padding-left: 0!important;
     text-align: center!important;

@@ -5,7 +5,6 @@ import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 
 var filterInput = document.getElementById('filter-box');
-var pluginsTable = document.getElementById('plugins');
 var mainSpinner = document.getElementById('spinner');
 var installPluginsButton = document.getElementById('button-install-plugins');
 var refreshServerButton = document.getElementById('button-refresh-server');
@@ -52,6 +51,10 @@ function applyFilter(searchQuery) {
         tbody.insertAdjacentHTML('beforeend', rows);
 
         longhorn();
+
+        // Rerender tooltips after the table has been loaded
+        // TODO - remove this when YUI tooltips are killed
+        new YAHOO.widget.Tooltip("tt", {context:[], zindex:999});
 
         mainSpinner.style.display = "none";
         pluginsTable.style.opacity = "1";
