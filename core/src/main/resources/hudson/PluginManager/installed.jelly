@@ -53,7 +53,7 @@ THE SOFTWARE.
            data-detached-possible-dependents="${%detached-possible-dependents}"
       />
 
-      <local:updates list="${app.updateCenter.updates}" xmlns:local="/hudson/PluginManager" />
+      <local:updates xmlns:local="/hudson/PluginManager" />
 
       <j:choose>
         <j:when test="${empty(app.pluginManager.plugins) and empty(app.pluginManager.failedPlugins)}">

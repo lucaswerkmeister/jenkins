@@ -25,16 +25,10 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
          xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-  <st:documentation>
-    <st:attribute name="list">
-      Variable to contain List of Plugin
-    </st:attribute>
-  </st:documentation>
-
   <st:adjunct includes="hudson.PluginManager._table"/>
 
   <j:choose>
-    <j:when test="${!empty(list) or (isUpdates and !empty(unavailableList))}">
+    <j:when test="${!empty(app.updateCenter.updates) or (isUpdates and !empty(unavailableList))}">
       <div class="jenkins-app-bar jenkins-app-bar--sticky">
         <div class="jenkins-app-bar__content">
           <h2>${app.updateCenter.updates.size()} ${%Updates}</h2>
@@ -72,7 +66,7 @@ THE SOFTWARE.
             <j:set var="unavailableList" value="${app.updateCenter.pluginsWithUnavailableUpdates}"/>
 
             <j:set var="cache" value="${it.createCache()}"/>
-            <j:forEach var="p" items="${list}">
+            <j:forEach var="p" items="${app.updateCenter.updates}">
               <j:set var="installJob" value="${isUpdates ? app.updateCenter.getJob(p) : null}"/>
               <j:set var="installedOk"
                      value="${installJob.status.success and installJob.plugin.version==p.version}"/>
