@@ -1,7 +1,7 @@
 <!--
 The MIT License
 
-Copyright (c) 2004-2010, Sun Microsystems, Inc., Kohsuke Kawaguchi, Seiji Sogabe
+Copyright (c) 2004-2022, Sun Microsystems, Inc., Kohsuke Kawaguchi, Seiji Sogabe, Jenkins Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,220 +23,234 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
   <st:documentation>
     <st:attribute name="list">
       Variable to contain List of Plugin
     </st:attribute>
-    <st:attribute name="page">
-      Page name to be passed to local:tabBar; 'updates' or 'available'.
-    </st:attribute>
-    <st:attribute name="filtered">
-      If true, will hide all rows by default, and only the filter field will show them.
-    </st:attribute>
   </st:documentation>
 
-      <st:adjunct includes="hudson.PluginManager._table"/>
+  <st:adjunct includes="hudson.PluginManager._table"/>
+
+  <j:choose>
+    <j:when test="${!empty(list) or (isUpdates and !empty(unavailableList))}">
+      <div class="jenkins-app-bar jenkins-app-bar--sticky">
+        <div class="jenkins-app-bar__content">
+          <h2>${app.updateCenter.updates.size()} ${%Updates}</h2>
+        </div>
+        <div class="jenkins-app-bar__controls jenkins-buttons-row jenkins-buttons-row--invert">
+          <button class="jenkins-button jenkins-button--primary" name="dynamicLoad">
+            <l:ionicon name="download-outline" />
+            ${%Update all}
+          </button>
+          <button class="jenkins-button jenkins-button--primary" name="dynamicLoad">
+            <l:ionicon name="download-outline" />
+            ${%Update selected}
+          </button>
+          <st:include page="check.jelly"/>
+        </div>
+      </div>
 
       <form method="post" action="install">
-        <j:set var="isUpdates" value="${attrs.page=='updates'}"/>
+        <j:set var="isUpdates" value="true"/>
 
         <table id="plugins" class="jenkins-table sortable">
           <thead>
             <tr>
               <l:isAdmin>
-                <th />
+                <th/>
               </l:isAdmin>
               <th initialSortDir="${isUpdates?'down':null}">${%Name}</th>
               <th>${%Released}</th>
               <l:isAdmin>
-                <th />
+                <th/>
               </l:isAdmin>
             </tr>
           </thead>
-          <j:set var="unavailableList" value="${app.updateCenter.pluginsWithUnavailableUpdates}"/>
-          <j:choose>
-            <j:when test="${!empty(list) or (isUpdates and !empty(unavailableList))}">
-              <j:set var="cache" value="${it.createCache()}"/>
-              <j:if test="${filtered == 'true'}">
-                <tr id="hidden-by-default-instructions">
-                  <td colspan="5" align="center" id="hidden-by-default-instructions-td"
-                      data-loaded-text="${%instructions}">
-                    ${%loading}
+          <tbody>
+            <j:set var="unavailableList" value="${app.updateCenter.pluginsWithUnavailableUpdates}"/>
+
+            <j:set var="cache" value="${it.createCache()}"/>
+            <j:forEach var="p" items="${list}">
+              <j:set var="installJob" value="${isUpdates ? app.updateCenter.getJob(p) : null}"/>
+              <j:set var="installedOk"
+                     value="${installJob.status.success and installJob.plugin.version==p.version}"/>
+              <tr
+                class="${installJob!=null ? 'already-upgraded' : ''} plugin"
+                name="${p.displayName}">
+                <l:isAdmin>
+                  <td style="vertical-align: top; padding-top: calc(var(--table-padding) * 2);" align="center"
+                      data="${isUpdates ? null : it.unscientific(p.popularity)}">
+                    <span class="jenkins-checkbox">
+                      <input type="checkbox" name="plugin.${p.name}.${p.sourceId}"
+                             id="plugin.${p.name}.${p.sourceId}"
+                             checked="${installedOk ? 'checked' : null}"
+                             disabled="${installedOk ? 'disabled' : null}"
+                             data-compat-warning="${!p.isCompatible(cache)}"/>
+                      <label for="plugin.${p.name}.${p.sourceId}"/>
+                    </span>
                   </td>
-                </tr>
-              </j:if>
-              <j:forEach var="p" items="${list}">
-                <j:set var="installJob" value="${isUpdates ? app.updateCenter.getJob(p) : null}"/>
-                <j:set var="installedOk"
-                       value="${installJob.status.success and installJob.plugin.version==p.version}"/>
-                <tr
-                  class="${installJob!=null ? 'already-upgraded' : ''} plugin ${filtered == 'true' ? 'hidden hidden-by-default' : ''}"
-                  name="${p.displayName}">
-                  <l:isAdmin>
-                    <td style="vertical-align: top; padding-top: calc(var(--table-padding) * 2);" align="center" data="${isUpdates ? null : it.unscientific(p.popularity)}">
-                      <span class="jenkins-checkbox">
-                        <input type="checkbox" name="plugin.${p.name}.${p.sourceId}"
-                               id="plugin.${p.name}.${p.sourceId}"
-                               checked="${installedOk ? 'checked' : null}"
-                               disabled="${installedOk ? 'disabled' : null}"
-                               data-compat-warning="${!p.isCompatible(cache)}"/>
-                        <label for="plugin.${p.name}.${p.sourceId}" />
-                      </span>
-                    </td>
-                  </l:isAdmin>
-                  <td class="details" style="padding-top: calc(var(--table-padding) * 2); padding-bottom: calc(var(--table-padding) * 2);"
-                      data="${h.xmlEscape(p.displayName)}"
-                      data-id="${h.xmlEscape(p.name+':'+p.version)}">
-                    <div>
-                      <a href="${p.wiki}" class="jenkins-table__link" rel="noopener noreferrer" target="_blank">
-                        <st:out value="${p.displayName}"/>
-                        <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch; display: flex; justify-content: center; align-items: center;">
-                          <j:choose>
-                            <j:when test="${p.installed.active}">
-                              <st:out value="${p.installed.version}"/>
-                            </j:when>
-                            <j:otherwise>
-                              <span title="${%Inactive}">
-                                (<st:out value="${p.installed.version}"/>)
-                              </span>
-                            </j:otherwise>
-                          </j:choose>
-                          <span class="test-test">
-                            <l:ionicon name="upgrade-outline" title="${to}" />
-                          </span>
-                          ${p.version}
+                </l:isAdmin>
+                <td class="details"
+                    style="padding-top: calc(var(--table-padding) * 2); padding-bottom: calc(var(--table-padding) * 2);"
+                    data="${h.xmlEscape(p.displayName)}"
+                    data-id="${h.xmlEscape(p.name+':'+p.version)}">
+                  <div>
+                    <a href="${p.wiki}" class="jenkins-table__link" rel="noopener noreferrer" target="_blank">
+                      <st:out value="${p.displayName}"/>
+                      <span class="jenkins-label jenkins-label--tertiary"
+                            style="margin-left: 1ch; display: flex; justify-content: center; align-items: center;">
+                        <j:choose>
+                          <j:when test="${p.installed.active}">
+                            <st:out value="${p.installed.version}"/>
+                          </j:when>
+                          <j:otherwise>
+                            <span title="${%Inactive}">
+                              (<st:out value="${p.installed.version}"/>)
+                            </span>
+                          </j:otherwise>
+                        </j:choose>
+                        <span class="test-test">
+                          <l:ionicon name="upgrade-outline" title="${to}"/>
                         </span>
-                      </a>
-                    </div>
-                    <j:if test="${!p.isCompatibleWithInstalledVersion()}">
-                      <div class="alert alert-danger">${%compatWarning}
-                        <j:if test="${p.hasIncompatibleParentPlugins()}">
-                          <br/>${%parentCompatWarning}
-                          <ul>
-                            <j:forEach var="i" items="${p.getIncompatibleParentPlugins()}">
-                              <li>
-                                <a href="${i.wiki}">
-                                  <st:out
-                                    value="${i.displayName} (${i.installed.version})"/>
-                                </a>
-                              </li>
-                            </j:forEach>
-                          </ul>
-                        </j:if>
-                      </div>
-                    </j:if>
-                    <j:if test="${p.isForNewerHudson()}">
-                      <div class="alert alert-danger">${%coreWarning(p.requiredCore)}</div>
-                    </j:if>
-                    <j:if test="${p.isForNewerJava()}">
-                      <div class="alert alert-danger">${%javaWarning(p.minimumJavaVersion)}</div>
-                    </j:if>
-                    <j:if test="${p.fixesSecurityVulnerabilities()}">
-                      <div class="alert alert-warning">
-                        ${%Applying this update will address security vulnerabilities in the currently installed version.}
-                      </div>
-                    </j:if>
-                    <j:if test="${!p.isNeededDependenciesCompatibleWithInstalledVersion(cache)}">
-                      <div class="alert alert-danger">${%depCompatWarning}
-                        <br/>${%parentDepCompatWarning}
+                        ${p.version}
+                      </span>
+                    </a>
+                  </div>
+                  <j:if test="${!p.isCompatibleWithInstalledVersion()}">
+                    <div class="alert alert-danger">${%compatWarning}
+                      <j:if test="${p.hasIncompatibleParentPlugins()}">
+                        <br/>${%parentCompatWarning}
                         <ul>
-                          <j:forEach var="d"
-                                     items="${p.getDependenciesIncompatibleWithInstalledVersion(cache)}">
+                          <j:forEach var="i" items="${p.getIncompatibleParentPlugins()}">
                             <li>
-                              <a href="${d.wiki}">
+                              <a href="${i.wiki}">
                                 <st:out
-                                  value="${d.displayName} (${d.installed.version})"/>
+                                  value="${i.displayName} (${i.installed.version})"/>
                               </a>
                             </li>
                           </j:forEach>
                         </ul>
-                      </div>
-                    </j:if>
-                    <j:if test="${p.isNeededDependenciesForNewerJenkins(cache)}">
-                      <div class="alert alert-danger">
-                        ${%depCoreWarning(p.getNeededDependenciesRequiredCore().toString())}
-                      </div>
-                    </j:if>
-                    <j:if test="${p.isNeededDependenciesForNewerJava()}">
-                      <div class="alert alert-danger">
-                        ${%depJavaWarning(p.getNeededDependenciesMinimumJavaVersion().toString())}
-                      </div>
-                    </j:if>
-                    <j:if test="${p.hasWarnings()}">
-                      <div class="alert alert-danger">${%securityWarning}
-                        <ul>
-                          <j:forEach var="warning" items="${p.getWarnings()}">
-                            <li>
-                              <a href="${warning.url}" rel="noopener noreferrer"
-                                 target="_blank">${warning.message}
-                              </a>
-                            </li>
-                          </j:forEach>
-                        </ul>
-                      </div>
-                    </j:if>
-                    <j:if test="${p.isDeprecated()}">
-                      <div class="alert alert-warning">
-                        ${%deprecationWarning(p.getDeprecation().url)}
-                      </div>
-                    </j:if>
-                    <j:if test="${it.hasAdoptThisPluginLabel(p)}">
-                      <div class="alert alert-warning">
-                        ${%adoptThisPlugin}
-                      </div>
-                    </j:if>
-                    <j:if test="${it.hasLatestVersionNewerThanOffered(p)}">
-                      <div class="alert alert-info">
-                        ${%newerVersionExists(p.latest)}
-                      </div>
-                    </j:if>
-                  </td>
-                  <td data="${p.releaseTimestamp.time}" class="jenkins-table__cell--no-wrap">
-                    <j:if test="${p.releaseTimestamp != null}">
-                      <time datetime="${h.iso8601DateTime(p.releaseTimestamp)}"
-                            tooltip="${h.localDate(p.releaseTimestamp)}">
-                        ${%ago(h.getTimeSpanString(p.releaseTimestamp))}
-                      </time>
-                    </j:if>
-                  </td>
-                  <td class="jenkins-table__cell--tight">
-                    <div class="jenkins-table__cell__button-wrapper">
-                      <button id="button-view-installed-information-${p.name}" data-plugin-id="${p.name}" type="button" class="jenkins-table__button" tooltip="${%View installed version}">
-                        <l:ionicon name="information-circle-outline" />
-                      </button>
+                      </j:if>
                     </div>
-                  </td>
-                  <td class="jenkins-table__cell--tight">
-                    <div class="jenkins-table__cell__button-wrapper">
-                      <button class="jenkins-table__button">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Download</title><path d="M336 176h40a40 40 0 0140 40v208a40 40 0 01-40 40H136a40 40 0 01-40-40V216a40 40 0 0140-40h40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M176 272l80 80 80-80M256 48v288"/></svg>
-                      </button>
+                  </j:if>
+                  <j:if test="${p.isForNewerHudson()}">
+                    <div class="alert alert-danger">${%coreWarning(p.requiredCore)}</div>
+                  </j:if>
+                  <j:if test="${p.isForNewerJava()}">
+                    <div class="alert alert-danger">${%javaWarning(p.minimumJavaVersion)}</div>
+                  </j:if>
+                  <j:if test="${p.fixesSecurityVulnerabilities()}">
+                    <div class="alert alert-warning">
+                      ${%Applying this update will address security vulnerabilities in the currently installed version.}
                     </div>
-                  </td>
-                </tr>
-              </j:forEach>
-            </j:when>
-            <j:otherwise>
-              <tr>
-                <td colspan="5" align="center">
-                  <div style="padding:1em">
-                    ${%No updates}
+                  </j:if>
+                  <j:if test="${!p.isNeededDependenciesCompatibleWithInstalledVersion(cache)}">
+                    <div class="alert alert-danger">${%depCompatWarning}
+                      <br/>${%parentDepCompatWarning}
+                      <ul>
+                        <j:forEach var="d"
+                                   items="${p.getDependenciesIncompatibleWithInstalledVersion(cache)}">
+                          <li>
+                            <a href="${d.wiki}">
+                              <st:out
+                                value="${d.displayName} (${d.installed.version})"/>
+                            </a>
+                          </li>
+                        </j:forEach>
+                      </ul>
+                    </div>
+                  </j:if>
+                  <j:if test="${p.isNeededDependenciesForNewerJenkins(cache)}">
+                    <div class="alert alert-danger">
+                      ${%depCoreWarning(p.getNeededDependenciesRequiredCore().toString())}
+                    </div>
+                  </j:if>
+                  <j:if test="${p.isNeededDependenciesForNewerJava()}">
+                    <div class="alert alert-danger">
+                      ${%depJavaWarning(p.getNeededDependenciesMinimumJavaVersion().toString())}
+                    </div>
+                  </j:if>
+                  <j:if test="${p.hasWarnings()}">
+                    <div class="alert alert-danger">${%securityWarning}
+                      <ul>
+                        <j:forEach var="warning" items="${p.getWarnings()}">
+                          <li>
+                            <a href="${warning.url}" rel="noopener noreferrer"
+                               target="_blank">${warning.message}
+                            </a>
+                          </li>
+                        </j:forEach>
+                      </ul>
+                    </div>
+                  </j:if>
+                  <j:if test="${p.isDeprecated()}">
+                    <div class="alert alert-warning">
+                      ${%deprecationWarning(p.getDeprecation().url)}
+                    </div>
+                  </j:if>
+                  <j:if test="${it.hasAdoptThisPluginLabel(p)}">
+                    <div class="alert alert-warning">
+                      ${%adoptThisPlugin}
+                    </div>
+                  </j:if>
+                  <j:if test="${it.hasLatestVersionNewerThanOffered(p)}">
+                    <div class="alert alert-info">
+                      ${%newerVersionExists(p.latest)}
+                    </div>
+                  </j:if>
+                </td>
+                <td data="${p.releaseTimestamp.time}" class="jenkins-table__cell--no-wrap">
+                  <j:if test="${p.releaseTimestamp != null}">
+                    <time datetime="${h.iso8601DateTime(p.releaseTimestamp)}"
+                          tooltip="${h.localDate(p.releaseTimestamp)}">
+                      ${%ago(h.getTimeSpanString(p.releaseTimestamp))}
+                    </time>
+                  </j:if>
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <button id="button-view-installed-information-${p.name}" data-plugin-id="${p.name}" type="button"
+                            class="jenkins-table__button" tooltip="${%View installed version}">
+                      <l:ionicon name="information-circle-outline"/>
+                    </button>
+                  </div>
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <button class="jenkins-table__button">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                        <title>Download</title>
+                        <path
+                          d="M336 176h40a40 40 0 0140 40v208a40 40 0 01-40 40H136a40 40 0 01-40-40V216a40 40 0 0140-40h40"
+                          fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="32"/>
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="32" d="M176 272l80 80 80-80M256 48v288"/>
+                      </svg>
+                    </button>
                   </div>
                 </td>
               </tr>
-            </j:otherwise>
-          </j:choose>
+            </j:forEach>
+          </tbody>
         </table>
-
-        <d:invokeBody/>
       </form>
+    </j:when>
+    <j:otherwise>
+      <div class="jenkins-app-bar jenkins-app-bar--sticky">
+        <div class="jenkins-app-bar__content">
+          <h2>${%Updates}</h2>
+        </div>
+        <div class="jenkins-app-bar__controls">
+          <st:include page="check.jelly"/>
+        </div>
+      </div>
 
-    <div class="grey-anime-preload" style="display:none">
-      <l:icon class="icon-grey-anime icon-md"/>
-      <l:icon class="icon-blue icon-md"/>
-      <l:icon class="icon-red icon-md"/>
-      <l:icon class="icon-grey icon-md"/>
-    </div>
-
+      <p class="app-plugin-manager__info-panel">
+        ${%There aren't any updates available right now}
+      </p>
+    </j:otherwise>
+  </j:choose>
 </j:jelly>

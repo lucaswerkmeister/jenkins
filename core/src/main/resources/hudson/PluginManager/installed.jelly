@@ -1,7 +1,7 @@
 <!--
 The MIT License
 
-Copyright (c) 2004-2010, Sun Microsystems, Inc., Kohsuke Kawaguchi, Seiji Sogabe, Yahoo! Inc.
+Copyright (c) 2004-2022, Sun Microsystems, Inc., Kohsuke Kawaguchi, Seiji Sogabe, Yahoo! Inc., Jenkins Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@ THE SOFTWARE.
 -->
 
 <!--
-  Installed plugins
+  Updates and installed plugins page
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:s="/lib/form">
@@ -53,41 +53,7 @@ THE SOFTWARE.
            data-detached-possible-dependents="${%detached-possible-dependents}"
       />
 
-      <j:choose>
-        <j:when test="${app.updateCenter.updates.size() == 0}">
-          <div class="jenkins-app-bar jenkins-app-bar--sticky">
-            <div class="jenkins-app-bar__content">
-              <h2>${%Updates}</h2>
-            </div>
-            <div class="jenkins-app-bar__controls">
-              <st:include page="check.jelly"/>
-            </div>
-          </div>
-          <p class="app-plugin-manager__info-panel">
-            ${%There aren't any updates available right now}
-          </p>
-        </j:when>
-        <j:otherwise>
-          <div class="jenkins-app-bar jenkins-app-bar--sticky">
-            <div class="jenkins-app-bar__content">
-              <h2>${app.updateCenter.updates.size()} ${%Updates}</h2>
-            </div>
-            <div class="jenkins-app-bar__controls jenkins-buttons-row jenkins-buttons-row--invert">
-              <button class="jenkins-button jenkins-button--primary" name="dynamicLoad">
-                <l:ionicon name="download-outline" />
-                ${%Update all}
-              </button>
-              <button class="jenkins-button jenkins-button--primary" name="dynamicLoad">
-                <l:ionicon name="download-outline" />
-                ${%Update selected}
-              </button>
-              <st:include page="check.jelly"/>
-            </div>
-          </div>
-
-          <local:updates page="updates" list="${app.updateCenter.updates}" xmlns:local="/hudson/PluginManager" />
-        </j:otherwise>
-      </j:choose>
+      <local:updates list="${app.updateCenter.updates}" xmlns:local="/hudson/PluginManager" />
 
       <j:choose>
         <j:when test="${empty(app.pluginManager.plugins) and empty(app.pluginManager.failedPlugins)}">
