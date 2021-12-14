@@ -34,6 +34,12 @@
       animation-duration: 2s;
     }
   }
+
+  &:empty {
+    &::before {
+      margin-right: 0;
+    }
+  }
 }
 
 @keyframes loading-spinner {

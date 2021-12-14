@@ -495,6 +495,11 @@
   &:checked + label:after {
     transform: scale(1)!important;
   }
+
+  &:disabled + label {
+    opacity: 0.15;
+    pointer-events: none;
+  }
 }
 
 .jenkins-checkbox label {

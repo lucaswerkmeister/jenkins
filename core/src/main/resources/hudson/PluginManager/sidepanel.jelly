@@ -78,7 +78,9 @@ THE SOFTWARE.
 
     <br/><br/><br/>
 
-    <st:include page="/hudson/model/UpdateCenter/body.jelly"/>
+    <div id="longhorn-panel">
+
+    </div>
 
     <a href="${rootURL}/updateCenter" class="jenkins-side-nav__item">
       <div class="jenkins-side-nav__item__icon">
