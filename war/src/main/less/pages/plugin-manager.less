@@ -98,3 +98,24 @@
     border-radius: 0.25em;
   }
 }
+
+.app-plugin-manager__info-panel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--pane-header-bg);
+  font-weight: 500;
+  margin: 0;
+  padding: 1rem;
+  border-radius: 10px;
+
+  &::before {
+    content: "";
+    width: 2ch;
+    height: 2ch;
+    background: currentColor;
+    mask-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg version='1.1' viewBox='0 0 416 416' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath id='Path' d='m208 0c-114.84 0-208 93.163-208 208s93.163 208 208 208 208-93.163 208-208-93.163-208-208-208zm0 32c97.163 0 176 78.837 176 176s-78.837 176-176 176-176-78.837-176-176 78.837-176 176-176z' fill='%23000' fill-rule='nonzero'/%3E%3Cpath id='a' d='m202.26 118.05 5.74 121.95 5.73-121.95c0.071517-1.5756-0.50844-3.1112-1.6037-4.2461-1.0952-1.1349-2.6092-1.7692-4.1863-1.7541v0c-1.558 0.014957-3.0432 0.6624-4.1143 1.7939-1.0712 1.1315-1.6363 2.6499-1.5657 4.2064v0z' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'/%3E%3Cpath d='m208 319.91c-11.046 0-20-8.9543-20-20s8.9543-20 20-20 20 8.9543 20 20-8.9543 20-20 20z' fill='%23000' fill-rule='nonzero'/%3E%3C/g%3E%3C/svg%3E%0A");
+    mask-size: contain;
+    margin-right: 0.8rem;
+  }
+}

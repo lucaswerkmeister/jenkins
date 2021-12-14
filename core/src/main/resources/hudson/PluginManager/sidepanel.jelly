@@ -23,7 +23,7 @@ THE SOFTWARE.
 -->
 
 <!--
-  The sidepanel component for Plugins Manager
+  Sidepanel component for Plugins Manager
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
@@ -33,7 +33,7 @@ THE SOFTWARE.
     </st:attribute>
   </st:documentation>
 
-  <!-- TODO - Remove this when all tasks are styled like this -->
+  <!-- TODO - Remove this when all tasks (Jenkins' sidepanel items) are styled like this -->
   <style>
     #side-panel {
       border-right: none;
@@ -74,19 +74,6 @@ THE SOFTWARE.
         <l:ionicon name="settings-outline" />
       </div>
       ${%Advanced settings}
-    </a>
-
-    <br/><br/><br/>
-
-    <div id="longhorn-panel">
-
-    </div>
-
-    <a href="${rootURL}/updateCenter" class="jenkins-side-nav__item">
-      <div class="jenkins-side-nav__item__icon">
-        ?
-      </div>
-      ${%Progress}
     </a>
   </div>
 </j:jelly>
