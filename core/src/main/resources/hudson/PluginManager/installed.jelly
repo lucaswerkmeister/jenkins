@@ -38,7 +38,7 @@ THE SOFTWARE.
       <st:adjunct includes="hudson.PluginManager._table"/>
 
       <j:if test="${app.updateCenter.isRestartRequiredForCompletion()}">
-        <div class="alert alert-warning"><strong>${%Warning}</strong>: ${%requires.restart}</div>
+        <div class="alert alert-warning" style="margin-bottom: 2rem;"><strong>${%Warning}</strong>: ${%requires.restart}</div>
       </j:if>
 
       <div class="plugins i18n"
@@ -299,7 +299,7 @@ THE SOFTWARE.
           <j:if test="${app.updateCenter.isRestartRequiredForCompletion()}">
             e = true;
           </j:if>
-          $('needRestart').style.display = (e!=null?"block":"none");
+          $('needRestart').style.display = (e!=null?"grid":"none");
         }
 
         updateMsg(); // set the initial state
