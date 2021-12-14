@@ -261,7 +261,7 @@ THE SOFTWARE.
                   <div class="jenkins-table__cell__button-wrapper">
                     <span class="jenkins-toggle-switch">
                       <input type="checkbox" disabled="disabled"/>
-                      <label class="attach-previous"></label>
+                      <label class="attach-previous" />
                     </span>
                   </div>
                 </td>
@@ -273,15 +273,6 @@ THE SOFTWARE.
           </table>
         </j:otherwise>
       </j:choose>
-
-      <div class="warning" id="needRestart" style="display:none; margin: 1em; height: 1em">
-        <form method="post" action="${rootURL}/safeRestart">
-          ${%Changes will take effect when you restart Jenkins}
-          <j:if test="${app.lifecycle.canRestart()}">
-            <s:submit value="${%Restart Once No Jobs Are Running}"/>
-          </j:if>
-        </form>
-      </div>
 
       <script>
         <!-- function to toggle the enable/disable state -->

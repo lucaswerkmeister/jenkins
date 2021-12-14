@@ -45,7 +45,7 @@ THE SOFTWARE.
       <form method="post" action="install">
         <j:set var="isUpdates" value="true"/>
 
-        <table id="plugins" class="jenkins-table sortable">
+        <table id="updates-table" class="jenkins-table sortable">
           <thead>
             <tr>
               <l:isAdmin>

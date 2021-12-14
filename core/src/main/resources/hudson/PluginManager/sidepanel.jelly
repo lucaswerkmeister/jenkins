@@ -76,4 +76,16 @@ THE SOFTWARE.
       ${%Advanced settings}
     </a>
   </div>
+
+  <div class="app-plugin-manager__restart-panel" id="needRestart" style="display:none;">
+    <l:ionicon name="warning-outline" />
+    <form method="post" action="${rootURL}/safeRestart">
+      You'll need to restart Jenkins for your changes to take effect
+      <j:if test="${app.lifecycle.canRestart()}">
+        <button class="jenkins-button">
+          ${%Restart once no jobs are running}
+        </button>
+      </j:if>
+    </form>
+  </div>
 </j:jelly>
