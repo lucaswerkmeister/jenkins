@@ -14,12 +14,29 @@
     margin: 0;
 
     &:empty {
-      display: none;
+      display: none !important;
     }
 
     a, span {
       margin: 0 1.25rem 0 0 !important;
       font-size: 0.75rem;
+    }
+
+    .app-plugin-manager__categories__separator {
+      position: relative;
+      display: inline;
+      height: 10px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -3px;
+        width: 2px;
+        height: 18px;
+        background: var(--text-color);
+        opacity: 0.05;
+        border-radius: 2px;
+      }
     }
   }
 
