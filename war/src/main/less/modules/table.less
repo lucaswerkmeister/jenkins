@@ -2,7 +2,7 @@
   width: calc(100% - 10px);
   background: var(--table-background);
   border-collapse: collapse;
-  border-radius: 6px;
+  border-radius: var(--table-border-radius);
   overflow: hidden;
   box-shadow: 0 0 0 5px var(--table-background);
   margin: 5px;
@@ -64,13 +64,11 @@
         height: 50px;
 
         &:first-of-type {
-          border-radius: var(--table-body-radius) 0 0 var(--table-body-radius);
           padding-left: calc(var(--table-padding) * 2);
           padding-right: var(--table-padding);
         }
 
         &:last-of-type {
-          border-radius: 0 var(--table-body-radius) var(--table-body-radius) 0;
           padding-right: var(--table-padding);
         }
       }
@@ -78,23 +76,36 @@
       &:last-of-type {
         border-bottom: none;
       }
-    }
 
-    & > tr:first-of-type {
+      // Style the rows so that the first and last have a larger border radius
       & > td:first-of-type {
-        border-radius: var(--table-border-radius) 0 0 var(--table-body-radius);
+        border-top-left-radius: var(--table-row-border-radius);
+        border-bottom-left-radius: var(--table-row-border-radius);
       }
-      & > td:last-of-type {
-        border-radius: 0 var(--table-border-radius) var(--table-body-radius) 0;
-      }
-    }
 
-    & > tr:last-of-type {
-      & > td:first-of-type {
-        border-radius: var(--table-body-radius) 0 0 var(--table-border-radius);
-      }
       & > td:last-of-type {
-        border-radius: 0 var(--table-body-radius) var(--table-border-radius) 0;
+        border-top-right-radius: var(--table-row-border-radius);
+        border-bottom-right-radius: var(--table-row-border-radius);
+      }
+
+      // First row
+      &:first-of-type {
+        & > td:first-of-type {
+          border-top-left-radius: var(--table-border-radius);
+        }
+        & > td:last-of-type {
+          border-top-right-radius: var(--table-border-radius);
+        }
+      }
+
+      // Last row
+      &:last-of-type {
+        & > td:first-of-type {
+          border-bottom-left-radius: var(--table-border-radius);
+        }
+        & > td:last-of-type {
+          border-bottom-right-radius: var(--table-border-radius);
+        }
       }
     }
   }

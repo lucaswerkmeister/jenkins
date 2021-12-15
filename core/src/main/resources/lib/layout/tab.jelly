@@ -37,10 +37,6 @@ THE SOFTWARE.
     <st:attribute name="title">
       The title of the tab
     </st:attribute>
-    <st:attribute name="tag">
-      Adds a tag element after the title of the tab
-      An example use case for this is showing the number of updates available on the `Installed plugins` tab
-    </st:attribute>
   </st:documentation>
   <div class="tab${attrs.active?' active':''}">
     <j:choose>
@@ -51,12 +47,7 @@ THE SOFTWARE.
         <input type="radio" id="tab-${tabBarId}-${tabIndex}" name="tab-group-${tabBarId}" />
       </j:otherwise>
     </j:choose>
-    <a href="${href}" class="${name.equals('+')?'addTab':''}" title="${attrs.title}">
-      ${attrs.name}
-      <j:if test="${tag != null}">
-        <span class="tab__badge" aria-hidden="true">${tag}</span>
-      </j:if>
-    </a>
+    <a href="${href}" class="${name.equals('+')?'addTab':''}" title="${attrs.title}">${attrs.name}</a>
   </div>
   <j:set scope="parent" var="tabIndex" value="${tabIndex+1}" />
 </j:jelly>
