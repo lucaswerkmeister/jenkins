@@ -10,66 +10,67 @@
       </td>
     {{/if}}
     <td>
-      <div>
-        <a href="{{ this.wiki }}" class="jenkins-table__link" target="_blank" rel="noopener noreferrer">
-          {{ this.displayName }}
-          <span class="jenkins-visually-hidden">Version</span>
-          <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">{{ this.version }}</span>
-        </a>
-      </div>
-      {{#if this.categories }}
+      <div class="longhorn-space-boi">
+        <div>
+          <a href="{{ this.wiki }}" class="jenkins-table__link" target="_blank" rel="noopener noreferrer">
+            {{ this.displayName }}
+            <span class="jenkins-visually-hidden">Version</span>
+            <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">{{ this.version }}</span>
+          </a>
+        </div>
         <div class="app-plugin-manager__categories">
           {{#each this.categories }}
             <a href="?filter={{ this }}" class="jenkins-table__link jenkins-table__badge">
               {{ this }}
             </a>
           {{/each}}
+          {{#if this.adoptMe }}
+            <a class="jenkins-table__link jenkins-table__badge jenkins-table__badge--solid" href="https://www.jenkins.io/doc/developer/plugin-governance/adopt-a-plugin/" tooltip="{{{ this.adoptMe }}}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Help Buoy</title><circle cx="256" cy="256" r="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="256" cy="256" r="80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M208 54l8 132M296 186l8-132M208 458l8-132M296 326l8 132M458 208l-132 8M326 296l132 8M54 208l132 8M186 296l-132 8"/></svg>
+              Adopt this plugin
+            </a>
+          {{/if}}
         </div>
-      {{/if}}
-      {{#if this.excerpt }}
-        <div class="except">
-          {{{ this.excerpt }}}
-        </div>
-      {{/if}}
-      {{#if this.newerCoreRequired }}
-        <div class="alert alert-danger">
-          {{{ this.newerCoreRequired }}}
-        </div>
-      {{/if}}
-      {{#if this.dependenciesNewerJava }}
-        <div class="alert alert-danger">
-          {{{ this.dependenciesNewerJava }}}
-        </div>
-      {{/if}}
-      {{#if this.unresolvedSecurityWarnings }}
-        <div class="alert alert-danger">
-          {{ this.unresolvedSecurityWarnings.text }}
-          <ul>
-            {{#each this.unresolvedSecurityWarnings.warnings}}
-              <li>
-                <a href="{{ this.url }}" target="_blank" rel="noopener noreferrer">
-                  {{ this.message }}
-                </a>
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      {{/if}}
-      {{#if this.deprecated }}
-        <div class="alert alert-warning">
-          {{{ this.deprecated }}}
-        </div>
-      {{/if}}
-      {{#if this.adoptMe }}
-        <div class="alert alert-warning">
-          {{{ this.adoptMe }}}
-        </div>
-      {{/if}}
-      {{#if this.newerVersionAvailableNotOffered }}
-        <div class="alert alert-info">
-          {{{ this.newerVersionAvailableNotOffered }}}
-        </div>
-      {{/if}}
+        {{#if this.excerpt }}
+          <div class="except">
+            {{{ this.excerpt }}}
+          </div>
+        {{/if}}
+        {{#if this.newerCoreRequired }}
+          <div class="alert alert-danger">
+            {{{ this.newerCoreRequired }}}
+          </div>
+        {{/if}}
+        {{#if this.dependenciesNewerJava }}
+          <div class="alert alert-danger">
+            {{{ this.dependenciesNewerJava }}}
+          </div>
+        {{/if}}
+        {{#if this.unresolvedSecurityWarnings }}
+          <div class="alert alert-danger">
+            {{ this.unresolvedSecurityWarnings.text }}
+            <ul>
+              {{#each this.unresolvedSecurityWarnings.warnings}}
+                <li>
+                  <a href="{{ this.url }}" target="_blank" rel="noopener noreferrer">
+                    {{ this.message }}
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
+        {{#if this.deprecated }}
+          <div class="alert alert-warning">
+            {{{ this.deprecated }}}
+          </div>
+        {{/if}}
+        {{#if this.newerVersionAvailableNotOffered }}
+          <div class="alert alert-info">
+            {{{ this.newerVersionAvailableNotOffered }}}
+          </div>
+        {{/if}}
+      </div>
     </td>
     <td class="jenkins-table__cell--no-wrap">
       {{#if this.releaseTimestamp }}

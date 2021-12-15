@@ -282,6 +282,34 @@
       bottom: -5px;
       right: -8px;
     }
+
+    &--solid {
+      color: var(--background) !important;
+
+      &::before {
+        opacity: 1;
+        background: var(--link-color) !important;
+      }
+
+      &:hover {
+        &::before {
+          opacity: 1 !important;
+        }
+      }
+
+      &:focus,
+      &:active {
+        &::after {
+          box-shadow: 0 0 0 5px var(--link-color) !important;
+        }
+      }
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+      margin-right: 0.5ch;
+    }
   }
 }
 
