@@ -500,6 +500,16 @@
     opacity: 0.15;
     pointer-events: none;
   }
+
+  &:indeterminate + label::before {
+    border: 11px solid var(--focus-input-border);
+  }
+
+  &:indeterminate + label::after {
+    transform: scale(1)!important;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'%3E%3Ctitle%3ERemove%3C/title%3E%3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='60' d='M400 256H112'/%3E%3C/svg%3E");
+    mask-size: 16px 16px;
+  }
 }
 
 .jenkins-checkbox label {
