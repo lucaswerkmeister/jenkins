@@ -29,7 +29,7 @@ THE SOFTWARE.
 
   <j:choose>
     <j:when test="${!empty(app.updateCenter.updates) or (isUpdates and !empty(unavailableList))}">
-      <div class="jenkins-app-bar jenkins-app-bar--sticky">
+      <div id="app-bar-updates" class="jenkins-app-bar jenkins-app-bar--sticky">
         <div class="jenkins-app-bar__content">
           <h2>${app.updateCenter.updates.size()} ${%Updates}</h2>
         </div>
@@ -37,10 +37,6 @@ THE SOFTWARE.
           <button class="jenkins-button jenkins-button--primary" type="button">
             <l:ionicon name="download-outline" />
             ${%Update all}
-          </button>
-          <button class="jenkins-button" type="button">
-            ${%Select}
-            <l:ionicon name="chevron-down-outline" />
           </button>
           <st:include page="check.jelly" />
         </div>
@@ -53,7 +49,31 @@ THE SOFTWARE.
           <thead>
             <tr>
               <l:isAdmin>
-                <th data-sort-disable="true" />
+                <th data-sort-disable="true">
+                  <div class="app-plugins__select">
+                    <button class="app-plugins__select-button" type="button" />
+                    <div class="app-plugins__select-menu">
+                      <button>
+                        <div>
+                          <l:ionicon name="checkmark-outline" />
+                        </div>
+                        All
+                      </button>
+                      <button>
+                        <div>
+                          <l:ionicon name="shield-checkmark-outline" />
+                        </div>
+                        Compatible plugins
+                      </button>
+                      <button>
+                        <div>
+                          <l:ionicon name="close-outline" />
+                        </div>
+                        None
+                      </button>
+                    </div>
+                  </div>
+                </th>
               </l:isAdmin>
               <th initialSortDir="${isUpdates?'down':null}">${%Name}</th>
               <th>${%Released}</th>

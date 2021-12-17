@@ -38,12 +38,19 @@
     }
   }
 
+  &--invisible-children {
+    .jenkins-app-bar__content, .jenkins-app-bar__controls {
+      opacity: 0;
+    }
+  }
+
   .jenkins-app-bar__content {
     display: flex;
     justify-content: center;
     flex-direction: column;
     width: 100%;
     min-height: 36px;
+    transition: opacity var(--standard-transition);
   }
 
   .jenkins-app-bar__controls {
@@ -52,6 +59,7 @@
     justify-content: center;
     margin-left: 2rem;
     min-height: 36px;
+    transition: opacity var(--standard-transition);
 
     .jenkins-search {
       min-width: 260px;
