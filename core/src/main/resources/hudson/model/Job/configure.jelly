@@ -34,10 +34,18 @@ THE SOFTWARE.
     <l:js src="jsbundles/config-scrollspy.js" />
 
     <l:side-panel>
+      <style>
+        <!-- TODO Remove when Jenkins' sidebar styling matches this -->
+        #side-panel {
+          border-right: none;
+          padding-right: 0;
+        }
+      </style>
+
       <div class="jenkins-side-nav">
         <div class="jenkins-app-bar">
           <div class="jenkins-app-bar__content">
-            <h1>Configuration</h1>
+            <h1>${%Configuration}</h1>
           </div>
         </div>
       </div>
