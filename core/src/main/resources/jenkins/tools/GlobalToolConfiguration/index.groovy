@@ -2,18 +2,15 @@ package jenkins.tools.GlobalToolConfiguration
 
 import hudson.Functions
 import hudson.model.Descriptor
+import jenkins.model.Jenkins
 
 def f=namespace(lib.FormTagLib)
 def l=namespace(lib.LayoutTagLib)
 def st=namespace("jelly:stapler")
 
 l.layout(permission:app.SYSTEM_READ, title:my.displayName) {
-    l.side_panel {
-        l.tasks {
-            l.task(icon:"icon-up icon-md", href:rootURL+'/', title:_("Back to Dashboard"))
-            l.task(icon:"icon-gear icon-md", href:"${rootURL}/manage", title:_("Manage Jenkins"))
-        }
-    }
+    st.include(page: "sidepanel.jelly", from: Jenkins.get(), it: Jenkins.get())
+
     set("readOnlyMode", !app.hasPermission(app.ADMINISTER))
     l.main_panel {
         h1 {

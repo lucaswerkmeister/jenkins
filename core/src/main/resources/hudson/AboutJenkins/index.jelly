@@ -26,7 +26,7 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:s="/lib/form">
   <l:layout permissions="${app.MANAGE_AND_SYSTEM_READ}" title="${%about(app.VERSION)}">
-    <st:include page="sidepanel.jelly" />
+    <st:include it="${app}" from="${app}" page="sidepanel.jelly" />
     <l:main-panel>
       <div class="jenkins-app-bar">
         <div class="jenkins-app-bar__content">

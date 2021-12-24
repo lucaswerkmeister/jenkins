@@ -6,15 +6,17 @@ import hudson.security.AuthorizationStrategy
 import jenkins.AgentProtocol
 import hudson.Functions
 import hudson.model.Descriptor
+import jenkins.model.Jenkins
 
 def f=namespace(lib.FormTagLib)
 def l=namespace(lib.LayoutTagLib)
 def st=namespace("jelly:stapler")
 
 l.layout(permission:app.SYSTEM_READ, title:my.displayName, cssclass:request.getParameter('decorate')) {
+    st.include(page: "sidepanel.jelly", from: Jenkins.get(), it: Jenkins.get())
+
     l.main_panel {
         h1 {
-            l.icon(class: 'icon-secure icon-xlg')
             text(my.displayName)
         }
         set("readOnlyMode", !app.hasPermission(app.ADMINISTER))

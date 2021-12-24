@@ -49,6 +49,6 @@ public class ManageJenkinsAction implements RootAction {
 
     @Override
     public String getUrlName() {
-        return "/manage";
+        return "/configure";
     }
 }

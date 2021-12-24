@@ -23,4 +23,102 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<st:include it="${it.primaryView}" page="sidepanel.jelly" xmlns:st="jelly:stapler" />
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <l:side-panel>
+    <!-- TODO - Remove this when all tasks (Jenkins' sidepanel items) are styled like this -->
+    <style>
+      #side-panel {
+        border-right: none;
+        padding-right: 0;
+      }
+    </style>
+
+    <div class="jenkins-side-nav">
+      <div class="jenkins-app-bar">
+        <h1>${%Manage Jenkins}</h1>
+      </div>
+
+      <section class="manage-messages">
+        <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
+          <st:include page="message.jelly" it="${am}" />
+        </j:forEach>
+        <st:include page="downgrade.jelly" />
+      </section>
+
+      <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
+      <section class="jenkins-section">
+        <h2 class="jenkins-section__title">${category.key.label}</h2>
+        ${taskTags!=null and attrs.contextMenu!='false' ? taskTags.addHeader(category.key.label) : null}
+        <div class="jenkins-section__items jenkins-section__items-1">
+          <j:forEach var="m" items="${category.value}">
+            <div class="jenkins-section__item">
+              <j:choose>
+                <j:when test="${m.requiresConfirmation}">
+                  <l:confirmationLink href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
+                    <div class="jenkins-section__item__icon" aria-hidden="true">
+                      <j:choose>
+                        <j:when test="${m.icon.path != null}">
+                          <img src="${rootURL}/${m.icon.path}" />
+                        </j:when>
+                        <j:otherwise>
+                          <j:out value="${m.icon.svg}" />
+                        </j:otherwise>
+                      </j:choose>
+                    </div>
+                    <dl>
+                      <dt>${m.displayName}</dt>
+                      <dd><j:out value="${m.description}"/></dd>
+                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
+                    </dl>
+                  </l:confirmationLink>
+                </j:when>
+                <j:when test="${m.requiresPOST}">
+                  <f:link href="${m.urlName}" post="${m.requiresPOST}">
+                    <div class="jenkins-section__item__icon" aria-hidden="true">
+                      <j:choose>
+                        <j:when test="${m.icon.path != null}">
+                          <img src="${rootURL}/${m.icon.path}" />
+                        </j:when>
+                        <j:otherwise>
+                          <j:out value="${m.icon.svg}" />
+                        </j:otherwise>
+                      </j:choose>
+                    </div>
+                    <dl>
+                      <dt>${m.displayName}</dt>
+                      <dd><j:out value="${m.description}"/></dd>
+                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
+                    </dl>
+                  </f:link>
+                </j:when>
+                <j:otherwise>
+                  <a href="${rootURL}/${m.urlName}">
+                    <div class="jenkins-section__item__icon" aria-hidden="true">
+                      <j:choose>
+                        <j:when test="${m.icon.path != null}">
+                          <img src="${rootURL}/${m.icon.path}" />
+                        </j:when>
+                        <j:otherwise>
+                          <j:out value="${m.icon.svg}" />
+                        </j:otherwise>
+                      </j:choose>
+                      <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
+                        <div class="jenkins-section__item__icon__badge">${m.getUpdateCount()}</div>
+                      </j:if>
+                    </div>
+                    <dl>
+                      <dt>${m.displayName}</dt>
+                      <dd><j:out value="${m.description}"/></dd>
+                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
+                    </dl>
+                  </a>
+                </j:otherwise>
+              </j:choose>
+            </div>
+          </j:forEach>
+        </div>
+      </section>
+    </j:forEach>
+    </div>
+  </l:side-panel>
+</j:jelly>
