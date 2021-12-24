@@ -1,5 +1,13 @@
 // Potential replacement for Jenkins' tasks sidebar, needs more investigation
 
+.jenkins-side-nav__heading {
+  margin: 2rem 0 0.75rem 0;
+  padding: 0;
+  font-size: var(--form-label-font-weight);
+  font-weight: var(--form-label-font-weight);
+  color: var(--text-color-secondary);
+}
+
 .jenkins-side-nav {
   position: sticky;
   top: 55px;
@@ -15,6 +23,7 @@
     z-index: 0;
     font-weight: 600 !important;
     font-size: 0.9rem;
+    flex-wrap: wrap;
     margin: 0 0 0.4rem -0.8rem;
     color: var(--text-color) !important;
     background: transparent;
@@ -67,7 +76,7 @@
       }
     }
 
-    div, &__icon {
+    &__icon {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -75,7 +84,8 @@
       height: 20px;
       margin-right: 1.5ch;
 
-      svg, img {
+      svg,
+      img {
         width: 20px !important;
         height: 20px !important;
       }
@@ -112,5 +122,19 @@
         opacity: 0.1;
       }
     }
+
+    dd {
+      color: var(--text-color-secondary);
+      margin-top: 0.5ch;
+      margin-left: calc(20px + 1.5ch);
+      flex-basis: 100%;
+      line-height: 1.66;
+      display: none;
+    }
+  }
+
+  &--non-sticky {
+    position: relative;
+    top: 0;
   }
 }

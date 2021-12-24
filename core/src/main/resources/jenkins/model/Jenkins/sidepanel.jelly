@@ -30,15 +30,20 @@ THE SOFTWARE.
       #side-panel {
         border-right: none;
         padding-right: 0;
+        width: 370px !important;
+      }
+
+      #inpage-nav {
+        display: none !important;
       }
     </style>
 
-    <div class="jenkins-side-nav">
+    <div class="jenkins-side-nav jenkins-side-nav--non-sticky">
       <div class="jenkins-app-bar">
         <h1>${%Manage Jenkins}</h1>
       </div>
 
-      <section class="manage-messages">
+      <section class="manage-messages" style="display: none;">
         <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
           <st:include page="message.jelly" it="${am}" />
         </j:forEach>
@@ -46,16 +51,50 @@ THE SOFTWARE.
       </section>
 
       <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
-      <section class="jenkins-section">
-        <h2 class="jenkins-section__title">${category.key.label}</h2>
+      <section class="jenkins-side-nav__items">
+        <h2 class="jenkins-side-nav__heading">${category.key.label}</h2>
         ${taskTags!=null and attrs.contextMenu!='false' ? taskTags.addHeader(category.key.label) : null}
-        <div class="jenkins-section__items jenkins-section__items-1">
+        <div class="jenkins-side-nav__items">
           <j:forEach var="m" items="${category.value}">
-            <div class="jenkins-section__item">
-              <j:choose>
-                <j:when test="${m.requiresConfirmation}">
-                  <l:confirmationLink href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
-                    <div class="jenkins-section__item__icon" aria-hidden="true">
+            <j:choose>
+              <j:when test="${m.requiresConfirmation}">
+                <l:confirmationLink tooltip="${m.description}" class="jenkins-side-nav__item" href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
+                  <div class="jenkins-side-nav__item__icon" aria-hidden="true">
+                    <j:choose>
+                      <j:when test="${m.icon.path != null}">
+                        <img src="${rootURL}/${m.icon.path}" />
+                      </j:when>
+                      <j:otherwise>
+                        <j:out value="${m.icon.svg}" />
+                      </j:otherwise>
+                    </j:choose>
+                  </div>
+                  <dt>${m.displayName}</dt>
+                  <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
+                </l:confirmationLink>
+              </j:when>
+              <j:when test="${m.requiresPOST}">
+                <f:link href="${m.urlName}" post="${m.requiresPOST}">
+                  <div class="jenkins-section__item__icon" aria-hidden="true">
+                    <j:choose>
+                      <j:when test="${m.icon.path != null}">
+                        <img src="${rootURL}/${m.icon.path}" />
+                      </j:when>
+                      <j:otherwise>
+                        <j:out value="${m.icon.svg}" />
+                      </j:otherwise>
+                    </j:choose>
+                  </div>
+                  <dl>
+                    <dt>${m.displayName}</dt>
+                    <dd><j:out value="${m.description}"/></dd>
+                    <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
+                  </dl>
+                </f:link>
+              </j:when>
+              <j:otherwise>
+                  <a tooltip="${m.description}" href="${rootURL}/${m.urlName}" class="jenkins-side-nav__item ${h.hyperlinkMatchesCurrentPage(rootURL + '/' + m.urlName) ? 'jenkins-side-nav__item--selected' : ''}">
+                    <div class="jenkins-side-nav__item__icon" aria-hidden="true">
                       <j:choose>
                         <j:when test="${m.icon.path != null}">
                           <img src="${rootURL}/${m.icon.path}" />
@@ -65,56 +104,15 @@ THE SOFTWARE.
                         </j:otherwise>
                       </j:choose>
                     </div>
-                    <dl>
-                      <dt>${m.displayName}</dt>
-                      <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                    </dl>
-                  </l:confirmationLink>
-                </j:when>
-                <j:when test="${m.requiresPOST}">
-                  <f:link href="${m.urlName}" post="${m.requiresPOST}">
-                    <div class="jenkins-section__item__icon" aria-hidden="true">
-                      <j:choose>
-                        <j:when test="${m.icon.path != null}">
-                          <img src="${rootURL}/${m.icon.path}" />
-                        </j:when>
-                        <j:otherwise>
-                          <j:out value="${m.icon.svg}" />
-                        </j:otherwise>
-                      </j:choose>
-                    </div>
-                    <dl>
-                      <dt>${m.displayName}</dt>
-                      <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                    </dl>
-                  </f:link>
-                </j:when>
-                <j:otherwise>
-                  <a href="${rootURL}/${m.urlName}">
-                    <div class="jenkins-section__item__icon" aria-hidden="true">
-                      <j:choose>
-                        <j:when test="${m.icon.path != null}">
-                          <img src="${rootURL}/${m.icon.path}" />
-                        </j:when>
-                        <j:otherwise>
-                          <j:out value="${m.icon.svg}" />
-                        </j:otherwise>
-                      </j:choose>
-                      <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
-                        <div class="jenkins-section__item__icon__badge">${m.getUpdateCount()}</div>
-                      </j:if>
-                    </div>
-                    <dl>
-                      <dt>${m.displayName}</dt>
-                      <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                    </dl>
+                    <dt>${m.displayName}</dt>
+                    <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
+                      <span class="jenkins-side-nav__item__badge">${m.getUpdateCount()}</span>
+                    </j:if>
+                    <dd><j:out value="${m.description}"/></dd>
+<!--                    <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>-->
                   </a>
                 </j:otherwise>
-              </j:choose>
-            </div>
+            </j:choose>
           </j:forEach>
         </div>
       </section>
