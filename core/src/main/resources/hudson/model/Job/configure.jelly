@@ -26,8 +26,7 @@ THE SOFTWARE.
   Config page. derived class specific entries should go to configure-entries.jsp
 -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:f="/lib/form">
-
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:f="/lib/form" xmlns:p="/lib/hudson/project">
   <l:layout type="two-column" permission="${it.EXTENDED_READ}" title="${%Config(it.displayName)}">
     <j:set var="readOnlyMode" value="${!it.hasPermission(it.CONFIGURE)}" />
 
@@ -52,24 +51,27 @@ THE SOFTWARE.
     </l:side-panel>
 
     <l:main-panel>
-      <div class="jenkins-app-bar">
-        <div class="jenkins-app-bar__content">
-          <h2>
-            <div class="jenkins-visually-hidden">
-              <l:ionicon name="settings-outline" />
-            </div>
-            <span>${%General}</span>
-          </h2>
-        </div>
-      </div>
-
-      <div class="behavior-loading"><l:spinner text="${%LOADING}"/></div>
-
       <f:form method="post" action="configSubmit" name="config" tableClass="config-table scrollspy">
+        <div class="jenkins-app-bar jenkins-form-item">
+          <div class="jenkins-app-bar__content">
+            <h2>
+              <div class="jenkins-visually-hidden">
+                <l:ionicon name="settings-outline" />
+              </div>
+              <span>${%General}</span>
+            </h2>
+          </div>
+          <div class="jenkins-app-bar__controls">
+            <p:config-disableBuild/>
+          </div>
+        </div>
+
+        <div class="behavior-loading"><l:spinner text="${%LOADING}"/></div>
+
         <j:set var="descriptor" value="${it.descriptor}" />
         <j:set var="instance" value="${it}" />
 
-        <div class="jenkins-section" style="padding-bottom: 0.5rem;">
+        <div class="jenkins-section jenkins-section--borderless" style="padding-top: 0.7rem; padding-bottom: 0.5rem;">
           <f:entry title="${%Description}" help="${app.markupFormatter.helpUrl}">
             <f:textarea name="description" value="${it.description}" codemirror-mode="${app.markupFormatter.codeMirrorMode}" codemirror-config="${app.markupFormatter.codeMirrorConfig}" previewEndpoint="/markupFormatter/previewDescription"/>
           </f:entry>

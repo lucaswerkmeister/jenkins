@@ -43,7 +43,9 @@ THE SOFTWARE.
         <st:attribute name="id" />
         <st:attribute name="onclick" />
         <st:attribute name="class" />
-        <st:attribute name="negative" />
+        <st:attribute name="invert-label">
+          Move the label of the toggle switch to the opposite side
+        </st:attribute>
         <st:attribute name="readonly">
             If set to true, this will take precedence over the onclick attribute and prevent the state of the checkbox from being changed.
 
@@ -67,14 +69,13 @@ THE SOFTWARE.
     <j:set var="default" value="${attrs.default ?: false}"/>
     <j:set var="value" value="${attrs.checked ?: instance[attrs.field] ?: default}"/>
 
-    <span class="jenkins-toggle-switch">
+    <span id="${attrs.id}" class="jenkins-toggle-switch ${attrs.invert-label != null ? 'jenkins-toggle-switch--invert-label' : null}">
         <input type="checkbox"
                name="${name}"
                value="${attrs.value}"
                title="${attrs.tooltip}"
                onclick="${attrs.readonly=='true' ? 'return false;' : attrs.onclick}"
-               id="${attrs.id}"
-               class="${attrs.class} ${attrs.negative!=null ? 'negative' : null} ${attrs.checkUrl!=null?'validated':''}"
+               class="${attrs.class} ${attrs.checkUrl!=null?'validated':''}"
                checkUrl="${attrs.checkUrl}"
                checkDependsOn="${attrs.checkDependsOn}" json="${attrs.json}"
                disabled="${readOnlyMode ? 'true' : null}"
