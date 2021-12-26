@@ -170,7 +170,7 @@ THE SOFTWARE.
       </j:forEach>
     </j:if>
 
-    <div class="repeatable-insertion-point" />
+<!--    <div class="repeatable-insertion-point" />-->
   </div>
   <j:if test="${!attrs.noAddButton}">
     <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add" />

@@ -161,8 +161,11 @@ Behaviour.specify("DIV.repeated-container", 'repeatable', -100, function(e) {
 
         // compute the insertion point
         var ip = $(e.lastElementChild);
-        while (!ip.hasClassName("repeatable-insertion-point"))
-            ip = ip.previous();
+
+        console.log(e.lastElementChild)
+
+        // while (!ip.hasClassName("repeatable-insertion-point"))
+        //     ip = ip.previous();
         // set up the logic
         object(repeatableSupport).init(e, e.firstChild, ip);
 });

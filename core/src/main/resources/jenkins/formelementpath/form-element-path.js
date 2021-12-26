@@ -77,11 +77,12 @@ document.addEventListener("DOMContentLoaded", function(){
                             }
                         });
                     if (name == null) {
-                        if (name == null) {
-                            element = element.parentNode.previousSibling;
-                            if (element != null && element.classList && element.classList.contains('repeatable-insertion-point')) {
-                                name = "hetero-list-add";
-                            }
+                      // console.log(element)
+                      // console.log(element.parentNode)
+                      // console.log(element.parentNode.previousSibling)
+                        element = element.parentNode.previousSibling;
+                        if (element != null && element.classList && element.classList.contains('repeatable-insertion-point')) {
+                            name = "hetero-list-add";
                         }
                     }
                     if (name != null) {
