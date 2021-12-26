@@ -79,10 +79,10 @@ THE SOFTWARE.
       Used for the data binding.
     </st:attribute>
     <st:attribute name="items">
-      The item collection to loop over. Required unless @field is given. 
+      The item collection to loop over. Required unless @field is given.
     </st:attribute>
     <st:attribute name="default">
-      Use this collection for items if items or @field is null 
+      Use this collection for items if items or @field is null
     </st:attribute>
     <st:attribute name="noAddButton">
       true if the default 'add' button (that adds a new copy) shouldn't be displayed.
@@ -138,7 +138,9 @@ THE SOFTWARE.
       </div>
       <j:scope>
         <j:set var="${var}" value="${null}"/>
-        <d:invokeBody />
+        <div class="repeated-chunk__body">
+          <d:invokeBody />
+        </div>
       </j:scope>
     </div>
     <j:if test="${!empty(items) and !attrs.noAddButton and attrs.enableTopButton}">
@@ -149,7 +151,9 @@ THE SOFTWARE.
       <div class="repeated-chunk" name="${name}">
         <j:set var="${var}" value="${loop}" />
         <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}">${header}</div></j:if>
-        <d:invokeBody />
+        <div class="repeated-chunk__body">
+          <d:invokeBody />
+        </div>
       </div>
     </j:forEach>
     <j:remove var="${var}" />
@@ -159,14 +163,16 @@ THE SOFTWARE.
         <j:set var="${var}" value="${null}" />
         <div class="repeated-chunk" name="${name}">
           <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}">${header}</div></j:if>
-          <d:invokeBody />
+          <div class="repeated-chunk__body">
+            <d:invokeBody />
+          </div>
         </div>
       </j:forEach>
     </j:if>
 
     <div class="repeatable-insertion-point" />
-    <j:if test="${!attrs.noAddButton}">
-      <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add" />
-    </j:if>
   </div>
+  <j:if test="${!attrs.noAddButton}">
+    <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add" />
+  </j:if>
 </j:jelly>

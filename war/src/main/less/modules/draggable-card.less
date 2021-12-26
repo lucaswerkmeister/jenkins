@@ -1,13 +1,4 @@
 /* ========================= repeatable elements ========================= */
-
-.repeated-chunk {
-  position: relative;
-  border: 2px dashed var(--input-border);
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
-
 .repeated-chunk .show-if-last { visibility: hidden; }
 .repeated-chunk.last .show-if-last { visibility: visible; }
 
@@ -48,7 +39,7 @@ div.to-be-removed { display: none; }
 
 .hetero-list-container.with-drag-drop .repeated-chunk,
 .repeated-container.with-drag-drop .repeated-chunk {
-  margin-bottom: 1rem;
+  margin-bottom: 5px;
 }
 
 // SortableJS drag & drop classes
@@ -69,7 +60,24 @@ div.to-be-removed { display: none; }
   }
 }
 
+.repeated-container,
+.hetero-list-container {
+  background: var(--table-background);
+  border-radius: 10px;
+  margin: 5px;
+  box-shadow: 0 0 0 5px var(--table-background);
+
+  &:empty {
+    display: none;
+  }
+}
+
 .repeated-chunk {
+  position: relative;
+  border-radius: 10px;
+  background: var(--table-body-background);
+  overflow: hidden;
+
   & > div > *:last-of-type {
     margin-bottom: 0;
   }
@@ -79,8 +87,7 @@ div.to-be-removed { display: none; }
     align-items: center;
     justify-content: flex-start;
     font-weight: bold;
-    margin-top: -0.4rem;
-    margin-bottom: 0.75rem;
+    padding: 0.75rem calc(var(--section-padding) / 2);
 
     .dd-handle {
       position: relative;
@@ -126,10 +133,18 @@ div.to-be-removed { display: none; }
     }
   }
 
+  &__body {
+    padding: 0 calc(var(--section-padding) / 2) 0 calc(var(--section-padding) / 2);
+
+    &:empty {
+      display: none;
+    }
+  }
+
   // TODO: Update/remove when .jenkins-button PR is merged
   .repeatable-delete {
     position: absolute;
-    top: 0.6rem;
+    top: 0.7rem;
     right: 0.6rem;
     display: flex;
     align-items: center;
@@ -193,5 +208,9 @@ div.to-be-removed { display: none; }
         box-shadow: 0 0 0 5px var(--red);
       }
     }
+  }
+
+  .repeated-chunk {
+    background: hsl(240, 7%, 14%);
   }
 }

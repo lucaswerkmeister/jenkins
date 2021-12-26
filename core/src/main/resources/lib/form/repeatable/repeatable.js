@@ -133,7 +133,9 @@ var repeatableSupport = {
     onAdd : function(n) {
         var addOnTop = false;
         while (n.tag == null) {
-            n = n.parentNode;
+            // YUI buttons have two span parents (hence two parentElements),
+            // the insertion box is then the previous element
+            n = n.parentElement.parentElement.previousSibling;
             if (n.hasClassName("repeatable-add-top")) {
                 addOnTop = true;
             }
