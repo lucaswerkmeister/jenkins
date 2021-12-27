@@ -24,32 +24,31 @@ THE SOFTWARE.
 
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:s="jelly:stapler" xmlns:l="/lib/layout">
-    <s:documentation>
-        ?????
-    </s:documentation>
+  <s:documentation>
+    ?????
+  </s:documentation>
 
-    <div id="command-centre-backdrop" class="jenkins-command-centre__backdrop"/>
+  <div id="command-centre-backdrop" class="jenkins-command-centre__backdrop" />
 
-    <div id="command-centre" class="jenkins-command-centre__wrapper">
-        <div class="jenkins-command-centre">
-            <div class="jenkins-command-centre__search">
-                <div class="icon">
-                    <l:ionicon name="search-outline"/>
-                </div>
-                <input id="command-bar" placeholder="Search" type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-                <div class="keyboard-shortcuts">
-                    <span id="command-centre-shortcut-modifier" class="shortcut">⌘</span>
-                    <l:ionicon name="add-outline"/>
-                    <span class="shortcut">K</span>
-                </div>
-            </div>
-            <div id="search-results-container" class="jenkins-command-centre__results-container">
-                <div id="search-results" class="jenkins-command-centre__results">
-
-                </div>
-            </div>
+  <div id="command-centre" class="jenkins-command-centre__wrapper">
+    <div class="jenkins-command-centre">
+      <div class="jenkins-command-centre__search">
+        <div class="icon">
+          <l:ionicon name="search-outline" />
         </div>
+        <input id="command-bar" placeholder="Search" type="search" autocomplete="off" autocorrect="off"
+               autocapitalize="off" spellcheck="false" />
+        <div class="keyboard-shortcuts">
+          <span id="command-centre-shortcut-modifier" class="shortcut">⌘</span>
+          <l:ionicon name="add-outline" />
+          <span class="shortcut">K</span>
+        </div>
+      </div>
+      <div id="search-results-container" class="jenkins-command-centre__results-container">
+        <div id="search-results" class="jenkins-command-centre__results" />
+      </div>
     </div>
+  </div>
 
-    <script src="${resURL}/jsbundles/command-centre.js" type="text/javascript"/>
+  <script src="${resURL}/jsbundles/command-centre.js" type="text/javascript" />
 </j:jelly>

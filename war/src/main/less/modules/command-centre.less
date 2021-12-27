@@ -55,15 +55,16 @@
   &__search {
     background: var(--spotlight-background);
     box-shadow: 0 0 0 20px transparent, var(--spotlight-inset-shadow);
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
     display: grid;
     grid-template-columns: auto 1fr auto;
     border-radius: 10px;
-    transition: 0.2s ease;
+    transition: var(--standard-transition);
     z-index: 10;
     backdrop-filter: saturate(2) blur(10px);
 
     .icon {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -74,6 +75,64 @@
       svg {
         width: 18px;
         height: 18px;
+        transition: var(--standard-transition);
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 17px;
+        left: 17px;
+        width: 0;
+        height: 0;
+        color: inherit;
+        border: 2px solid currentColor;
+        border-radius: 100%;
+        opacity: 0;
+        transition: var(--standard-transition);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 17px;
+        left: 17px;
+        width: 0;
+        height: 0;
+        color: inherit;
+        border: 2px solid currentColor;
+        border-radius: 100%;
+        clip-path: inset(0 0 50% 50%);
+        opacity: 0;
+        transition: var(--standard-transition);
+        animation: loading-spinner 1s infinite linear;
+
+        @media (prefers-reduced-motion) {
+          animation-duration: 2s;
+        }
+      }
+
+      &--loading {
+        svg {
+          opacity: 0;
+          transform: scale(0);
+        }
+
+        &::before {
+          opacity: 0.2;
+          top: calc(50% - 8px);
+          left: calc(50% - 8px);
+          width: 16px;
+          height: 16px;
+        }
+
+        &::after {
+          opacity: 1;
+          top: calc(50% - 8px);
+          left: calc(50% - 8px);
+          width: 16px;
+          height: 16px;
+        }
       }
     }
 
@@ -83,11 +142,11 @@
       margin: 0;
       border: none;
       outline: none;
-      padding: 15px 20px 15px 0;
+      padding: 1rem 1.5rem 1rem 0;
       font-size: 0.9rem;
       font-weight: 500;
       color: var(--text-color);
-      transition: 0.2s ease;
+      transition: var(--standard-transition);
       background: transparent;
 
       // Safari adds unwanted padding - let's remove it
@@ -199,12 +258,13 @@
       border-radius: 6px;
       font-weight: 600;
       cursor: pointer;
-      color: var(--text-color)!important;
-      transition: 0.2s ease;
+      color: var(--text-color) !important;
+      transition: var(--standard-transition);
       box-shadow: 0 0 0 10px transparent;
       z-index: 0;
 
-      &::before, &::after {
+      &::before,
+      &::after {
         content: "";
         position: absolute;
         top: 0;
@@ -214,7 +274,7 @@
         z-index: -1;
         opacity: 0;
         border-radius: inherit;
-        transition: 0.2s ease;
+        transition: var(--standard-transition);
       }
 
       &::before {
@@ -239,7 +299,8 @@
         }
       }
 
-      &:active, &:focus {
+      &:active,
+      &:focus {
         &::before {
           opacity: 0.15;
         }
@@ -261,7 +322,8 @@
         pointer-events: none;
         color: var(--primary);
 
-        svg, img {
+        svg,
+        img {
           width: 18px;
           height: 18px;
         }
