@@ -46,7 +46,7 @@ public class AboutJenkins extends ManagementLink {
 
     @Override
     public Icon getSearchItemIcon() {
-        return Icon.fromSvg(IconSet.getIonicon("logo", null));
+        return Icon.fromSvg(IconSet.getIonicon("help-circle-outline", null));
     }
 
     @Restricted(NoExternalUse.class)
