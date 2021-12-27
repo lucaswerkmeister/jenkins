@@ -20,8 +20,12 @@ spotlightButton.addEventListener("click", function() {
     showCommandCentre()
 })
 
-commandCentreBackdrop.addEventListener("click", function() {
-    hideCommandCentre()
+commandCentre.addEventListener("click", function(e) {
+  if (e.target !== e.currentTarget) {
+    return;
+  }
+
+  hideCommandCentre()
 })
 
 hotkeys('ctrl+k, command+k', async function() {
@@ -69,7 +73,7 @@ commandBarInput.addEventListener('input', async function (e) {
             let link = document.createElement('DIV')
             link.innerHTML = `<a class="jenkins-command-centre__results__item" href="${obj.url}">
                             <div class="jenkins-command-centre__results__item__icon">${obj.icon ? `${obj.icon.svg ? obj.icon.svg : `<img src="${obj.icon.url}" alt="" />`}` : ``}</div>
-                            ${obj.name} 
+                            ${obj.name}
                             ${obj.description ? `<span class="jenkins-command-centre__results__item__description">${obj.description}</span>` : ''}
                             <svg class="jenkins-command-centre__results__item__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"/></svg>
                         </a>`
