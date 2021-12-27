@@ -17,29 +17,12 @@
             </a>
         </div>
 
-        <div class="searchbox hidden-xs">
-            <!-- search box -->
-            <j:set var="searchURL" value="${h.searchURL}"/>
-            <form action="${searchURL}" method="get" style="position:relative;" class="no-json" name="search" role="search">
-                <!-- this div is used to calculate the width of the text box -->
-                <div id="search-box-sizer"/>
-                <div id="searchform">
-                    <input name="q" placeholder="${searchPlaceholder}" id="search-box" class="main-search__input" value="${request.getParameter('q')}" role="searchbox" />
-
-                    <span class="main-search__icon-leading">
-                        <l:ionicon name="search-outline"/>
-                    </span>
-                    <a href="${searchHelpUrl}" class="main-search__icon-trailing">
-                        <l:ionicon name="help-circle-outline"/>
-                    </a>
-
-                    <div id="search-box-completion" />
-                    <script>createSearchBox("${searchURL}");</script>
-                </div>
-            </form>
-        </div>
-
         <div class="login page-header__hyperlinks">
+          <button id="button-spotlight" class="model-link inside inverse">
+            <u:ionicon name="search-outline"/>
+            <span class="jenkins-visually-hidden">${searchPlaceholder}</span>
+          </button>
+
             <div id="visible-am-insertion" class="page-header__am-wrapper" />
             <div id="visible-sec-am-insertion" class="page-header__am-wrapper" />
 
