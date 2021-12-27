@@ -25,8 +25,12 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:s="jelly:stapler" xmlns:l="/lib/layout">
   <s:documentation>
-    ?????
+    The command centre overlay for Jenkins
   </s:documentation>
+
+  <div id="command-center-i18n" class="i18n"
+       data-no-results-for="${%No results for}"
+  />
 
   <div id="command-centre-backdrop" class="jenkins-command-centre__backdrop" />
 
@@ -36,7 +40,7 @@ THE SOFTWARE.
         <div class="icon">
           <l:ionicon name="search-outline" />
         </div>
-        <input id="command-bar" placeholder="Search" type="search" autocomplete="off" autocorrect="off"
+        <input id="command-bar" placeholder="${%Search}" type="search" autocomplete="off" autocorrect="off"
                autocapitalize="off" spellcheck="false" />
         <div class="keyboard-shortcuts">
           <span id="command-centre-shortcut-modifier" class="shortcut">⌘</span>

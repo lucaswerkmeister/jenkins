@@ -2,6 +2,7 @@ import "core-js/stable"
 import "regenerator-runtime/runtime"
 import hotkeys from 'hotkeys-js'
 
+const i18n = document.getElementById("command-center-i18n")
 const spotlightButton = document.getElementById("button-spotlight")
 const commandCentreBackdrop = document.getElementById("command-centre-backdrop")
 const commandCentre = document.getElementById("command-centre")
@@ -96,8 +97,8 @@ commandBarInput.addEventListener('input', async function (e) {
       updateSelectedItem(0)
     } else {
       const heading = document.createElement('p')
-      heading.className = "jenkins-command-centre__results__heading"
-      heading.innerText = "No results for " + e.target.value
+      heading.className = "jenkins-command-centre__info"
+      heading.innerHTML = "<span>" + i18n.dataset.noResultsFor.escapeHTML() + "</span> " + e.target.value.escapeHTML()
       searchResults.append(heading)
     }
   }
