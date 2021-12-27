@@ -19,7 +19,7 @@
 
         <div class="login page-header__hyperlinks">
           <button id="button-spotlight" class="model-link inside inverse">
-            <u:ionicon name="search-outline"/>
+            <l:ionicon name="search-outline"/>
             <span class="jenkins-visually-hidden">${searchPlaceholder}</span>
           </button>
 

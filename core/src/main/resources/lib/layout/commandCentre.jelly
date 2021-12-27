@@ -23,7 +23,7 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:s="jelly:stapler" xmlns:u="jelly:org.jenkins.ui.icon.IconTagLibrary">
+<j:jelly xmlns:j="jelly:core" xmlns:s="jelly:stapler" xmlns:l="/lib/layout">
     <s:documentation>
         ?????
     </s:documentation>
@@ -34,12 +34,12 @@ THE SOFTWARE.
         <div class="jenkins-command-centre">
             <div class="jenkins-command-centre__search">
                 <div class="icon">
-                    <u:ionicon name="search-outline"/>
+                    <l:ionicon name="search-outline"/>
                 </div>
                 <input id="command-bar" placeholder="Search" type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
                 <div class="keyboard-shortcuts">
                     <span id="command-centre-shortcut-modifier" class="shortcut">⌘</span>
-                    <u:ionicon name="add-outline"/>
+                    <l:ionicon name="add-outline"/>
                     <span class="shortcut">K</span>
                 </div>
             </div>
