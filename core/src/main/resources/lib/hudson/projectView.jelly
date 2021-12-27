@@ -56,7 +56,6 @@ THE SOFTWARE.
 
   <t:setIconSize/>
   <div class="dashboard">
-
     <j:if test="${columnExtensions==null}">
         <j:invokeStatic var="columnExtensions" className="hudson.model.ListView" method="getDefaultColumns"/>
     </j:if>

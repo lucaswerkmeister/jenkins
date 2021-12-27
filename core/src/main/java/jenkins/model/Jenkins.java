@@ -223,6 +223,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -283,6 +285,7 @@ import jenkins.security.stapler.StaplerFilteredActionListener;
 import jenkins.security.stapler.TypedFilter;
 import jenkins.slaves.WorkspaceLocator;
 import jenkins.util.JenkinsJVM;
+import jenkins.util.Listeners;
 import jenkins.util.SystemProperties;
 import jenkins.util.Timer;
 import jenkins.util.io.FileBoolean;
@@ -680,7 +683,6 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
      */
     private String label="";
 
-    //@SuppressFBWarnings("MS_SHOULD_BE_FINAL")
     private static /* non-final for Groovy */ String nodeNameAndSelfLabelOverride = SystemProperties.getString(Jenkins.class.getName() + ".nodeNameAndSelfLabelOverride");
 
     /**
@@ -882,7 +884,8 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     /**
      * Bound to "/log".
      */
-    private final transient LogRecorderManager log = new LogRecorderManager();
+    private transient LogRecorderManager log = new LogRecorderManager();
+
 
     private final transient boolean oldJenkinsJVM;
 
@@ -895,6 +898,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
      *      If non-null, use existing plugin manager.  create a new one.
      */
     @SuppressFBWarnings({
+        "DMI_RANDOM_USED_ONLY_ONCE", // TODO needs triage
         "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", // Trigger.timer
         "DM_EXIT" // Exit is wanted here
     })
@@ -1484,7 +1488,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
      *
      * <p>
      * This form of identifier is weak in that it can be impersonated by others. See
-     * https://wiki.jenkins-ci.org/display/JENKINS/Instance+Identity for more modern form of instance ID
+     * https://github.com/jenkinsci/instance-identity-plugin for more modern form of instance ID
      * that can be challenged and verified.
      *
      * @since 1.498
@@ -2246,14 +2250,38 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
      * but we also call this periodically to self-heal any data out-of-sync issue.
      */
     /*package*/ void trimLabels() {
+        trimLabels((Set) null);
+    }
+
+    /**
+     * Reset labels and remove invalid ones for the given nodes.
+     * @param nodes the nodes taken as reference to update labels
+     */
+    void trimLabels(Node... nodes) {
+        Set<LabelAtom> includedLabels = new HashSet<>();
+        Arrays.asList(nodes).stream().filter(Objects::nonNull).forEach(n -> includedLabels.addAll(n.getAssignedLabels()));
+        trimLabels(includedLabels);
+    }
+
+    /**
+     * Reset labels and remove invalid ones for the given nodes.
+     * @param includedLabels the labels taken as reference to update labels. If {@code null}, all labels are considered.
+     */
+    private void trimLabels(@CheckForNull Set<LabelAtom> includedLabels) {
         Set<Label> nodeLabels = new HashSet<>(this.getAssignedLabels());
         this.getNodes().forEach(n -> nodeLabels.addAll(n.getAssignedLabels()));
         for (Iterator<Label> itr = labels.values().iterator(); itr.hasNext();) {
             Label l = itr.next();
-            if (nodeLabels.contains(l) || this.clouds.stream().anyMatch(c -> c.canProvision(l))) {
-                resetLabel(l);
-            } else {
-                itr.remove();
+            if (includedLabels == null || includedLabels.contains(l)) {
+                if (nodeLabels.contains(l) || !l.getClouds().isEmpty()) {
+                    // there is at least one static agent or one cloud that currently claims it can handle the label.
+                    // if the cloud has been removed, or its labels updated such that it can not handle this, this is handle in later calls
+                    // resetLabel will remove the agents, and clouds from the label, and they will be repopulated later.
+                    // not checking `cloud.canProvision()` here prevents a potential call that will only be repeated later
+                    resetLabel(l);
+                } else {
+                    itr.remove();
+                }
             }
         }
     }
@@ -2424,11 +2452,6 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
      */
     public @Nullable String getRootUrl() throws IllegalStateException {
         final JenkinsLocationConfiguration config = JenkinsLocationConfiguration.get();
-        if (config == null) {
-            // Try to get standard message if possible
-            final Jenkins j = Jenkins.get();
-            throw new IllegalStateException("Jenkins instance " + j + " has been successfully initialized, but JenkinsLocationConfiguration is undefined.");
-        }
         String url = config.getUrl();
         if(url!=null) {
             return Util.ensureEndsWith(url,"/");
@@ -2445,7 +2468,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     @CheckForNull
     public String getConfiguredRootUrl() {
         JenkinsLocationConfiguration config = JenkinsLocationConfiguration.get();
-        return config != null ? config.getUrl() : null;
+        return config.getUrl();
     }
 
     /**
@@ -2472,7 +2495,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
      * <p>Please note that this will not work in all cases if Jenkins is running behind a
      * reverse proxy which has not been fully configured.
      * Specifically the {@code Host} and {@code X-Forwarded-Proto} headers must be set.
-     * <a href="https://wiki.jenkins-ci.org/display/JENKINS/Running+Jenkins+behind+Apache">Running Jenkins behind Apache</a>
+     * <a href="https://www.jenkins.io/doc/book/system-administration/reverse-proxy-configuration-apache/">Reverse proxy - Apache</a>
      * shows some examples of configuration.
      * @since 1.263
      */
@@ -2636,6 +2659,17 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     public LogRecorderManager getLog() {
         checkPermission(SYSTEM_READ);
         return log;
+    }
+
+    /**
+     * Set the LogRecorderManager.
+     *
+     * @param log the LogRecorderManager to set
+     * @since TODO
+     */
+    public void setLog(LogRecorderManager log) {
+        checkPermission(ADMINISTER);
+        this.log = log;
     }
 
     /**
@@ -3331,9 +3365,9 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
             // make sure platform can handle colon
             try {
                 File tmp = File.createTempFile("Jenkins-doCheckRawBuildsDir", "foo:bar");
-                tmp.delete();
-            } catch (IOException e) {
-                throw new InvalidBuildsDir(newBuildsDirValue +  " contains ${ITEM_FULLNAME} but your system does not support it (JENKINS-12251). Use ${ITEM_FULL_NAME} instead");
+                Files.delete(tmp.toPath());
+            } catch (IOException | InvalidPathException e) {
+                throw (InvalidBuildsDir)new InvalidBuildsDir(newBuildsDirValue +  " contains ${ITEM_FULLNAME} but your system does not support it (JENKINS-12251). Use ${ITEM_FULL_NAME} instead").initCause(e);
             }
         }
 
@@ -3526,7 +3560,6 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     /**
      * Called to shut down the system.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void cleanUp() {
         if (theInstance != this && theInstance != null) {
             LOGGER.log(Level.WARNING, "This instance is no longer the singleton, ignoring cleanUp()");
@@ -4009,7 +4042,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
         try {
             return doQuietDown(false, 0, null);
         } catch (IOException | InterruptedException e) {
-            throw new AssertionError(); // impossible
+            throw new AssertionError(e); // impossible
         }
     }
 
@@ -4026,7 +4059,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
         try {
             return doQuietDown(block, timeout, null);
         } catch (IOException | InterruptedException e) {
-            throw new AssertionError(); // impossible
+            throw new AssertionError(e); // impossible
         }
     }
 
@@ -4345,8 +4378,8 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     /**
      * For debugging. Expose URL to perform GC.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DM_GC")
     @RequirePOST
+    @SuppressFBWarnings(value = "DM_GC", justification = "for debugging")
     public void doGc(StaplerResponse rsp) throws IOException {
         checkPermission(Jenkins.ADMINISTER);
         System.gc();
@@ -4481,8 +4514,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
                     // give some time for the browser to load the "reloading" page
                     Thread.sleep(TimeUnit.SECONDS.toMillis(5));
                     LOGGER.info(String.format("Restarting VM as requested by %s", exitUser));
-                    for (RestartListener listener : RestartListener.all())
-                        listener.onRestart();
+                    Listeners.notify(RestartListener.class, true, RestartListener::onRestart);
                     lifecycle.restart();
                 } catch (InterruptedException | InterruptedIOException e) {
                     LOGGER.log(Level.WARNING, "Interrupted while trying to restart Jenkins", e);
@@ -4519,8 +4551,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
                         LOGGER.info("Restart in 10 seconds");
                         Thread.sleep(TimeUnit.SECONDS.toMillis(10));
                         LOGGER.info(String.format("Restarting VM as requested by %s",exitUser));
-                        for (RestartListener listener : RestartListener.all())
-                            listener.onRestart();
+                        Listeners.notify(RestartListener.class, true, RestartListener::onRestart);
                         lifecycle.restart();
                     } else {
                         LOGGER.info("Safe-restart mode cancelled");
@@ -4540,9 +4571,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
             Computer computer = Jenkins.get().toComputer();
             if (computer == null) return;
             RestartCause cause = new RestartCause();
-            for (ComputerListener listener: ComputerListener.all()) {
-                listener.onOffline(computer, cause);
-            }
+            Listeners.notify(ComputerListener.class, true, l -> l.onOffline(computer, cause));
         }
 
         @Override
@@ -4583,7 +4612,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
 
                     cleanUp();
                     System.exit(0);
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     LOGGER.log(Level.WARNING, "Failed to shut down Jenkins", e);
                 }
             }
@@ -4853,6 +4882,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     /**
      * Checks if container uses UTF-8 to decode URLs. See
      * http://wiki.jenkins-ci.org/display/JENKINS/Tomcat#Tomcat-i18n
+     * @deprecated use {@link URICheckEncodingMonitor#doCheckURIEncoding(StaplerRequest)}
      */
     @Restricted(NoExternalUse.class)
     @RestrictedSince("2.37")
@@ -4863,6 +4893,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
 
     /**
      * Does not check when system default encoding is "ISO-8859-1".
+     * @deprecated use {@link URICheckEncodingMonitor#isCheckEnabled()}
      */
     @Restricted(NoExternalUse.class)
     @RestrictedSince("2.37")
@@ -5413,9 +5444,9 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
      */
     public static String VIEW_RESOURCE_PATH = "/resources/TBD";
 
-    @SuppressFBWarnings("MS_SHOULD_BE_FINAL")
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL", justification = "for script console")
     public static boolean PARALLEL_LOAD = SystemProperties.getBoolean(Jenkins.class.getName() + "." + "parallelLoad", true);
-    @SuppressFBWarnings("MS_SHOULD_BE_FINAL")
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL", justification = "for script console")
     public static boolean KILL_AFTER_LOAD = SystemProperties.getBoolean(Jenkins.class.getName() + "." + "killAfterLoad", false);
     /**
      * @deprecated No longer used.
@@ -5486,7 +5517,7 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
     /**
      * Automatically try to launch an agent when Jenkins is initialized or a new agent computer is created.
      */
-    @SuppressFBWarnings("MS_SHOULD_BE_FINAL")
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL", justification = "TODO needs triage")
     public static boolean AUTOMATIC_SLAVE_LAUNCH = true;
 
     private static final Logger LOGGER = Logger.getLogger(Jenkins.class.getName());
@@ -5570,14 +5601,24 @@ public class Jenkins extends AbstractCIBase implements DirectlyModifiableTopLeve
      *
      * @since 2.266
      */
-    public static final Authentication ANONYMOUS2 = new AnonymousAuthenticationToken("anonymous", "anonymous", Collections.singleton(new SimpleGrantedAuthority("anonymous")));
+    public static final Authentication ANONYMOUS2 =
+            new AnonymousAuthenticationToken(
+                    "anonymous",
+                    "anonymous",
+                    Collections.singleton(new SimpleGrantedAuthority("anonymous")));
 
     /**
      * @deprecated use {@link #ANONYMOUS2}
      * @since 1.343
      */
     @Deprecated
-    public static final org.acegisecurity.Authentication ANONYMOUS = new org.acegisecurity.providers.anonymous.AnonymousAuthenticationToken("anonymous", "anonymous", new org.acegisecurity.GrantedAuthority[] {new org.acegisecurity.GrantedAuthorityImpl("anonymous")});
+    public static final org.acegisecurity.Authentication ANONYMOUS =
+            new org.acegisecurity.providers.anonymous.AnonymousAuthenticationToken(
+                    "anonymous",
+                    "anonymous",
+                    new org.acegisecurity.GrantedAuthority[] {
+                        new org.acegisecurity.GrantedAuthorityImpl("anonymous"),
+                    });
 
     static {
         try {

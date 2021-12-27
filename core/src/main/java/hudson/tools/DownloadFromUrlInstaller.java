@@ -103,7 +103,7 @@ public abstract class DownloadFromUrlInstaller extends ToolInstaller {
      * @param root
      *      The directory that contains the extracted archive. This directory contains nothing but the
      *      extracted archive. For example, if the user installed
-     *      http://archive.apache.org/dist/ant/binaries/jakarta-ant-1.1.zip , this directory would contain
+     *      https://archive.apache.org/dist/ant/binaries/jakarta-ant-1.1.zip , this directory would contain
      *      a single directory "jakarta-ant".
      *
      * @return
@@ -254,7 +254,7 @@ public abstract class DownloadFromUrlInstaller extends ToolInstaller {
      */
     public abstract class NodeSpecificInstallable extends Installable implements NodeSpecific<NodeSpecificInstallable> {
 
-        public NodeSpecificInstallable(Installable inst) {
+        protected NodeSpecificInstallable(Installable inst) {
             this.id = inst.id;
             this.name = inst.name;
             this.url = inst.url;

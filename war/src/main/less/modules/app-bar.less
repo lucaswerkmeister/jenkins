@@ -9,6 +9,7 @@
     justify-content: center;
     flex-direction: column;
     width: 100%;
+    min-height: 36px;
   }
 
   .jenkins-app-bar__controls {
@@ -16,15 +17,21 @@
     align-items: center;
     justify-content: center;
     margin-left: 2rem;
+    min-height: 36px;
+
+    .jenkins-search {
+      min-width: 260px;
+    }
   }
 
   &--border {
-    border-bottom: 2px solid var(--panel-border-color);
+    margin-bottom: 2rem;
     padding-bottom: 2rem;
+    border-bottom: 2px solid var(--panel-border-color);
   }
 
   h1 {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
 }
