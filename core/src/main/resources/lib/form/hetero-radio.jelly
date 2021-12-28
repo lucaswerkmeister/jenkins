@@ -42,7 +42,6 @@ THE SOFTWARE.
     <j:set var="currentDescriptor" value="${currentInstance.descriptor}" />
     <j:set var="uniqueId" value="${h.generateId()}" />
     <j:forEach var="d" items="${descriptors}" varStatus="loop">
-      <j:set var="mode" value="vars" />
       <j:set var="descriptor" value="${d}" />
       <j:set var="instance" value="${currentDescriptor==d?currentInstance:null}" />
       <f:radioBlock name="${uniqueId}.${field}" help="${d.helpFile}" value="${loop.index}"
