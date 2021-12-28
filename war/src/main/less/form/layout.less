@@ -1,0 +1,47 @@
+.optionalBlock-container > .form-container,
+.radioBlock-container > .form-container,
+.dropdownList-container {
+  position: relative;
+  // Vertical margins collapse and this can have adverse affects with keeping things lined up - so disable it
+  // by using display: inline-flex
+  display: inline-flex;
+  width: 100%;
+  padding-left: 32px;
+  background: red;
+  margin: 10px 0 2px 0;
+
+  & > .jenkins-form-item:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10px;
+    bottom: 0;
+    width: 2px;
+    background: var(--input-border);
+    border-radius: 2px;
+    transition: var(--standard-transition);
+  }
+
+  &:empty {
+    display: none;
+  }
+
+  .jenkins-form-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.form-container--hidden {
+  display: none !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  max-height: 0 !important;
+  height: 0 !important;
+  overflow: hidden;
+}

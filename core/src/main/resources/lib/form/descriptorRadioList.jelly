@@ -49,11 +49,10 @@ THE SOFTWARE.
   <f:section title="${attrs.title}">
     <d:invokeBody />
 	  <j:forEach var="d" items="${descriptors}" varStatus="loop">
+      <j:set var="descriptor" value="${d}" />
+      <j:set var="instance" value="${instance.descriptor==d?instance:null}" />
       <f:radioBlock name="${varName}" help="${d.helpFile}" value="${loop.index}"
         title="${d.displayName}" checked="${instance.descriptor==d}">
-        <j:set var="descriptor" value="${d}" />
-	      <j:set var="instance" value="${instance.descriptor==d?instance:null}" />
-	      <f:class-entry descriptor="${descriptor}" />
 	      <st:include from="${d}" page="${d.configPage}" optional="true" />
 	    </f:radioBlock>
 	  </j:forEach>

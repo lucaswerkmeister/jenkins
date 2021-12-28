@@ -76,6 +76,9 @@ THE SOFTWARE.
     <j:if test="${attrs.help!=null}">
       <f:helpArea />
     </j:if>
+
+    <f:class-entry descriptor="${descriptor}" />
+
     <div class="form-container tr">
       <d:invokeBody />
     </div>

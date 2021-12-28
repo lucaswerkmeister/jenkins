@@ -1039,52 +1039,6 @@ table.fingerprint-in-build td {
   padding-right: 1em;
 }
 
-.radioBlock-container {
-  margin-bottom: calc(var(--section-padding) / 3);
-
-  &:last-of-type {
-    margin-bottom: var(--section-padding);
-  }
-}
-
-.optionalBlock-container > .form-container,
-.radioBlock-container > .form-container,
-.dropdownList-container {
-  position: relative;
-  padding-left: 32px;
-  transition: var(--standard-transition);
-  margin-top: calc(var(--section-padding) / 3);
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10px;
-    bottom: 0;
-    width: 2px;
-    background: var(--input-border);
-    border-radius: 2px;
-    transition: var(--standard-transition);
-  }
-
-  &:empty {
-    display: none;
-  }
-}
-
-.dropdownList-container {
-  margin-bottom: var(--section-padding);
-}
-
-.form-container--hidden {
-  visibility: hidden !important;
-  margin: 0 !important;
-  opacity: 0 !important;
-  max-height: 0 !important;
-  height: 0 !important;
-  overflow: hidden;
-}
-
 .row-set-end { display: none; }
 
 /* ========================= resizable text area ========================= */
