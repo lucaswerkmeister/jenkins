@@ -4,15 +4,15 @@ import hotkeys from "hotkeys-js"
 
 const i18n = document.getElementById("command-center-i18n")
 const spotlightButton = document.getElementById("button-spotlight")
-const commandCentreBackdrop = document.getElementById("command-centre-backdrop")
-const commandCentre = document.getElementById("command-centre")
+const commandCenterBackdrop = document.getElementById("command-center-backdrop")
+const commandCenter = document.getElementById("command-center")
 const commandBarInput = document.getElementById("command-bar")
-const commandBarMagnifyingGlass = commandCentre.querySelector(".jenkins-command-centre__search .icon")
+const commandBarMagnifyingGlass = commandCenter.querySelector(".jenkins-command-center__search .icon")
 const searchResults = document.getElementById("search-results")
 const searchResultsContainer = document.getElementById("search-results-container")
-const keyboardModifier = document.getElementById("command-centre-shortcut-modifier")
+const keyboardModifier = document.getElementById("command-center-shortcut-modifier")
 
-const hoverClass = "jenkins-command-centre__results__item--hover"
+const hoverClass = "jenkins-command-center__results__item--hover"
 
 // Update the keyboard shortcut text depending on OS
 const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0
@@ -20,15 +20,15 @@ keyboardModifier.textContent = isMac ? "⌘" : "CTRL"
 
 // Events
 spotlightButton.addEventListener("click", function () {
-  showCommandCentre()
+  showCommandCenter()
 })
 
-commandCentre.addEventListener("click", function (e) {
+commandCenter.addEventListener("click", function (e) {
   if (e.target !== e.currentTarget) {
     return
   }
 
-  hideCommandCentre()
+  hideCommandCenter()
 })
 
 commandBarInput.addEventListener("input", async function (e) {
@@ -61,17 +61,17 @@ commandBarInput.addEventListener("input", async function (e) {
   if (e.target.value.length === 0 || Object.keys(results).length > 0) {
     for (const [group, items] of Object.entries(results)) {
       const heading = document.createElement("p")
-      heading.className = "jenkins-command-centre__results__heading"
+      heading.className = "jenkins-command-center__results__heading"
       heading.innerText = group
       searchResults.append(heading)
 
       items.forEach(function (obj) {
         let link = document.createElement("DIV")
-        link.innerHTML = `<a class="jenkins-command-centre__results__item" href="${obj.url}">
-                              <div class="jenkins-command-centre__results__item__icon">${obj.icon ? `${obj.icon.svg ? obj.icon.svg : `<img src="${obj.icon.url}" alt="" />`}` : ``}</div>
+        link.innerHTML = `<a class="jenkins-command-center__results__item" href="${obj.url}">
+                              <div class="jenkins-command-center__results__item__icon">${obj.icon ? `${obj.icon.svg ? obj.icon.svg : `<img src="${obj.icon.url}" alt="" />`}` : ``}</div>
                               ${obj.name}
-                              ${obj.description ? `<span class="jenkins-command-centre__results__item__description">${obj.description}</span>` : ``}
-                              <svg class="jenkins-command-centre__results__item__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"/></svg>
+                              ${obj.description ? `<span class="jenkins-command-center__results__item__description">${obj.description}</span>` : ``}
+                              <svg class="jenkins-command-center__results__item__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"/></svg>
                           </a>`
         link = link.firstChild
         link.addEventListener("mouseenter", e => itemMouseEnter(e))
@@ -82,7 +82,7 @@ commandBarInput.addEventListener("input", async function (e) {
     updateSelectedItem(0)
   } else {
     const label = document.createElement("p")
-    label.className = "jenkins-command-centre__info"
+    label.className = "jenkins-command-center__info"
     label.innerHTML = "<span>" + i18n.dataset.noResultsFor.escapeHTML() + "</span> " + e.target.value.escapeHTML()
     searchResults.append(label)
   }
@@ -132,24 +132,24 @@ commandBarInput.addEventListener("keyup", function (event) {
 })
 
 hotkeys("ctrl+k, command+k", async function () {
-  showCommandCentre()
+  showCommandCenter()
   // Returning false stops the event and prevents default browser events
   return false
 })
 
-// Helper methods for visibility of command centre
-function showCommandCentre() {
-  commandCentre.style.display = "flex"
-  commandCentreBackdrop.style.display = "block"
+// Helper methods for visibility of command center
+function showCommandCenter() {
+  commandCenter.style.display = "flex"
+  commandCenterBackdrop.style.display = "block"
   commandBarInput.focus()
 
   // Fire empty input event to command bar to set appropriate UI states (OOBE, results, no results)
   commandBarInput.dispatchEvent(new Event("input"))
 }
 
-function hideCommandCentre() {
-  commandCentre.style.display = "none"
-  commandCentreBackdrop.style.display = "none"
+function hideCommandCenter() {
+  commandCenter.style.display = "none"
+  commandCenterBackdrop.style.display = "none"
 }
 
 // Group suggestions by 'group' field into map
