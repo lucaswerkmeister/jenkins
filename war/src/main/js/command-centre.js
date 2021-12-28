@@ -1,6 +1,6 @@
 import "core-js/stable"
 import "regenerator-runtime/runtime"
-import hotkeys from 'hotkeys-js'
+import hotkeys from "hotkeys-js"
 
 const i18n = document.getElementById("command-center-i18n")
 const spotlightButton = document.getElementById("button-spotlight")
@@ -18,6 +18,7 @@ const hoverClass = "jenkins-command-centre__results__item--hover"
 const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
 keyboardModifier.textContent = isMac ? "⌘" : "CTRL"
 
+// Events
 spotlightButton.addEventListener("click", function () {
   showCommandCentre()
 })
@@ -29,34 +30,6 @@ commandCentre.addEventListener("click", function (e) {
 
   hideCommandCentre()
 })
-
-hotkeys('ctrl+k, command+k', async function () {
-  showCommandCentre()
-  // Returning false stops the event and prevents default browser events
-  return false
-})
-
-function showCommandCentre() {
-  commandCentre.style.display = "flex"
-  commandCentreBackdrop.style.display = "block"
-  commandBarInput.focus()
-
-  // Fire empty input event to command bar to set appropriate UI states (OOBE, results, no results)
-  commandBarInput.dispatchEvent(new Event('input'))
-}
-
-function hideCommandCentre() {
-  commandCentre.style.display = "none"
-  commandCentreBackdrop.style.display = "none"
-}
-
-function groupByKey(array, key) {
-  return array
-    .reduce((hash, obj) => {
-      if (obj[key] === undefined) return hash
-      return Object.assign(hash, {[obj[key]]: (hash[obj[key]] || []).concat(obj)})
-    }, {})
-}
 
 commandBarInput.addEventListener('input', async function (e) {
   commandBarMagnifyingGlass.classList.add("icon--loading")
@@ -157,6 +130,36 @@ commandBarInput.addEventListener("keyup", function (event) {
       return false
   }
 })
+
+hotkeys('ctrl+k, command+k', async function () {
+  showCommandCentre()
+  // Returning false stops the event and prevents default browser events
+  return false
+})
+
+// Helper methods for visibility of command centre
+function showCommandCentre() {
+  commandCentre.style.display = "flex"
+  commandCentreBackdrop.style.display = "block"
+  commandBarInput.focus()
+
+  // Fire empty input event to command bar to set appropriate UI states (OOBE, results, no results)
+  commandBarInput.dispatchEvent(new Event('input'))
+}
+
+function hideCommandCentre() {
+  commandCentre.style.display = "none"
+  commandCentreBackdrop.style.display = "none"
+}
+
+// Group suggestions by 'group' field into map
+function groupByKey(array, key) {
+  return array
+    .reduce((hash, obj) => {
+      if (obj[key] === undefined) return hash
+      return Object.assign(hash, {[obj[key]]: (hash[obj[key]] || []).concat(obj)})
+    }, {})
+}
 
 function itemMouseEnter(item) {
   let hoveredItems = document.querySelector("." + hoverClass)
