@@ -27,13 +27,7 @@ THE SOFTWARE.
   <l:layout permission="${app.READ}" title="Command ${command.name}">
     <st:include page="sidepanel.jelly" it="${app}"/>
     <l:main-panel>
-      <div class="jenkins-app-bar">
-        <div class="jenkins-app-bar__content">
-          <h1>
-            Command ${command.name}
-          </h1>
-        </div>
-      </div>
+      <h1>Command ${command.name}</h1>
       <j:set var="commandArgs" value="${command.name}${command.singleLineSummary}"/>
       <st:include page="example.jelly"/>
       <pre>
