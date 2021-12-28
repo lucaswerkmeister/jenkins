@@ -1,0 +1,21 @@
+.jenkins-input {
+  display: block;
+  background: var(--input-color);
+  border: 2px solid var(--input-border);
+  padding: var(--form-input-padding);
+  border-radius: var(--form-input-border-radius);
+  width: 100%;
+  box-shadow: var(--form-input-glow);
+  transition: var(--standard-transition);
+
+  &:hover {
+    border-color: var(--input-border-hover);
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    border-color: var(--focus-input-border);
+    box-shadow: var(--form-input-glow--focus);
+  }
+}
