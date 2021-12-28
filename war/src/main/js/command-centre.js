@@ -15,7 +15,7 @@ const keyboardModifier = document.getElementById("command-centre-shortcut-modifi
 const hoverClass = "jenkins-command-centre__results__item--hover"
 
 // Update the keyboard shortcut text depending on OS
-const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
+const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0
 keyboardModifier.textContent = isMac ? "⌘" : "CTRL"
 
 // Events
@@ -31,7 +31,7 @@ commandCentre.addEventListener("click", function (e) {
   hideCommandCentre()
 })
 
-commandBarInput.addEventListener('input', async function (e) {
+commandBarInput.addEventListener("input", async function (e) {
   commandBarMagnifyingGlass.classList.add("icon--loading")
   let results
 
@@ -48,7 +48,7 @@ commandBarInput.addEventListener('input', async function (e) {
       ]
     }
   } else {
-    let response = await fetch(document.getElementById("header").dataset.searchUrl.escapeHTML() + '?query=' + e.target.value)
+    let response = await fetch(document.getElementById("header").dataset.searchUrl.escapeHTML() + "?query=" + e.target.value)
     let result = await response.json()
 
     // Group the results
@@ -56,21 +56,21 @@ commandBarInput.addEventListener('input', async function (e) {
   }
 
   // Clear current search results
-  searchResults.innerHTML = ''
+  searchResults.innerHTML = ""
 
   if (e.target.value.length === 0 || Object.keys(results).length > 0) {
     for (const [group, items] of Object.entries(results)) {
-      const heading = document.createElement('p')
+      const heading = document.createElement("p")
       heading.className = "jenkins-command-centre__results__heading"
       heading.innerText = group
       searchResults.append(heading)
 
       items.forEach(function (obj) {
-        let link = document.createElement('DIV')
+        let link = document.createElement("DIV")
         link.innerHTML = `<a class="jenkins-command-centre__results__item" href="${obj.url}">
                               <div class="jenkins-command-centre__results__item__icon">${obj.icon ? `${obj.icon.svg ? obj.icon.svg : `<img src="${obj.icon.url}" alt="" />`}` : ``}</div>
                               ${obj.name}
-                              ${obj.description ? `<span class="jenkins-command-centre__results__item__description">${obj.description}</span>` : ''}
+                              ${obj.description ? `<span class="jenkins-command-centre__results__item__description">${obj.description}</span>` : ``}
                               <svg class="jenkins-command-centre__results__item__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"/></svg>
                           </a>`
         link = link.firstChild
@@ -81,10 +81,10 @@ commandBarInput.addEventListener('input', async function (e) {
 
     updateSelectedItem(0)
   } else {
-    const heading = document.createElement('p')
-    heading.className = "jenkins-command-centre__info"
-    heading.innerHTML = "<span>" + i18n.dataset.noResultsFor.escapeHTML() + "</span> " + e.target.value.escapeHTML()
-    searchResults.append(heading)
+    const label = document.createElement("p")
+    label.className = "jenkins-command-centre__info"
+    label.innerHTML = "<span>" + i18n.dataset.noResultsFor.escapeHTML() + "</span> " + e.target.value.escapeHTML()
+    searchResults.append(label)
   }
 
   searchResultsContainer.style.height = searchResults.offsetHeight + "px"
@@ -101,12 +101,12 @@ commandBarInput.addEventListener("keyup", function (event) {
   }
 
   switch (event.code) {
-    case 'Enter':
+    case "Enter":
       if (hoveredItem) {
         window.location.href = hoveredItem.href
       }
       return false
-    case 'ArrowUp':
+    case "ArrowUp":
       if (selectedIndex !== -1) {
         if (selectedIndex - 1 < 0) {
           selectedIndex = maxLength - 1
@@ -117,7 +117,7 @@ commandBarInput.addEventListener("keyup", function (event) {
         updateSelectedItem(selectedIndex, selectedIndex + 1 >= maxLength)
       }
       return false
-    case 'ArrowDown':
+    case "ArrowDown":
       if (selectedIndex !== -1) {
         if (selectedIndex + 1 >= maxLength) {
           selectedIndex = 0
@@ -131,7 +131,7 @@ commandBarInput.addEventListener("keyup", function (event) {
   }
 })
 
-hotkeys('ctrl+k, command+k', async function () {
+hotkeys("ctrl+k, command+k", async function () {
   showCommandCentre()
   // Returning false stops the event and prevents default browser events
   return false
@@ -144,7 +144,7 @@ function showCommandCentre() {
   commandBarInput.focus()
 
   // Fire empty input event to command bar to set appropriate UI states (OOBE, results, no results)
-  commandBarInput.dispatchEvent(new Event('input'))
+  commandBarInput.dispatchEvent(new Event("input"))
 }
 
 function hideCommandCentre() {
