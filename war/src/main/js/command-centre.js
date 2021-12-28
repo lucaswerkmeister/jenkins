@@ -62,9 +62,6 @@ commandBarInput.addEventListener('input', async function (e) {
   commandBarMagnifyingGlass.classList.add("icon--loading")
   let results
 
-  // Clear current search results
-  searchResults.innerHTML = ''
-
   if (e.target.value.length === 0) {
     results = {
       [i18n.dataset.help]: [
@@ -84,6 +81,9 @@ commandBarInput.addEventListener('input', async function (e) {
     // Group the results
     results = groupByKey(result["suggestions"], "group")
   }
+
+  // Clear current search results
+  searchResults.innerHTML = ''
 
   if (e.target.value.length === 0 || Object.keys(results).length > 0) {
     for (const [group, items] of Object.entries(results)) {
