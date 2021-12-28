@@ -7,8 +7,8 @@
   display: inline-flex;
   width: 100%;
   padding-left: 32px;
-  background: red;
   margin: 10px 0 2px 0;
+  transition: var(--standard-transition);
 
   & > .jenkins-form-item:last-of-type {
     margin-bottom: 0;
@@ -38,7 +38,7 @@
 }
 
 .form-container--hidden {
-  display: none !important;
+  visibility: hidden !important;
   margin: 0 !important;
   opacity: 0 !important;
   max-height: 0 !important;
