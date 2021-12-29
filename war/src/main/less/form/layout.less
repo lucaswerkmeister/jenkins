@@ -177,6 +177,12 @@
     flex-direction: column;
     width: 100%;
   }
+
+  &:focus-within {
+    &::after {
+      background: var(--focus-input-border);
+    }
+  }
 }
 
 .form-container--hidden {

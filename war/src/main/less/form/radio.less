@@ -103,6 +103,10 @@
     visibility: hidden;
     max-height: 0;
 
+    &:empty {
+      display: none;
+    }
+
     &::after {
       content: "";
       position: absolute;
