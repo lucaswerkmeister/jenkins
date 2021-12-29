@@ -111,7 +111,7 @@ THE SOFTWARE.
         var label = toggleSwitch.nextSibling
         var enabledLabel = label.querySelector(".jenkins-toggle-switch__label__enabled-title")
 
-        // We don't need to do anything for toggle switches that don't have checkedTitles
+        // We don't need to do anything for toggle switches that don't have checkedTitle set
         if (enabledLabel == null) {
           return;
         }
