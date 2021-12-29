@@ -27,15 +27,11 @@ THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <f:toggleSwitch id="toggle-switch-job-enabled" name="enable" title="${it.disabled ? '%Disabled' : '%Enabled'}" checked="${!it.disabled}" invert-label="true" />
-
-  <script>
-    var toggleSwitch = document.getElementById("toggle-switch-job-enabled");
-    var toggleSwitchInput = toggleSwitch.querySelector("input");
-    var toggleSwitchLabel = toggleSwitch.querySelector("label");
-
-    toggleSwitchInput.addEventListener("change", function() {
-      toggleSwitchLabel.textContent = toggleSwitchInput.checked ? "Enabled" : "Disabled";
-    });
-  </script>
+  <f:toggleSwitch id="toggle-switch-job-enabled"
+                  name="enable"
+                  title="${%Disabled}"
+                  checkedTitle="${%Enabled}"
+                  checked="${!it.disabled}"
+                  invert-label="true"
+                  tooltip="${%Enable or disable the current job}" />
 </j:jelly>

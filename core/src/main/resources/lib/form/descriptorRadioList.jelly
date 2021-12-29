@@ -58,6 +58,7 @@ THE SOFTWARE.
         title="${d.displayName}" checked="${checked}">
         <!-- Variable set for class-entry component in radioBlock -->
         <j:set var="instance" value="${instance.descriptor==d?instance:null}" />
+
 	      <st:include from="${d}" page="${d.configPage}" optional="true" />
 	    </f:radioBlock>
 	  </j:forEach>
