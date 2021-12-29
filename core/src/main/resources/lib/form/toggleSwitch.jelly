@@ -119,27 +119,20 @@ THE SOFTWARE.
         var disabledLabel = label.querySelector(".jenkins-toggle-switch__label__disabled-title")
 
         function animateLabels(labelOne, labelTwo) {
+          labelOne.style.opacity = 1;
+          labelOne.style.transform = "translateY(0) rotateX(0deg)";
+          labelTwo.style.opacity = 0;
+          labelTwo.style.transform = "translateY(-1.5rem) rotateX(-75deg)";
 
+          setTimeout(function() {
+            labelTwo.style.transform = "translateY(1.5rem) rotateX(75deg)";
+          }, 550);
         }
 
         if (toggleSwitch.checked) {
-          enabledLabel.style.opacity = 1;
-          enabledLabel.style.transform = "translateY(0) rotateX(0deg)";
-          disabledLabel.style.opacity = 0;
-          disabledLabel.style.transform = "translateY(-1.5rem) rotateX(0deg)";
-
-          setTimeout(function() {
-            disabledLabel.style.transform = "translateY(1.5rem) rotateX(0deg)";
-          }, 550);
+          animateLabels(enabledLabel, disabledLabel)
         } else {
-          enabledLabel.style.opacity = 0;
-          enabledLabel.style.transform = "translateY(-1.5rem) rotateX(0deg)"
-          disabledLabel.style.opacity = 1;
-          disabledLabel.style.transform = "translateY(0) rotateX(0deg)";
-
-          setTimeout(function() {
-            enabledLabel.style.transform = "translateY(1.5rem) rotateX(0deg)";
-          }, 550);
+          animateLabels(disabledLabel, enabledLabel)
         }
       })
 
