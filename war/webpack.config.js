@@ -23,6 +23,7 @@ module.exports = (env, argv) => ({
     ],
     "config-scrollspy": [path.join(__dirname, "src/main/js/config-scrollspy.js")],
     "sortable-drag-drop": [path.join(__dirname, "src/main/js/sortable-drag-drop.js")],
+    "section-to-tabs": [path.join(__dirname, "src/main/js/section-to-tabs.js")],
     "filter-build-history": [path.join(__dirname, "src/main/js/filter-build-history.js")],
 
     // New UI CSS files
