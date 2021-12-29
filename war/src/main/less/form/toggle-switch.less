@@ -1,6 +1,29 @@
 .jenkins-toggle-switch {
   position: relative;
   display: inline-block;
+
+  &--invert-label {
+    input {
+      &:checked + label:after {
+        left: unset !important;
+        right: 5px !important;
+      }
+    }
+
+    label {
+      flex-direction: row-reverse;
+
+      &::before {
+        margin-left: 1rem;
+        margin-right: 0 !important;
+      }
+
+      &::after {
+        left: unset !important;
+        right: 25px;
+      }
+    }
+  }
 }
 
 .jenkins-toggle-switch input {
