@@ -38,9 +38,12 @@ THE SOFTWARE.
     <st:attribute name="align" use="optional">
       'left' or 'center' to align the button to left or center.
     </st:attribute>
+    <st:attribute name="parentClass">
+      Class to apply to the jenkins-form-item parent container
+    </st:attribute>
   </st:documentation>
 
-	<div class='jenkins-form-item tr'>
+	<div class='jenkins-form-item tr ${parentClass}'>
         <st:adjunct includes="lib.form.advanced.advanced"/>
 
 	    <div class="advancedLink" style="${attrs.align!=null?('text-align:'+attrs.align):''}">
@@ -52,10 +55,10 @@ THE SOFTWARE.
 	      <input type="button" value="${attrs.title?:'%Advanced'}..." class="advanced-button advancedButton" /><!-- advancedButton is legacy -->
 	    </div>
             <j:new var="customizedFields" className="java.util.TreeSet"/>
-	    <div class="advancedBody"><div class="tbody">
+	    <div class="advancedBody">
 	    <!-- this is the hidden portion that hosts the "advanced" part. Contents will be moved to the master table when "advanced..." is clicked -->
 	      <d:invokeBody/>
-	    </div></div>
+	    </div>
             <j:if test="${!customizedFields.isEmpty()}">
                 <div class="advanced-customized-fields-info" data-id="${id}" data-customized-fields="${customizedFields}"/>
             </j:if>
