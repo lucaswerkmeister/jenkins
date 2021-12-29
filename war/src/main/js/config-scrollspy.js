@@ -51,7 +51,7 @@ function autoActivateTabs() {
 
   // Calculate the top and height of each section to know where to switch the tabs
   sections.forEach(function (section, i) {
-    const previousSection = i === 1 ? document.querySelector(".jenkins-section:first-of-type") : sections[Math.max(i - 1, 0)].parentNode
+    const previousSection = i === 1 ? document.querySelectorAll(".config-table .jenkins-section")[0] : sections[Math.max(i - 1, 0)].parentNode
     const viewportEntryOffset = i === 0 ? 0 : ((section.parentNode.getBoundingClientRect().top + window.scrollY) - (previousSection.offsetHeight / 2))
 
     if (winScrollTop >= viewportEntryOffset) {
