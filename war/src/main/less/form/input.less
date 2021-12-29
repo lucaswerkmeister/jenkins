@@ -6,7 +6,8 @@
   border-radius: var(--form-input-border-radius);
   width: 100%;
   box-shadow: var(--form-input-glow);
-  transition: var(--standard-transition);
+  // Set height transition to 0s as vertical resizing has a delay/lag otherwise
+  transition: all var(--standard-transition), height 0s;
 
   &:hover {
     border-color: var(--input-border-hover);
