@@ -1354,7 +1354,7 @@ function rowvgStartEachRow(recursive,f) {
         if(isInsideRemovable(e))    return;
 
         var subForms = [];
-        var start = findInFollowingTR(e, 'dropdownList-container'), end;
+        var start = e.parentElement.parentElement.querySelector(".dropdownList-container")
 
         do { start = start.firstElementChild; } while (start && !isTR(start));
 
