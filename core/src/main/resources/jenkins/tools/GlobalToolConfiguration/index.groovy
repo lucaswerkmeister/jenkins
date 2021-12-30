@@ -17,8 +17,6 @@ l.layout(permission:app.SYSTEM_READ, title:my.displayName) {
     set("readOnlyMode", !app.hasPermission(app.ADMINISTER))
     l.main_panel {
         h1 {
-            l.icon(class: 'icon-setting icon-xlg')
-            // TODO more appropriate icon
             text(my.displayName)
         }
 

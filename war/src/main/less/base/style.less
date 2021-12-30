@@ -219,9 +219,14 @@ td.tab {
 }
 
 pre {
-    white-space: pre-wrap;       /* css-3 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
-    margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0 0 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  color: white;
+  background-color: black;
+  font-weight: bold;
 }
 
 pre a {
@@ -439,6 +444,7 @@ div.behavior-loading {
 .bottom-sticker,
 #bottom-sticker {
     width: 100%;   /* it needs to occupy the entire width or else the underlying content will see through */
+    z-index: 999;
 }
 
 .bottom-sticker-inner {
@@ -712,6 +718,7 @@ table.parameters > tbody:hover {
   table {
     border-radius: 0;
     min-width: 450px;
+    margin-bottom: 5px;
   }
 }
 
@@ -912,22 +919,55 @@ table.parameters > tbody:hover {
 
 /* ========================= editable combobox style ========================= */
 .comboBoxList {
-  overflow: visible;
-  background-color: var(--background);
+  overflow-y: scroll;
   color: var(--text-color);
-  border-radius: var(--form-input-border-radius);
-  box-shadow: 0 10px 20px rgba(black, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(black, 0.15);
+  margin-top: 8px;
+  margin-left: 3px;
+  max-height: 300px;
+  z-index: 1000;
+  background: var(--background);
+  padding: 0.3rem;
 }
 
-.comboBoxSelectedItem {
-  background-color: var(--primary);
-  color: var(--background);
+.comboBoxItem {
+  position: relative;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  font-weight: 500;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: var(--text-color);
+    border-radius: 10px;
+    opacity: 0;
+    transition: var(--standard-transition);
+    z-index: -1;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 0.1;
+    }
+  }
+
+  &:active,
+  &:focus {
+    &::before {
+      opacity: 0.2;
+    }
+  }
 }
 
 .combobox-values {
   display: none;
 }
-
 
 /* ========================= directory tree ========================= */
 .parentPath {
@@ -1018,7 +1058,7 @@ table.fingerprint-in-build td {
   position: relative;
   padding-left: 32px;
   transition: var(--standard-transition);
-  margin-top: 0.66rem;
+  margin-top: calc(var(--section-padding) / 3);
 
   &::after {
     content: "";
