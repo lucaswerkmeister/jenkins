@@ -65,6 +65,8 @@
   outline: none !important;
   backdrop-filter: saturate(2) blur(10px);
   max-width: unset !important;
+  max-height: 90vh;
+  overflow-y: scroll;
 
   .tippy-content {
     padding: 0;
@@ -103,6 +105,10 @@
 }
 
 .jenkins-popover {
+  &__header {
+
+  }
+
   &__item {
     display: flex;
     align-items: center;

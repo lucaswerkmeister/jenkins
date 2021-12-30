@@ -33,52 +33,72 @@ tippy('[popover]', {
     animation: 'popover'
 })
 
-tippy('li.children, #menuSelector', {
+const swag = (isSubmenu) => {
+  return {
     content: "<p class='jenkins-spinner'></p>",
     interactive: true,
-    trigger: 'click',
+    trigger: isSubmenu ? "mouseenter" : "click",
     allowHTML: true,
-    placement: "bottom-start",
+    placement: isSubmenu ? "right-start" : "bottom-start",
     arrow: false,
     theme: 'popover',
     offset: [0, 0],
     animation: 'popover',
     onShow(instance) {
-        // If the instance already has existing items, render those instead
-        if (instance.reference.target && instance.reference.target.items) {
-            let content = instance.reference.target.items().map(function (x) {
-                return `<a class="jenkins-popover__item" href="${x.url}">
-                            ${x.text}
-                        </a>`
-            }).join('')
-            instance.setContent(content)
-        } else {
-            const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
-            const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu'
+      // If the instance already has existing items, render those instead
+      console.log(instance.reference)
 
-            fetch(combinePath(href, contextMenuSuffix))
-                .then((response) => response.json())
-                .then((json) => {
-                    let content = json.items.map(function (x) {
-                        return `<a class="jenkins-popover__item" href="${x.url}">
-                                    ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
-                                    ${x.displayName}
-                                </a>`
-                    }).join('')
-                    instance.setContent(content)
-                })
-                .catch((error) => {
-                    // Fallback if the network request failed
-                    instance.setContent(`Request failed. ${error}`)
-                })
-        }
+      if (instance.reference.items || (instance.reference.target && instance.reference.target.items)) {
+        let items = instance.reference.items || instance.reference.target.items()
+
+        console.log(items)
+
+        let content = items.map(function (x) {
+          return `<a class="jenkins-popover__item" href="${x.url}">
+                    ${x.displayName}
+                </a>`
+        }).join('')
+        instance.setContent(content)
+      } else {
+        const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
+        const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu'
+
+        fetch(combinePath(href, contextMenuSuffix))
+          .then((response) => response.json())
+          .then((json) => {
+            console.log(json)
+
+            let menuItems = document.createElement("div")
+            menuItems.append(...json.items.map(function (x) {
+              const menuItem = createElementFromHTML(`<a class="jenkins-popover__item" href="${x.url}">
+                                      ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
+                                      ${x.displayName}
+                                      ${x.subMenu != null ? `<span class="jenkins-popover__item--with-children"></span>` : ``}
+                                  </a>`)
+              if (x.subMenu != null) {
+                menuItem.items = x.subMenu.items
+                tippy(menuItem, swag(true))
+              }
+              return menuItem
+            }))
+
+            instance.setContent(menuItems)
+          })
+          .catch((error) => {
+            // Fallback if the network request failed
+            instance.setContent(`Request failed. ${error}`)
+          })
+      }
     },
     onHidden(instance) {
-        instance.setContent("<p class='jenkins-spinner'></p>")
-    },
-})
+      instance.setContent("<p class='jenkins-spinner'></p>")
+    }
+  }
+}
 
-tippy('[tooltip]', {
+tippy('li.children, #menuSelector', swag(false))
+
+tippy('[tooltip], .submenu', {
     content: element => element.getAttribute('tooltip'),
     arrow: false,
     theme: 'tooltip',
