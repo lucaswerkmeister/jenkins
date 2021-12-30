@@ -150,7 +150,10 @@ THE SOFTWARE.
     <j:forEach var="loop" varStatus="loopStatus" items="${items}">
       <div class="repeated-chunk" name="${name}">
         <j:set var="${var}" value="${loop}" />
-        <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}">${header}</div></j:if>
+        <div class="repeated-chunk__header">
+          <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}"/></j:if>
+          ${header}
+        </div>
         <div class="repeated-chunk__body">
           <d:invokeBody />
         </div>
@@ -162,15 +165,16 @@ THE SOFTWARE.
       <j:forEach begin="${h.size2(items)}" end="${minimum-1}" var="i">
         <j:set var="${var}" value="${null}" />
         <div class="repeated-chunk" name="${name}">
-          <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}">${header}</div></j:if>
+          <div class="repeated-chunk__header">
+            <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}"/></j:if>
+            ${header}
+          </div>
           <div class="repeated-chunk__body">
             <d:invokeBody />
           </div>
         </div>
       </j:forEach>
     </j:if>
-
-<!--    <div class="repeatable-insertion-point" />-->
   </div>
   <j:if test="${!attrs.noAddButton}">
     <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add" />

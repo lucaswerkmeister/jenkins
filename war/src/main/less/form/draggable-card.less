@@ -74,9 +74,20 @@ div.to-be-removed { display: none; }
 
 .repeated-chunk {
   position: relative;
-  border-radius: 10px;
+  border-radius: 6px;
   background: var(--table-body-background);
   overflow: hidden;
+  margin-bottom: 5px;
+
+  &:first-of-type {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  &:last-of-type {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
 
   & > div > *:last-of-type {
     margin-bottom: 0;
@@ -212,5 +223,27 @@ div.to-be-removed { display: none; }
 
   .repeated-chunk {
     background: hsl(240, 7%, 14%);
+  }
+}
+
+//
+
+.jenkins-\!-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-environment-variable-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  grid-gap: 0.75rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.75rem !important;
+
+  .repeatable-delete {
+    position: relative;
+    top: unset;
+    right: unset;
   }
 }
