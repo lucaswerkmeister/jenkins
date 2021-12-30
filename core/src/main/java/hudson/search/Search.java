@@ -195,6 +195,7 @@ public class Search implements StaplerProxy {
     @ExportedBean(defaultVisibility=999)
     public static class Item {
         @Exported
+        @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "read by Stapler")
         public String name;
 
         public Item(String name) {
@@ -300,6 +301,7 @@ public class Search implements StaplerProxy {
                 prefixMatch = i.getPath().startsWith(tokenList)?1:0;
             }
 
+            @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS", justification = "TODO needs triage")
             @Override
             public int compareTo(Tag that) {
                 int r = this.prefixMatch -that.prefixMatch;
@@ -422,7 +424,7 @@ public class Search implements StaplerProxy {
     /**
      * Escape hatch for StaplerProxy-based access control
      */
-    @SuppressFBWarnings("MS_SHOULD_BE_FINAL")
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL", justification = "for script console")
     @Restricted(NoExternalUse.class)
     public static /* Script Console modifiable */ boolean SKIP_PERMISSION_CHECK = SystemProperties.getBoolean(Search.class.getName() + ".skipPermissionCheck");
 

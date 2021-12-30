@@ -17,8 +17,6 @@ l.layout(permission:app.SYSTEM_READ, title:my.displayName) {
     set("readOnlyMode", !app.hasPermission(app.ADMINISTER))
     l.main_panel {
         h1 {
-            l.icon(class: 'icon-setting icon-xlg')
-            // TODO more appropriate icon
             text(my.displayName)
         }
 
@@ -31,7 +29,7 @@ l.layout(permission:app.SYSTEM_READ, title:my.displayName) {
             Functions.getSortedDescriptorsForGlobalConfigByDescriptor(my.FILTER).each { Descriptor descriptor ->
                 set("descriptor",descriptor)
                 set("instance",descriptor)
-                f.rowSet(name:descriptor.jsonSafeClassName) {
+                f.rowSet(name:descriptor.jsonSafeClassName, class: "jenkins-!-margin-bottom-0") {
                     st.include(from:descriptor, page:descriptor.globalConfigPage)
                 }
             }

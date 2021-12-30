@@ -25,6 +25,8 @@ package hudson.util;
 
 import com.jcraft.jzlib.GZIPInputStream;
 import com.jcraft.jzlib.GZIPOutputStream;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import hudson.Util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,8 +34,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -77,33 +79,22 @@ public class CompressedFile {
      * Gets the OutputStream to write to the file.
      */
     public OutputStream write() throws IOException {
-        if(gz.exists())
-            gz.delete();
-        try {
-            return Files.newOutputStream(file.toPath());
-        } catch (InvalidPathException e) {
-            throw new IOException(e);
-        }
+        Files.deleteIfExists(Util.fileToPath(gz));
+        return Files.newOutputStream(Util.fileToPath(file));
     }
 
     /**
      * Reads the contents of a file.
      */
     public InputStream read() throws IOException {
-        if(file.exists())
-            try {
-                return Files.newInputStream(file.toPath());
-            } catch (InvalidPathException e) {
-                throw new IOException(e);
-            }
+        if (Files.exists(Util.fileToPath(file))) {
+            return Files.newInputStream(Util.fileToPath(file));
+        }
 
         // check if the compressed file exists
-        if(gz.exists())
-            try {
-                return new GZIPInputStream(Files.newInputStream(gz.toPath()));
-            } catch (InvalidPathException e) {
-                throw new IOException(e);
-            }
+        if (Files.exists(Util.fileToPath(gz))) {
+            return new GZIPInputStream(Files.newInputStream(Util.fileToPath(gz)));
+        }
 
         // no such file
         throw new FileNotFoundException(file.getName());
@@ -111,7 +102,9 @@ public class CompressedFile {
 
     /**
      * Loads the file content as a string.
+     * @deprecated removed without replacement
      */
+    @Deprecated
     public String loadAsString() throws IOException {
         long sizeGuess;
         if(file.exists())
@@ -125,7 +118,7 @@ public class CompressedFile {
         StringBuilder str = new StringBuilder((int)sizeGuess);
 
         try (InputStream is = read();
-             Reader r = new InputStreamReader(is)) {
+             Reader r = new InputStreamReader(is, Charset.defaultCharset())) {
             char[] buf = new char[8192];
             int len;
             while((len=r.read(buf,0,buf.length))>0)
@@ -144,6 +137,7 @@ public class CompressedFile {
      */
     public void compress() {
         compressionThread.submit(new Runnable() {
+            @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "TODO needs triage")
             @Override
             public void run() {
                 try {

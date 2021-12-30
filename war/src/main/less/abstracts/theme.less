@@ -234,7 +234,7 @@
   --tabs-item-foreground--active: var(--text-color);
   --tabs-item-background--selected: white;
   --tabs-item-foreground--selected: var(--link-color);
-  --tabs-border-radius: calc((10px + 2rem) / 2);
+  --tabs-border-radius: calc((10px + 34px) / 2);
 
   // Deprecated
   --tab-link-border-radius: 10px;
@@ -267,13 +267,14 @@
   --task-link-bg-color--hover: var(--very-light-grey);
 
   // Form
+  --section-padding: 1.85rem;
   --input-color: var(--white);
   --input-border: #C3CCD1;
   --input-border-hover: #5C7889;
   --input-hidden-password-bg-color: #f9f9f9;
-  --form-item-max-width: 650px;
-  --form-item-max-width--small: 300px;
-  --form-item-max-width--medium: 450px;
+  --form-item-max-width: ~"min(56vw, 1400px)";
+  --form-item-max-width--medium: ~"min(41vw, 1200px)";
+  --form-item-max-width--small: ~"min(26vw, 1000px)";
   --form-label-font-weight: bold;
   --form-input-padding: 8px;
   --form-input-border-radius: 6px;
@@ -282,6 +283,7 @@
 
   // Animations
   --standard-transition: 0.2s ease;
+  --elastic-transition: 0.3s cubic-bezier(0, 0.68, 0.5, 1.5);
 
   // Pop out menus
   --menu-text-color: black;
@@ -323,5 +325,6 @@
 
   // Colors
   --green: #1c9146;
+  --orange: #fe820a;
   --red: #df001c;
 }

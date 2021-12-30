@@ -16,7 +16,6 @@ module.exports = (env, argv) => ({
     ],
     "plugin-manager-ui": [
       path.join(__dirname, "src/main/js/plugin-manager-ui.js"),
-      path.join(__dirname, "src/main/less/plugin-manager-ui.less"),
     ],
     "add-item": [
       path.join(__dirname, "src/main/js/add-item.js"),
@@ -32,6 +31,7 @@ module.exports = (env, argv) => ({
     ],
     "tooltips-popovers": [path.join(__dirname, "src/main/js/tooltips-popovers.js")],
     "sortable-drag-drop": [path.join(__dirname, "src/main/js/sortable-drag-drop.js")],
+    "section-to-tabs": [path.join(__dirname, "src/main/js/section-to-tabs.js")],
     "filter-build-history": [path.join(__dirname, "src/main/js/filter-build-history.js")],
 
     // New UI CSS files

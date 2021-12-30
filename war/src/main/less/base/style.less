@@ -219,9 +219,14 @@ td.tab {
 }
 
 pre {
-    white-space: pre-wrap;       /* css-3 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
-    margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0 0 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  color: white;
+  background-color: black;
+  font-weight: bold;
 }
 
 pre a {
@@ -256,10 +261,6 @@ pre.console {
 
 .setting-checkbox {
   font-weight: 500;
-}
-
-.setting-main {
-  width: 100%; /* try to make this column as big as possible. */
 }
 
 .setting-help {
@@ -322,10 +323,6 @@ pre.console {
 /* div that looks like a hyperlink */
 .pseudoLink {
   cursor: pointer;
-}
-
-.advancedLink {
-  text-align: right;
 }
 
 .advancedBody {
@@ -449,18 +446,27 @@ div.behavior-loading {
   }
 }
 
-label.attach-previous {
-    margin-left: 0.5em;
-}
-
 .bottom-sticker,
 #bottom-sticker {
     width: 100%;   /* it needs to occupy the entire width or else the underlying content will see through */
+    z-index: 999;
 }
 
 .bottom-sticker-inner {
+  position: relative;
+  padding: 1em 0;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(-2rem - 2px);
+    bottom: 0;
+    right: 0;
     background: var(--background);
-    padding: 1em 0;
+    z-index: -1;
+  }
 }
 
 .top-sticker,
@@ -712,27 +718,18 @@ table.parameters > tbody:hover {
   display: none;
   margin-left: 20px;
   padding: 0;
+  --table-border-radius: 7px;
 
-  table * {
-    font-size: 0.8rem;
-    border-top: none!important;
-    border-bottom: none!important;
+  table {
+    border-radius: 0;
+    min-width: 450px;
+    margin-bottom: 5px;
   }
-}
-
-.healthReport:hover,
-.healthReport.hover { /* fix IE6 bug with :hover */
-    background: transparent;
 }
 
 .healthReport:hover div.healthReportDetails,
 .healthReport.hover div.healthReportDetails {
   display: block;
-}
-
-.healthReport div.healthReportDetails table {
-    border-collapse: collapse;
-    width: 450px; /* fix IE bug with width */
 }
 
 /* ========================= build history ========================= */
@@ -927,21 +924,55 @@ table.parameters > tbody:hover {
 
 /* ========================= editable combobox style ========================= */
 .comboBoxList {
-  border: 1px solid #000;
-  overflow: visible;
-  background-color: white;
-  color: black;
+  overflow-y: scroll;
+  color: var(--text-color);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(black, 0.15);
+  margin-top: 8px;
+  margin-left: 3px;
+  max-height: 300px;
+  z-index: 1000;
+  background: var(--background);
+  padding: 0.3rem;
 }
 
-.comboBoxSelectedItem {
-  background-color: Highlight;
-  color: HighlightText;
+.comboBoxItem {
+  position: relative;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  font-weight: 500;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: var(--text-color);
+    border-radius: 10px;
+    opacity: 0;
+    transition: var(--standard-transition);
+    z-index: -1;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 0.1;
+    }
+  }
+
+  &:active,
+  &:focus {
+    &::before {
+      opacity: 0.2;
+    }
+  }
 }
 
 .combobox-values {
   display: none;
 }
-
 
 /* ========================= directory tree ========================= */
 .parentPath {
@@ -1018,162 +1049,50 @@ table.fingerprint-in-build td {
   padding-right: 1em;
 }
 
+.radioBlock-container {
+  margin-bottom: calc(var(--section-padding) / 3);
 
-
-
-/* ========================= plugin manager ========================= */
-#plugins {
-  margin-top: 0;
-  border-top: none;
-}
-
-#plugins.bigtable {
-  // Add this fallback because tables with hidden rows will
-  // not have a bottom border
-  border-bottom: 1px solid var(--bigtable-row-border-color);
-}
-
-#pluginsAdv tr:hover {
-  background-color: inherit;
-}
-
-#plugins tr.already-upgraded {
-  background-color: var(--plugin-manager-bg-color-already-upgraded);
-}
-
-#plugins tr.all-dependents-disabled .enable input {
-  pointer-events: auto;
-  opacity: 1;
-  visibility: visible;
-}
-
-#plugins tr.has-dependents input,
-#plugins tr.has-disabled-dependency .enable input {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-#plugins tr.has-dependents-but-disabled .enable input {
-  pointer-events: auto;
-  opacity: 1;
-  visibility: visible;
-}
-
-#plugins tr.has-disabled-dependency .enable input {
-  opacity: 0.4;
-}
-
-#plugins tr.deleted input {
-  visibility: hidden !important;
-}
-
-#plugins .dependent-list,
-#plugins .dependency-list {
-  display: none;
-}
-
-#plugins .enable-state-info,
-#plugins .uninstall-state-info {
-    padding: 5px 20px;
-    max-width: 70%;
-    border: solid 1px var(--warning);
-    border-radius: 3px;
-    text-align: center;
-}
-
-#plugins .enable-state-info {
-    float: left;
-}
-
-#plugins .uninstall-state-info {
-    float: right;
-}
-
-#plugins .plugin-dependency-info .title,
-#plugins .plugin-dependency-info .subtitle {
-    opacity: 0.7;
-}
-
-#plugins .plugin-dependency-info .title {
-    margin-bottom: 5px;
-    font-size: larger;
-    font-weight: bolder;
-}
-
-#plugins .plugin-dependency-info span {
-    margin: 5px 5px 0 0;
-    background-color: var(--primary);
-    display: inline-block;
-    padding: 0.2em 0.6em 0.3em;
-    font-size: var(--font-size-xs);
-    font-weight: 700;
-    line-height: 1;
-    color: var(--white);
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25em;
-}
-
-/* ========================= repeatable elements ========================= */
-
-.repeated-chunk {
-    border: 2px dashed transparent;
-    padding-left: 1.5rem;
-}
-
-.repeated-chunk.hover {
-    border-color: var(--medium-grey);
-}
-
-.repeated-chunk .show-if-last { visibility: hidden; }
-.repeated-chunk.last .show-if-last { visibility: visible; }
-
-.repeated-chunk .show-if-not-last { visibility: visible; }
-.repeated-chunk.last .show-if-not-last { visibility: hidden; }
-
-.repeated-chunk .show-if-not-only { visibility: visible; }
-.repeated-chunk.only .show-if-not-only { visibility: hidden; }
-
-/* == nested repeatable elements / 2 deep == */
-.repeated-chunk .repeated-chunk .show-if-last { visibility: hidden; }
-.repeated-chunk .repeated-chunk.last .show-if-last { visibility: visible; }
-
-.repeated-chunk .repeated-chunk .show-if-not-last { visibility: visible; }
-.repeated-chunk .repeated-chunk.last .show-if-not-last { visibility: hidden; }
-
-.repeated-chunk .repeated-chunk .show-if-not-only { visibility: visible; }
-.repeated-chunk .repeated-chunk.only .show-if-not-only { visibility: hidden; }
-
-/* == nested repeatable elements / 3 deep == */
-.repeated-chunk .repeated-chunk .repeated-chunk .show-if-last { visibility: hidden; }
-.repeated-chunk .repeated-chunk .repeated-chunk.last .show-if-last { visibility: visible; }
-
-.repeated-chunk .repeated-chunk .repeated-chunk .show-if-not-last { visibility: visible; }
-.repeated-chunk .repeated-chunk .repeated-chunk.last .show-if-not-last { visibility: hidden; }
-
-.repeated-chunk .repeated-chunk .repeated-chunk .show-if-not-only { visibility: visible; }
-.repeated-chunk .repeated-chunk .repeated-chunk.only .show-if-not-only { visibility: hidden; }
-
-/*
-    <DIV>s marked with to-be-removed is used in conjunction with repeatable.jelly and hetero-list.jelly
-    and represents a master copy that gets pulled out from HTML, then inserted later upon demand multiple times
-    when the user does "Add".
-*/
-div.to-be-removed { display: none; }
-
-/* ========================= Other form related CSS ========================= */
-
-.form-container {
-  max-width: 100%;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .optionalBlock-container > .form-container,
 .radioBlock-container > .form-container,
 .dropdownList-container {
-  margin-left: 0.25rem;
-  border-left: 2px dashed rgba(0, 0, 0, 0.33);
-  padding-left: 1rem;
+  position: relative;
+  padding-left: 32px;
+  transition: var(--standard-transition);
+  margin-top: calc(var(--section-padding) / 3);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10px;
+    bottom: 0;
+    width: 2px;
+    background: var(--input-border);
+    border-radius: 2px;
+    transition: var(--standard-transition);
+  }
+
+  &:empty {
+    display: none;
+  }
+}
+
+.dropdownList-container {
+  margin-bottom: var(--section-padding);
+}
+
+.form-container--hidden {
+  visibility: hidden !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  max-height: 0 !important;
+  height: 0 !important;
+  overflow: hidden;
 }
 
 .row-set-end { display: none; }
@@ -1204,63 +1123,6 @@ textarea.rich-editor {
   visibility: hidden;
 }
 
-/* ========================= D&D support in heterogenous/repeatable lists = */
-
-.hetero-list-container .has-help .dd-handle {
-    flex: 1;
-}
-
-.hetero-list-container .dd-handle,
-.repeated-container .dd-handle {
-    cursor: move;
-    background-image: url(../../images/grip.png);
-    background-repeat: repeat-y;
-    padding-left: 20px;
-}
-
-.hetero-list-container.with-drag-drop .repeated-chunk,
-.repeated-container.with-drag-drop .repeated-chunk {
-    padding: 0.5em;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    padding-left: 1.5rem;
-}
-
-.hetero-list-container.with-drag-drop .repeated-chunk .dd-handle,
-.repeated-container.with-drag-drop .repeated-chunk .dd-handle {
-  margin-left: -1.25rem;
-}
-
-// SortableJS drag & drop classes
-.repeated-chunk--sortable-ghost {
-  height: 100px;
-  width: 100%;
-  overflow: hidden;
-}
-.repeated-chunk--sortable-chosen {
-  height: 100px;
-  width: 100%;
-  background-color: transparent;
-  border: 2px solid var(--primary);
-
-  & > * {
-    display: none;
-  }
-}
-
-/* ========================= plugin update center ========================= */
-
-#plugins .excerpt {
-    white-space: normal;
-    margin-top: 0.5em;
-    padding-left: 2em;
-    color: var(--text-color-secondary);
-}
-
-#plugins .excerpt a {
-  text-decoration: underline;
-}
-
 /*
  * TODO(andipabst): Not used after https://github.com/jenkinsci/jenkins/pull/4299,
  *                  remove once there are no more dependencies
@@ -1277,16 +1139,6 @@ textarea.rich-editor {
     margin-top: 0.5em;
     padding-left: 2em;
     color: #f00;
-}
-
-#pluginsAdv {
-  padding: 0.5rem;
-}
-
-#pluginsAdv section {
-  &:not(:last-child) {
-    margin-bottom: 1.5rem;
-  }
 }
 
 /* ========================= progress bar ========================= */
@@ -1548,7 +1400,7 @@ select.select-ajax-pending {
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: var(--form-input-border-radius);
 }
 
 .alert a {

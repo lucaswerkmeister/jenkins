@@ -411,7 +411,7 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
      * plugin</a>. *
      * 
      * @throws Exception if the File could not be inserted into the classpath for some reason.
-     * @since TODO
+     * @since 2.313
      */
     @Restricted(Beta.class)
     public void injectJarsToClasspath(File... jars) throws Exception {
@@ -767,6 +767,7 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
     /**
      * Disables this plugin next time Jenkins runs. As it doesn't check anything, it's recommended to use the method
      * {@link #disable(PluginDisableStrategy)}
+     * @deprecated use {@link #disable(PluginDisableStrategy)}
      */
     @Deprecated //see https://issues.jenkins.io/browse/JENKINS-27177
     public void disable() throws IOException {
@@ -971,7 +972,7 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
             if (dependency == null) {
                 PluginWrapper failedDependency = NOTICE.getPlugin(d.shortName);
                 if (failedDependency != null) {
-                    dependencyErrors.put(Messages.PluginWrapper_failed_to_load_dependency(failedDependency.getLongName(), failedDependency.getVersion()), true);
+                    dependencyErrors.put(Messages.PluginWrapper_failed_to_load_dependency_2(failedDependency.getLongName(), failedDependency.getShortName(), failedDependency.getVersion()), true);
                     break;
                 } else {
                     dependencyErrors.put(Messages.PluginWrapper_missing(d.shortName, d.version), false);
@@ -979,13 +980,13 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
             } else {
                 if (dependency.isActive()) {
                     if (isDependencyObsolete(d, dependency)) {
-                        versionDependencyError(Messages.PluginWrapper_obsolete(dependency.getLongName(), dependency.getVersion(), d.version), dependency.getVersion(), d.version);
+                        versionDependencyError(Messages.PluginWrapper_obsolete_2(dependency.getLongName(), dependency.getShortName(), dependency.getVersion(), d.version), dependency.getVersion(), d.version);
                     }
                 } else {
                     if (isDependencyObsolete(d, dependency)) {
-                        versionDependencyError(Messages.PluginWrapper_disabledAndObsolete(dependency.getLongName(), dependency.getVersion(), d.version), dependency.getVersion(), d.version);
+                        versionDependencyError(Messages.PluginWrapper_obsolete_2(dependency.getLongName(), dependency.getShortName(), dependency.getVersion(), d.version), dependency.getVersion(), d.version);
                     } else {
-                        dependencyErrors.put(Messages.PluginWrapper_disabled(dependency.getLongName()), false);
+                        dependencyErrors.put(Messages.PluginWrapper_disabled_2(dependency.getLongName(), dependency.getShortName()), false);
                     }
                 }
 
@@ -996,7 +997,7 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
             PluginWrapper dependency = parent.getPlugin(d.shortName);
             if (dependency != null && dependency.isActive()) {
                 if (isDependencyObsolete(d, dependency)) {
-                    versionDependencyError(Messages.PluginWrapper_obsolete(dependency.getLongName(), dependency.getVersion(), d.version), dependency.getVersion(), d.version);
+                    versionDependencyError(Messages.PluginWrapper_obsolete_2(dependency.getLongName(), dependency.getShortName(), dependency.getVersion(), d.version), dependency.getVersion(), d.version);
                 } else {
                     dependencies.add(d);
                 }
@@ -1005,7 +1006,7 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
         if (!dependencyErrors.isEmpty()) {
             NOTICE.addPlugin(this);
             StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.append(Messages.PluginWrapper_failed_to_load_plugin(getLongName(), getVersion())).append(System.lineSeparator());
+            messageBuilder.append(Messages.PluginWrapper_failed_to_load_plugin_2(getLongName(), getShortName(), getVersion())).append(System.lineSeparator());
             for (Iterator<String> iterator = dependencyErrors.keySet().iterator(); iterator.hasNext(); ) {
                 String dependencyError = iterator.next();
                 messageBuilder.append(" - ").append(dependencyError);
@@ -1028,7 +1029,7 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
      */
     private void versionDependencyError(String message, String actual, String minimum) {
         if (isSnapshot(actual) || isSnapshot(minimum)) {
-            LOGGER.log(WARNING, "Suppressing dependency error in {0} v{1}: {2}", new Object[] {getLongName(), getVersion(), message});
+            LOGGER.log(WARNING, "Suppressing dependency error in {0} v{1}: {2}", new Object[] {getShortName(), getVersion(), message});
         } else {
             dependencyErrors.put(message, false);
         }
@@ -1190,6 +1191,7 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
 
     /**
      * Checks if this plugin is pinned and that's forcing us to use an older version than the bundled one.
+     * @deprecated removed without replacement
      */
     @Deprecated // See https://groups.google.com/d/msg/jenkinsci-dev/kRobm-cxFw8/6V66uhibAwAJ
     public boolean isPinningForcingOldVersion() {
@@ -1376,7 +1378,7 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
         Jenkins jenkins = Jenkins.get();
         
         jenkins.checkPermission(Jenkins.ADMINISTER);
-        archive.delete();
+        Files.deleteIfExists(Util.fileToPath(archive));
 
         // Redo who depends on who.
         jenkins.getPluginManager().resolveDependentPlugins();
@@ -1407,6 +1409,24 @@ public class PluginWrapper implements Comparable<PluginWrapper>, ModelObject {
             }
         }
         return deprecations;
+    }
+
+    @Restricted(NoExternalUse.class)
+    public String getIssueTrackerReportUrl() {
+        final UpdateCenter updateCenter = Jenkins.get().getUpdateCenter();
+        if (updateCenter.isSiteDataReady()) {
+            for (UpdateSite site : updateCenter.getSites()) {
+                final UpdateSite.Plugin sitePlugin = site.getPlugin(this.shortName);
+                if (sitePlugin != null && sitePlugin.issueTrackers != null) {
+                    for (UpdateSite.IssueTracker issueTracker : sitePlugin.issueTrackers) {
+                        if (issueTracker.reportUrl != null) {
+                            return issueTracker.reportUrl;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private static final Logger LOGGER = Logger.getLogger(PluginWrapper.class.getName());
