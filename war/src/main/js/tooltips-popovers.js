@@ -92,3 +92,85 @@ tippy('[html-tooltip]', {
     theme: 'tooltip',
     animation: 'tooltip'
 })
+
+function createElementFromHTML(htmlString) {
+  var div = document.createElement('div');
+  div.innerHTML = htmlString.trim();
+
+  // Change this to div.childNodes to support multiple top-level nodes
+  return div.firstChild;
+}
+
+document.querySelectorAll(".hetero-list-add").forEach(function(e) {
+  // Templates for hetero-lists are stored in a div on load (.prototypes), so we
+  // need to take them and translate them into template objects we can use for our dropdown menu
+  const prototypes = e.parentElement.previousSibling
+  const insertionPoint = e.parentElement.previousSibling.previousSibling
+
+  // Initialize drag and drop
+  var withDragDrop = registerSortableDragDrop(insertionPoint.parentElement);
+
+  // Translate the .prototypes div children into templates for the dropdown menu
+  const templates = [];
+  [...prototypes.children].forEach(function (n) {
+    const name = n.getAttribute("name");
+    const descriptorId = n.getAttribute("descriptorId");
+    const title = n.getAttribute("title");
+    const icon = `<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Ellipse</title><circle cx="256" cy="256" r="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`
+    templates.push({html: n.innerHTML, name, title, descriptorId, icon});
+  });
+
+  // Remove the .prototypes div to prevent tampering
+  Element.remove(prototypes);
+
+  // Generate a list of menu items for the dropdown to use
+  let menuItems = document.createElement("div")
+  menuItems.append(...templates.map(function (x) {
+    const menuItem = createElementFromHTML(`<button type="button" class="jenkins-popover__item">
+                        <div class="jenkins-popover__item__icon">${x.icon}</div>
+                        ${x.title}
+                      </button>`)
+
+    menuItem.addEventListener("click", () => {
+      const nc = document.createElement("div");
+      nc.className = "repeated-chunk";
+      nc.setAttribute("name", x.name);
+      nc.setAttribute("descriptorId", x.descriptorId);
+      nc.innerHTML = x.html;
+
+      insertionPoint.parentElement.insertBefore(nc, insertionPoint)
+
+      renderOnDemand(findElementsBySelector(nc,"div.config-page")[0],function() {
+      });
+
+      Behaviour.applySubtree(nc,true);
+      ensureVisible(nc);
+      layoutUpdateCallback.call();
+
+      // Initialize drag & drop for this component
+      if(withDragDrop) alert(registerSortableDragDrop(insertionPoint.parentElement))
+    });
+
+    return menuItem
+  }))
+
+  // Add the tippy dropdown to the .hetero-list-add button
+  tippy(e, {
+    interactive: true,
+    trigger: 'click',
+    allowHTML: true,
+    placement: "bottom-start",
+    arrow: false,
+    theme: 'popover',
+    offset: [0, 0],
+    animation: 'popover',
+    content: menuItems,
+    onShow(instance) {
+      instance.popper.addEventListener("click", () => {
+        instance.hide();
+      });
+    },
+  })
+})
+
+
