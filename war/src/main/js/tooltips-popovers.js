@@ -33,7 +33,7 @@ tippy('[popover]', {
     animation: 'popover'
 })
 
-const swag = (isSubmenu) => {
+const generatePopoverDetails = (isSubmenu) => {
   return {
     content: "<p class='jenkins-spinner'></p>",
     interactive: true,
@@ -42,53 +42,53 @@ const swag = (isSubmenu) => {
     placement: isSubmenu ? "right-start" : "bottom-start",
     arrow: false,
     theme: 'popover',
-    offset: [0, 0],
+    offset: isSubmenu ? [-7, 0] : [0, 0],
     animation: 'popover',
     onShow(instance) {
+      instance.popper.addEventListener("click", () => {
+        instance.hide();
+      });
+
       // If the instance already has existing items, render those instead
-      console.log(instance.reference)
-
       if (instance.reference.items || (instance.reference.target && instance.reference.target.items)) {
-        let items = instance.reference.items || instance.reference.target.items()
-
-        console.log(items)
-
-        let content = items.map(function (x) {
-          return `<a class="jenkins-popover__item" href="${x.url}">
-                    ${x.displayName}
-                </a>`
-        }).join('')
-        instance.setContent(content)
+        generateMenuItems(instance.reference.items || instance.reference.target.items())
       } else {
         const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
         const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu'
 
         fetch(combinePath(href, contextMenuSuffix))
           .then((response) => response.json())
-          .then((json) => {
-            console.log(json)
-
-            let menuItems = document.createElement("div")
-            menuItems.append(...json.items.map(function (x) {
-              const menuItem = createElementFromHTML(`<a class="jenkins-popover__item" href="${x.url}">
-                                      ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
-                                      ${x.displayName}
-                                      ${x.subMenu != null ? `<span class="jenkins-popover__item--with-children"></span>` : ``}
-                                  </a>`)
-              if (x.subMenu != null) {
-                menuItem.items = x.subMenu.items
-                tippy(menuItem, swag(true))
-              }
-              return menuItem
-            }))
-
-            instance.setContent(menuItems)
-          })
+          .then((json) => generateMenuItems(json.items))
           .catch((error) => {
             // Fallback if the network request failed
             instance.setContent(`Request failed. ${error}`)
           })
       }
+
+      function generateMenuItems(items) {
+        let menuItems = document.createElement("div")
+        menuItems.append(...items.map(function (x) {
+          if (x.header) {
+            return createElementFromHTML(`<p class="jenkins-popover__header">${x.text || x.displayName}</p>`)
+          }
+
+          const menuItem = createElementFromHTML(`<a class="jenkins-popover__item" href="${x.url}">
+                                      ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
+                                      ${x.text || x.displayName}
+                                      ${x.subMenu != null ? `<span class="jenkins-popover__item__chevron"></span>` : ``}
+                                  </a>`)
+
+          if (x.subMenu != null) {
+            menuItem.items = x.subMenu.items
+            tippy(menuItem, generatePopoverDetails(true))
+          }
+
+          return menuItem
+        }))
+
+        instance.setContent(menuItems)
+      }
+
     },
     onHidden(instance) {
       instance.setContent("<p class='jenkins-spinner'></p>")
@@ -96,7 +96,7 @@ const swag = (isSubmenu) => {
   }
 }
 
-tippy('li.children, #menuSelector', swag(false))
+tippy('li.children, #menuSelector', generatePopoverDetails(false))
 
 tippy('[tooltip], .submenu', {
     content: element => element.getAttribute('tooltip'),
@@ -190,5 +190,3 @@ document.querySelectorAll(".hetero-list-add").forEach(function(e) {
     },
   })
 })
-
-
