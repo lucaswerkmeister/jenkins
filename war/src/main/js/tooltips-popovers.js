@@ -71,12 +71,32 @@ const generatePopoverDetails = (isSubmenu) => {
           if (x.header) {
             return createElementFromHTML(`<p class="jenkins-popover__header">${x.text || x.displayName}</p>`)
           }
+          const tagName = x.post ? "button" : "a";
 
-          const menuItem = createElementFromHTML(`<a class="jenkins-popover__item" href="${x.url}">
+          const menuItem = createElementFromHTML(`<${tagName} class="jenkins-popover__item" href="${x.url}">
                                       ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
                                       ${x.text || x.displayName}
                                       ${x.subMenu != null ? `<span class="jenkins-popover__item__chevron"></span>` : ``}
-                                  </a>`)
+                                  </${tagName}>`)
+
+          if (x.post || x.requiresConfirmation) {
+            menuItem.addEventListener("click", () => {
+              if (x.requiresConfirmation) {
+                if (confirm((x.text || x.displayName) + ": are you sure?")) { // TODO I18N
+                  var form = document.createElement('form');
+                  form.setAttribute('method', x.post ? 'POST' : 'GET');
+                  form.setAttribute('action', x.url);
+                  if (x.post) {
+                    crumb.appendToForm(form);
+                  }
+                  document.body.appendChild(form);
+                  form.submit();
+                }
+              } else {
+                new Ajax.Request(x.url);
+              }
+            })
+          }
 
           if (x.subMenu != null) {
             menuItem.items = x.subMenu.items
