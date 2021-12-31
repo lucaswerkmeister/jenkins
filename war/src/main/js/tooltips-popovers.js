@@ -210,3 +210,28 @@ document.querySelectorAll(".hetero-list-add").forEach(function(e) {
     },
   })
 })
+
+function hoverNotification(text, element) {
+  let tooltip = tippy(element, {
+    interactive: true,
+    trigger: 'hover',
+    followCursor: 'initial',
+    arrow: false,
+    theme: 'tooltip',
+    offset: [0, 0],
+    animation: 'tooltip',
+    content: text,
+    onShow(instance) {
+      setTimeout(() => {
+        instance.hide();
+      }, 3000);
+    },
+  })
+  tooltip.show()
+}
+
+/*
+ * Expose the function to register drag & drop components to the window objects
+ * so that other widgets can use it (repeatable, hetero-list)
+ */
+window.hoverNotification = hoverNotification;

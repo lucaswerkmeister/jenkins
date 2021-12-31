@@ -2318,10 +2318,6 @@ var toggleCheckboxes = function(toggle) {
     }
 };
 
-function hoverNotification(text, element) {
-    alert(text)
-}
-
 // Decrease vertical padding for checkboxes
 window.addEventListener('load', function () {
     document.querySelectorAll(".jenkins-form-item").forEach(function (element) {
