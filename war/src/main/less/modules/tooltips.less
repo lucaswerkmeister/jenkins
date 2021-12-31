@@ -51,9 +51,18 @@
   font-weight: 500;
   font-size: 0.75rem;
   backdrop-filter: saturate(2) blur(10px);
+  max-width: unset !important;
 
   .tippy-content {
     padding: 0;
+  }
+
+  // We style tables as they have additional margin/border radius when in tooltips
+  .jenkins-table {
+    --table-background: rgba(black, 0.05);
+    --table-border-radius: 8px;
+    margin: calc(-0.55rem + 5px) calc(-0.8rem + 5px);
+    width: 400px;
   }
 }
 
