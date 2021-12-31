@@ -51,8 +51,10 @@ THE SOFTWARE.
                     <tbody>
                         <j:forEach var="rpt" items="${healthReports}">
                             <tr>
-                                <td align="left">
+                                <td align="left" class="jenkins-table__cell--tight jenkins-table__icon">
+                                  <div class="jenkins-table__cell__button-wrapper">
                                     <l:icon class="${rpt.iconClassName} icon-sm" />
+                                  </div>
                                 </td>
                                 <td>${rpt.localizableDescription}</td>
                                 <td align="right">${rpt.score}</td>
