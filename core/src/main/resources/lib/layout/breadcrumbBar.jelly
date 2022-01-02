@@ -34,8 +34,6 @@ THE SOFTWARE.
     use the &lt;l:breadcrumb> tag.
   </st:documentation>
 
-  <st:adjunct includes="lib.layout.breadcrumbs" />
-
   <div class="top-sticker noedge">
     <div class="top-sticker-inner">
       <div class="jenkins-breadcrumbs">
