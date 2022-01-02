@@ -21,6 +21,17 @@ function combinePath(a,b) {
     return a + '/' + b + qs
 }
 
+document.querySelectorAll("A.model-link").forEach(function (link) {
+  const dropdownChevron = document.createElement("button")
+  dropdownChevron.className = "jenkins-menu-dropdown-chevron"
+  dropdownChevron.setAttribute("href", link.href)
+  dropdownChevron.addEventListener("click", function(event) {
+    event.preventDefault()
+  })
+  link.appendChild(dropdownChevron)
+});
+
+
 tippy('[popover]', {
     content: element => document.getElementById(element.getAttribute('menu')).innerHTML,
     interactive: true,
@@ -44,6 +55,9 @@ const generatePopoverDetails = (isSubmenu) => {
     theme: 'popover',
     offset: isSubmenu ? [-7, 0] : [0, 0],
     animation: 'popover',
+    // onTrigger(instance, event) {
+    //   event.stopPropagation()
+    // },
     onShow(instance) {
       instance.popper.addEventListener("click", () => {
         instance.hide();
@@ -54,9 +68,8 @@ const generatePopoverDetails = (isSubmenu) => {
         generateMenuItems(instance.reference.items || instance.reference.target.items())
       } else {
         const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
-        const contextMenuSuffix = instance.reference.target ? 'contextMenu' : 'childrenContextMenu'
 
-        fetch(combinePath(href, contextMenuSuffix))
+        fetch(combinePath(href, "pageMenu"))
           .then((response) => response.json())
           .then((json) => generateMenuItems(json.items))
           .catch((error) => {
@@ -68,9 +81,14 @@ const generatePopoverDetails = (isSubmenu) => {
       function generateMenuItems(items) {
         let menuItems = document.createElement("div")
         menuItems.append(...items.map(function (x) {
-          if (x.header) {
+          if (x.type === "HEADER") {
             return createElementFromHTML(`<p class="jenkins-popover__header">${x.text || x.displayName}</p>`)
           }
+
+          if (x.type === "SEPARATOR") {
+            return createElementFromHTML(`<div class="jenkins-popover__separator"></div>`)
+          }
+
           const tagName = x.post ? "button" : "a";
 
           const menuItem = createElementFromHTML(`<${tagName} class="jenkins-popover__item" href="${x.url}">
@@ -116,7 +134,7 @@ const generatePopoverDetails = (isSubmenu) => {
   }
 }
 
-tippy('li.children, #menuSelector', generatePopoverDetails(false))
+tippy('li.children, #menuSelector, .jenkins-menu-dropdown-chevron', generatePopoverDetails(false))
 
 tippy('[tooltip], .submenu', {
     content: element => element.getAttribute('tooltip'),
@@ -235,3 +253,4 @@ function hoverNotification(text, element) {
  * so that other widgets can use it (repeatable, hetero-list)
  */
 window.hoverNotification = hoverNotification;
+
