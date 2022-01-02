@@ -53,11 +53,9 @@ const generatePopoverDetails = (isSubmenu) => {
     placement: isSubmenu ? "right-start" : "bottom-start",
     arrow: false,
     theme: 'popover',
+    appendTo: document.body,
     offset: isSubmenu ? [-7, 0] : [0, 0],
     animation: 'popover',
-    // onTrigger(instance, event) {
-    //   event.stopPropagation()
-    // },
     onShow(instance) {
       instance.popper.addEventListener("click", () => {
         instance.hide();

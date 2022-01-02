@@ -1,53 +1,9 @@
-:root {
-  --tooltip-background: rgba(255, 255, 255, 0.7);
-  --tooltip-foreground: var(--text-color);
-  --tooltip-shadow-new: 0 0 1px rgba(0, 0, 20, 0.15),
-                        inset 0 0 1px rgba(240, 240, 255, 0.5),
-                        0 15px 35px rgba(50, 50, 100, 0.2),
-                        0 7.5px 15px -15px rgba(0, 0, 0, 0.25);
-
-  --popover-background: rgba(255, 255, 255, 0.7);
-  --popover-foreground: var(--text-color);
-  --popover-shadow: 0 0 1px rgba(0, 0, 20, 0.15),
-                    inset 0 0 1px rgba(240, 240, 255, 0.5),
-                    0 15px 35px rgba(50, 50, 100, 0.2),
-                    0 7.5px 15px -15px rgba(0, 0, 0, 0.25);
-
-  --popover-item-background--hover: rgb(235, 235, 235);
-  --popover-item-foreground--hover: black;
-
-  --popover-item-background--active: rgb(210, 210, 210);
-  --popover-item-foreground--active: black;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --tooltip-background: rgba(40, 40, 45, 0.85);
-    --tooltip-foreground: rgb(240, 240, 245);
-    --tooltip-shadow-new: inset 0 0 1px rgba(240, 240, 255, 0.1),
-                          0 10px 25px rgba(15, 15, 20, 0.45),
-                          0 7.5px 15px -15px rgba(0, 0, 0, 1);
-
-    --popover-background: rgba(40, 40, 45, 0.85);
-    --popover-foreground: rgb(240, 240, 245);
-    --popover-shadow: inset 0 0 1px rgba(240, 240, 255, 0.1),
-                      0 10px 25px rgba(15, 15, 20, 0.45),
-                      0 7.5px 15px -15px rgba(0, 0, 0, 1);
-
-    --popover-item-background--hover: rgb(62, 62, 64);
-    --popover-item-foreground--hover: rgb(240, 240, 245);
-
-    --popover-item-background--active: rgb(72, 72, 74);
-    --popover-item-foreground--active: rgb(240, 240, 245);
-  }
-}
-
 .tippy-box[data-theme~='tooltip'] {
   background: var(--tooltip-background);
   color: var(--tooltip-foreground);
   padding: 0.55rem 0.8rem;
   border-radius: 10px;
-  box-shadow: var(--tooltip-shadow-new);
+  box-shadow: var(--tooltip-shadow);
   font-weight: 500;
   font-size: 0.75rem;
   backdrop-filter: saturate(2) blur(10px);
@@ -68,7 +24,7 @@
 
 .tippy-box[data-theme~='popover'] {
   background: var(--popover-background);
-  padding: 0.5rem;
+  padding: 0.45rem;
   border-radius: 14px;
   box-shadow: var(--popover-shadow);
   outline: none !important;
@@ -174,7 +130,7 @@
       background: var(--text-color);
       border-radius: 10px;
       opacity: 0;
-      transition: 0.2s ease;
+      transition: var(--standard-transition);
       z-index: -1;
     }
 
@@ -187,7 +143,7 @@
       right: 0;
       border-radius: 10px;
       opacity: 0.05;
-      transition: 0.2s ease;
+      transition: var(--standard-transition);
       box-shadow: 0 0 0 10px transparent;
     }
 
