@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jenkins.model.Jenkins;
+import org.jenkins.ui.icon.NewIcon;
 import org.jvnet.localizer.Localizable;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -65,9 +66,22 @@ public abstract class ManagementLink implements ExtensionPoint, Action {
      *      As a special case, return null to exclude this object from the management link.
      *      This is useful for defining {@link ManagementLink} that only shows up under
      *      certain circumstances.
+     * @deprecated Use getIcon() instead
      */
-    @Override
-    public abstract @CheckForNull String getIconFileName();
+    @Override @Deprecated
+    public @CheckForNull String getIconFileName() {
+        return null;
+    }
+
+    /**
+     * @return
+     *      As a special case, return null to exclude this object from the management link.
+     *      This is useful for defining {@link ManagementLink} that only shows up under
+     *      certain circumstances.
+     */
+    public @CheckForNull NewIcon getIcon() {
+        return NewIcon.fromRelativePath(getIconFileName());
+    }
 
     /**
      * Returns a short description of what this link does. This text

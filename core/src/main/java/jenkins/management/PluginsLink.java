@@ -30,6 +30,8 @@ import hudson.model.ManagementLink;
 import hudson.model.UpdateCenter;
 import hudson.security.Permission;
 import jenkins.model.Jenkins;
+import org.jenkins.ui.icon.IconSet;
+import org.jenkins.ui.icon.NewIcon;
 import org.jenkinsci.Symbol;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -41,8 +43,8 @@ import org.kohsuke.accmod.restrictions.NoExternalUse;
 public class PluginsLink extends ManagementLink {
 
     @Override
-    public String getIconFileName() {
-        return "plugin.png";
+    public NewIcon getIcon() {
+        return NewIcon.fromSvg(IconSet.getIonicon("puzzle-outline", null));
     }
 
     @Override
@@ -73,12 +75,12 @@ public class PluginsLink extends ManagementLink {
     }
 
     @Restricted(NoExternalUse.class)
-    public boolean hasUpdates() {
+    public int getUpdateCount() {
         final UpdateCenter updateCenter = Jenkins.get().getUpdateCenter();
         if (!updateCenter.isSiteDataReady()) {
             // Do not display message during this page load, but possibly later.
-            return false;
+            return 0;
         }
-        return !updateCenter.getUpdates().isEmpty();
+        return updateCenter.getUpdates().size();
     }
 }

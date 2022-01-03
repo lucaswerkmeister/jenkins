@@ -58,6 +58,8 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jenkins.model.Jenkins;
+import org.jenkins.ui.icon.IconSet;
+import org.jenkins.ui.icon.NewIcon;
 import org.jenkinsci.Symbol;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -453,8 +455,8 @@ public class OldDataMonitor extends AdministrativeMonitor {
         }
 
         @Override
-        public String getIconFileName() {
-            return "document.png";
+        public NewIcon getIcon() {
+            return NewIcon.fromSvg(IconSet.getIonicon("cube-outline", null));
         }
 
         @Override
