@@ -67,6 +67,17 @@ pluginManager.plugins = function() {
 };
 
 /**
+ * Asynchronously refreshes the list of available plugins and updates
+ */
+pluginManager.refreshServer = function(handler) {
+  new Ajax.Request('checkUpdatesServer', {
+    onComplete: function() {
+      handler.call({ isError: false })
+    }
+  });
+};
+
+/**
  * Get the curated list of plugins to be offered in the wizard by name only.
  * @returns The curated list of plugins to be offered in the wizard by name only.
  */

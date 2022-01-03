@@ -5,6 +5,9 @@ import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 
 var filterInput = document.getElementById('filter-box');
+var mainSpinner = document.getElementById('spinner');
+var installPluginsButton = document.getElementById('button-install-plugins');
+var refreshServerButton = document.getElementById('button-refresh-server');
 
 function applyFilter(searchQuery) {
     // debounce reduces number of server side calls while typing
@@ -17,6 +20,9 @@ function applyFilter(searchQuery) {
         filterInput.parentElement.classList.remove("jenkins-search--loading");
 
         function clearOldResults() {
+            mainSpinner.style.display = "flex";
+            pluginsTable.style.opacity = "0";
+
             if (!admin) {
                 tbody.innerHTML = '';
             } else {
@@ -44,10 +50,16 @@ function applyFilter(searchQuery) {
 
         tbody.insertAdjacentHTML('beforeend', rows);
 
-        // @see JENKINS-64504 - Update the sticky buttons position after each search.
-        requestAnimationFrame(() => {
-            layoutUpdateCallback.call()
-        })
+        longhorn();
+
+        // Rerender tooltips after the table has been loaded
+        // TODO - remove this when YUI tooltips are killed
+        new YAHOO.widget.Tooltip("tt", {context:[], zindex:999});
+
+        mainSpinner.style.display = "none";
+        pluginsTable.style.opacity = "1";
+
+        addQuerySelectors();
     })
 }
 
@@ -64,8 +76,125 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     applyFilter(filterInput.value);
-
-    setTimeout(function () {
-        layoutUpdateCallback.call();
-    }, 350)
 });
+
+installPluginsButton.addEventListener("click", function () {
+  const plugins = document.querySelectorAll('input[type=checkbox]:checked');
+
+  // Uncheck all checked plugins
+  plugins.forEach(el => {
+    el.checked = false;
+    el.dispatchEvent(new Event('change'));
+  })
+
+  installPlugins([...plugins].map(x => x.dataset.pluginId))
+});
+
+// Takes plugin id array as param eg [git-plugin, dark-theme]
+function installPlugins(plugins) {
+  plugins.forEach(function(plugin) {
+    // Set plugin row status to 'loading'
+    switchPluginInstallStatus(plugin, "loading")
+  });
+
+  const pluginInstallIds = plugins.map(plugin => {
+    const pluginRow = document.querySelector("tr[data-plugin-id='" + plugin + "']")
+    return pluginRow.dataset.pluginInstallId
+  })
+
+  pluginManager.installPlugins(pluginInstallIds, function() {
+    console.log("sent message x")
+  });
+}
+
+refreshServerButton.addEventListener("click", function () {
+  refreshServerButton.classList.add("jenkins-button--loading");
+  refreshServerButton.disabled = true;
+  pluginManager.refreshServer(function() {
+    // No need to unset the class as we're reloading the page
+    location.reload();
+  });
+});
+
+// TODO
+function addQuerySelectors() {
+  const downloadButtons = document.querySelectorAll('button[id^=button-install-plugin-]')
+
+  downloadButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      installPlugins([button.dataset.pluginId])
+    });
+  });
+
+  document.querySelectorAll('input[type=checkbox]').forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+
+      console.log("changing")
+
+      const checkedCheckboxesLength = document.querySelectorAll('input[type=checkbox]:checked').length
+      if (checkedCheckboxesLength > 0) {
+        installPluginsButton.classList.remove("jenkins-app-bar__hidden-item");
+        downloadButtons.forEach((el) => {
+          el.classList.add("jenkins-app-bar__hidden-item");
+        })
+      } else {
+        installPluginsButton.classList.add("jenkins-app-bar__hidden-item");
+        downloadButtons.forEach((el) => {
+          el.classList.remove("jenkins-app-bar__hidden-item");
+        })
+      }
+    });
+  });
+}
+
+// TODO rename function
+function longhorn() {
+  console.log("Updating statuses...")
+
+  pluginManager.installStatus(function(e) {
+    e.jobs.forEach(e => {
+      if (e.installStatus.toLowerCase().includes("failure")) {
+        switchPluginInstallStatus(e.name, "failure")
+      } else if (e.installStatus.toLowerCase().includes("success")) {
+        switchPluginInstallStatus(e.name, "success")
+      }
+    })
+  })
+}
+
+setInterval(function() {
+  longhorn()
+},1500);
+
+function switchPluginInstallStatus(pluginName, status) {
+  const pluginRow = document.querySelector("tr[data-plugin-id='" + pluginName + "']")
+
+  if (pluginRow == null) {
+    return;
+  }
+
+  const installButton = pluginRow.querySelector("button[id^=button-install-plugin]")
+  const spinner = pluginRow.querySelector("p[id^=spinner-]")
+  const successIcon = pluginRow.querySelector("svg[id^=success-]")
+  const failureIcon = pluginRow.querySelector("svg[id^=failure-]")
+
+  installButton.classList.add("longhorn-bye")
+  spinner.classList.add("longhorn-bye")
+  successIcon.classList.add("longhorn-bye")
+  failureIcon.classList.add("longhorn-bye")
+
+  // Disable row checkbox
+  pluginRow.querySelector("input[type='checkbox']").disabled = true;
+
+  switch (status) {
+    case "loading":
+      spinner.classList.remove("longhorn-bye")
+      break;
+    case "success":
+      successIcon.classList.remove("longhorn-bye")
+      break;
+    case "failure":
+      failureIcon.classList.remove("longhorn-bye")
+      break;
+  }
+}

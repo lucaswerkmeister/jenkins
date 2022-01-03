@@ -3,6 +3,46 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: var(--section-padding);
+  // Vertical margins collapse and this can have adverse affects with keeping things lined up - so disable it
+  // in browsers that support it
+  -webkit-margin-collapse: separate;
+
+  &--sticky {
+    position: sticky;
+    top: 40px;
+    padding-top: 2rem;
+    margin-top: -2rem;
+    z-index: 2;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -2rem;
+      bottom: -2rem;
+      right: -2rem;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    &::before {
+      background: var(--background);
+      mask-image: linear-gradient(black 70%, transparent);
+      opacity: 0.55;
+    }
+
+    &::after {
+      backdrop-filter: blur(15px);
+      mask-image: linear-gradient(black 50%, transparent);
+    }
+  }
+
+  &--invisible-children {
+    .jenkins-app-bar__content, .jenkins-app-bar__controls {
+      opacity: 0;
+    }
+  }
 
   .jenkins-app-bar__content {
     display: flex;
@@ -10,6 +50,7 @@
     flex-direction: column;
     width: 100%;
     min-height: 36px;
+    transition: opacity var(--standard-transition);
   }
 
   .jenkins-app-bar__controls {
@@ -18,9 +59,19 @@
     justify-content: center;
     margin-left: var(--section-padding);
     min-height: 36px;
+    transition: opacity var(--standard-transition);
 
     .jenkins-search {
       min-width: 260px;
+
+      input {
+        line-height: 32px;
+      }
+
+      .jenkins-search__icon {
+        top: 10px;
+        left: 10px;
+      }
     }
   }
 
@@ -30,8 +81,18 @@
     border-bottom: 2px solid var(--panel-border-color);
   }
 
+  &__hidden-item {
+    visibility: hidden;
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
   h1, h2 {
     margin: 0;
     font-size: 1.7rem;
   }
+}
+
+.longhorn-bye {
+  display: none !important;
 }
