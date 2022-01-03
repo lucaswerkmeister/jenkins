@@ -52,26 +52,26 @@ THE SOFTWARE.
                 <th data-sort-disable="true">
                   <div class="app-plugins__select">
                     <button class="app-plugins__select-button" type="button" />
-                    <div class="app-plugins__select-menu">
-                      <button id="button-select-all" type="button">
-                        <div>
-                          <l:ionicon name="checkmark-outline" />
-                        </div>
-                        All
-                      </button>
-                      <button id="button-select-compatible" type="button">
-                        <div>
-                          <l:ionicon name="shield-checkmark-outline" />
-                        </div>
-                        Compatible plugins
-                      </button>
-                      <button id="button-select-none" type="button">
-                        <div>
-                          <l:ionicon name="close-outline" />
-                        </div>
-                        None
-                      </button>
-                    </div>
+<!--                    <div class="app-plugins__select-menu">-->
+<!--                      <button id="button-select-all" type="button">-->
+<!--                        <div>-->
+<!--                          <l:ionicon name="checkmark-outline" />-->
+<!--                        </div>-->
+<!--                        All-->
+<!--                      </button>-->
+<!--                      <button id="button-select-compatible" type="button">-->
+<!--                        <div>-->
+<!--                          <l:ionicon name="shield-checkmark-outline" />-->
+<!--                        </div>-->
+<!--                        Compatible plugins-->
+<!--                      </button>-->
+<!--                      <button id="button-select-none" type="button">-->
+<!--                        <div>-->
+<!--                          <l:ionicon name="close-outline" />-->
+<!--                        </div>-->
+<!--                        None-->
+<!--                      </button>-->
+<!--                    </div>-->
                   </div>
                 </th>
               </l:isAdmin>
