@@ -2,6 +2,8 @@ package hudson;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.model.ManagementLink;
+import hudson.search.Icon;
+import hudson.search.Search;
 import hudson.security.Permission;
 import java.net.URL;
 import jenkins.model.Jenkins;
@@ -37,6 +39,16 @@ public class AboutJenkins extends ManagementLink {
     @Override
     public String getDescription() {
         return Messages.AboutJenkins_Description();
+    }
+
+    @Override
+    public String getSearchDescription() {
+        return "Version " + Functions.getVersion();
+    }
+
+    @Override
+    public Icon getSearchItemIcon() {
+        return Icon.fromSvg(IconSet.getIonicon("help-circle-outline", null));
     }
 
     @Restricted(NoExternalUse.class)

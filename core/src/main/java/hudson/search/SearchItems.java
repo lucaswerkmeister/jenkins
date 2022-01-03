@@ -69,4 +69,42 @@ public class SearchItems {
             }
         };
     }
+
+    public static SearchItem create(final String searchName,
+                                    final String url,
+                                    final String description,
+                                    final Icon icon,
+                                    final SearchItemCategory category) {
+        return new SearchItem() {
+            @Override
+            public String getSearchName() {
+                return searchName;
+            }
+
+            @Override
+            public String getSearchUrl() {
+                return url;
+            }
+
+            @Override
+            public SearchIndex getSearchIndex() {
+                return SearchIndex.EMPTY;
+            }
+
+            @Override
+            public String getSearchDescription() {
+                return description;
+            }
+
+            @Override
+            public SearchItemCategory getSearchItemCategory() {
+                return category;
+            }
+
+            @Override
+            public Icon getSearchItemIcon() {
+                return icon;
+            }
+        };
+    }
 }

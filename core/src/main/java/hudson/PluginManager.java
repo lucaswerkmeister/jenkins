@@ -53,6 +53,8 @@ import hudson.model.UpdateCenter;
 import hudson.model.UpdateCenter.DownloadJob;
 import hudson.model.UpdateCenter.InstallationJob;
 import hudson.model.UpdateSite;
+import hudson.search.SearchItemCategory;
+import hudson.search.Icon;
 import hudson.security.ACL;
 import hudson.security.ACLContext;
 import hudson.security.Permission;
@@ -139,6 +141,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.LogFactory;
+import org.jenkins.ui.icon.IconSet;
 import org.jenkinsci.Symbol;
 import org.jvnet.hudson.reactor.Executable;
 import org.jvnet.hudson.reactor.Reactor;
@@ -1290,6 +1293,16 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
     @Override
     public String getSearchUrl() {
         return "pluginManager";
+    }
+
+    @Override
+    public SearchItemCategory getSearchItemCategory() {
+        return SearchItemCategory.PAGES;
+    }
+
+    @Override
+    public Icon getSearchItemIcon() {
+        return Icon.fromSvg(IconSet.getIonicon("extension-puzzle-outline", null));
     }
 
     /**

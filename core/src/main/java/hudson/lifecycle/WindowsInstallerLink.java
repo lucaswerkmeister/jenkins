@@ -250,15 +250,15 @@ public class WindowsInstallerLink extends ManagementLink {
     /**
      * Displays the error in a page.
      */
-    protected final void sendError(Exception e, StaplerRequest req, StaplerResponse rsp) throws ServletException, IOException {
-        sendError(e.getMessage(), req, rsp);
-    }
-
-    protected final void sendError(String message, StaplerRequest req, StaplerResponse rsp) throws ServletException, IOException {
-        req.setAttribute("message", message);
-        req.setAttribute("pre", true);
-        rsp.forward(Jenkins.get(), "error", req);
-    }
+//    protected final void sendError(Exception e, StaplerRequest req, StaplerResponse rsp) throws ServletException, IOException {
+//        sendError(e.getMessage(),req,rsp);
+//    }
+//
+//    protected final void sendError(String message, StaplerRequest req, StaplerResponse rsp) throws ServletException, IOException {
+//        req.setAttribute("message",message);
+//        req.setAttribute("pre",true);
+//        rsp.forward(Jenkins.get(),"error",req);
+//    }
 
     /**
      * Decide if {@link WindowsInstallerLink} should show up in UI, and if so, register it.

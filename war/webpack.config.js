@@ -26,6 +26,7 @@ module.exports = (env, argv) => ({
     "sortable-drag-drop": [path.join(__dirname, "src/main/js/sortable-drag-drop.js")],
     "section-to-tabs": [path.join(__dirname, "src/main/js/section-to-tabs.js")],
     "filter-build-history": [path.join(__dirname, "src/main/js/filter-build-history.js")],
+    "command-center": [path.join(__dirname, "src/main/js/command-center.js")],
 
     // New UI CSS files
     "base-styles-v2": [path.join(__dirname, "src/main/less/base-styles-v2.less")],
