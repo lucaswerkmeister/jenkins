@@ -1,3 +1,13 @@
+.radioBlock-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: calc(var(--section-padding) / 3);
+
+  &:last-of-type {
+    margin-bottom: var(--section-padding);
+  }
+}
+
 .jenkins-radio-help-wrapper {
   display: flex;
   align-items: center;
@@ -5,8 +15,6 @@
 }
 
 .jenkins-radio {
-  margin-top: 3px;
-
   &:not(:last-of-type) {
     margin-bottom: calc(var(--section-padding) / 3);
   }
@@ -56,7 +64,7 @@
     position: relative;
     display: inline-block;
     margin-bottom: 0;
-    padding: 0 0 5px 32px;
+    padding: 0 0 0 32px;
     cursor: pointer;
     font-weight: 600;
     // remove 300ms pause on mobile
@@ -81,7 +89,7 @@
   }
 
   &__description {
-    margin: 0 0 0 32px;
+    margin: 5px 0 0 32px;
     color: var(--text-color-secondary);
     line-height: 1.66;
   }
@@ -94,6 +102,10 @@
     transition: var(--standard-transition);
     visibility: hidden;
     max-height: 0;
+
+    &:empty {
+      display: none;
+    }
 
     &::after {
       content: "";

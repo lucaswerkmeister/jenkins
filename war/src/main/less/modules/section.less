@@ -1,9 +1,10 @@
 .jenkins-section {
   border-top: 2px solid var(--panel-border-color);
   padding: var(--section-padding) 0 0 0;
-  max-width: 1800px;
+  max-width: var(--form-item-max-width);
 
-  &:first-of-type {
+  &:first-of-type,
+  &--borderless {
     border-top: none;
     padding-top: 0;
   }
@@ -18,6 +19,7 @@
 
   &--bottom-padding {
     padding-bottom: var(--section-padding);
+    max-width: 2560px;
   }
 }
 

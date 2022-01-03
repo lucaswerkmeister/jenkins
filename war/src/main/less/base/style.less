@@ -454,18 +454,48 @@ div.behavior-loading {
 
 .bottom-sticker-inner {
   position: relative;
-  padding: 1em 0;
+  padding: 1em 2rem;
   z-index: 0;
+  backdrop-filter: blur(15px);
 
   &::before {
     content: "";
     position: absolute;
     top: 0;
-    left: calc(-2rem - 2px);
+    left: 0;
     bottom: 0;
     right: 0;
     background: var(--background);
+    opacity: 0.9;
     z-index: -1;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -30px;
+    left: -1rem;
+    right: -1rem;
+    background: linear-gradient(rgba(black, 0), rgba(#555566, 0.05) 100%);
+    max-width: calc(var(--form-item-max-width) + 6rem);
+    height: 30px;
+    opacity: 0;
+    transition: var(--standard-transition);
+    mask-image: linear-gradient(to right, transparent, white 2rem, white calc(100% - 2rem), transparent);
+    pointer-events: none;
+  }
+
+  &--shadow {
+    .bottom-sticker-inner {
+      &::after {
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  .yui-button {
+    margin-left: 0;
+    margin-right: 0.5rem;
   }
 }
 
@@ -1021,52 +1051,6 @@ table.fingerprint-in-build td {
   padding-right: 1em;
 }
 
-.radioBlock-container {
-  margin-bottom: calc(var(--section-padding) / 3);
-
-  &:last-of-type {
-    margin-bottom: 0;
-  }
-}
-
-.optionalBlock-container > .form-container,
-.radioBlock-container > .form-container,
-.dropdownList-container {
-  position: relative;
-  padding-left: 32px;
-  transition: var(--standard-transition);
-  margin-top: calc(var(--section-padding) / 3);
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10px;
-    bottom: 0;
-    width: 2px;
-    background: var(--input-border);
-    border-radius: 2px;
-    transition: var(--standard-transition);
-  }
-
-  &:empty {
-    display: none;
-  }
-}
-
-.dropdownList-container {
-  margin-bottom: var(--section-padding);
-}
-
-.form-container--hidden {
-  visibility: hidden !important;
-  margin: 0 !important;
-  opacity: 0 !important;
-  max-height: 0 !important;
-  height: 0 !important;
-  overflow: hidden;
-}
-
 .row-set-end { display: none; }
 
 /* ========================= resizable text area ========================= */
@@ -1285,9 +1269,15 @@ table.progress-bar.red td.progress-bar-done {
     text-align: left;
 }
 
+.textarea-preview-controls {
+  margin-top: 0.5rem;
+}
+
 .textarea-preview {
-    background-color: var(--very-light-grey);
-    padding: 0.5em;
+  background-color: var(--input-color);
+  padding: calc(var(--form-input-padding) + 2px);
+  border-radius: var(--form-input-border-radius);
+  margin-top: 0.5rem;
 }
 
 /* ========================= logRecords.jelly ================== */

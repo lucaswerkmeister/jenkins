@@ -941,11 +941,8 @@ function updateVisibility() {
             e = e.rowVisibilityGroup.end; // the above call updates visibility up to e.rowVisibilityGroup.end inclusive
         } else {
             if (display) {
-                e.style.display = ""
                 e.classList.remove("form-container--hidden")
             } else {
-                // TODO remove display once tab bar (ConfigTableMetaData) is able to handle hidden tabs via class and not just display
-                e.style.display = "none"
                 e.classList.add("form-container--hidden")
             }
         }
@@ -1357,7 +1354,7 @@ function rowvgStartEachRow(recursive,f) {
         if(isInsideRemovable(e))    return;
 
         var subForms = [];
-        var start = findInFollowingTR(e, 'dropdownList-container'), end;
+        var start = e.parentElement.parentElement.querySelector(".dropdownList-container")
 
         do { start = start.firstElementChild; } while (start && !isTR(start));
 
@@ -1454,7 +1451,13 @@ function rowvgStartEachRow(recursive,f) {
             var bottomPos = Math.max(0, viewport.bottom - pos.bottom);
 
             sticker.style.bottom = bottomPos + "px"
-            sticker.style.left = Math.max(0,pos.left-viewport.left) + "px"
+            sticker.style.left = "calc(" + Math.max(0,pos.left-viewport.left) + "px" + " - 2rem)"
+
+            if (bottomPos === 0) {
+              sticker.classList.add("bottom-sticker-inner--shadow")
+            } else {
+              sticker.classList.remove("bottom-sticker-inner--shadow")
+            }
         }
 
         // react to layout change

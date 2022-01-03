@@ -55,16 +55,14 @@ THE SOFTWARE.
                 <d:invokeBody/>
             </select>
         </div>
-    </div>
-
-    <!-- generate the actual form entries -->
-    <div class="dropdownList-container tr">
-      <div>
-        <div width="100%" name="${name}">
-            <j:set var="dropdownListMode" value="generateEntries"/>
-            <d:invokeBody/>
-        </div>
+        <!-- generate the actual form entries -->
+        <div class="dropdownList-container tr">
+          <div>
+            <div width="100%" name="${name}">
+              <j:set var="dropdownListMode" value="generateEntries"/>
+              <d:invokeBody/>
+            </div>
+          </div>
       </div>
     </div>
-
 </j:jelly>

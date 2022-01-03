@@ -27,6 +27,11 @@ THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <f:optionalBlock name="disable" title="${%Disable this project}" checked="${it.disabled}"
-                   help="/help/project-config/disable.html" inline="true" />
+  <f:toggleSwitch id="toggle-switch-job-enabled"
+                  name="enable"
+                  title="${%Disabled}"
+                  checkedTitle="${%Enabled}"
+                  checked="${!it.disabled}"
+                  invert-label="true"
+                  tooltip="${%Enable or disable the current job}" />
 </j:jelly>
