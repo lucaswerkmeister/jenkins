@@ -5,7 +5,7 @@
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 0 0 5px var(--table-background);
-  margin: 5px;
+  margin: 5px 5px calc(var(--section-padding) + 5px);
   --table-padding: 0.55rem;
 
   * {
@@ -63,7 +63,6 @@
         &:first-of-type {
           border-radius: var(--table-body-radius) 0 0 var(--table-body-radius);
           padding-left: calc(var(--table-padding) * 2);
-          padding-right: var(--table-padding);
         }
 
         &:last-of-type {

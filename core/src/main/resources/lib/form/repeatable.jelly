@@ -79,10 +79,10 @@ THE SOFTWARE.
       Used for the data binding.
     </st:attribute>
     <st:attribute name="items">
-      The item collection to loop over. Required unless @field is given. 
+      The item collection to loop over. Required unless @field is given.
     </st:attribute>
     <st:attribute name="default">
-      Use this collection for items if items or @field is null 
+      Use this collection for items if items or @field is null
     </st:attribute>
     <st:attribute name="noAddButton">
       true if the default 'add' button (that adds a new copy) shouldn't be displayed.
@@ -132,7 +132,10 @@ THE SOFTWARE.
   <div class="repeated-container${!empty(header)?' with-drag-drop':''}" enableTopButton="${attrs.enableTopButton}">
     <!-- The first DIV is the master copy. -->
     <div class="repeated-chunk to-be-removed" name="${name}">
-      <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}">${header}</div></j:if>
+      <div class="repeated-chunk__header">
+        <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}"/></j:if>
+        ${header}
+      </div>
       <j:scope>
         <j:set var="${var}" value="${null}"/>
         <d:invokeBody />
