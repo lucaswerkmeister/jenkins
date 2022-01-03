@@ -47,12 +47,15 @@ THE SOFTWARE.
         <st:adjunct includes="lib.form.advanced.advanced"/>
 
 	    <div class="advancedLink" style="${attrs.align!=null?('text-align:'+attrs.align):''}">
-              <j:set var="id" value="${h.generateId()}"/>
-              <span style="display: none" id="${id}">
-                <l:icon class="icon-notepad icon-md" tooltip="${%customizedFields}"/>
-              </span>
-              <st:nbsp />
-	      <input type="button" value="${attrs.title?:'%Advanced'}..." class="advanced-button advancedButton" /><!-- advancedButton is legacy -->
+            <j:set var="id" value="${h.generateId()}"/>
+
+            <!-- advancedButton is legacy -->
+            <button type="button" class="jenkins-button advanced-button advancedButton">
+                <span id="${id}" tooltip="${%customizedFields}">
+                    <l:ionicon name="asterisk-outline" />
+                </span>
+                ${attrs.title?:'%Advanced'}...
+            </button>
 	    </div>
             <j:new var="customizedFields" className="java.util.TreeSet"/>
 	    <div class="advancedBody">

@@ -47,11 +47,15 @@
   }
 }
 
-.jenkins-section__item a {
+.jenkins-section__item .jenkins-button {
   position: relative;
   display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   z-index: 0;
   text-decoration: none;
+  padding: 0;
+  white-space: normal;
 
   // IE11 doesn't support grid-gap, so apply margin, remove it for modern browsers
   margin: 0 var(--section-padding) var(--section-padding) 0;
@@ -59,33 +63,11 @@
     margin: 0;
   }
 
-  &::before {
-    position: absolute;
-    content: "";
+  &::before, &::after {
     top: -10px;
     left: -10px;
     bottom: -10px;
     right: -10px;
-    z-index: -1;
-    border-radius: 6px;
-  }
-
-  &:hover,
-  &:focus {
-    &::before {
-      background-color: var(--btn-link-bg--hover);
-    }
-  }
-
-  &:active,
-  &:focus {
-    outline: none !important;
-    z-index: 1;
-
-    &::before {
-      background: var(--btn-link-bg--active);
-      box-shadow: 0 0 0 2px var(--focus-btn-primary);
-    }
   }
 
   dl {
@@ -159,14 +141,19 @@
   dt {
     font-size: var(--font-size-base);
     font-weight: 600;
-    margin: 0 0 2px 0;
+    margin: 0 0 5px 0;
     color: var(--text-color);
   }
 
   dd {
     color: var(--text-color-secondary);
+    font-size: 0.9rem;
     font-weight: 500;
-    margin: 0;
-    line-height: 1.66;
+    line-height: 1.6;
+    margin: 0 0 5px 0;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 }

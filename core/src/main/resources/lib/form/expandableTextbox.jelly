@@ -26,7 +26,7 @@ THE SOFTWARE.
   TODO: support @checkUrl
 -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:d="jelly:define" xmlns:f="/lib/form" xmlns:st="jelly:stapler">
+<j:jelly xmlns:j="jelly:core" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:f="/lib/form" xmlns:st="jelly:stapler">
   <st:documentation>
     A single-line textbox that can be expanded into a multi-line textarea.
 
@@ -76,8 +76,9 @@ THE SOFTWARE.
             </j:if>
           </div>
           <div class="expanding-input__button">
-            <input type="button" value="&#x25BC;" onclick="expandTextArea(this,'textarea.${h.jsStringEscape(name)}')"
-                   tooltip="${%tooltip}"/>
+            <button class="jenkins-button" type="button" onclick="expandTextArea(this,'textarea.${h.jsStringEscape(name)}')" tooltip="${%tooltip}">
+              <l:ionicon name="chevron-down-outline" />
+            </button>
           </div>
         </div>
       </f:possibleReadOnlyField>

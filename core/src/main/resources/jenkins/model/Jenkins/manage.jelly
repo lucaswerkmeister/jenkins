@@ -57,7 +57,7 @@ THE SOFTWARE.
               <div class="jenkins-section__item">
                 <j:choose>
                 <j:when test="${m.requiresConfirmation}">
-                  <l:confirmationLink href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
+                <l:confirmationLink class="jenkins-button jenkins-button--transparent" href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
                     <div class="jenkins-section__item__icon" aria-hidden="true">
                       <j:choose>
                         <j:when test="${m.icon.path != null}">
@@ -95,7 +95,7 @@ THE SOFTWARE.
                   </f:link>
                 </j:when>
                 <j:otherwise>
-                  <a href="${m.urlName}">
+                  <a href="${m.urlName}" class="jenkins-button jenkins-button--transparent">
                     <div class="jenkins-section__item__icon" aria-hidden="true">
                       <j:choose>
                         <j:when test="${m.icon.path != null}">
@@ -112,7 +112,9 @@ THE SOFTWARE.
                     <dl>
                       <dt>${m.displayName}</dt>
                       <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
+                      <j:if test="${m.hasUpdates()}">
+                        <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
+                      </j:if>
                     </dl>
                   </a>
                 </j:otherwise>

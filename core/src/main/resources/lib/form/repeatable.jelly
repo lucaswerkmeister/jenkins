@@ -180,6 +180,6 @@ THE SOFTWARE.
   </div>
 
   <j:if test="${!attrs.noAddButton}">
-    <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add" />
+    <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add jenkins-button" />
   </j:if>
 </j:jelly>
