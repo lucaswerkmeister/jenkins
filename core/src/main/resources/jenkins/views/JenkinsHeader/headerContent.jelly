@@ -1,7 +1,7 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:i="jelly:fmt" xmlns:x="jelly:xml">
     <j:set var="searchURL" value="${h.searchURL}"/>
-    <header id="page-header" class="page-header" data-search-url="${searchURL + 'suggest'}" data-search-help-url="${searchHelpUrl}">
+    <header id="header" class="page-header" data-search-url="${searchURL + 'suggest'}" data-search-help-url="${searchHelpUrl}">
         <div class="page-header__brand">
             <div class="logo">
                 <a id="jenkins-home-link" href="${rootURL}/">
