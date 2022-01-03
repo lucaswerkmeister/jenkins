@@ -18,9 +18,7 @@ function registerSortableDragDrop(e) {
   const sortableElement = new Sortable(e, {
       draggable: '.repeated-chunk',
       handle: '.dd-handle',
-      ghostClass: 'repeated-chunk--sortable-ghost',
-      chosenClass: 'repeated-chunk--sortable-chosen',
-      forceFallback: true, // Do not use html5 drag & drop behaviour because it does not work with autoscroll
+      animation: 150,
       scroll: true,
       bubbleScroll: true,
   });

@@ -26,15 +26,17 @@ THE SOFTWARE.
 	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <f:entry title="${%List of variables}" help="${descriptor.getHelpPage()}">
     <f:repeatable var="env" items="${instance.env}">
-      <div class="jenkins-two-columns">
-        <f:entry title="${%Name}" class="jenkins-!-margin-bottom-0">
-          <f:textbox name="env.key" value="${env.key}" />
+      <div class="app-environment-variable-card">
+        <f:entry class="jenkins-!-margin-bottom-0">
+          <f:textbox name="env.key" value="${env.key}" placeholder="${%Name}" />
         </f:entry>
-        <f:entry title="${%Value}" class="jenkins-!-margin-bottom-0">
-          <f:textbox name="env.value" value="${env.value}" />
+        <f:entry class="jenkins-!-margin-bottom-0">
+          <f:textbox name="env.value" value="${env.value}" placeholder="${%Value}" />
         </f:entry>
+        <div class="jenkins-!-center">
+          <f:repeatableDeleteButton />
+        </div>
       </div>
-      <f:repeatableDeleteButton />
     </f:repeatable>
   </f:entry>
 </j:jelly>

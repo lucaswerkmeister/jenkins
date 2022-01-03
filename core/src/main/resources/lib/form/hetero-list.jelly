@@ -101,7 +101,9 @@ THE SOFTWARE.
 
         <f:class-entry descriptor="${descriptor}" />
 
-        <d:invokeBody/>
+        <div class="repeated-chunk__body">
+          <d:invokeBody/>
+        </div>
       </div>
     </d:tag>
   </d:taglib>
@@ -119,7 +121,7 @@ THE SOFTWARE.
       </div>
     </j:forEach>
 
-    <div class="repeatable-insertion-point" />
+<!--    <div class="repeatable-insertion-point" />-->
 
     <div class="prototypes to-be-removed">
       <!-- render one prototype for each type -->
@@ -150,11 +152,11 @@ THE SOFTWARE.
         </div>
       </j:forEach>
     </div>
-
-    <j:if test="${!readOnlyMode}">
-      <div>
-        <input type="button" value="${attrs.addCaption?:'%Add'}" class="hetero-list-add" menualign="${attrs.menuAlign}" suffix="${attrs.name}"/>
-      </div>
-    </j:if>
   </div>
+
+  <j:if test="${!readOnlyMode}">
+    <div>
+      <input type="button" value="${attrs.addCaption?:'%Add'}" class="hetero-list-add" menualign="${attrs.menuAlign}" suffix="${attrs.name}"/>
+    </div>
+  </j:if>
 </j:jelly>

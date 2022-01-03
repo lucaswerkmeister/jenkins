@@ -129,6 +129,10 @@ THE SOFTWARE.
     </j:otherwise>
   </j:choose>
 
+  <j:if test="${!empty(items) and !attrs.noAddButton and attrs.enableTopButton}">
+    <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add repeatable-add-top" />
+  </j:if>
+
   <div class="repeated-container${!empty(header)?' with-drag-drop':''}" enableTopButton="${attrs.enableTopButton}">
     <!-- The first DIV is the master copy. -->
     <div class="repeated-chunk to-be-removed" name="${name}">
@@ -138,18 +142,23 @@ THE SOFTWARE.
       </div>
       <j:scope>
         <j:set var="${var}" value="${null}"/>
-        <d:invokeBody />
+        <div class="repeated-chunk__body">
+          <d:invokeBody />
+        </div>
       </j:scope>
     </div>
-    <j:if test="${!empty(items) and !attrs.noAddButton and attrs.enableTopButton}">
-      <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add repeatable-add-top" />
-    </j:if>
+
     <!-- then populate them for each item -->
     <j:forEach var="loop" varStatus="loopStatus" items="${items}">
       <div class="repeated-chunk" name="${name}">
         <j:set var="${var}" value="${loop}" />
-        <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}">${header}</div></j:if>
-        <d:invokeBody />
+        <div class="repeated-chunk__header">
+          <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}"/></j:if>
+          ${header}
+        </div>
+        <div class="repeated-chunk__body">
+          <d:invokeBody />
+        </div>
       </div>
     </j:forEach>
     <j:remove var="${var}" />
@@ -158,15 +167,19 @@ THE SOFTWARE.
       <j:forEach begin="${h.size2(items)}" end="${minimum-1}" var="i">
         <j:set var="${var}" value="${null}" />
         <div class="repeated-chunk" name="${name}">
-          <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}">${header}</div></j:if>
-          <d:invokeBody />
+          <div class="repeated-chunk__header">
+            <j:if test="${!empty(header)}"><div class="${readOnlyMode ? '' : 'dd-handle'}"/></j:if>
+            ${header}
+          </div>
+          <div class="repeated-chunk__body">
+            <d:invokeBody />
+          </div>
         </div>
       </j:forEach>
     </j:if>
-
-    <div class="repeatable-insertion-point" />
-    <j:if test="${!attrs.noAddButton}">
-      <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add" />
-    </j:if>
   </div>
+
+  <j:if test="${!attrs.noAddButton}">
+    <input type="button" value="${attrs.add?:'%Add'}" class="repeatable-add" />
+  </j:if>
 </j:jelly>

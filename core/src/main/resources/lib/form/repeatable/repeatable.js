@@ -37,25 +37,18 @@ var repeatableSupport = {
 
     // insert one more block at the insertion position
     expand : function(addOnTop) {
-        if (addOnTop == null) {
-            addOnTop = false;
-        }
-
-        // importNode isn't supported in IE.
-        // nc = document.importNode(node,true);
         var nc = $(document.createElement("div"));
         nc.className = "repeated-chunk";
         nc.setOpacity(0);
         nc.setAttribute("name",this.name);
         nc.innerHTML = this.blockHTML;
-        if (!addOnTop) {
-            this.insertionPoint.parentNode.insertBefore(nc, this.insertionPoint);
-        } else if (this.enableTopButton) {
-            var children = $(this.container).childElements().findAll(function (n) {
-                return n.hasClassName("repeated-chunk");
-            });
-            this.container.insertBefore(nc, children[0]);
+
+        if (addOnTop) {
+          this.container.prepend(nc);
+        } else {
+          this.container.appendChild(nc);
         }
+
         // Initialize drag & drop for this element
         if (this.withDragDrop) registerSortableDragDrop(nc);
 
@@ -133,7 +126,9 @@ var repeatableSupport = {
     onAdd : function(n) {
         var addOnTop = false;
         while (n.tag == null) {
-            n = n.parentNode;
+            // YUI buttons have two span parents (hence two parentElements),
+            // the insertion box is then the previous element
+            n = n.parentElement.parentElement.previousSibling;
             if (n.hasClassName("repeatable-add-top")) {
                 addOnTop = true;
             }
@@ -155,12 +150,13 @@ var repeatableSupport = {
 // do the ones that extract innerHTML so that they can get their original HTML before
 // other behavior rules change them (like YUI buttons.)
 Behaviour.specify("DIV.repeated-container", 'repeatable', -100, function(e) {
-        if(isInsideRemovable(e))    return;
+        // if(isInsideRemovable(e))    return;
 
         // compute the insertion point
         var ip = $(e.lastElementChild);
-        while (!ip.hasClassName("repeatable-insertion-point"))
-            ip = ip.previous();
+
+        // while (!ip.hasClassName("repeatable-insertion-point"))
+        //     ip = ip.previous();
         // set up the logic
         object(repeatableSupport).init(e, e.firstChild, ip);
 });
