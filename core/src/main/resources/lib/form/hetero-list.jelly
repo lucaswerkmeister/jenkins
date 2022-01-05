@@ -156,7 +156,9 @@ THE SOFTWARE.
 
   <j:if test="${!readOnlyMode}">
     <div>
-      <input type="button" value="${attrs.addCaption?:'%Add'}" class="jenkins-button hetero-list-add" menualign="${attrs.menuAlign}" suffix="${attrs.name}"/>
+      <button type="button" class="jenkins-button hetero-list-add" menualign="${attrs.menuAlign}" suffix="${attrs.name}">
+        ${attrs.addCaption?:'%Add'}
+      </button>
     </div>
   </j:if>
 </j:jelly>
