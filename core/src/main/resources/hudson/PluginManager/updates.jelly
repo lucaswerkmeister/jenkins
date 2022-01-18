@@ -31,7 +31,7 @@ THE SOFTWARE.
     <j:when test="${!empty(app.updateCenter.updates) or (isUpdates and !empty(unavailableList))}">
       <div id="app-bar-updates" class="jenkins-app-bar jenkins-app-bar--sticky">
         <div class="jenkins-app-bar__content">
-          <h2>${app.updateCenter.updates.size()} ${%Updates}</h2>
+          <h2>${app.updateCenter.updates.size()} ${%Update}</h2>
         </div>
         <div class="jenkins-app-bar__controls jenkins-buttons-row jenkins-buttons-row--invert">
           <button class="jenkins-button jenkins-button--primary" type="button">
