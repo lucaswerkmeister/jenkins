@@ -42,10 +42,10 @@ THE SOFTWARE.
       </div>
 
       <section class="manage-messages">
-        <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
-          <st:include page="message.jelly" it="${am}" />
-        </j:forEach>
-        <st:include page="downgrade.jelly" />
+<!--        <j:forEach var="am" items="${app.activeAdministrativeMonitors}">-->
+<!--          <st:include page="message.jelly" it="${am}" />-->
+<!--        </j:forEach>-->
+<!--        <st:include page="downgrade.jelly" />-->
       </section>
 
       <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
