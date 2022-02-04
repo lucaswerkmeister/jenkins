@@ -73,7 +73,6 @@ THE SOFTWARE.
             <j:if test="${it.hasPermission(it.CONFIGURE)}">
               <p class="jenkins-notice__description">You can add the columns back by clicking
                 <a href="configure">
-                  <l:ionicon name="settings-outline" />
                   Edit View
                 </a>
               </p>
