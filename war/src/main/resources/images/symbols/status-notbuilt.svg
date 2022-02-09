@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Build not yet ran #2</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Build-not-yet-ran-#2">
+            <circle id="Oval" fill-opacity="0.15" fill="#8686A2" cx="12" cy="12" r="12"></circle>
+            <path d="M8.95,7.6875644 L8.95,16.3183645 C8.95,16.8374029 9.42223862,17.167159 9.81114101,16.9183539 L16.6974912,12.502658 C17.0341696,12.286888 17.0341696,11.7190409 16.6974912,11.5032709 L9.81114101,7.08757499 C9.42223862,6.83876986 8.95,7.16852594 8.95,7.6875644 Z" id="Path" stroke="#8686A2" stroke-width="1.5"></path>
+        </g>
+    </g>
+</svg>

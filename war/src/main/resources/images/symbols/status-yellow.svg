@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g fill="var(--orange)">
+            <circle opacity="0.15" cx="12" cy="12" r="12"></circle>
+            <circle cx="12" cy="17" r="1.25"></circle>
+            <path d="M13.25,7.25 L12.95,13 C12.95,13.5522847 12.5022847,14 11.95,14 C11.3977153,14 10.95,13.5522847 10.95,13 L10.75,7.25 C10.75,6.72060205 11.0791018,6.26806995 11.5438789,6.0858303 C11.6265468,6.04908385 11.715202,6.02318587 11.8079782,6.01000348 L12,6 C12.6903559,6 13.25,6.55964406 13.25,7.25 Z"></path>
+        </g>
+    </g>
+</svg>
