@@ -38,12 +38,14 @@ THE SOFTWARE.
     <td class="build-row-cell">
       <div class="pane build-name">
         <div class="build-icon">
-          <a class="build-status-link" href="${link}console"><l:icon alt="${build.iconColor.description} &gt; ${%Console Output}" class="${build.buildStatusIconClassName} icon-sm" tooltip="${build.iconColor.description} &gt; ${%Console Output}"/></a>
+          <a class="build-status-link" href="${link}console">
+            <l:icon alt="${build.iconColor.description} &gt; ${%Console Output}" class="${build.buildStatusIconClassName} icon-sm" tooltip="${build.iconColor.description} &gt; ${%Console Output}"/>
+          </a>
         </div>
         <a class="tip model-link inside build-link display-name" update-parent-class=".build-row" href="${link}">${build.displayName}</a>
       </div>
       <div class="pane build-details" time="${build.timestamp.time.time}">
-        <j:set var="linkTitleAttr" value=""/> 
+        <j:set var="linkTitleAttr" value=""/>
         <j:if test="${!build.building}">
           <j:set var="linkTitleAttr">${%Took} ${build.durationString}</j:set>
         </j:if>

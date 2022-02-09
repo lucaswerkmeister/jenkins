@@ -23,6 +23,10 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:t="/lib/hudson">
-    <t:ballColorTd it="${job.iconColor}" />
+<j:jelly xmlns:j="jelly:core" xmlns:t="/lib/hudson" xmlns:l="/lib/layout">
+  <td class="jenkins-table__cell--tight jenkins-table__icon" data="${job.iconColor.ordinal()}">
+    <div class="jenkins-table__cell__button-wrapper">
+      <l:icon src="symbol-status-${job.iconColor}" />
+    </div>
+  </td>
 </j:jelly>
