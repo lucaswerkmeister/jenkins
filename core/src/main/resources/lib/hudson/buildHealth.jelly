@@ -66,7 +66,7 @@ THE SOFTWARE.
                         <j:forEach var="rpt" items="${healthReports}">
                             <tr>
                                 <td align="left">
-                                    <l:icon class="${rpt.iconClassName} icon-sm" />
+                                  <l:icon src="symbol-weather-${buildHealth.iconClassName}" />
                                 </td>
                                 <td align="left">${rpt.localizableDescription}</td>
                                 <td align="right">${rpt.score}</td>
