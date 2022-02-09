@@ -42,7 +42,7 @@ public class PluginsLink extends ManagementLink {
 
     @Override
     public String getIconFileName() {
-        return "plugin.png";
+        return "plugin.svg";
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PluginsLink extends ManagementLink {
     public Permission getRequiredPermission() {
         return Jenkins.SYSTEM_READ;
     }
-  
+
     @NonNull
     @Override
     public Category getCategory() {

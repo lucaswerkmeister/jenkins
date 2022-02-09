@@ -39,7 +39,7 @@ public class SystemLogLink extends ManagementLink {
 
     @Override
     public String getIconFileName() {
-        return "clipboard.png";
+        return "clipboard.svg";
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SystemLogLink extends ManagementLink {
     public Permission getRequiredPermission() {
         return Jenkins.SYSTEM_READ;
     }
-    
+
     @NonNull
     @Override
     public Category getCategory() {
