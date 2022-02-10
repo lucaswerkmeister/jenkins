@@ -27,12 +27,13 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:s="/lib/form">
   <l:layout title="${%Icon legend}">
-
     <l:app-bar title="${title}" />
 
     <st:include page="sidepanel.jelly"/>
 
     <l:main-panel>
+      <h2>${%Status}</h2>
+
       <dl class="app-icon-legend">
         <dt>
           <l:icon src="symbol-status-blue" />
@@ -41,12 +42,12 @@ THE SOFTWARE.
           ${%blue}
         </dd>
 
-        <!--        <dt>-->
-        <!--          <l:icon src="symbol-icon-blue-anime" />-->
-        <!--        </dt>-->
-        <!--        <dd>-->
-        <!--          ${%blue_anime}-->
-        <!--        </dd>-->
+        <dt>
+          <l:icon src="symbol-icon-blue-anime" />
+        </dt>
+        <dd>
+          ${%blue_anime}
+        </dd>
 
         <dt>
           <l:icon src="symbol-status-yellow" />
@@ -55,12 +56,12 @@ THE SOFTWARE.
           ${%yellow}
         </dd>
 
-        <!--        <dt>-->
-        <!--          <l:icon src="symbol-icon-yellow-anime" />-->
-        <!--        </dt>-->
-        <!--        <dd>-->
-        <!--          ${%yellow_anime}-->
-        <!--        </dd>-->
+        <dt>
+          <l:icon src="symbol-icon-yellow-anime" />
+        </dt>
+        <dd>
+          ${%yellow_anime}
+        </dd>
 
         <dt>
           <l:icon src="symbol-status-red" />
@@ -69,12 +70,12 @@ THE SOFTWARE.
           ${%red}
         </dd>
 
-        <!--        <dt>-->
-        <!--          <l:icon src="symbol-icon-red-anime" />-->
-        <!--        </dt>-->
-        <!--        <dd>-->
-        <!--          ${%red_anime}-->
-        <!--        </dd>-->
+        <dt>
+          <l:icon src="symbol-icon-red-anime" />
+        </dt>
+        <dd>
+          ${%red_anime}
+        </dd>
 
         <dt>
           <l:icon src="symbol-status-notbuilt" />
@@ -83,12 +84,12 @@ THE SOFTWARE.
           ${%lightgrey}
         </dd>
 
-<!--        <dt>-->
-<!--          <l:icon src="symbol-icon-nobuilt-anime" />-->
-<!--        </dt>-->
-<!--        <dd>-->
-<!--          ${%lightgrey_anime}-->
-<!--        </dd>-->
+        <dt>
+          <l:icon src="symbol-icon-nobuilt-anime" />
+        </dt>
+        <dd>
+          ${%lightgrey_anime}
+        </dd>
 
         <dt>
           <l:icon src="symbol-status-disabled" />
@@ -97,12 +98,12 @@ THE SOFTWARE.
           ${%grey}
         </dd>
 
-<!--        <dt>-->
-<!--          <l:icon src="symbol-icon-disabled-anime" />-->
-<!--        </dt>-->
-<!--        <dd>-->
-<!--          ${%grey_anime}-->
-<!--        </dd>-->
+        <dt>
+          <l:icon src="symbol-icon-disabled-anime" />
+        </dt>
+        <dd>
+          ${%grey_anime}
+        </dd>
 
         <dt>
           <l:icon src="symbol-status-aborted" />
@@ -111,13 +112,17 @@ THE SOFTWARE.
           ${%darkgrey}
         </dd>
 
-<!--        <dt>-->
-<!--          <l:icon src="symbol-icon-aborted-anime" />-->
-<!--        </dt>-->
-<!--        <dd>-->
-<!--          ${%darkgrey_anime}-->
-<!--        </dd>-->
+        <dt>
+          <l:icon src="symbol-icon-aborted-anime" />
+        </dt>
+        <dd>
+          ${%darkgrey_anime}
+        </dd>
+      </dl>
 
+      <h2>${%Weather}</h2>
+
+      <dl class="app-icon-legend">
         <dt>
           <l:icon src="symbol-weather-icon-health-80plus" />
         </dt>

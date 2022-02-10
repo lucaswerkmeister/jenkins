@@ -6,7 +6,7 @@
             <stop stop-color="var(--blue)" offset="100%"></stop>
         </linearGradient>
         <linearGradient x1="50%" y1="50%" x2="50%" y2="250%" id="rain-cloud-gradient">
-            <stop stop-color="var(--light-grey)" offset="0%"></stop>
+            <stop stop-color="var(--grey-lighter)" offset="0%"></stop>
             <stop stop-color="var(--cyan)" offset="100%"></stop>
         </linearGradient>
     </defs>
