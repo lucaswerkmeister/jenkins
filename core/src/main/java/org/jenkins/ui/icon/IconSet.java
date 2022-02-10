@@ -80,8 +80,8 @@ public class IconSet {
     public static String getSymbol(String name, String title, String classes) {
         if (SYMBOLS.containsKey(name)) {
             String symbol = SYMBOLS.get(name);
-            symbol = symbol.replaceAll("(class=\")[^&]*?(\")", "$1$2");
-            symbol = symbol.replaceAll("<svg", "<svg class=\"" + classes + "\"");
+            symbol = symbol.replaceFirst("(class=\")[^&]*?(\")", "$1$2");
+            symbol = symbol.replaceFirst("<svg", "<svg class=\"" + classes + "\"");
             return prependTitleIfRequired(symbol, title);
         }
 
@@ -100,10 +100,10 @@ public class IconSet {
             symbol = PLACEHOLDER_SVG;
         }
 
-        symbol = symbol.replaceAll("(<title>)[^&]*(</title>)", "$1$2");
-        symbol = symbol.replaceAll("(class=\")[^&]*?(\")", "$1$2");
-        symbol = symbol.replaceAll("<svg", "<svg aria-hidden=\"true\"");
-        symbol = symbol.replaceAll("<svg", "<svg class=\"" + classes + "\"");
+        symbol = symbol.replaceFirst("(<title>)[^&]*(</title>)", "$1$2");
+        symbol = symbol.replaceFirst("(class=\")[^&]*?(\")", "$1$2");
+        symbol = symbol.replaceFirst("<svg", "<svg aria-hidden=\"true\"");
+        symbol = symbol.replaceFirst("<svg", "<svg class=\"" + classes + "\"");
         symbol = symbol.replace("stroke:#000", "stroke:currentColor");
 
         SYMBOLS.put(name, symbol);
