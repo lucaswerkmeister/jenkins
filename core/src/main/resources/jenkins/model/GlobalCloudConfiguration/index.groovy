@@ -48,8 +48,12 @@ l.layout(norefresh:true, permission:app.SYSTEM_READ, title:my.displayName) {
         } else {
             String label = Jenkins.get().updateCenter.getCategoryDisplayName("cloud")
 
-            p(_("There are no cloud implementations for dynamically allocated agents installed. "))
-            a(href: rootURL + "/pluginManager/available?filter=" + URLEncoder.encode(label, "UTF-8"), _("Go to plugin manager."))
+            div(class: "jenkins-notice") {
+                p(class: "jenkins-notice__title", _("There are no cloud implementations for dynamically allocated agents installed. "))
+                p(class: "jenkins-notice__description") {
+                    a(href: rootURL + "/pluginManager/available?filter=" + URLEncoder.encode(label, "UTF-8"), _("Go to plugin manager."))
+                }
+            }
         }
     }
 }
