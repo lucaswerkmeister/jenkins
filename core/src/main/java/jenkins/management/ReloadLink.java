@@ -40,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class ReloadLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("reload-outline", null));
+    public String getIconFileName() {
+        return "symbol-reload";
     }
 
     @Override

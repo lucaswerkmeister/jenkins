@@ -43,8 +43,8 @@ import org.kohsuke.accmod.restrictions.NoExternalUse;
 public class PluginsLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("puzzle-outline", null));
+    public String getIconFileName() {
+        return "plugin.svg";
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PluginsLink extends ManagementLink {
     public Permission getRequiredPermission() {
         return Jenkins.SYSTEM_READ;
     }
-  
+
     @NonNull
     @Override
     public Category getCategory() {

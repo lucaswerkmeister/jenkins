@@ -40,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class SystemInfoLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("server-outline", null));
+    public String getIconFileName() {
+        return "symbol-server";
     }
 
     @Override

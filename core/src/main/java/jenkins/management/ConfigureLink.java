@@ -40,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class ConfigureLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("settings-outline", null));
+    public String getIconFileName() {
+        return "symbol-settings";
     }
 
     @Override

@@ -28,15 +28,13 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <l:layout title="${%Manage Jenkins}" permissions="${app.MANAGE_AND_SYSTEM_READ}">
+    <l:app-bar title="${%Manage Jenkins}" />
+
     <j:if test="${taskTags==null}">
       <st:include page="sidepanel.jelly" />
     </j:if>
 
     <l:main-panel>
-      <div class="jenkins-app-bar">
-        <h1>${%Manage Jenkins}</h1>
-      </div>
-
       <section class="manage-messages">
         <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
           <st:include page="message.jelly" it="${am}" />
@@ -45,24 +43,24 @@ THE SOFTWARE.
       </section>
 
       <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
-        <section class="jenkins-section">
+        <section class="jenkins-section jenkins-section--bottom-padding">
           <h2 class="jenkins-section__title">${category.key.label}</h2>
           ${taskTags!=null and attrs.contextMenu!='false' ? taskTags.addHeader(category.key.label) : null}
           <div class="jenkins-section__items">
-            <j:forEach var="m" items="${category.value}">
+          <j:forEach var="m" items="${category.value}">
+            <j:if test="${m.iconFileName != null}">
               <div class="jenkins-section__item">
-                <j:choose>
+              <j:set var="alt" value="${icon.replaceAll('\\d*\\.[^.]+$', '')}"/>
+              <j:set var="iconSrc" value="${h.tryGetIconPath(m.iconFileName, context)}"/>
+              <j:set var="iconXml">
+                <l:icon src="${m.iconFileName}" />
+              </j:set>
+              ${taskTags!=null and attrs.contextMenu!='false' ? taskTags.add(m.urlName, iconSrc, iconXml, m.displayName, m.requiresPOST, m.requiresConfirmation) : null}
+              <j:choose>
                 <j:when test="${m.requiresConfirmation}">
                   <l:confirmationLink href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
                     <div class="jenkins-section__item__icon" aria-hidden="true">
-                      <j:choose>
-                        <j:when test="${m.icon.path != null}">
-                          <img src="${rootURL}/${m.icon.path}" />
-                        </j:when>
-                        <j:otherwise>
-                          <j:out value="${m.icon.svg}" />
-                        </j:otherwise>
-                      </j:choose>
+                      <l:icon src="${m.iconFileName}" class="icon" />
                     </div>
                     <dl>
                       <dt>${m.displayName}</dt>
@@ -74,14 +72,7 @@ THE SOFTWARE.
                 <j:when test="${m.requiresPOST}">
                   <f:link href="${m.urlName}" post="${m.requiresPOST}">
                     <div class="jenkins-section__item__icon" aria-hidden="true">
-                      <j:choose>
-                        <j:when test="${m.icon.path != null}">
-                          <img src="${rootURL}/${m.icon.path}" />
-                        </j:when>
-                        <j:otherwise>
-                          <j:out value="${m.icon.svg}" />
-                        </j:otherwise>
-                      </j:choose>
+                      <l:icon src="${m.iconFileName}" class="icon" />
                     </div>
                     <dl>
                       <dt>${m.displayName}</dt>
@@ -93,16 +84,11 @@ THE SOFTWARE.
                 <j:otherwise>
                   <a href="${m.urlName}">
                     <div class="jenkins-section__item__icon" aria-hidden="true">
-                      <j:choose>
-                        <j:when test="${m.icon.path != null}">
-                          <img src="${rootURL}/${m.icon.path}" />
-                        </j:when>
-                        <j:otherwise>
-                          <j:out value="${m.icon.svg}" />
-                        </j:otherwise>
-                      </j:choose>
+                      <l:icon src="${m.iconFileName}" class="icon" />
                       <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
-                        <div class="jenkins-section__item__icon__badge">${m.getUpdateCount()}</div>
+                        <div tooltip="${m.getUpdateCount() == 1 ? '%updateAvailable(m.getUpdateCount())' : '%updatesAvailable(m.getUpdateCount())'}" class="jenkins-section__item__icon__badge">
+                          ${m.getUpdateCount()}
+                        </div>
                       </j:if>
                     </div>
                     <dl>

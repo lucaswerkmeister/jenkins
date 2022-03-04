@@ -103,6 +103,13 @@
       <groupId>com.github.spotbugs</groupId>
       <artifactId>spotbugs-annotations</artifactId>
       <scope>provided</scope>
+      <optional>true</optional>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>
@@ -123,10 +130,10 @@
         <version>3.2.4</version>
         <executions>
           <execution>
-            <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <createDependencyReducedPom>false</createDependencyReducedPom>
               <relocations>
@@ -141,6 +148,14 @@
                 <relocation>
                   <pattern>net</pattern>
                   <shadedPattern>io.jenkins.cli.shaded.net</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com</pattern>
+                  <shadedPattern>io.jenkins.cli.shaded.com</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>jakarta</pattern>
+                  <shadedPattern>io.jenkins.cli.shaded.jakarta</shadedPattern>
                 </relocation>
               </relocations>
               <transformers>
@@ -180,10 +195,10 @@
         <executions>
           <execution>
             <id>add-source</id>
-            <phase>generate-sources</phase>
             <goals>
               <goal>add-source</goal>
             </goals>
+            <phase>generate-sources</phase>
             <configuration>
               <sources>
                 <source>${project.build.directory}/generated-sources/localizer</source>

@@ -40,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class ConsoleLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("code-working-outline", null));
+    public String getIconFileName() {
+        return "symbol-code-working";
     }
 
     @Override

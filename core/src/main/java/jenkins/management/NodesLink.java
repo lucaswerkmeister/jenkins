@@ -40,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class NodesLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("cloud-outline", null));
+    public String getIconFileName() {
+        return "symbol-cloud";
     }
 
     @Override

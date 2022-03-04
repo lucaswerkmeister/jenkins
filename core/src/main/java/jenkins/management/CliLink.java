@@ -40,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class CliLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("terminal-outline", null));
+    public String getIconFileName() {
+        return "symbol-terminal";
     }
 
     @Override

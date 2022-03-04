@@ -40,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class SystemLogLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("file-tray-outline", null));
+    public String getIconFileName() {
+        return "symbol-file-tray";
     }
 
     @Override
@@ -64,7 +64,7 @@ public class SystemLogLink extends ManagementLink {
     public Permission getRequiredPermission() {
         return Jenkins.SYSTEM_READ;
     }
-    
+
     @NonNull
     @Override
     public Category getCategory() {

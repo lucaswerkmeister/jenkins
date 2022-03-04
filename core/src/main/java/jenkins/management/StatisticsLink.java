@@ -40,8 +40,8 @@ import org.jenkinsci.Symbol;
 public class StatisticsLink extends ManagementLink {
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("analytics-outline", null));
+    public String getIconFileName() {
+        return "symbol-analytics";
     }
 
     @Override

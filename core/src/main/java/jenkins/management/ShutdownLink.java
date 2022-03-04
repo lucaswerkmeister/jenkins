@@ -48,8 +48,8 @@ public class ShutdownLink extends ManagementLink {
     private static final Logger LOGGER = Logger.getLogger(ShutdownLink.class.getName());
 
     @Override
-    public NewIcon getIcon() {
-        return NewIcon.fromSvg(IconSet.getIonicon("power-outline", null));
+    public String getIconFileName() {
+        return "symbol-power";
     }
 
     @Override
@@ -91,7 +91,7 @@ public class ShutdownLink extends ManagementLink {
     public Permission getRequiredPermission() {
         return Jenkins.MANAGE;
     }
-  
+
     @NonNull
     @Override
     public Category getCategory() {
