@@ -34,8 +34,6 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
-import org.jenkins.ui.icon.IconSet;
-import org.jenkins.ui.icon.NewIcon;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
