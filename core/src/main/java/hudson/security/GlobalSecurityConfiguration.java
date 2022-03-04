@@ -47,8 +47,6 @@ import jenkins.model.Jenkins;
 import jenkins.util.ServerTcpPort;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.jenkins.ui.icon.IconSet;
-import org.jenkins.ui.icon.NewIcon;
 import org.jenkinsci.Symbol;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;

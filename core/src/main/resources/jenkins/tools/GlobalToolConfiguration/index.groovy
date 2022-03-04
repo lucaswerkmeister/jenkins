@@ -2,7 +2,6 @@ package jenkins.tools.GlobalToolConfiguration
 
 import hudson.Functions
 import hudson.model.Descriptor
-import jenkins.model.Jenkins
 
 def f=namespace(lib.FormTagLib)
 def l=namespace(lib.LayoutTagLib)

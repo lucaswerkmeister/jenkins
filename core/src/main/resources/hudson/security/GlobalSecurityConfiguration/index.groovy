@@ -6,7 +6,6 @@ import hudson.security.AuthorizationStrategy
 import jenkins.AgentProtocol
 import hudson.Functions
 import hudson.model.Descriptor
-import jenkins.model.Jenkins
 
 def f=namespace(lib.FormTagLib)
 def l=namespace(lib.LayoutTagLib)
