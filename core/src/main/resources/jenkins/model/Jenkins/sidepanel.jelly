@@ -60,14 +60,7 @@ THE SOFTWARE.
               <j:when test="${m.requiresConfirmation}">
                 <l:confirmationLink tooltip="${m.description}" class="jenkins-side-nav__item" href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
                   <div class="jenkins-side-nav__item__icon" aria-hidden="true">
-                    <j:choose>
-                      <j:when test="${m.icon.path != null}">
-                        <img src="${rootURL}/${m.icon.path}" />
-                      </j:when>
-                      <j:otherwise>
-                        <j:out value="${m.icon.svg}" />
-                      </j:otherwise>
-                    </j:choose>
+                    <l:icon src="${m.iconFileName}" class="icon" />
                   </div>
                   <dt>${m.displayName}</dt>
                   <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
@@ -76,14 +69,7 @@ THE SOFTWARE.
               <j:when test="${m.requiresPOST}">
                 <f:link href="${m.urlName}" post="${m.requiresPOST}">
                   <div class="jenkins-section__item__icon" aria-hidden="true">
-                    <j:choose>
-                      <j:when test="${m.icon.path != null}">
-                        <img src="${rootURL}/${m.icon.path}" />
-                      </j:when>
-                      <j:otherwise>
-                        <j:out value="${m.icon.svg}" />
-                      </j:otherwise>
-                    </j:choose>
+                    <l:icon src="${m.iconFileName}" class="icon" />
                   </div>
                   <dl>
                     <dt>${m.displayName}</dt>
@@ -95,21 +81,14 @@ THE SOFTWARE.
               <j:otherwise>
                   <a tooltip="${m.description}" href="${rootURL}/${m.urlName}" class="jenkins-side-nav__item ${h.hyperlinkMatchesCurrentPage(rootURL + '/' + m.urlName) ? 'jenkins-side-nav__item--selected' : ''}">
                     <div class="jenkins-side-nav__item__icon" aria-hidden="true">
-                      <j:choose>
-                        <j:when test="${m.icon.path != null}">
-                          <img src="${rootURL}/${m.icon.path}" />
-                        </j:when>
-                        <j:otherwise>
-                          <j:out value="${m.icon.svg}" />
-                        </j:otherwise>
-                      </j:choose>
+                      <l:icon src="${m.iconFileName}" class="icon" />
                     </div>
                     <dt>${m.displayName}</dt>
                     <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
                       <span class="jenkins-side-nav__item__badge">${m.getUpdateCount()}</span>
                     </j:if>
                     <dd><j:out value="${m.description}"/></dd>
-<!--                    <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>-->
+                    <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
                   </a>
                 </j:otherwise>
             </j:choose>
