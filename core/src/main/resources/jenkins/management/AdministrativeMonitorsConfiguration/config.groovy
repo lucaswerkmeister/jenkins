@@ -41,7 +41,7 @@ f.section(title: _("Administrative monitors configuration")) {
                             checked: am.enabled,
                             json: am.id)
                     if (am.isSecurity()) {
-                        span(style: 'margin-left: 0.5rem', class: 'am-badge', _("Security"))
+                        span(class: 'jenkins-badge', _("Security"))
                     }
                 }
                 div(class: "tr") {
