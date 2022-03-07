@@ -44,10 +44,8 @@ f.section(title: _("Administrative monitors configuration")) {
                         span(class: 'jenkins-badge', _("Security"))
                     }
                 }
-                div(class: "tr") {
-                    div(class: "jenkins-checkbox__description") {
-                        st.include(from: am, page: "description", optional: true)
-                    }
+                div(class: "jenkins-checkbox__description") {
+                    st.include(from: am, page: "description", optional: true)
                 }
             }
         }
