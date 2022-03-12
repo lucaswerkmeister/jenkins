@@ -141,10 +141,10 @@ $.when(getItems()).done(function(data) {
 
     function drawCategory(category) {
       var $category = $('<div/>').addClass('category').attr('id', 'j-add-item-type-' + cleanClassName(category.id));
-      var $items = $('<ul/>').addClass('j-item-options');
+      var $items = $('<div/>');
       var $catHeader = $('<div class="header" />');
-      var title = '<h2>' + category.name + '</h2>';
-      var description = '<p>' + category.description + '</p>';
+      var title = '<p class="jenkins-dynamic-select__items__header">' + category.name + '</p>';
+      var description = '<p class="jenkins-dynamic-select__items__description">' + category.description + '</p>';
 
       // Add items
       $.each(category.items, function(i, elem) {
@@ -160,30 +160,22 @@ $.when(getItems()).done(function(data) {
     }
 
     function drawItem(elem) {
-      var item = document.createElement('li');
+      var item = document.createElement('button');
       item.tabIndex = 0;
-      item.className = cleanClassName(elem.class);
+      item.className = 'jenkins-dynamic-select__items__item app-project';
       item.setAttribute('role', 'radio');
       item.setAttribute('aria-checked', 'false');
 
-      var label = item.appendChild(document.createElement('label'));
-
-      var radio = label.appendChild(document.createElement('input'));
-      radio.type = 'radio';
-      radio.name = 'mode';
-      radio.value = elem.class;
-
-      var displayName = label.appendChild(document.createElement('span'));
-      displayName.className = 'label';
-
-      displayName.appendChild(document.createTextNode(elem.displayName));
-
-      var desc = item.appendChild(document.createElement('div'));
-      desc.className = 'desc';
-      desc.innerHTML = checkForLink(elem.description);
-
       var iconDiv = drawIcon(elem);
       item.appendChild(iconDiv);
+
+      let textContainer = item.appendChild(document.createElement('div'));
+      var label = textContainer.appendChild(document.createElement('p'));
+      label.appendChild(document.createTextNode(elem.displayName));
+
+      var desc = textContainer.appendChild(document.createElement('p'));
+      desc.className = 'desc';
+      desc.innerHTML = checkForLink(elem.description);
 
       function select(e) {
         e.preventDefault();
@@ -216,26 +208,26 @@ $.when(getItems()).done(function(data) {
     }
 
     function drawIcon(elem) {
-      var iconDiv = document.createElement('div');
+      var iconDiv = document.createElement('span');
       if (elem.iconClassName && elem.iconQualifiedUrl) {
         iconDiv.className = 'icon';
-        
+
         var img1 = document.createElement('img');
         img1.className = elem.iconClassName + ' icon-xlg';
         img1.src = elem.iconQualifiedUrl;
         iconDiv.appendChild(img1);
-        
+
         // Example for Freestyle project
         // <div class="icon"><img class="icon-freestyle-project icon-xlg" src="/jenkins/static/108b2346/images/48x48/freestyleproject.png"></div>
       } else if (elem.iconFilePathPattern) {
         iconDiv.className = 'icon';
-        
+
         var iconFilePath = jRoot + '/' + elem.iconFilePathPattern.replace(":size", "48x48");
-        
+
         var img2 = document.createElement('img');
         img2.src = iconFilePath;
         iconDiv.appendChild(img2);
-        
+
         // Example for Maven project
         // <div class="icon"><img src="/jenkins/plugin/maven-plugin/images/48x48/mavenmoduleset.png"></div>
       } else {
@@ -246,7 +238,7 @@ $.when(getItems()).done(function(data) {
         var aName = name.split(' ');
         var a = name.substring(0,1);
         var b = ((aName.length === 1) ? name.substring(1,2) : aName[1].substring(0,1));
-        
+
         var spanFakeImgA = document.createElement('span');
         spanFakeImgA.className = "a";
         spanFakeImgA.innerText = a;
@@ -256,7 +248,7 @@ $.when(getItems()).done(function(data) {
         spanFakeImgB.innerText = b;
         iconDiv.appendChild(spanFakeImgB);
         iconDiv.className = colorClass + ' default-icon';
-        
+
         // Example for MockFolder
         // <div class="default-icon c-49728B"><span class="a">M</span><span class="b">o</span></div>
       }

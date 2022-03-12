@@ -32,7 +32,7 @@ THE SOFTWARE.
 
     <l:main-panel>
       <form method="post" action="createItem" name="createItem" id="createItem" class="jenkins-form" style="margin: auto;">
-        <h1>New Project</h1>
+        <h1>${%New Project}</h1>
 
         <s:entry title="Name">
           <s:textbox />
@@ -40,37 +40,122 @@ THE SOFTWARE.
 
         <s:entry title="Type">
           <button class="jenkins-dynamic-select">
-            <span>
-              <l:icon src="symbol-duplicate" />
-            </span>
-            <div>
-              <p>Freestyle Project</p>
-              <p>This is the central feature of Jenkins. Jenkins will build your project, combining any SCM with any build system, and this can be even used for something other than software build.</p>
-            </div>
-          </button>
-        </s:entry>
-
-        <div class="jenkins-dynamic-select__items">
-          <div id="items" class="categories flat" role="radiogroup" aria-labelledby="Items" data-valid="false" />
-
-          <j:if test="${!empty(app.itemMap)}">
-            <div class="item-copy">
-              <p class="description">${%CopyOption.description}</p>
-              <div class="add-item-copy">
-                <input type="radio" name="mode" value="copy" />
-                <div class="icon">
-                  <img src="${resURL}/images/48x48/copy.png" />
-                </div>
-                <label>${%CopyOption.label}</label>
-                <j:set var="descriptor" value="${it.descriptor}" />
-                <s:textbox id="from" data-valid="false" name="from" placeholder="${%CopyOption.placeholder}" field="copyNewItemFrom"/>
+            <div class="app-project">
+              <span>
+                <l:icon src="symbol-duplicate" />
+              </span>
+              <div>
+                <p>Freestyle Project</p>
+                <p>This is the central feature of Jenkins. Jenkins will build your project, combining any SCM with any build system, and this can be even used for something other than software build.</p>
               </div>
             </div>
-          </j:if>
-        </div>
+          </button>
+          <div style="position: relative;">
+            <div class="jenkins-dynamic-select__items">
+              <div id="items" class="categories flat" role="radiogroup" aria-labelledby="Items" data-valid="false" />
+            </div>
+
+            <div class="jenkins-dynamic-select__items">
+              <j:if test="${!empty(app.itemMap)}">
+                <div>
+                  <p class="jenkins-dynamic-select__items__header">Standalone Projects</p>
+                  <p class="jenkins-dynamic-select__items__description">Create projects with a self-contained configuration and history. These projects can be at the top-level or grouped within folders.</p>
+                </div>
+                <button class="jenkins-dynamic-select__items__item">
+                  <span>
+                    <l:icon src="symbol-duplicate" />
+                  </span>
+                  <div>
+                    <p>Freestyle Project</p>
+                    <p>This is the central feature of Jenkins. Jenkins will build your project, combining any SCM with any build system, and this can be even used for something other than software build.</p>
+                  </div>
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  <span>
+                    <l:icon src="symbol-duplicate" />
+                  </span>
+                  <div>
+                    <p>Freestyle Project</p>
+                    <p>This is the central feature of Jenkins. Jenkins will build your project, combining any SCM with any build system, and this can be even used for something other than software build.</p>
+                  </div>
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  <span>
+                    <l:icon src="symbol-duplicate" />
+                  </span>
+                  <div>
+                    <p>Freestyle Project</p>
+                    <p>This is the central feature of Jenkins. Jenkins will build your project, combining any SCM with any build system, and this can be even used for something other than software build.</p>
+                  </div>
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+                <button class="jenkins-dynamic-select__items__item">
+                  Sleep Well Beast
+                </button>
+              </j:if>
+            </div>
+          </div>
+        </s:entry>
+
+        <j:if test="${!empty(app.itemMap)}">
+          <s:entry title="Clone an existing project">
+            <button class="jenkins-dynamic-select">
+              <div class="app-project">
+                <span>
+                  <l:icon src="symbol-duplicate" />
+                </span>
+                <div>
+                  <p>Select a project</p>
+                </div>
+              </div>
+            </button>
+            <div style="position: relative;">
+              <div class="jenkins-dynamic-select__items">
+                <j:forEach items="${app.itemMap}" var="item">
+                  <button class="jenkins-dynamic-select__items__item">
+                    ${item.key}
+                  </button>
+                </j:forEach>
+              </div>
+            </div>
+          </s:entry>
+        </j:if>
+
+        <script>
+          let dynamicDropdowns = document.querySelectorAll(".jenkins-dynamic-select")
+          dynamicDropdowns.forEach(function(e) {
+              let relatedDropdown = e.nextSibling.childNodes[0]
+              e.addEventListener("click", e => {
+                relatedDropdown.classList.add("jenkins-dynamic-select__items--visible")
+              })
+          })
+        </script>
 
         <s:bottomButtonBar>
-          <st:include page="newJobButtonBar.jelly"/>
+          <button type="submit" class="jenkins-button" id="ok-button">${%Create}</button>
         </s:bottomButtonBar>
       </form>
     </l:main-panel>
