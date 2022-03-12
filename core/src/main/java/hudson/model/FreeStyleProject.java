@@ -28,8 +28,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Extension;
 import jenkins.model.Jenkins;
 import jenkins.model.item_category.StandaloneProjectsCategory;
-import org.jenkins.ui.icon.Icon;
-import org.jenkins.ui.icon.IconSet;
 import org.jenkinsci.Symbol;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -103,20 +101,8 @@ public class FreeStyleProject extends Project<FreeStyleProject, FreeStyleBuild> 
         }
 
         @Override
-        public String getIconFilePathPattern() {
-            return (Jenkins.RESOURCE_PATH + "/images/:size/freestyleproject.png").replaceFirst("^/", "");
-        }
-
-        @Override
         public String getIconClassName() {
-            return "icon-freestyle-project";
-        }
-
-        static {
-            IconSet.icons.addIcon(new Icon("icon-freestyle-project icon-sm", "16x16/freestyleproject.png", Icon.ICON_SMALL_STYLE));
-            IconSet.icons.addIcon(new Icon("icon-freestyle-project icon-md", "24x24/freestyleproject.png", Icon.ICON_MEDIUM_STYLE));
-            IconSet.icons.addIcon(new Icon("icon-freestyle-project icon-lg", "32x32/freestyleproject.png", Icon.ICON_LARGE_STYLE));
-            IconSet.icons.addIcon(new Icon("icon-freestyle-project icon-xlg", "48x48/freestyleproject.png", Icon.ICON_XLARGE_STYLE));
+            return "symbol-freestyle-project";
         }
     }
 }

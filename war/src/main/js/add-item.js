@@ -78,28 +78,6 @@ $.when(getItems()).done(function(data) {
       $('.input-help', context).removeClass('input-message-disabled');
     }
 
-    // About Scroll-linked effect: https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Scroll-linked_effects
-    function doSticky() {
-      var decorator = $('form .footer .btn-decorator');
-      var pos = decorator.offset();
-      var vpH = $(window).height();
-      if (pos.top >= vpH) {
-        decorator.css({position: 'fixed'});
-      }
-
-      $(window).scroll(function() {
-        var footer = $('form .footer');
-        var ref1 = decorator.offset().top + decorator.outerHeight();
-        var ref2 = footer.offset().top + footer.outerHeight();
-        var vpH = $(window).height();
-        if (ref2 > vpH + $(window).scrollTop()) {
-          decorator.css({position: 'fixed'});
-        } else if (ref2 - 1 <= ref1) {
-          decorator.css({position: 'absolute'});
-        }
-      });
-    }
-
     function enableSubmit(status) {
       var btn = $('form .footer .btn-decorator button[type=submit]');
       if (status === true) {
@@ -161,6 +139,7 @@ $.when(getItems()).done(function(data) {
 
     function drawItem(elem) {
       var item = document.createElement('button');
+      item.type = 'button';
       item.tabIndex = 0;
       item.className = 'jenkins-dynamic-select__items__item app-project';
       item.setAttribute('role', 'radio');
@@ -231,23 +210,23 @@ $.when(getItems()).done(function(data) {
         // Example for Maven project
         // <div class="icon"><img src="/jenkins/plugin/maven-plugin/images/48x48/mavenmoduleset.png"></div>
       } else {
-        var colors = ['c-49728B','c-335061','c-D33833','c-6D6B6D', 'c-6699CC'];
-        var desc = elem.description || '';
-        var name = elem.displayName;
-        var colorClass= colors[(desc.length) % 4];
-        var aName = name.split(' ');
-        var a = name.substring(0,1);
-        var b = ((aName.length === 1) ? name.substring(1,2) : aName[1].substring(0,1));
-
-        var spanFakeImgA = document.createElement('span');
-        spanFakeImgA.className = "a";
-        spanFakeImgA.innerText = a;
-        iconDiv.appendChild(spanFakeImgA);
-        var spanFakeImgB = document.createElement('span');
-        spanFakeImgB.className = "b";
-        spanFakeImgB.innerText = b;
-        iconDiv.appendChild(spanFakeImgB);
-        iconDiv.className = colorClass + ' default-icon';
+        // var colors = ['c-49728B','c-335061','c-D33833','c-6D6B6D', 'c-6699CC'];
+        // var desc = elem.description || '';
+        // var name = elem.displayName;
+        // var colorClass= colors[(desc.length) % 4];
+        // var aName = name.split(' ');
+        // var a = name.substring(0,1);
+        // var b = ((aName.length === 1) ? name.substring(1,2) : aName[1].substring(0,1));
+        //
+        // var spanFakeImgA = document.createElement('span');
+        // spanFakeImgA.className = "a";
+        // spanFakeImgA.innerText = a;
+        // iconDiv.appendChild(spanFakeImgA);
+        // var spanFakeImgB = document.createElement('span');
+        // spanFakeImgB.className = "b";
+        // spanFakeImgB.innerText = b;
+        // iconDiv.appendChild(spanFakeImgB);
+        // iconDiv.className = colorClass + ' default-icon';
 
         // Example for MockFolder
         // <div class="default-icon c-49728B"><span class="a">M</span><span class="b">o</span></div>
@@ -331,8 +310,5 @@ $.when(getItems()).done(function(data) {
 
     // Disable the submit button
     enableSubmit(false);
-
-    // Do sticky the form buttons
-    doSticky();
   });
 });

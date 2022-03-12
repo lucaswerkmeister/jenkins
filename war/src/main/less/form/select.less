@@ -262,3 +262,34 @@
     }
   }
 }
+
+.app-project-label {
+  span {
+    color: var(--text-color-secondary);
+    margin: 0 0.75ch;
+  }
+
+  button {
+    display: inline;
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    font-weight: inherit;
+    color: var(--link-color);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--link-color--hover);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+
+    &:active,
+    &:focus {
+      color: var(--link-color--active);
+    }
+  }
+}
