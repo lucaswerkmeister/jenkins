@@ -42,7 +42,7 @@ THE SOFTWARE.
           <button class="jenkins-dynamic-select">
             <div class="app-project">
               <span>
-                <l:icon src="symbol-duplicate" />
+                <l:icon src="symbol-freestyle-project" />
               </span>
               <div>
                 <p>Freestyle Project</p>
