@@ -158,15 +158,47 @@
 }
 
 .jenkins-dynamic-select__items__header {
+  position: relative;
+  margin: 0.35rem -0.35rem;
+  padding: 1rem;
   font-weight: 500;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0.025;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    opacity: 0.05;
+  }
+
+  &:first-of-type {
+    margin-top: -0.35rem;
+
+    &::after {
+      border-top: none;
+    }
+  }
+}
+
+.jenkins-dynamic-select__items__title {
   margin: 0;
-  padding: 0.4rem 0 0 0.7rem;
+  padding: 0;
 }
 
 .jenkins-dynamic-select__items__description {
   margin: 0;
-  padding: 0 0 0.4rem 0.7rem;
+  padding: 0.1rem 0 0 0;
   color: var(--text-color-secondary);
+  font-weight: 500;
 }
 
 .jenkins-dynamic-select__items__item {
@@ -255,8 +287,8 @@
       text-align: left;
 
       &:last-of-type {
+        color: var(--text-color-secondary);
         margin-top: calc(var(--form-input-padding) / 3);
-        opacity: 0.6;
         line-height: 1.66;
       }
     }
@@ -264,22 +296,17 @@
 }
 
 .app-project-label {
-  span {
-    color: var(--text-color-secondary);
-    margin: 0 0.75ch;
-  }
-
   button {
     display: inline;
     appearance: none;
     background: none;
     border: none;
     outline: none;
-    margin: 0;
     padding: 0;
     font-weight: inherit;
     color: var(--link-color);
     cursor: pointer;
+    margin: 0 0 0 auto;
 
     &:hover {
       color: var(--link-color--hover);

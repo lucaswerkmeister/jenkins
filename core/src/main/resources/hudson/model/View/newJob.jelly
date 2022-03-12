@@ -35,12 +35,14 @@ THE SOFTWARE.
         <h1>${%New Project}</h1>
 
         <s:entry title="Enter a name">
-          <s:textbox />
+          <s:textbox name="name" />
         </s:entry>
 
+        <!--This is updated when the user clicks Clone-->
+        <input type="hidden" name="copy" value="false" />
+
         <div class="jenkins-form-item">
-          <div class="jenkins-form-label app-project-label">Select a type <span>or</span> <button>Clone an existing project</button></div>
-          <div style="display: none;" class="jenkins-form-label app-project-label">Clone an existing project <span>or</span> <button>Select a type</button></div>
+          <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button>Clone an existing project</button></j:if></div>
           <button type="button" class="jenkins-dynamic-select">
             <div class="app-project">
               <span>
@@ -54,11 +56,33 @@ THE SOFTWARE.
           </button>
           <div style="position: relative;">
             <div class="jenkins-dynamic-select__items">
-              <div id="items" class="categories flat" role="radiogroup" aria-labelledby="Items" data-valid="false" />
+
+              <j:forEach var="category" items="${it.itemCategories.items}">
+                <div class="jenkins-dynamic-select__items__header">
+                  <div class="jenkins-dynamic-select__items__title">${category.name}</div>
+                  <div class="jenkins-dynamic-select__items__description">${category.description}</div>
+                </div>
+                <j:forEach var="item" items="${category.items}">
+                  <input id="type-${item.class}" type="radio" name="mode" value="${item.class}" />
+                  <label for="type-${item.class}" class="jenkins-dynamic-select__items__item app-project">
+                    <span>
+                      <l:icon src="${item.iconClassName ?: item.iconFilePathPattern}" />
+                    </span>
+                    <div>
+                      <p>${item}</p>
+                      <p>${item.description}</p>
+                    </div>
+                  </label>
+                </j:forEach>
+              </j:forEach>
+
             </div>
           </div>
+        </div>
 
-          <j:if test="${!empty(app.itemMap)} and false">
+        <j:if test="${!empty(app.itemMap)}">
+          <div class="jenkins-form-item">
+            <div class="jenkins-form-label app-project-label">Clone an existing project <button>Select a project type</button></div>
             <button type="button" class="jenkins-dynamic-select">
               <div class="app-project">
                 <span>
@@ -70,17 +94,17 @@ THE SOFTWARE.
               </div>
             </button>
             <div style="position: relative;">
-              <div class="jenkins-dynamic-select__items">
-                <j:forEach items="${app.itemMap}" var="item">
-                  <button type="button" class="jenkins-dynamic-select__items__item">
-                    ${item.key}
-                  </button>
-                </j:forEach>
+                <div class="jenkins-dynamic-select__items">
+                  <j:forEach items="${app.itemMap}" var="item">
+                    <input id="copy-${item.key}" type="radio" name="copy" value="${item.key}" />
+                    <label for="copy-${item.key}" class="jenkins-dynamic-select__items__item">
+                      ${item.key}
+                    </label>
+                  </j:forEach>
+                </div>
               </div>
-            </div>
-          </j:if>
-        </div>
-
+          </div>
+        </j:if>
 
         <script>
           let dynamicDropdowns = document.querySelectorAll(".jenkins-dynamic-select")
@@ -93,7 +117,7 @@ THE SOFTWARE.
         </script>
 
         <s:bottomButtonBar>
-          <button type="submit" class="jenkins-button jenkins-button--primary" id="ok-button">${%Create}</button>
+          <button type="submit" class="jenkins-button jenkins-button--primary" id="ok-button">${%Create project}</button>
         </s:bottomButtonBar>
       </form>
     </l:main-panel>

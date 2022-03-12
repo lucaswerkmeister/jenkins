@@ -1098,6 +1098,45 @@ public abstract class View extends AbstractModelObject implements AccessControll
         return FormValidation.ok();
     }
 
+    public Categories getItemCategories() {
+        getOwner().checkPermission(Item.CREATE);
+
+        Categories categories = new Categories();
+        int order = 0;
+
+        for (TopLevelItemDescriptor descriptor : DescriptorVisibilityFilter.apply(getOwner().getItemGroup(), Items.all2(Jenkins.getAuthentication2(), getOwner().getItemGroup()))) {
+            ItemCategory ic = ItemCategory.getCategory(descriptor);
+            Map<String, Serializable> metadata = new HashMap<>();
+
+            // Information about Item.
+            metadata.put("class", descriptor.getId());
+            metadata.put("order", ++order);
+            metadata.put("displayName", descriptor.getDisplayName());
+            metadata.put("description", descriptor.getDescription());
+            metadata.put("iconFilePathPattern", descriptor.getIconFilePathPattern());
+            String iconClassName = descriptor.getIconClassName();
+            if (StringUtils.isNotBlank(iconClassName)) {
+                metadata.put("iconClassName", iconClassName);
+                Icon icon = IconSet.icons
+                        .getIconByClassSpec(String.join(" ", iconClassName, "48x48"));
+                if (icon != null) {
+                    metadata.put("iconQualifiedUrl", icon.getQualifiedUrl(""));
+                }
+            }
+
+            Category category = categories.getItem(ic.getId());
+            if (category != null) {
+                category.getItems().add(metadata);
+            } else {
+                List<Map<String, Serializable>> temp = new ArrayList<>();
+                temp.add(metadata);
+                category = new Category(ic.getId(), ic.getDisplayName(), ic.getDescription(), ic.getOrder(), ic.getMinToShow(), temp);
+                categories.getItems().add(category);
+            }
+        }
+        return categories;
+    }
+
     /**
      * An API REST method to get the allowed {$link TopLevelItem}s and its categories.
      *
