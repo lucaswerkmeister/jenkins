@@ -38,25 +38,13 @@ THE SOFTWARE.
           <s:textbox name="name" />
         </s:entry>
 
-        <!--This is updated when the user clicks Clone-->
-        <input type="hidden" name="copy" value="false" />
-
         <div class="jenkins-form-item">
           <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button>Clone an existing project</button></j:if></div>
           <button type="button" class="jenkins-dynamic-select">
-            <div class="app-project">
-              <span>
-                <l:icon src="symbol-freestyle-project" />
-              </span>
-              <div>
-                <p>Freestyle Project</p>
-                <p>This is the central feature of Jenkins. Jenkins will build your project, combining any SCM with any build system, and this can be even used for something other than software build.</p>
-              </div>
-            </div>
+            Select a type of project
           </button>
           <div style="position: relative;">
             <div class="jenkins-dynamic-select__items">
-
               <j:forEach var="category" items="${it.itemCategories.items}">
                 <div class="jenkins-dynamic-select__items__header">
                   <div class="jenkins-dynamic-select__items__title">${category.name}</div>
@@ -75,7 +63,6 @@ THE SOFTWARE.
                   </label>
                 </j:forEach>
               </j:forEach>
-
             </div>
           </div>
         </div>
@@ -96,7 +83,7 @@ THE SOFTWARE.
             <div style="position: relative;">
                 <div class="jenkins-dynamic-select__items">
                   <j:forEach items="${app.itemMap}" var="item">
-                    <input id="copy-${item.key}" type="radio" name="copy" value="${item.key}" />
+                    <input id="copy-${item.key}" type="radio" name="from" value="${item.key}" />
                     <label for="copy-${item.key}" class="jenkins-dynamic-select__items__item">
                       ${item.key}
                     </label>
