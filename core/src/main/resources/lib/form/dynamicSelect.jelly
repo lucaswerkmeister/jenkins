@@ -22,17 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 
-<!-- Tomcat doesn't like us using the attribute called 'class' -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define">
   <st:documentation>
     todo
 
     <st:attribute name="placeholder">
-      Additional CSS classes that the control gets.
-    </st:attribute>
-    <st:attribute name="clazz">
-      Additional CSS classes that the control gets.
+      Placeholder content for when an item isn't selected
     </st:attribute>
   </st:documentation>
 
@@ -41,7 +37,7 @@ THE SOFTWARE.
   </st:once>
 
   <button type="button" class="jenkins-dynamic-select">
-    ${placeholder}
+    <p class="jenkins-dynamic-select__placeholder">${placeholder}</p>
   </button>
   <div style="position: relative;">
     <div class="jenkins-dynamic-select__items">

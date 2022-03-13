@@ -11,6 +11,7 @@ window.addEventListener("load", function () {
     relatedDropdown.querySelectorAll("input[type='radio']").forEach(function(radio) {
       radio.addEventListener("change", function() {
         e.innerHTML = radio.nextSibling.innerHTML
+        relatedDropdown.classList.remove("jenkins-dynamic-select__items--visible")
       })
     })
   })

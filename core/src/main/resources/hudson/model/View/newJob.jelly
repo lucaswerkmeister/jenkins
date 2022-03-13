@@ -39,7 +39,7 @@ THE SOFTWARE.
         </s:entry>
 
         <div id="pane-project-type" class="jenkins-form-item">
-          <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button id="button-clone" type="button">Clone an existing project</button></j:if></div>
+          <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button id="button-clone" type="button">or clone an existing project</button></j:if></div>
           <s:dynamicSelect placeholder="${%Select a project type}">
             <j:forEach var="category" items="${it.itemCategories.items}">
               <div class="jenkins-dynamic-select__items__header">
@@ -66,12 +66,16 @@ THE SOFTWARE.
 
         <j:if test="${!empty(app.itemMap)}">
           <div id="pane-clone" class="jenkins-form-item jenkins-hidden">
-            <div class="jenkins-form-label app-project-label">Clone an existing project <button id="button-project-type" type="button">Select a project type</button></div>
+            <div class="jenkins-form-label app-project-label">Clone an existing project <button id="button-project-type" type="button">or select a project type</button></div>
+            <input id="input-override-mode" disabled="true" type="hidden" name="mode" value="copy" />
             <s:dynamicSelect placeholder="${%Select a project to clone}">
               <j:forEach items="${app.itemMap}" var="item">
-                <input id="copy-${item.key}" type="radio" name="from" value="${item.key}" />
+                <input id="copy-${item.key}" disabled="true" type="radio" name="from" value="${item.key}" />
                 <label for="copy-${item.key}" class="jenkins-dynamic-select__items__item">
-                  ${item.key}
+                  <p class="app-copy-project">
+                    ${item.key}
+                    <span>${item.value.descriptor.displayName}</span>
+                  </p>
                 </label>
               </j:forEach>
             </s:dynamicSelect>
