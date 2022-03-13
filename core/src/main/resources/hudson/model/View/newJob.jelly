@@ -40,68 +40,41 @@ THE SOFTWARE.
 
         <div class="jenkins-form-item">
           <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button>Clone an existing project</button></j:if></div>
-          <button type="button" class="jenkins-dynamic-select">
-            Select a type of project
-          </button>
-          <div style="position: relative;">
-            <div class="jenkins-dynamic-select__items">
-              <j:forEach var="category" items="${it.itemCategories.items}">
-                <div class="jenkins-dynamic-select__items__header">
-                  <div class="jenkins-dynamic-select__items__title">${category.name}</div>
-                  <div class="jenkins-dynamic-select__items__description">${category.description}</div>
-                </div>
-                <j:forEach var="item" items="${category.items}">
-                  <input id="type-${item.class}" type="radio" name="mode" value="${item.class}" />
-                  <label for="type-${item.class}" class="jenkins-dynamic-select__items__item app-project">
-                    <span>
-                      <l:icon src="${item.iconClassName ?: item.iconFilePathPattern}" />
-                    </span>
-                    <div>
-                      <p>${item}</p>
-                      <p>${item.description}</p>
-                    </div>
-                  </label>
-                </j:forEach>
+          <s:dynamicSelect placeholder="${%Select a project type}">
+            <j:forEach var="category" items="${it.itemCategories.items}">
+              <div class="jenkins-dynamic-select__items__header">
+                <div class="jenkins-dynamic-select__items__title">${category.name}</div>
+                <div class="jenkins-dynamic-select__items__description">${category.description}</div>
+              </div>
+              <j:forEach var="item" items="${category.items}">
+                <input id="type-${item.class}" type="radio" name="mode" value="${item.class}" />
+                <label for="type-${item.class}" class="jenkins-dynamic-select__items__item app-project">
+                  <span>
+                    <l:icon src="${item.iconClassName ?: item.iconFilePathPattern}" />
+                  </span>
+                  <div>
+                    <p>${item}</p>
+                    <p>${item.description}</p>
+                  </div>
+                </label>
               </j:forEach>
-            </div>
-          </div>
+            </j:forEach>
+          </s:dynamicSelect>
         </div>
 
-        <j:if test="${!empty(app.itemMap)}">
+        <j:if test="${empty(app.itemMap)}">
           <div class="jenkins-form-item">
             <div class="jenkins-form-label app-project-label">Clone an existing project <button>Select a project type</button></div>
-            <button type="button" class="jenkins-dynamic-select">
-              <div class="app-project">
-                <span>
-                  <l:icon src="symbol-duplicate" />
-                </span>
-                <div>
-                  <p>Select a project</p>
-                </div>
-              </div>
-            </button>
-            <div style="position: relative;">
-                <div class="jenkins-dynamic-select__items">
-                  <j:forEach items="${app.itemMap}" var="item">
-                    <input id="copy-${item.key}" type="radio" name="from" value="${item.key}" />
-                    <label for="copy-${item.key}" class="jenkins-dynamic-select__items__item">
-                      ${item.key}
-                    </label>
-                  </j:forEach>
-                </div>
-              </div>
+            <s:dynamicSelect placeholder="${%Select a project to clone}">
+              <j:forEach items="${app.itemMap}" var="item">
+                <input id="copy-${item.key}" type="radio" name="from" value="${item.key}" />
+                <label for="copy-${item.key}" class="jenkins-dynamic-select__items__item">
+                  ${item.key}
+                </label>
+              </j:forEach>
+            </s:dynamicSelect>
           </div>
         </j:if>
-
-        <script>
-          let dynamicDropdowns = document.querySelectorAll(".jenkins-dynamic-select")
-          dynamicDropdowns.forEach(function(e) {
-              let relatedDropdown = e.nextSibling.childNodes[0]
-              e.addEventListener("click", e => {
-                relatedDropdown.classList.add("jenkins-dynamic-select__items--visible")
-              })
-          })
-        </script>
 
         <s:bottomButtonBar>
           <button type="submit" class="jenkins-button jenkins-button--primary" id="ok-button">${%Create project}</button>
