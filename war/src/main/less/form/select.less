@@ -155,6 +155,17 @@
     transform: translateY(0);
     opacity: 1;
   }
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+
+    &:checked + .jenkins-dynamic-select__items__item {
+      &::before {
+        opacity: 0.05;
+      }
+    }
+  }
 }
 
 .jenkins-dynamic-select__items__header {
