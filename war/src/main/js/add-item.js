@@ -16,7 +16,7 @@ window.addEventListener("load", function () {
     })
   })
 
-  // TODO - Remove!
+  // TODO - Remove otherwise submission doesn't work!
   function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);

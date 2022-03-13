@@ -72,10 +72,10 @@ THE SOFTWARE.
               <j:forEach items="${app.itemMap}" var="item">
                 <input id="copy-${item.key}" disabled="true" type="radio" name="from" value="${item.key}" />
                 <label for="copy-${item.key}" class="jenkins-dynamic-select__items__item">
-                  <p class="app-copy-project">
+                  <div class="app-copy-project">
                     ${item.key}
                     <span>${item.value.descriptor.displayName}</span>
-                  </p>
+                  </div>
                 </label>
               </j:forEach>
             </s:dynamicSelect>
