@@ -1,4 +1,5 @@
 window.addEventListener("load", function () {
+  const form = document.querySelector('#createItem')
   const toggleButtons = document.querySelectorAll("#button-project-type, #button-clone")
   const paneProjectType = document.querySelector("#pane-project-type")
   const paneClone = document.querySelector("#pane-clone")
@@ -7,8 +8,8 @@ window.addEventListener("load", function () {
 
   toggleButtons.forEach(button => {
     button.addEventListener("click", function() {
-      paneProjectType.classList.toggle("jenkins-hidden")
-      paneClone.classList.toggle("jenkins-hidden")
+      paneProjectType.classList.toggle("app-banana")
+      paneClone.classList.toggle("app-banana")
 
       // Invert the disabled state of each input so that the disabled inputs are not submitted
       paneProjectTypeInputs.forEach(e => e.toggleAttribute("disabled"))
@@ -18,11 +19,10 @@ window.addEventListener("load", function () {
 
   // TODO - Remove otherwise submission doesn't work!
   function handleSubmit(event) {
-    event.preventDefault();
-    const data = new FormData(event.target);
-    console.log(Object.fromEntries(data.entries()));
+    event.preventDefault()
+    const data = new FormData(event.target)
+    console.log(Object.fromEntries(data.entries()))
   }
 
-  const form = document.querySelector('#createItem');
-  form.addEventListener('submit', handleSubmit);
+  form.addEventListener('submit', handleSubmit)
 })

@@ -333,6 +333,8 @@
     &:active,
     &:focus {
       color: var(--link-color--active);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
     }
   }
 }
@@ -344,4 +346,23 @@
     margin: 0 0.5ch;
     color: var(--text-color-secondary);
   }
+}
+
+.app-taken-away {
+  display: grid;
+
+  .jenkins-form-item {
+    grid-area: ~"1 / 1";
+  }
+}
+
+.app-custard {
+  transition: var(--standard-transition);
+}
+
+.app-banana {
+  opacity: 0;
+  transform: scale(0.95);
+  max-height: 0;
+  visibility: hidden;
 }

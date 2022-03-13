@@ -38,34 +38,35 @@ THE SOFTWARE.
           <s:textbox name="name" />
         </s:entry>
 
-        <div id="pane-project-type" class="jenkins-form-item">
-          <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button id="button-clone" type="button">or clone an existing project</button></j:if></div>
-          <s:dynamicSelect placeholder="${%Select a project type}">
-            <j:forEach var="category" items="${it.itemCategories.items}">
-              <div class="jenkins-dynamic-select__items__header">
-                <div class="jenkins-dynamic-select__items__title">${category.name}</div>
-                <div class="jenkins-dynamic-select__items__description">${category.description}</div>
-              </div>
-              <j:forEach var="item" items="${category.items}">
-                <input id="type-${item.class}" type="radio" name="mode" value="${item.class}" />
-                <label for="type-${item.class}" class="jenkins-dynamic-select__items__item">
-                  <div class="app-project">
-                    <span>
-                      <l:icon src="${item.iconClassName ?: item.iconFilePathPattern}" />
-                    </span>
-                    <div>
-                      <p>${item.displayName}</p>
-                      <p>${item.description}</p>
+        <div class="app-taken-away">
+          <div id="pane-project-type" class="jenkins-form-item app-custard">
+            <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button id="button-clone" type="button">or clone an existing project</button></j:if></div>
+            <s:dynamicSelect placeholder="${%Select a project type}">
+              <j:forEach var="category" items="${it.itemCategories.items}">
+                <div class="jenkins-dynamic-select__items__header">
+                  <div class="jenkins-dynamic-select__items__title">${category.name}</div>
+                  <div class="jenkins-dynamic-select__items__description">${category.description}</div>
+                </div>
+                <j:forEach var="item" items="${category.items}">
+                  <input id="type-${item.class}" type="radio" name="mode" value="${item.class}" />
+                  <label for="type-${item.class}" class="jenkins-dynamic-select__items__item">
+                    <div class="app-project">
+                      <span>
+                        <l:icon src="${item.iconClassName ?: item.iconFilePathPattern}" />
+                      </span>
+                      <div>
+                        <p>${item.displayName}</p>
+                        <p>${item.description}</p>
+                      </div>
                     </div>
-                  </div>
-                </label>
+                  </label>
+                </j:forEach>
               </j:forEach>
-            </j:forEach>
-          </s:dynamicSelect>
-        </div>
+            </s:dynamicSelect>
+          </div>
 
-        <j:if test="${!empty(app.itemMap)}">
-          <div id="pane-clone" class="jenkins-form-item jenkins-hidden">
+          <j:if test="${!empty(app.itemMap)}">
+          <div id="pane-clone" class="jenkins-form-item app-custard app-banana">
             <div class="jenkins-form-label app-project-label">Clone an existing project <button id="button-project-type" type="button">or select a project type</button></div>
             <input id="input-override-mode" disabled="true" type="hidden" name="mode" value="copy" />
             <s:dynamicSelect placeholder="${%Select a project to clone}">
@@ -81,6 +82,7 @@ THE SOFTWARE.
             </s:dynamicSelect>
           </div>
         </j:if>
+        </div>
 
         <s:bottomButtonBar>
           <button type="submit" class="jenkins-button jenkins-button--primary" id="ok-button">${%Create project}</button>
