@@ -5,6 +5,11 @@ window.addEventListener("load", function () {
 
     // Show and hide the dropdown
     e.addEventListener("click", function() {
+      const dropdownPosition = e.getBoundingClientRect().bottom
+      const windowHeight = window.innerHeight
+      const maxHeight = (windowHeight - dropdownPosition) - 20
+
+      relatedDropdown.style.maxHeight = `${maxHeight}px`
       relatedDropdown.classList.toggle("jenkins-dynamic-select__items--visible")
     })
 
