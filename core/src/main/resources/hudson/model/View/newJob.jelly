@@ -29,6 +29,7 @@ THE SOFTWARE.
   <l:layout type="one-column" permission="${permission}" title="${%NewJob(it.newPronoun)}">
 
     <l:js src="jsbundles/add-item.js" />
+    <l:css src="jsbundles/add-item.css" />
 
     <l:main-panel>
       <form method="post" action="createItem" name="createItem" id="createItem" class="jenkins-form" style="margin: auto;">

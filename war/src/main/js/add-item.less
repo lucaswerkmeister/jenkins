@@ -1,13 +1,131 @@
-@import "widgets/variables";
+:root {
+  --standard-transition: 0s;
+}
 
-/*
- * Mixins
- * http://lesscss.org/features/#mixins-feature
- */
-@import "widgets/layout-mixins";
+.app-project {
+  display: flex;
+  gap: 0.75rem;
 
-/*
- * Widget styles
- */
-@import "widgets/config/tabbar";
-@import "widgets/add/addform";
+  span {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 100%;
+      background-color: var(--text-color);
+      opacity: 0.1;
+    }
+
+    svg,
+    img {
+      width: 50% !important;
+      height: 50% !important;
+
+      * {
+        stroke-width: 40px;
+      }
+    }
+  }
+
+  div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-right: 40px;
+
+    p {
+      margin: 0;
+      text-align: left;
+
+      &:last-of-type {
+        color: var(--text-color-secondary);
+        margin-top: calc(var(--form-input-padding) / 3);
+        line-height: 1.66;
+      }
+    }
+  }
+}
+
+.app-project-label {
+  button {
+    display: inline;
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    font-weight: inherit;
+    color: var(--link-color);
+    cursor: pointer;
+    margin: 0 0 0 auto;
+
+    &:hover {
+      color: var(--link-color--hover);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+
+    &:active,
+    &:focus {
+      color: var(--link-color--active);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+  }
+}
+
+.app-copy-project {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  gap: 0.6rem;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+
+    .build-status-icon__wrapper,
+    svg,
+    img {
+      width: 20px !important;
+      height: 20px !important;
+    }
+
+    &:last-of-type {
+      color: var(--text-color-secondary);
+    }
+  }
+}
+
+.app-taken-away {
+  display: grid;
+
+  .jenkins-form-item {
+    grid-area: ~"1 / 1";
+  }
+}
+
+.app-custard {
+  transition: var(--standard-transition);
+}
+
+.app-banana {
+  opacity: 0;
+  transform: scale(0.95);
+  max-height: 0;
+  visibility: hidden;
+}
