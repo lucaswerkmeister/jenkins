@@ -156,14 +156,13 @@
   right: 0;
   backdrop-filter: blur(20px);
   border-radius: var(--form-input-border-radius);
-  max-height: 45vh;
   overflow: scroll;
   z-index: 1001;
   background: var(--command-center-background);
   box-shadow: var(--command-center-drop-shadow), var(--command-center-inset-shadow);
   padding: 0.375rem;
   transform: translateY(-1rem);
-  transition: var(--standard-transition);
+  transition: all var(--standard-transition), max-height 0s;
   opacity: 0;
 
   &--visible {
