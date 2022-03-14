@@ -35,7 +35,7 @@ THE SOFTWARE.
         <h1>${%New Project}</h1>
 
         <s:entry title="Enter a name">
-          <s:textbox name="name" checkUrl="'${h.jsStringEscape('checkViewName')}?value='+encodeURIComponent(this.value)" />
+          <s:textbox name="name" checkUrl="'${h.jsStringEscape('checkJobName')}?value='+encodeURIComponent(this.value)" clazz="required" checkMessage="${%Name is mandatory}" />
         </s:entry>
 
         <div class="app-taken-away">
