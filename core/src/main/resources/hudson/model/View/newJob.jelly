@@ -35,7 +35,7 @@ THE SOFTWARE.
         <h1>${%New Project}</h1>
 
         <s:entry title="Enter a name">
-          <s:textbox name="name" />
+          <s:textbox name="name" checkUrl="'${h.jsStringEscape('checkViewName')}?value='+encodeURIComponent(this.value)" />
         </s:entry>
 
         <div class="app-taken-away">
@@ -52,7 +52,7 @@ THE SOFTWARE.
                   <label for="type-${item.class}" class="jenkins-dynamic-select__items__item">
                     <div class="app-project">
                       <span>
-                        <l:icon src="${item.iconClassName ?: item.iconFilePathPattern}" />
+                        <l:icon src="${item.iconClassName ?: item.iconFilePathPattern.replace(':size', '48x48')}" />
                       </span>
                       <div>
                         <p>${item.displayName}</p>
@@ -66,22 +66,23 @@ THE SOFTWARE.
           </div>
 
           <j:if test="${!empty(app.itemMap)}">
-          <div id="pane-clone" class="jenkins-form-item app-custard app-banana">
-            <div class="jenkins-form-label app-project-label">Clone an existing project <button id="button-project-type" type="button">or select a project type</button></div>
-            <input id="input-override-mode" disabled="true" type="hidden" name="mode" value="copy" />
-            <s:dynamicSelect placeholder="${%Select a project to clone}">
-              <j:forEach items="${app.itemMap}" var="item">
-                <input id="copy-${item.key}" disabled="true" type="radio" name="from" value="${item.key}" />
-                <label for="copy-${item.key}" class="jenkins-dynamic-select__items__item">
-                  <div class="app-copy-project">
-                    ${item.key}
-                    <span>${item.value.descriptor.displayName}</span>
-                  </div>
-                </label>
-              </j:forEach>
-            </s:dynamicSelect>
-          </div>
-        </j:if>
+            <div id="pane-clone" class="jenkins-form-item app-custard app-banana">
+              <div class="jenkins-form-label app-project-label">Clone an existing project <button id="button-project-type" type="button">or select a project type</button></div>
+              <input id="input-override-mode" disabled="true" type="hidden" name="mode" value="copy" />
+              <s:dynamicSelect placeholder="${%Select a project to clone}">
+                <j:forEach items="${app.itemMap}" var="item">
+                  <input id="copy-${item.key}" disabled="true" type="radio" name="from" value="${item.key}" />
+                  <label for="copy-${item.key}" class="jenkins-dynamic-select__items__item">
+                    <div class="app-copy-project">
+                      <t:ballColorTd it="${item.value.iconColor}" />
+                      <div>${item.key}</div>
+                      <div>${item.value.descriptor.displayName}</div>
+                    </div>
+                  </label>
+                </j:forEach>
+              </s:dynamicSelect>
+            </div>
+          </j:if>
         </div>
 
         <s:bottomButtonBar>

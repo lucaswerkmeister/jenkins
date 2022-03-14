@@ -114,6 +114,17 @@
     mask-position: center;
     pointer-events: none;
   }
+
+  & > * {
+    animation: jenkins-fade-in-dynamic-select-selection var(--standard-transition);
+  }
+}
+
+@keyframes jenkins-fade-in-dynamic-select-selection {
+  from {
+    opacity: 0.5;
+    transform: scale(0.975);
+  }
 }
 
 .jenkins-dynamic-select__placeholder {
@@ -340,11 +351,27 @@
 }
 
 .app-copy-project {
+  display: flex;
+  justify-content: center;
   margin: 0;
+  gap: 0.6rem;
 
-  span {
-    margin: 0 0.5ch;
-    color: var(--text-color-secondary);
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+
+    .build-status-icon__wrapper,
+    svg,
+    img {
+      width: 20px !important;
+      height: 20px !important;
+    }
+
+    &:last-of-type {
+      color: var(--text-color-secondary);
+    }
   }
 }
 

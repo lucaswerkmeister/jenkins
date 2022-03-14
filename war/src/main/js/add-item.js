@@ -18,11 +18,11 @@ window.addEventListener("load", function () {
   })
 
   // TODO - Remove otherwise submission doesn't work!
-  function handleSubmit(event) {
-    event.preventDefault()
-    const data = new FormData(event.target)
-    console.log(Object.fromEntries(data.entries()))
-  }
-
-  form.addEventListener('submit', handleSubmit)
+  // function handleSubmit(event) {
+  //   event.preventDefault()
+  //   const data = new FormData(event.target)
+  //   console.log(Object.fromEntries(data.entries()))
+  // }
+  //
+  // form.addEventListener('submit', handleSubmit)
 })

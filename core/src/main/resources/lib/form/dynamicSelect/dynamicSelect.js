@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
     let relatedDropdown = e.nextSibling.childNodes[0]
 
     // Show and hide the dropdown
-    e.addEventListener("click", e => {
+    e.addEventListener("click", function() {
       relatedDropdown.classList.toggle("jenkins-dynamic-select__items--visible")
     })
 
