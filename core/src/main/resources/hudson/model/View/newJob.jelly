@@ -35,12 +35,15 @@ THE SOFTWARE.
         <h1>${%New Project}</h1>
 
         <s:entry title="Enter a name">
-          <s:textbox name="name" checkUrl="'${h.jsStringEscape('checkJobName')}?value='+encodeURIComponent(this.value)" clazz="required" checkMessage="${%Name is mandatory}" />
+          <s:textbox name="name" checkUrl="'${h.jsStringEscape('checkJobName')}?value='+encodeURIComponent(this.value)" />
+          <div id="validation-name-error" class="error jenkins-hidden">
+            Enter a name for the project
+          </div>
         </s:entry>
 
         <div class="app-taken-away">
           <div id="pane-project-type" class="jenkins-form-item app-custard">
-            <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button id="button-clone" type="button">or clone an existing project</button></j:if></div>
+            <div class="jenkins-form-label app-project-label">Select a project type <j:if test="${!empty(app.itemMap)}"><button id="button-clone" type="button">or copy an existing project type</button></j:if></div>
             <s:dynamicSelect placeholder="${%Select a project type}">
               <j:forEach var="category" items="${it.itemCategories.items}">
                 <div class="jenkins-dynamic-select__items__header">
@@ -63,11 +66,14 @@ THE SOFTWARE.
                 </j:forEach>
               </j:forEach>
             </s:dynamicSelect>
+            <div id="validation-project-type-error" class="error jenkins-hidden">
+              Select a type of project
+            </div>
           </div>
 
           <j:if test="${!empty(app.itemMap)}">
             <div id="pane-clone" class="jenkins-form-item app-custard app-banana">
-              <div class="jenkins-form-label app-project-label">Clone an existing project <button id="button-project-type" type="button">or select a project type</button></div>
+              <div class="jenkins-form-label app-project-label">Copy an existing project type <button id="button-project-type" type="button">or select a project type</button></div>
               <input id="input-override-mode" disabled="true" type="hidden" name="mode" value="copy" />
               <s:dynamicSelect placeholder="${%Select a project to clone}">
                 <j:forEach items="${app.itemMap}" var="item">
@@ -81,6 +87,9 @@ THE SOFTWARE.
                   </label>
                 </j:forEach>
               </s:dynamicSelect>
+              <div id="validation-clone-error" class="error jenkins-hidden">
+                Select a project
+              </div>
             </div>
           </j:if>
         </div>

@@ -1,5 +1,3 @@
-import $ from "jquery";
-
 window.addEventListener("load", function () {
   const form = document.querySelector('#createItem')
   const toggleButtons = document.querySelectorAll("#button-project-type, #button-clone")
@@ -19,16 +17,29 @@ window.addEventListener("load", function () {
     })
   })
 
-  // TODO - Remove otherwise submission doesn't work!
-  function handleSubmit(event) {
-    event.preventDefault()
-    const data = new FormData(event.target)
-    console.log(Object.fromEntries(data.entries()))
+  document.querySelectorAll("input").forEach(function(input) {
+    input.addEventListener("change", function() {
+      validateFormItems()
+    })
+  })
 
-    $.get("checkJobName", { value: "   " }).done(function(data) {
-      console.log(data)
-    });
+  function validateFormItems() {
+    const data = Object.fromEntries(new FormData(form).entries())
+
+    const validationNameError = document.querySelector('#validation-name-error')
+    const validationProjectTypeError = document.querySelector('#validation-project-type-error')
+    const validationCloneError = document.querySelector('#validation-clone-error')
+
+    validationNameError.classList.toggle("jenkins-hidden", data.name.trim().length !== 0)
+    validationProjectTypeError.classList.toggle("jenkins-hidden", 'mode' in data && data.mode !== "copy")
+    validationCloneError.classList.toggle("jenkins-hidden", data.mode === "copy" && 'from' in data)
+
+    return [...document.querySelectorAll(".error")].every(e => e.offsetParent === null)
   }
 
-  form.addEventListener('submit', handleSubmit)
+  form.addEventListener('submit', function(event) {
+    if (!validateFormItems()) {
+      event.preventDefault()
+    }
+  })
 })
