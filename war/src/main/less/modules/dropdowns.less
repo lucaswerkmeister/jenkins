@@ -1,6 +1,6 @@
 .tippy-box[data-theme~='dropdown'] {
   background: var(--dropdown-background);
-  padding: 0.45rem;
+  padding: 0.3rem;
   border-radius: 15px;
   box-shadow: var(--dropdown-box-shadow);
   outline: none !important;
@@ -36,6 +36,10 @@
 }
 
 .jenkins-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+
   &__header {
     color: var(--dropdown-color) !important;
     margin: 0;
@@ -82,10 +86,6 @@
     width: 100%;
     white-space: nowrap;
     gap: 0.6rem;
-
-    &:not(:last-of-type) {
-      margin-bottom: 0.2rem;
-    }
 
     &::before {
       content: "";
