@@ -117,7 +117,7 @@ function registerDropdowns() {
             const tagName = x.post ? "button" : "a";
 
             const menuItem = createElementFromHTML(`<${tagName} class="jenkins-popover__item" href="${x.url}">
-                                      ${x.icon ? `<div class="jenkins-popover__item__icon"><img src="${x.icon}" alt="" /></div>` : ``}
+                                      ${x.icon ? `<div class="jenkins-popover__item__icon">${x.iconXml ? x.iconXml : '<img src="${x.icon}" alt="" />'}</div>` : ``}
                                       ${x.text || x.displayName}
                                       ${x.subMenu != null ? `<span class="jenkins-popover__item__chevron"></span>` : ``}
                                   </${tagName}>`)
