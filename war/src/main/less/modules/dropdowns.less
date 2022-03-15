@@ -1,45 +1,169 @@
-.tippy-box[data-theme~='tooltip'] {
-  background: var(--tooltip-background);
-  color: var(--tooltip-color);
-  padding: 0.55rem 0.8rem;
-  border-radius: 10px;
-  box-shadow: var(--tooltip-box-shadow);
-  font-weight: 500;
-  font-size: 0.75rem;
-  backdrop-filter: saturate(2) blur(15px);
+.tippy-box[data-theme~='popover'] {
+  background: var(--popover-background);
+  padding: 0.45rem;
+  border-radius: 15px;
+  box-shadow: var(--popover-shadow);
+  outline: none !important;
+  backdrop-filter: saturate(2) blur(20px);
   max-width: unset !important;
+  max-height: 75vh;
+  overflow-y: scroll;
 
   .tippy-content {
+    display: flex;
+    flex-direction: column;
     padding: 0;
-  }
 
-  // We style tables as they have additional margin/border radius when in tooltips
-  .jenkins-tooltip--table-wrapper {
-    background-color: rgba(black, 0.05);
-    margin: -0.55rem -0.8rem;
-    border-radius: 10px;
-  }
-
-  .jenkins-table {
-    --table-background: transparent;
-    --table-border-radius: 8px;
-
-    margin: 0;
-    width: 450px;
+    .jenkins-spinner {
+      margin: 1rem;
+    }
   }
 }
 
-.tippy-box[data-animation='tooltip'][data-state='hidden'] {
+.tippy-box[data-animation='popover'][data-state='hidden'] {
   opacity: 0;
-  transform: scale(0.995);
+  transform: scale(0.975);
 
   &[data-placement^="top"] {
     transform-origin: bottom;
-    transform: translateY(2px) scale(0.995);
+    transform: translateY(10px) scale(0.975);
   }
 
   &[data-placement^="bottom"] {
     transform-origin: top;
-    transform: translateY(-2px) scale(0.995);
+    transform: translateY(-10px) scale(0.975);
   }
+}
+
+.jenkins-popover {
+  &__header {
+    color: var(--popover-foreground) !important;
+    margin: 0;
+    padding: 0.55rem 3rem 0.55rem 0.7rem;
+    font-weight: 600 !important;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0.75;
+  }
+
+  &__separator {
+    position: relative;
+    height: 2px;
+    margin: 0.45rem -0.45rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: var(--popover-foreground);
+      border-radius: 2px;
+      opacity: 0.05;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--popover-foreground) !important;
+    border-radius: 6px;
+    text-decoration: none !important;
+    transition: var(--standard-transition);
+    min-width: 180px;
+    position: relative;
+    padding: 0.55rem 3rem 0.55rem 0.7rem;
+    cursor: pointer;
+    z-index: 0;
+    font-weight: 500 !important;
+    font-size: 0.8rem;
+    background: transparent;
+    outline: none;
+    border: none;
+    width: 100%;
+    white-space: nowrap;
+
+    &:not(:last-of-type) {
+      margin-bottom: 0.2rem;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: var(--text-color);
+      border-radius: 10px;
+      opacity: 0;
+      transition: var(--standard-transition);
+      z-index: -1;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 10px;
+      opacity: 0.05;
+      transition: var(--standard-transition);
+      box-shadow: 0 0 0 10px transparent;
+    }
+
+    &:hover {
+      color: var(--text-color);
+      text-decoration: none;
+
+      &::before {
+        opacity: 0.05;
+      }
+    }
+
+    &:active,
+    &:focus {
+      &::before {
+        opacity: 0.1;
+      }
+      &::after {
+        box-shadow: 0 0 0 5px var(--text-color);
+      }
+    }
+
+    &__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      margin-right: 1.5ch;
+
+      svg, img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &__chevron {
+      position: absolute;
+      top: 0;
+      right: 5px;
+      bottom: 0;
+      background: var(--popover-foreground);
+      width: 16px;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'%3E%3Ctitle%3EChevron Forward%3C/title%3E%3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M184 112l144 144-144 144'/%3E%3C/svg%3E");
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      opacity: 0.4;
+    }
+  }
+
+  color: var(--tooltip-foreground-color);
+  font-size: 0.8rem;
+  z-index: 1001 !important;
+  overflow: hidden;
+  max-width: none !important;
 }
