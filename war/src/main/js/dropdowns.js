@@ -56,9 +56,9 @@ function registerDropdowns() {
     allowHTML: true,
     placement: "bottom-start",
     arrow: false,
-    theme: 'popover',
+    theme: 'dropdown',
     offset: [0, 0],
-    animation: 'popover'
+    animation: 'dropdown'
   })
 
   document.querySelectorAll("A.model-link").forEach(function (link) {
@@ -71,7 +71,7 @@ function registerDropdowns() {
     link.appendChild(dropdownChevron)
   });
 
-  const generatePopoverDetails = (isSubmenu) => {
+  const generateDropdownDetails = (isSubmenu) => {
     return {
       content: "<p class='jenkins-spinner'></p>",
       interactive: true,
@@ -79,10 +79,10 @@ function registerDropdowns() {
       allowHTML: true,
       placement: isSubmenu ? "right-start" : "bottom-start",
       arrow: false,
-      theme: 'popover',
+      theme: 'dropdown',
       appendTo: document.body,
       offset: isSubmenu ? [-7, 0] : [0, 0],
-      animation: 'popover',
+      animation: 'dropdown',
       onShow(instance) {
         instance.popper.addEventListener("click", () => {
           instance.hide();
@@ -107,19 +107,19 @@ function registerDropdowns() {
           let menuItems = document.createElement("div")
           menuItems.append(...items.map(function (x) {
             if (x.type === "HEADER") {
-              return createElementFromHTML(`<p class="jenkins-popover__header">${x.text || x.displayName}</p>`)
+              return createElementFromHTML(`<p class="jenkins-dropdown__header">${x.text || x.displayName}</p>`)
             }
 
             if (x.type === "SEPARATOR") {
-              return createElementFromHTML(`<div class="jenkins-popover__separator"></div>`)
+              return createElementFromHTML(`<div class="jenkins-dropdown__separator"></div>`)
             }
 
             const tagName = x.post ? "button" : "a";
 
-            const menuItem = createElementFromHTML(`<${tagName} class="jenkins-popover__item" href="${x.url}">
-                                      ${x.icon ? `<div class="jenkins-popover__item__icon">${x.iconXml ? x.iconXml : '<img src="${x.icon}" alt="" />'}</div>` : ``}
+            const menuItem = createElementFromHTML(`<${tagName} class="jenkins-dropdown__item" href="${x.url}">
+                                      ${x.icon ? `<div class="jenkins-dropdown__item__icon">${x.iconXml ? x.iconXml : '<img src="${x.icon}" alt="" />'}</div>` : ``}
                                       ${x.text || x.displayName}
-                                      ${x.subMenu != null ? `<span class="jenkins-popover__item__chevron"></span>` : ``}
+                                      ${x.subMenu != null ? `<span class="jenkins-dropdown__item__chevron"></span>` : ``}
                                   </${tagName}>`)
 
             if (x.post || x.requiresConfirmation) {
@@ -143,7 +143,7 @@ function registerDropdowns() {
 
             if (x.subMenu != null) {
               menuItem.items = x.subMenu.items
-              tippy(menuItem, generatePopoverDetails(true))
+              tippy(menuItem, generateDropdownDetails(true))
             }
 
             return menuItem
@@ -159,7 +159,7 @@ function registerDropdowns() {
     }
   }
 
-  tippy('li.children, #menuSelector, .jenkins-menu-dropdown-chevron', generatePopoverDetails(false))
+  tippy('li.children, #menuSelector, .jenkins-menu-dropdown-chevron', generateDropdownDetails(false))
 
   function createElementFromHTML(htmlString) {
     var div = document.createElement('div');
@@ -193,7 +193,7 @@ function registerDropdowns() {
     // Generate a list of menu items for the dropdown to use
     let menuItems = document.createElement("div")
     menuItems.append(...templates.map(function (templateItem) {
-      const menuItem = createElementFromHTML(`<button type="button" class="jenkins-popover__item">
+      const menuItem = createElementFromHTML(`<button type="button" class="jenkins-dropdown__item">
                         ${templateItem.title}
                       </button>`)
 
@@ -227,9 +227,9 @@ function registerDropdowns() {
       allowHTML: true,
       placement: "bottom-start",
       arrow: false,
-      theme: 'popover',
+      theme: 'dropdown',
       offset: [0, 0],
-      animation: 'popover',
+      animation: 'dropdown',
       content: menuItems,
       onShow(instance) {
         instance.popper.addEventListener("click", () => {
