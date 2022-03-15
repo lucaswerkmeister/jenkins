@@ -18,6 +18,102 @@ tippy.setDefaultProps({
   plugins: [globalPlugin]
 })
 
+const generateDropdownDetails = (isSubmenu) => {
+  return {
+    content: "<p class='jenkins-spinner'></p>",
+    interactive: true,
+    trigger: isSubmenu ? "mouseenter" : "click",
+    allowHTML: true,
+    placement: isSubmenu ? "right-start" : "bottom-start",
+    arrow: false,
+    theme: 'dropdown',
+    appendTo: document.body,
+    offset: isSubmenu ? [-7, 0] : [0, 0],
+    animation: 'dropdown',
+    onShow(instance) {
+      instance.popper.addEventListener("click", () => {
+        instance.hide();
+      });
+
+      // If the instance already has existing items, render those instead
+      if (instance.reference.items || (instance.reference.target && instance.reference.target.items)) {
+        generateMenuItems(instance.reference.items || instance.reference.target.items())
+      } else {
+        const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
+
+        fetch(combinePath(href, "contextMenu"))
+          .then((response) => response.json())
+          .then((json) => generateMenuItems(json.items))
+          .catch((error) => {
+            // Fallback if the network request failed
+            instance.setContent(`Request failed. ${error}`)
+          })
+      }
+
+      function generateMenuItems(items) {
+        let menuItems = document.createElement("div")
+        menuItems.append(...items.map(function (x) {
+          if (x.type === "HEADER") {
+            return createElementFromHTML(`<p class="jenkins-dropdown__header">${x.text || x.displayName}</p>`)
+          }
+
+          if (x.type === "SEPARATOR") {
+            return createElementFromHTML(`<div class="jenkins-dropdown__separator"></div>`)
+          }
+
+          const tagName = x.post ? "button" : "a";
+
+          const menuItem = createElementFromHTML(`<${tagName} class="jenkins-dropdown__item" href="${x.url}">
+                                      ${x.icon ? `<div class="jenkins-dropdown__item__icon">${x.iconXml ? x.iconXml : '<img src="${x.icon}" alt="" />'}</div>` : ``}
+                                      ${x.text || x.displayName}
+                                      ${x.subMenu != null ? `<span class="jenkins-dropdown__item__chevron"></span>` : ``}
+                                  </${tagName}>`)
+
+          if (x.post || x.requiresConfirmation) {
+            menuItem.addEventListener("click", () => {
+              if (x.requiresConfirmation) {
+                if (confirm((x.text || x.displayName) + ": are you sure?")) { // TODO I18N
+                  var form = document.createElement('form');
+                  form.setAttribute('method', x.post ? 'POST' : 'GET');
+                  form.setAttribute('action', x.url);
+                  if (x.post) {
+                    crumb.appendToForm(form);
+                  }
+                  document.body.appendChild(form);
+                  form.submit();
+                }
+              } else {
+                new Ajax.Request(x.url);
+              }
+            })
+          }
+
+          if (x.subMenu != null) {
+            menuItem.items = x.subMenu.items
+            tippy(menuItem, generateDropdownDetails(true))
+          }
+
+          return menuItem
+        }))
+
+        instance.setContent(menuItems)
+      }
+
+    },
+    onHidden(instance) {
+      instance.setContent("<p class='jenkins-spinner'></p>")
+    }
+  }
+}
+
+function createElementFromHTML(htmlString) {
+  var div = document.createElement('div');
+  div.innerHTML = htmlString.trim();
+
+  // Change this to div.childNodes to support multiple top-level nodes
+  return div.firstChild;
+}
+
 function combinePath(a,b) {
   var qs
   var i = a.indexOf('?')
@@ -71,108 +167,15 @@ function registerDropdowns() {
     link.appendChild(dropdownChevron)
   });
 
-  const generateDropdownDetails = (isSubmenu) => {
-    return {
-      content: "<p class='jenkins-spinner'></p>",
-      interactive: true,
-      trigger: isSubmenu ? "mouseenter" : "click",
-      allowHTML: true,
-      placement: isSubmenu ? "right-start" : "bottom-start",
-      arrow: false,
-      theme: 'dropdown',
-      appendTo: document.body,
-      offset: isSubmenu ? [-7, 0] : [0, 0],
-      animation: 'dropdown',
-      onShow(instance) {
-        instance.popper.addEventListener("click", () => {
-          instance.hide();
-        });
-
-        // If the instance already has existing items, render those instead
-        if (instance.reference.items || (instance.reference.target && instance.reference.target.items)) {
-          generateMenuItems(instance.reference.items || instance.reference.target.items())
-        } else {
-          const href = instance.reference.target ? instance.reference.target.href : instance.reference.getAttribute('href')
-
-          fetch(combinePath(href, "contextMenu"))
-            .then((response) => response.json())
-            .then((json) => generateMenuItems(json.items))
-            .catch((error) => {
-              // Fallback if the network request failed
-              instance.setContent(`Request failed. ${error}`)
-            })
-        }
-
-        function generateMenuItems(items) {
-          let menuItems = document.createElement("div")
-          menuItems.append(...items.map(function (x) {
-            if (x.type === "HEADER") {
-              return createElementFromHTML(`<p class="jenkins-dropdown__header">${x.text || x.displayName}</p>`)
-            }
-
-            if (x.type === "SEPARATOR") {
-              return createElementFromHTML(`<div class="jenkins-dropdown__separator"></div>`)
-            }
-
-            const tagName = x.post ? "button" : "a";
-
-            const menuItem = createElementFromHTML(`<${tagName} class="jenkins-dropdown__item" href="${x.url}">
-                                      ${x.icon ? `<div class="jenkins-dropdown__item__icon">${x.iconXml ? x.iconXml : '<img src="${x.icon}" alt="" />'}</div>` : ``}
-                                      ${x.text || x.displayName}
-                                      ${x.subMenu != null ? `<span class="jenkins-dropdown__item__chevron"></span>` : ``}
-                                  </${tagName}>`)
-
-            if (x.post || x.requiresConfirmation) {
-              menuItem.addEventListener("click", () => {
-                if (x.requiresConfirmation) {
-                  if (confirm((x.text || x.displayName) + ": are you sure?")) { // TODO I18N
-                    var form = document.createElement('form');
-                    form.setAttribute('method', x.post ? 'POST' : 'GET');
-                    form.setAttribute('action', x.url);
-                    if (x.post) {
-                      crumb.appendToForm(form);
-                    }
-                    document.body.appendChild(form);
-                    form.submit();
-                  }
-                } else {
-                  new Ajax.Request(x.url);
-                }
-              })
-            }
-
-            if (x.subMenu != null) {
-              menuItem.items = x.subMenu.items
-              tippy(menuItem, generateDropdownDetails(true))
-            }
-
-            return menuItem
-          }))
-
-          instance.setContent(menuItems)
-        }
-
-      },
-      onHidden(instance) {
-        instance.setContent("<p class='jenkins-spinner'></p>")
-      }
-    }
-  }
-
   tippy('li.children, #menuSelector, .jenkins-menu-dropdown-chevron', generateDropdownDetails(false))
 
-  function createElementFromHTML(htmlString) {
-    var div = document.createElement('div');
-    div.innerHTML = htmlString.trim();
-
-    // Change this to div.childNodes to support multiple top-level nodes
-    return div.firstChild;
-  }
-
-  document.querySelectorAll(".hetero-list-add").forEach(function(e) {
+  document.querySelectorAll(".hetero-list-container .hetero-list-add").forEach(function(e) {
     // Templates for hetero-lists are stored in a div on load (.prototypes), so we
     // need to take them and translate them into template objects we can use for our dropdown menu
     const prototypes = e.parentElement.previousSibling
+
+    console.log(e)
+
     const insertionPoint = e.parentElement.previousSibling.previousSibling
 
     // Initialize drag and drop
@@ -239,5 +242,3 @@ function registerDropdowns() {
     })
   })
 }
-
-
