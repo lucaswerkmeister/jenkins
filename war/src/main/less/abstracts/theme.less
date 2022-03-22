@@ -1,4 +1,4 @@
-:root {
+:root, .app-theme-picker__picker[data-theme=none] {
   // Font related properties
   --font-family-sans: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Noto Sans", oxygen, ubuntu, cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-family-mono: ui-monospace, SFMono-Regular, SF Mono, JetBrainsMono, Consolas, monospace;
@@ -141,6 +141,7 @@
   --btn-large-font-size: var(--font-size-sm);
   --btn-large-line-height: 1.25rem;
   // Button primary
+  --button-color--primary: var(--background);
   --btn-primary-bg: #063F61;
   --btn-primary-bg-hover: lighten(#063F61, 7.5%);
   --btn-primary-bg-active: lighten(#063F61, 12%);
@@ -193,7 +194,7 @@
   --link-color: var(--primary);
   --link-visited-color: var(--link-color);
   --link-color--hover: var(--link-color);
-  --link-color--active: var(--text-color);
+  --link-color--active: var(--link-color);
   --link-text-decoration: none;
   --link-text-decoration--hover: underline;
   --link-text-decoration--active: underline;
@@ -307,8 +308,6 @@
   --light-bg-color--hover: rgba(255, 255, 255, 0.65);
   --add-item-btn-decorator-border-color: #acb;
   --add-item-btn-decorator-bg-color: rgba(245, 249, 239, 0.75);
-  --configure-job-bottom-sticker-bg-color: rgba(245, 249, 239, 0.75);
-  --configure-job-bottom-sticker-border-color: var(--line-green);
 
   // Plugin manager
   --plugin-manager-bg-color-already-upgraded: var(--light-grey);
@@ -319,6 +318,7 @@
   --plugin-manager-category-text-color: var(--text-color);
   --plugin-manager-category-link-color--hover: var(--text-color);
   --plugin-manager-unavailable-bg-color: #f4f4f4;
+  --plugin-manager-unavailable-label-color: var(--text-color);
 
   // Auto complete
   --auto-complete-bg-color--prehighlight: #b3d4ff;
