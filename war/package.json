@@ -53,10 +53,13 @@
     "@babel/preset-env": "^7.7.4",
     "babel-loader": "^8.0.6",
     "bootstrap": "3.3.5",
+    "core-js": "^3.19.0",
+    "hotkeys-js": "^3.8.7",
     "jenkins-js-modules": "^1.5.0",
     "jquery": "3.5.1",
     "lodash": "^4.17.20",
     "raf": "^3.4.1",
+    "regenerator-runtime": "^0.13.9",
     "sortablejs": "^1.13.0",
     "window-handle": "^1.0.0"
   },

@@ -30,6 +30,7 @@ import hudson.Extension;
 import hudson.ExtensionList;
 import hudson.ExtensionListView;
 import hudson.ExtensionPoint;
+import hudson.search.SearchItemCategory;
 import hudson.security.Permission;
 import java.util.List;
 import java.util.logging.Level;

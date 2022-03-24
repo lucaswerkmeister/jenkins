@@ -25,6 +25,7 @@
 package hudson.search;
 
 import hudson.model.Build;
+import org.jenkins.ui.icon.Icon;
 
 /**
  * Represents an item reachable from {@link SearchIndex}.
@@ -53,6 +54,21 @@ public interface SearchItem {
      */
 
     String getSearchUrl();
+
+    default String getSearchDescription() {
+        return null;
+    }
+
+    // TODO
+    default String getSearchItemCategory() {
+        return SearchItemCategory.OTHER;
+    }
+
+    // TODO
+    // Overrides the icon from search item category
+    default Icon getSearchItemIcon() {
+        return null;
+    }
 
     /**
      * Returns the {@link SearchIndex} to further search sub items inside this item.

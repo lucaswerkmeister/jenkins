@@ -26,6 +26,7 @@ package hudson.model;
 
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import hudson.Functions;
+import hudson.search.SearchItemCategory;
 
 /**
  * Object that contributes additional information, behaviors, and UIs to {@link ModelObject}
