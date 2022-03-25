@@ -16,31 +16,15 @@
   }
 }
 
-.jenkins-command-center__backdrop {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: var(--command-center-backdrop);
-  z-index: 1000;
-  backdrop-filter: saturate(2) blur(2px);
-}
-
 .jenkins-command-center__wrapper {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 1000;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 15vh;
-  padding-bottom: 15vh;
-  overflow-y: scroll;
+  background: none;
+  border: none;
+  filter: drop-shadow(var(--command-center-drop-shadow));
+  margin: 20vh auto;
+
+  &::backdrop {
+    backdrop-filter: saturate(1.5) contrast(0.75) brightness(0.45) blur(3px);
+  }
 }
 
 .jenkins-command-center {
@@ -49,7 +33,6 @@
   min-width: 400px;
   max-width: 650px;
   color: var(--text-color);
-  filter: drop-shadow(var(--command-center-drop-shadow));
   pointer-events: auto;
 
   &__search {

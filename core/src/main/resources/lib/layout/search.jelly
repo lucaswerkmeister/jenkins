@@ -34,9 +34,7 @@ THE SOFTWARE.
        data-get-help="${%Get help using Jenkins search}"
   />
 
-  <div id="command-center-backdrop" class="jenkins-command-center__backdrop" />
-
-  <div id="command-center" class="jenkins-command-center__wrapper">
+  <dialog id="command-center" class="jenkins-command-center__wrapper">
     <div class="jenkins-command-center">
       <div class="jenkins-command-center__search">
         <div class="icon">
@@ -44,17 +42,15 @@ THE SOFTWARE.
         </div>
         <input id="command-bar" placeholder="${%Search}" type="search" autocomplete="off" autocorrect="off"
                autocapitalize="off" spellcheck="false" />
-        <div class="keyboard-shortcuts">
-          <span id="command-center-shortcut-modifier" class="shortcut">⌘</span>
-          <l:icon src="symbol-add" />
-          <span class="shortcut">K</span>
+        <div class="keyboard-shortcuts" id="command-center-keyboard-shortcut">
+
         </div>
       </div>
       <div id="search-results-container" class="jenkins-command-center__results-container">
         <div id="search-results" class="jenkins-command-center__results" />
       </div>
     </div>
-  </div>
+  </dialog>
 
   <script src="${resURL}/jsbundles/search.js" type="text/javascript" />
 </j:jelly>

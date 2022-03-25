@@ -1,27 +1,31 @@
 import "core-js/stable"
 import "regenerator-runtime/runtime"
-import hotkeys from "hotkeys-js"
+import {generateKeyboardShortcutUI} from "./keyboard-shortcuts"
 
 window.addEventListener('load', () => {
   const i18n = document.getElementById("command-center-i18n")
   const spotlightButton = document.getElementById("button-spotlight")
-  const commandCenterBackdrop = document.getElementById("command-center-backdrop")
   const commandCenter = document.getElementById("command-center")
   const commandBarInput = document.getElementById("command-bar")
   const commandBarMagnifyingGlass = commandCenter.querySelector(".jenkins-command-center__search .icon")
   const searchResults = document.getElementById("search-results")
   const searchResultsContainer = document.getElementById("search-results-container")
-  const keyboardModifier = document.getElementById("command-center-shortcut-modifier")
+  const commandBarKeyboardShortcut = document.getElementById("command-center-keyboard-shortcut")
 
   const hoverClass = "jenkins-command-center__results__item--hover"
 
 // Update the keyboard shortcut text depending on OS
-  const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0
-  keyboardModifier.textContent = isMac ? "⌘" : "CTRL"
+//   commandBarKeyboardShortcut.innerHTML = generateKeyboardShortcutUI("CMD+K")
 
 // Events
   spotlightButton.addEventListener("click", function () {
-    showCommandCenter()
+    console.log("hello")
+
+    if (commandCenter.open) {
+      hideCommandCenter()
+    } else {
+      showCommandCenter()
+    }
   })
 
   commandCenter.addEventListener("click", function (e) {
@@ -32,7 +36,7 @@ window.addEventListener('load', () => {
     hideCommandCenter()
   })
 
-  commandBarInput.addEventListener("input", async function (e) {
+  commandBarInput.addEventListener("input", async (e) => {
     commandBarMagnifyingGlass.classList.add("icon--loading")
     let results
 
@@ -134,16 +138,11 @@ window.addEventListener('load', () => {
     }
   })
 
-  hotkeys("ctrl+k, command+k", async function () {
-    showCommandCenter()
-    // Returning false stops the event and prevents default browser events
-    return false
-  })
-
 // Helper methods for visibility of command center
   function showCommandCenter() {
-    commandCenter.style.display = "flex"
-    commandCenterBackdrop.style.display = "block"
+    commandCenter.showModal()
+    // commandCenter.style.display = "flex"
+    // commandCenterBackdrop.style.display = "block"
     commandBarInput.focus()
 
     // Fire empty input event to command bar to set appropriate UI states (OOBE, results, no results)
@@ -151,8 +150,9 @@ window.addEventListener('load', () => {
   }
 
   function hideCommandCenter() {
-    commandCenter.style.display = "none"
-    commandCenterBackdrop.style.display = "none"
+    commandCenter.close()
+    // commandCenter.style.display = "none"
+    // commandCenterBackdrop.style.display = "none"
   }
 
 // Group suggestions by 'category' field into map

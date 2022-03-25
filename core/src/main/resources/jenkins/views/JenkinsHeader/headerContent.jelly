@@ -19,7 +19,7 @@
         </div>
 
         <div class="login page-header__hyperlinks">
-          <button id="button-spotlight" tooltip="${%Search}">
+          <button id="button-spotlight" tooltip="${%Search}" data-keyboard-shortcut="CMD+K">
             <l:icon src="symbol-search" />
           </button>
 
