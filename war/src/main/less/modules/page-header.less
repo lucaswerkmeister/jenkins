@@ -1,6 +1,7 @@
 @import "../abstracts/theme.less";
 
 .page-header {
+    display: block;
     display: flex;
     align-items: center;
     height: 3.5rem;
@@ -49,27 +50,22 @@ a.page-header__brand-link {
     align-items: center;
 }
 
-.page-header__hyperlinks a, .page-header__hyperlinks button {
+.page-header__hyperlinks a {
     --text-color: var(--header-link-color);
     display: inline-flex;
     align-items: center;
 
-    background: transparent;
-    border: none;
-    outline: none;
-
     // need to override an existing rule
+    padding-right: 0.5rem;
     padding: 0.5rem;
     margin-right: 0.25rem;
     font-weight: bold;
-    border-radius: var(--header-item-border-radius);
-    color: var(--header-link-color);
-    cursor: pointer;
-
-    transition: 0.2s ease;
+    outline-color: var(--header-link-outline);
 
     &:link,
     &:visited {
+        color: var(--header-link-color);
+        border-radius: var(--header-item-border-radius);
         text-decoration: none;
     }
 
@@ -84,11 +80,6 @@ a.page-header__brand-link {
 
     &:active {
         background-color: var(--header-link-bg-classic-active);
-    }
-
-    svg {
-      width: 18px;
-      height: 18px;
     }
 }
 
