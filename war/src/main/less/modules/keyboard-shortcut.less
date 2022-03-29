@@ -1,0 +1,41 @@
+.jenkins-keyboard-shortcut {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-left: auto;
+
+  &__item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem 0.35rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    min-width: 21px;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      opacity: 0.1;
+    }
+
+    &::before {
+      background: var(--text-color);
+    }
+
+    &::after {
+      border-bottom: 2px solid var(--text-color);
+    }
+  }
+
+  svg {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+}

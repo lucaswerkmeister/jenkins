@@ -81,6 +81,10 @@ THE SOFTWARE.
       Message to use for confirmation, if requested; defaults to title.
       (since 1.512)
     </st:attribute>
+    <st:attribute name="keyboardShortcut">
+      TODO - in Mac format TODO CMD+K
+      (since TODO)
+    </st:attribute>
   </st:documentation>
 
   <!--
@@ -167,15 +171,17 @@ THE SOFTWARE.
                     <l:icon src="${icon}" />
                   </span>
                   <span>${title}</span>
+                  <l:keyboardShortcut keys="${attrs.keyboardShortcut}" />
                 </l:confirmationLink>
               </j:when>
 
               <j:otherwise>
-                <a href="${href}" class="task-link ${isCurrent ? 'task-link--active' : ''}" onclick="${attrs.onclick ?: (post ? 'return postRequest_' + id + '(this)' : null)}">
+                <a href="${href}" class="task-link ${isCurrent ? 'task-link--active' : ''}" onclick="${attrs.onclick ?: (post ? 'return postRequest_' + id + '(this)' : null)}" data-keyboard-shortcut="${attrs.keyboardShortcut}">
                   <span class="task-icon-link">
                     <l:icon src="${icon}" />
                   </span>
                   <span class="task-link-text">${title}</span>
+                  <l:keyboardShortcut keys="${attrs.keyboardShortcut}" />
                 </a>
               </j:otherwise>
             </j:choose>
