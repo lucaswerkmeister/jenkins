@@ -940,14 +940,7 @@ function updateVisibility() {
             e.rowVisibilityGroup.makeOuterVisible(this.innerVisible);
             e = e.rowVisibilityGroup.end; // the above call updates visibility up to e.rowVisibilityGroup.end inclusive
         } else {
-            if (display) {
-                e.style.display = ""
-                e.classList.remove("form-container--hidden")
-            } else {
-                // TODO remove display once tab bar (ConfigTableMetaData) is able to handle hidden tabs via class and not just display
-                e.style.display = "none"
-                e.classList.add("form-container--hidden")
-            }
+            e.classList.toggle("form-container--hidden", !display);
         }
     }
     layoutUpdateCallback.call();
@@ -1306,7 +1299,7 @@ function rowvgStartEachRow(recursive,f) {
         // this requires "TR.row-set-end" to mark rows
         // Get the `input` from the checkbox container
         var checkbox = e.querySelector("input[type='checkbox']")
-        updateOptionalBlock(checkbox,false);
+        updateOptionalBlock(checkbox);
     });
 
     // image that shows [+] or [-], with hover effect.
@@ -1590,12 +1583,9 @@ function applyNameRefHelper(s,e,id) {
     }
 }
 
-
-// used by optionalBlock.jelly to update the form status
-//   @param c     checkbox element
-function updateOptionalBlock(c,scroll) {
+function updateOptionalBlock(checkbox) {
     // find the start TR
-    var s = $(c);
+    var s = $(checkbox);
     while(!s.hasClassName("optional-block-start"))
         s = s.up();
 
@@ -1604,25 +1594,17 @@ function updateOptionalBlock(c,scroll) {
     while (!vg.hasClassName("rowvg-start"))
         vg = vg.next();
 
-    var checked = xor(c.checked,Element.hasClassName(c,"negative"));
+    var checked = xor(checkbox.checked,Element.hasClassName(checkbox,"negative"));
 
     vg.rowVisibilityGroup.makeInnerVisible(checked);
 
-    if(checked && scroll) {
-        var D = YAHOO.util.Dom;
-
-        var r = D.getRegion(s);
-        r = r.union(D.getRegion(vg.rowVisibilityGroup.end));
-        scrollIntoView(r);
-    }
-
-    if (c.name == 'hudson-tools-InstallSourceProperty') {
+    if (checkbox.name === 'hudson-tools-InstallSourceProperty') {
         // Hack to hide tool home when "Install automatically" is checked.
-        var homeField = findPreviousFormItem(c, 'home');
+        var homeField = findPreviousFormItem(checkbox, 'home');
         if (homeField != null && homeField.value == '') {
             var tr = findAncestor(homeField, 'TR') || findAncestorClass(homeField, 'tr');
             if (tr != null) {
-                tr.style.display = c.checked ? 'none' : '';
+                tr.style.display = checkbox.checked ? 'none' : '';
                 layoutUpdateCallback.call();
             }
         }
@@ -1690,29 +1672,6 @@ function AutoScroller(scrollContainer) {
             scrollDiv.scrollTop = currentHeight;
         }
     };
-}
-
-// scroll the current window to display the given element or the region.
-function scrollIntoView(e) {
-    function calcDelta(ex1,ex2,vx1,vw) {
-        var vx2=vx1+vw;
-        var a;
-        a = Math.min(vx1-ex1,vx2-ex2);
-        if(a>0)     return -a;
-        a = Math.min(ex1-vx1,ex2-vx2);
-        if(a>0)     return a;
-        return 0;
-    }
-
-    var D = YAHOO.util.Dom;
-
-    var r;
-    if(e.tagName!=null) r = D.getRegion(e);
-    else                r = e;
-
-    var dx = calcDelta(r.left,r.right, document.body.scrollLeft, D.getViewportWidth());
-    var dy = calcDelta(r.top, r.bottom,document.body.scrollTop,  D.getViewportHeight());
-    window.scrollBy(dx,dy);
 }
 
 // used in expandableTextbox.jelly to change a input field into a text area

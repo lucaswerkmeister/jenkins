@@ -18,11 +18,7 @@ var radioBlockSupport = {
             n = blockStart;
         }
         while((n = n.next()) != blockEnd) {
-            if (show) {
-                n.classList.remove("form-container--hidden")
-            } else {
-                n.classList.add("form-container--hidden")
-            }
+            n.classList.toggle("form-container--hidden", !show);
         }
         layoutUpdateCallback.call();
     }
