@@ -25,7 +25,12 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <st:documentation>
-    Foldable block that can be expanded to show more controls by checking the checkbox.
+    Checkbox that can be expanded to show more controls upon click.
+
+    It's recommended that this component in placed inside a .jenkins-checkboxes container, e.g.
+    <!--  <div class="jenkins-checkboxes">  -->
+    <!--    <f:optionalBlock ... />  -->
+    <!--  </div>  -->
 
     <st:attribute name="name">
       Name of the checkbox. Can be used by the server to determine

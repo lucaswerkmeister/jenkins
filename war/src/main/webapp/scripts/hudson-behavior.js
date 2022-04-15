@@ -1227,13 +1227,13 @@ function rowvgStartEachRow(recursive,f) {
         makeButton(e);
     });
 
-    Behaviour.specify("TR.optional-block-start,DIV.tr.optional-block-start", "tr-optional-block-start-div-tr-optional-block-start", ++p, function(e) { // see optionalBlock.jelly
+    // Behaviour.specify("TR.optional-block-start,DIV.optional-block", "tr-optional-block-start-div-tr-optional-block-start", ++p, function(e) { // see optionalBlock.jelly
         // Get the `input` from the checkbox container
-        var checkbox = e.querySelector("input[type='checkbox']")
+        // var checkbox = e.querySelector("input[type='checkbox']")
 
         // Set start.ref to checkbox in preparation of row-set-end processing
-        e.setAttribute("ref", checkbox.id = "cb"+(iota++));
-    });
+        // e.setAttribute("ref", checkbox.id = "cb"+(iota++));
+    // });
 
     // see RowVisibilityGroupTest
     Behaviour.specify("TR.rowvg-start,DIV.tr.rowvg-start", "tr-rowvg-start-div-tr-rowvg-start", ++p, function(e) {
@@ -1298,15 +1298,6 @@ function rowvgStartEachRow(recursive,f) {
             start.id = ref = "rowSetStart"+(iota++);
 
         applyNameRef(start,end,ref);
-    });
-
-    Behaviour.specify("TR.optional-block-start,DIV.tr.optional-block-start", "tr-optional-block-start-div-tr-optional-block-start-2", ++p, function(e) { // see optionalBlock.jelly
-        // this is suffixed by a pointless string so that two processing for optional-block-start
-        // can sandwich row-set-end
-        // this requires "TR.row-set-end" to mark rows
-        // Get the `input` from the checkbox container
-        var checkbox = e.querySelector("input[type='checkbox']")
-        updateOptionalBlock(checkbox,false);
     });
 
     // image that shows [+] or [-], with hover effect.
@@ -1589,46 +1580,6 @@ function applyNameRefHelper(s,e,id) {
         }
     }
 }
-
-
-// used by optionalBlock.jelly to update the form status
-//   @param c     checkbox element
-function updateOptionalBlock(c,scroll) {
-    // find the start TR
-    var s = $(c);
-    while(!s.hasClassName("optional-block-start"))
-        s = s.up();
-
-    // find the beginning of the rowvg
-    var vg =s;
-    while (!vg.hasClassName("rowvg-start"))
-        vg = vg.next();
-
-    var checked = xor(c.checked,Element.hasClassName(c,"negative"));
-
-    vg.rowVisibilityGroup.makeInnerVisible(checked);
-
-    if(checked && scroll) {
-        var D = YAHOO.util.Dom;
-
-        var r = D.getRegion(s);
-        r = r.union(D.getRegion(vg.rowVisibilityGroup.end));
-        scrollIntoView(r);
-    }
-
-    if (c.name == 'hudson-tools-InstallSourceProperty') {
-        // Hack to hide tool home when "Install automatically" is checked.
-        var homeField = findPreviousFormItem(c, 'home');
-        if (homeField != null && homeField.value == '') {
-            var tr = findAncestor(homeField, 'TR') || findAncestorClass(homeField, 'tr');
-            if (tr != null) {
-                tr.style.display = c.checked ? 'none' : '';
-                layoutUpdateCallback.call();
-            }
-        }
-    }
-}
-
 
 //
 // Auto-scroll support for progressive log output.
@@ -2302,13 +2253,14 @@ var hoverNotification = (function() {
 })();
 
 // Decrease vertical padding for checkboxes
-window.addEventListener('load', function () {
-    document.querySelectorAll(".jenkins-form-item").forEach(function (element) {
-        if (element.querySelector(".optionalBlock-container > .row-group-start input[type='checkbox'], .optional-block-start input[type='checkbox'], div > .jenkins-checkbox") != null) {
-            element.classList.add("jenkins-form-item--tight")
-        }
-    });
-})
+// window.addEventListener('load', function () {
+//     document.querySelectorAll(".jenkins-form-item").forEach(function (element) {
+//         if (element.querySelector(".optionalBlock-container > .row-group-start input[type='checkbox'], " +
+//           ".optional-block-start input[type='checkbox'], div > .jenkins-checkbox") != null) {
+//             element.classList.add("jenkins-form-item--tight")
+//         }
+//     });
+// })
 
 /**
  * Loads the script specified by the URL.
