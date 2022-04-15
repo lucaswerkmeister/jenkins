@@ -80,6 +80,11 @@ Behaviour.specify("INPUT.apply-button", 'apply', 0, function (e) {
             Event.fire(f,"jenkins:apply"); // give everyone a chance to write back to DOM
             try {
                 buildFormTree(f);
+
+              console.log("hello world!")
+              console.log(new FormData(f).get("json"))
+              console.log(Object.fromEntries(new FormData(f).entries()))
+
                 f.submit();
             } finally {
                 f.elements['core:apply'].value = null;
