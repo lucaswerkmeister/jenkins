@@ -23,7 +23,7 @@ Behaviour.specify("TEXTAREA.codemirror", 'textarea', 0, function(e) {
         if(typeof(codemirror.getScrollerElement) !== "function") {
             // Maybe older versions of CodeMirror do not provide getScrollerElement method.
             codemirror.getScrollerElement = function(){
-                return findElementsBySelector(codemirror.getWrapperElement(), ".CodeMirror-scroll")[0];
+                return codemirror.getWrapperElement().querySelectorAll(".CodeMirror-scroll")[0];
             };
         }
         var scroller = codemirror.getScrollerElement();
@@ -39,9 +39,9 @@ Behaviour.specify("TEXTAREA.codemirror", 'textarea', 0, function(e) {
     });
 
 Behaviour.specify("DIV.textarea-preview-container", 'textarea', 100, function (e) {
-        var previewDiv = findElementsBySelector(e,".textarea-preview")[0];
-        var showPreview = findElementsBySelector(e,".textarea-show-preview")[0];
-        var hidePreview = findElementsBySelector(e,".textarea-hide-preview")[0];
+        var previewDiv = e.querySelectorAll(".textarea-preview")[0];
+        var showPreview = e.querySelectorAll(".textarea-show-preview")[0];
+        var hidePreview = e.querySelectorAll(".textarea-hide-preview")[0];
         $(hidePreview).hide();
         $(previewDiv).hide();
 

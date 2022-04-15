@@ -6,7 +6,7 @@ Behaviour.specify("DIV.hetero-list-container", 'hetero-list', -100, function(e) 
 
         // components for the add button
         var menu = document.createElement("SELECT");
-        var btns = findElementsBySelector(e,"INPUT.hetero-list-add"),
+        var btns = e.querySelectorAll("INPUT.hetero-list-add"),
             btn = btns[btns.length-1]; // In case nested content also uses hetero-list
         if (!btn) {
             return;
@@ -55,9 +55,7 @@ Behaviour.specify("DIV.hetero-list-container", 'hetero-list', -100, function(e) 
             nc.innerHTML = t.html;
             $(nc).setOpacity(0);
 
-            var scroll = document.body.scrollTop;
-
-            renderOnDemand(findElementsBySelector(nc,"div.config-page")[0],function() {
+            renderOnDemand(nc.querySelectorAll("div.config-page")[0], function() {
                 function findInsertionPoint() {
                     // given the element to be inserted 'prospect',
                     // and the array of existing items 'current',

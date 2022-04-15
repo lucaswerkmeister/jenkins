@@ -93,14 +93,11 @@ var Behaviour = (function() {
         storage._each(function (registration) {
             if (registration.id == '_deprecated') {
                 Behaviour.list._each(function(sheet) {
-                    for (var selector in sheet){
+                    for (const selector in sheet){
                         startNode._each(function (n) {
                           try {
-                            var list = findElementsBySelector(n, selector, includeSelf);
-                            if (list.length > 0) { // just to simplify setting of a breakpoint.
-                                //console.log('deprecated:' + selector + ' on ' + list.length + ' elements');
-                                list._each(sheet[selector]);
-                            }
+                            const list = includeSelf ? n.parentNode.querySelectorAll(selector) : n.querySelectorAll(selector);
+                            [...list].forEach(() => sheet[selector]);
                           } catch (e) {
                               console.error(e)
                           }
@@ -110,11 +107,8 @@ var Behaviour = (function() {
             } else {
                 startNode._each(function (node) {
                   try {
-                    var list = findElementsBySelector(node, registration.selector, includeSelf);
-                    if (list.length > 0) {
-                        //console.log(registration.id + ':' + registration.selector + ' @' + registration.priority + ' on ' + list.length + ' elements');
-                        list._each(registration.behavior);
-                    }
+                    const list = includeSelf ? node.parentNode.querySelectorAll(registration.selector) : node.querySelectorAll(registration.selector);
+                    [...list].forEach(registration.behavior);
                   } catch (e) {
                       console.error(e)
                   }
@@ -138,54 +132,3 @@ var Behaviour = (function() {
 }})();
 
 Behaviour.start();
-
-/*
-   The following code is Copyright (C) Simon Willison 2004.
-
-   document.getElementsBySelector(selector)
-   - returns an array of element objects from the current document
-     matching the CSS selector. Selectors can contain element names,
-     class names and ids and can be nested. For example:
-
-       elements = document.getElementsBySelect('div#main p a.external')
-
-     Will return an array of all 'a' elements with 'external' in their
-     class attribute that are contained inside 'p' elements that are
-     contained inside the 'div' element which has id="main"
-
-   New in version 0.4: Support for CSS2 and CSS3 attribute selectors:
-   See http://www.w3.org/TR/css3-selectors/#attribute-selectors
-
-   Version 0.4 - Simon Willison, March 25th 2003
-   -- Works in Phoenix 0.5, Mozilla 1.3, Opera 7, Internet Explorer 6, Internet Explorer 5 on Windows
-   -- Opera 7 fails
-*/
-
-function findElementsBySelector(startNode,selector,includeSelf) {
-    if(includeSelf) {
-        function isSelfOrChild(c) {
-          while(true) {
-              if(startNode == c) return true;
-              if(c == null) return false;
-              c = c.parentNode;
-          }
-        }
-        return Prototype.Selector.select(selector, startNode.parentNode).filter(isSelfOrChild);
-    } else {
-        return Prototype.Selector.select(selector, startNode);
-    }
-}
-
-document.getElementsBySelector = function(selector) {
-    return findElementsBySelector(document,selector);
-}
-
-/* That revolting regular expression explained
-/^(\w+)\[(\w+)([=~\|\^\$\*]?)=?"?([^\]"]*)"?\]$/
-  \---/  \---/\-------------/    \-------/
-    |      |         |               |
-    |      |         |           The value
-    |      |    ~,|,^,$,* or =
-    |   Attribute
-   Tag
-*/

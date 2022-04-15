@@ -104,7 +104,7 @@ function getOldestEntryId() {
 }
 
 function getDataTable(buildHistoryDiv) {
-    return $(buildHistoryDiv).getElementsBySelector('table.pane')[0];
+    return $(buildHistoryDiv).querySelectorAll('table.pane')[0];
 }
 
 function updatePageParams(dataTable) {
@@ -163,7 +163,7 @@ function checkRowCellOverflows(row) {
         return div;
     }
     function blockUnwrap(element) {
-        var wrapped = $(element).getElementsBySelector('.wrapped');
+        var wrapped = $(element).querySelectorAll('.wrapped');
         for (var i = 0; i < wrapped.length; i++) {
             var wrappedEl = wrapped[i];
             wrappedEl.parentNode.removeChild(wrappedEl);
@@ -173,17 +173,17 @@ function checkRowCellOverflows(row) {
         element.parentNode.removeChild(element);
     }
 
-    var buildName = $(row).getElementsBySelector('.build-name')[0];
-    var buildDetails = $(row).getElementsBySelector('.build-details')[0];
+    var buildName = $(row).querySelectorAll('.build-name')[0];
+    var buildDetails = $(row).querySelectorAll('.build-details')[0];
 
     if (!buildName || !buildDetails) {
         return;
     }
 
-    var buildControls = $(row).getElementsBySelector('.build-controls')[0];
+    var buildControls = $(row).querySelectorAll('.build-controls')[0];
     var desc;
 
-    var descElements = $(row).getElementsBySelector('.desc');
+    var descElements = $(row).querySelectorAll('.desc');
     if (descElements.length > 0) {
         desc = descElements[0];
     }
@@ -192,7 +192,7 @@ function checkRowCellOverflows(row) {
         markSingleline();
 
         // undo block wraps
-        var blockWraps = $(row).getElementsBySelector('.block.wrap');
+        var blockWraps = $(row).querySelectorAll('.block.wrap');
         for (var i = 0; i < blockWraps.length; i++) {
             blockUnwrap(blockWraps[i]);
         }
@@ -235,13 +235,13 @@ function checkRowCellOverflows(row) {
 
     function setBuildControlWidths() {
         if (buildControls) {
-            var buildBadge = $(buildControls).getElementsBySelector('.build-badge')[0];
+            var buildBadge = $(buildControls).querySelectorAll('.build-badge')[0];
 
             if (buildBadge) {
                 var buildControlsWidth = buildControls.clientWidth;
                 var buildBadgeWidth;
 
-                var buildStop = $(buildControls).getElementsBySelector('.build-stop')[0];
+                var buildStop = $(buildControls).querySelectorAll('.build-stop')[0];
                 if (buildStop) {
                     $(buildStop).setStyle({width: '24px'});
                     // Minus 24 for the buildStop width,
@@ -275,7 +275,7 @@ function checkRowCellOverflows(row) {
             var badgesOverflowing = false;
             var nameLessThanHalf = true;
             var detailsLessThanHalf = true;
-            var buildBadge = $(buildControls).getElementsBySelector('.build-badge')[0];
+            var buildBadge = $(buildControls).querySelectorAll('.build-badge')[0];
             if (buildBadge) {
                 var badgeOverflowParams = getElementOverflowParams(buildBadge);
 
@@ -357,7 +357,7 @@ function checkRowCellOverflows(row) {
     }
 
     if (buildControls && !controlsRepositioned) {
-        var buildBadge = $(buildControls).getElementsBySelector('.build-badge')[0];
+        var buildBadge = $(buildControls).querySelectorAll('.build-badge')[0];
         if (buildBadge) {
             var badgeOverflowParams = getElementOverflowParams(buildBadge);
 

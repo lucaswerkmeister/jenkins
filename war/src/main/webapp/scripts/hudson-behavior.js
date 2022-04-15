@@ -1158,7 +1158,7 @@ function rowvgStartEachRow(recursive,f) {
 
         // CodeMirror inserts a wrapper element next to the textarea.
         // textarea.nextSibling may not be the handle.
-        var handles = findElementsBySelector(textarea.parentNode, ".textarea-handle");
+        var handles = textarea.parentNode.querySelectorAll(".textarea-handle");
         if(handles.length != 1) return;
         var handle = handles[0];
 
@@ -1961,7 +1961,7 @@ function ensureVisible(e) {
     function handleStickers(name,f) {
         var e = $(name);
         if (e) f(e);
-        document.getElementsBySelector("."+name).each(TryEach(f));
+        document.querySelectorAll("." + name).forEach((f) => TryEach(f));
     }
 
     // if there are any stickers around, subtract them from the viewport
