@@ -6,17 +6,22 @@ function showHideOptionalBlock(optionalBlock) {
 
   optionalBlockHiddenContainer.style.display = checkbox.checked ? "block" : "none";
 
-  // if (c.name == 'hudson-tools-InstallSourceProperty') {
-  //   // Hack to hide tool home when "Install automatically" is checked.
-  //   var homeField = findPreviousFormItem(c, 'home');
-  //   if (homeField != null && homeField.value == '') {
-  //     var tr = findAncestor(homeField, 'TR') || findAncestorClass(homeField, 'tr');
-  //     if (tr != null) {
-  //       tr.style.display = c.checked ? 'none' : '';
-  //       layoutUpdateCallback.call();
-  //     }
-  //   }
-  // }
+  if (checkbox.name === 'hudson-tools-InstallSourceProperty') {
+    // Hack to hide tool home when "Install automatically" is checked.
+    const homeField = findPreviousFormItem(checkbox, 'home');
+
+    console.log(homeField)
+
+    if (homeField != null && homeField.value === '') {
+      const container = homeField.closest(".jenkins-form-item");
+
+      console.log(container)
+
+      if (container !== null) {
+        container.style.display = checkbox.checked ? 'none' : '';
+      }
+    }
+  }
 }
 
 window.addEventListener("load", function() {

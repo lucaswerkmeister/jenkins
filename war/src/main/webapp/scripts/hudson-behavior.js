@@ -97,6 +97,7 @@ var isPageVisible = (function(){
 
 // id generator
 var iota = 0;
+window.iota = iota;
 
 // crumb information
 var crumb = {
@@ -1227,12 +1228,12 @@ function rowvgStartEachRow(recursive,f) {
         makeButton(e);
     });
 
-    Behaviour.specify("DIV.optional-block", "tr-optional-block-start-div-tr-optional-block-start", ++p, function(e) { // see optionalBlock.jelly
+    Behaviour.specify("DIV.optional-block-start", "tr-optional-block-start-div-tr-optional-block-start", ++p, function(e) { // see optionalBlock.jelly
         // Get the `input` from the checkbox container
         var checkbox = e.querySelector("input[type='checkbox']")
 
         // Set start.ref to checkbox in preparation of row-set-end processing
-        e.setAttribute("ref", checkbox.id = "cb"+(iota++));
+        e.setAttribute("ref", checkbox.id = "cb" + (iota++));
     });
 
     // see RowVisibilityGroupTest
