@@ -32,6 +32,15 @@
     &::after {
       border-bottom: 2px solid var(--text-color);
     }
+
+    &--chosen {
+      padding-top: calc(0.2rem + 1px);
+      padding-bottom: calc(0.2rem - 1px);
+
+      &::after {
+        border-bottom-width: 0;
+      }
+    }
   }
 
   svg {

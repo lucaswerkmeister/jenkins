@@ -3,6 +3,22 @@ import hotkeys from "hotkeys-js"
 const ADD_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 112v288M400 256H112"/></svg>`
 
 window.addEventListener("load", () => {
+  hotkeys("*", ({key}) => {
+    if (key === "Meta") {
+      key = "CMD";
+    }
+
+    [...document.querySelectorAll(".jenkins-keyboard-shortcut__item")]
+      .filter(shortcut => shortcut.textContent.toLowerCase() === key.toLowerCase())
+      .forEach(shortcut => {
+        shortcut.classList.add("jenkins-keyboard-shortcut__item--chosen")
+
+        setTimeout(function(){
+          shortcut.classList.remove("jenkins-keyboard-shortcut__item--chosen");
+        }, 500);
+      })
+  })
+
   document.querySelectorAll("[data-keyboard-shortcut]").forEach(function(element) {
     hotkeys(translateKeyboardShortcutForOS(element.dataset.keyboardShortcut), () => {
       element.click()
@@ -40,5 +56,6 @@ export function generateKeyboardShortcutUI(keyboardShortcut) {
     .map(shortcut => `<span class="shortcut">${shortcut}</span>`)
     .join(ADD_SVG)
 }
+
 
 export default { generateKeyboardShortcutUI }
