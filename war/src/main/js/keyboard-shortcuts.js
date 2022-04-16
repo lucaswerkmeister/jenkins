@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
       .forEach(shortcut => {
         shortcut.classList.add("jenkins-keyboard-shortcut__item--chosen")
 
-        setTimeout(function(){
+        setTimeout(function() {
           shortcut.classList.remove("jenkins-keyboard-shortcut__item--chosen");
         }, 500);
       })
@@ -21,9 +21,20 @@ window.addEventListener("load", () => {
 
   document.querySelectorAll("[data-keyboard-shortcut]").forEach(function(element) {
     hotkeys(translateKeyboardShortcutForOS(element.dataset.keyboardShortcut), () => {
-      element.click()
-      // Returning false stops the event and prevents default browser events
-      return false
+      // Small delay to show animation
+      setTimeout(function() {
+        switch (element.tagName) {
+          case "A":
+            element.click()
+            break;
+          case "INPUT":
+            element.focus()
+            break;
+        }
+
+        // Returning false stops the event and prevents default browser events
+        return false
+      }, 50);
     })
   })
 })
