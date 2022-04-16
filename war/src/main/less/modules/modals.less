@@ -7,10 +7,10 @@
   --modal-backdrop-background: hsla(240, 10%, 20%, 0.8);
 
   @media (prefers-color-scheme: dark) {
-    --modal-background: hsla(240, 8%, 18%, 0.8);
+    --modal-background: hsla(240, 8%, 15%, 0.85);
     --modal-color: var(--text-color);
     --modal-box-shadow: inset 0 0 0 1px rgba(200, 200, 255, 0.05), 0 0 8px 2px rgba(0, 0, 30, 0.05), 0 0 1px 1px rgba(0, 0, 20, 0.025), 0 10px 20px rgba(0, 0, 20, 0.15);
-    --modal-backdrop-background: radial-gradient(hsla(240, 8%, 5%, 0.5), hsla(240, 8%, 5%, 0.7) 75%);
+    --modal-backdrop-background: radial-gradient(hsla(240, 8%, 2.5%, 0.65), hsla(240, 8%, 2.5%, 0.75) 85%);
   }
 }
 
@@ -94,5 +94,38 @@
   from {
     transform: scale(0.8);
     opacity: 0;
+  }
+}
+
+.longhorn-container {
+  background: var(--modal-background);
+  overflow: hidden;
+  padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+}
+
+.longhorn-container-2 {
+  position: relative;
+  padding: 1.5rem;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--modal-background);
+    opacity: 0.9;
+    z-index: -1;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--modal-color);
+    opacity: 0.025;
+    z-index: -1;
   }
 }
