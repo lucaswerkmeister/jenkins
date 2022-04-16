@@ -22,6 +22,7 @@
   box-shadow: var(--modal-box-shadow);
   padding: @jenkins-modal-padding;
   backdrop-filter: saturate(2) blur(10px);
+  animation: jenkins-modal-animate-in var(--standard-transition);
 
   &::backdrop {
     background: var(--modal-backdrop-background);
@@ -86,5 +87,12 @@
         opacity: 0.25;
       }
     }
+  }
+}
+
+@keyframes jenkins-modal-animate-in {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
   }
 }

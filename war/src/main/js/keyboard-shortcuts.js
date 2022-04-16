@@ -11,6 +11,12 @@ window.addEventListener("load", () => {
       key = "⌘";
     }
 
+    // Workaround for ? character
+    // https://stackoverflow.com/questions/4620002/js-hotkeys-how-to-bind-to-the-question-mark
+    if (key === "?" && !window.disableShortcuts) {
+      document.querySelector("#button-show-keyboard-shortcuts-modal").click();
+    }
+
     [...document.querySelectorAll(".jenkins-keyboard-shortcut__item")]
       .filter(shortcut => shortcut.textContent.toLowerCase() === key.toLowerCase())
       .forEach(shortcut => {
