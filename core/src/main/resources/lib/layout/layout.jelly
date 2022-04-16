@@ -226,6 +226,10 @@ THE SOFTWARE.
             </j:forEach>
           </j:if>
 
+          <div class="page-footer__links hidden-xs">
+            <button id="button-show-keyboard-shortcuts-modal" data-keyboard-shortcut-title="Show keyboard shortcuts" data-keyboard-shortcut="?">Keyboard shortcuts</button>
+          </div>
+
           <j:if test="${!empty(it.api)}">
             <div class="page-footer__links rest_api hidden-xs">
               <a href="api/">REST API</a>
