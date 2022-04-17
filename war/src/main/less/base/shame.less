@@ -28,19 +28,6 @@
  * be removed
  */
 
-/* Panel */
-@media (min-width: 1600px) {
-  body#jenkins.j-hide-left #main-panel {
-    max-width: 75%;
-  }
-}
-
-@media (min-width: 2000px) {
-  body#jenkins.j-hide-left #main-panel {
-    max-width: 85%;
-  }
-}
-
 form {
   margin: 0;
 }
@@ -109,23 +96,6 @@ td.center-align {
     border-radius: var(--form-input-border-radius)
 }
 
-/* #header .login {
-  position: relative;
-  top: 6px;
-  color: white;
-  margin-right: 10px;
-}
-
-#header .login a, #header .login a:visited {
-  color: white;
-  text-decoration: none;
-}
-
-#header .login a:hover {
-    text-decoration: underline;
-    color: #ccc;
-} */
-
 a {
   .link();
 }
@@ -188,22 +158,6 @@ a.tip:hover span {
   text-align: left;
 }
 
-.call-to-action {
-  display: table;
-  margin-bottom: 5px;
-  padding: 10px;
-  background-color: var(--alert-info-bg-color);
-  border-left: 4px solid #577baa;
-  color: var(--call-to-action-text-color);
-}
-
-.call-to-action a,
-.call-to-action a:visited {
-  color: var(--call-to-action-link-color);
-  font-weight: bold;
-  font-size: larger;
-}
-
 img {
   vertical-align: middle;
   border: 0;
@@ -216,17 +170,6 @@ div.disabled {
 
 table.tab {
   border-collapse: collapse;
-}
-
-td.selected_tab {
-  vertical-align: middle;
-  border: 1px #090 solid;
-  background: #fff;
-}
-
-td.tab_filler {
-  background: #fff;
-  border-bottom: 1px #090 solid;
 }
 
 td.tab {
@@ -277,10 +220,6 @@ pre.console {
   font-weight: 500;
   margin-bottom: 0.5rem;
   white-space: nowrap;
-}
-
-.setting-checkbox {
-  font-weight: 500;
 }
 
 .setting-help {
@@ -340,77 +279,13 @@ pre.console {
   min-width: 0 !important;
 }
 
-/* div that looks like a hyperlink */
-.pseudoLink {
-  cursor: pointer;
-}
-
 .advancedBody {
   display: none;
-}
-
-.scm_info {
-  width: 480px;
-}
-
-.build-keep {
-  font-weight: bold;
-}
-
-.task-header {
-  display: block;
-  border-bottom: 1px #090 solid;
-  font-weight: bold;
-  font-size: var(--font-size-xs);
 }
 
 .jenkins-not-applicable {
   color: darkgrey;
   font-style: italic;
-}
-
-.main-table {
-}
-
-.smallfont {
-  font-size: 9px;
-}
-
-#foldertab {
-  padding: 4px 0;
-  margin-left: 0;
-  border-bottom: 1px solid #090;
-  font: bold 12px Helvetica, Arial, sans-serif;
-}
-
-#foldertab li {
-  list-style: none;
-  margin: 0;
-  display: inline;
-}
-
-#foldertab li a {
-  padding: 4px 0.5em;
-  margin-left: 3px;
-  border: 1px solid #090;
-  border-bottom: none;
-  background: #090;
-  text-decoration: none;
-}
-
-#foldertab li a:link { color: white; }
-#foldertab li a:visited { color: white; }
-
-#foldertab li a:hover {
-  color: white;
-  background: #6c0;
-  border-color: #6c0;
-}
-
-#foldertab li a#current {
-  background: white;
-  border-bottom: 1px solid white;
-  color: black;
 }
 
 .changeset-message {
@@ -427,116 +302,6 @@ pre.console {
 
 .disabledJob {
   color: gray;
-}
-
-#login-field {
-    vertical-align: middle;
-    padding-right: 1em;
-    width: 1px;
-}
-
-#login-field span {
-  white-space: nowrap;
-  color: white;
-}
-
-#login-field a {
-    /*
-      link inside login field should be always white.
-      If I set this to inherit, it won't work in IE7
-     */
-    color: white;
-}
-
-div.behavior-loading {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: var(--background);
-    opacity: 0.95;
-  }
-}
-
-.bottom-sticker,
-#bottom-sticker {
-  position: sticky;
-  // This has to be set to -1px so that IntersectionObserver can add the
-  // &--stuck class when the element is stuck to the bottom of the screen
-  // https://css-tricks.com/how-to-detect-when-a-sticky-element-gets-pinned/
-  bottom: -1px;
-  margin-left: -2rem;
-  width: calc(100% + 4rem);   /* it needs to occupy the entire width or else the underlying content will see through */
-  z-index: 999;
-}
-
-.bottom-sticker-inner {
-  position: relative;
-  padding: 1em 2rem;
-  z-index: 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: var(--background);
-    opacity: 0;
-    z-index: -1;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: -30px;
-    left: 0;
-    right: 0;
-    background: linear-gradient(rgba(black, 0), rgba(#555566, 0.075) 110%);
-    max-width: 100%;
-    height: 30px;
-    opacity: 0;
-    transition: var(--standard-transition);
-    mask-image: linear-gradient(to right, transparent, white 2rem, white calc(100% - 2rem), transparent);
-    pointer-events: none;
-  }
-
-  &--stuck {
-    .bottom-sticker-inner {
-      backdrop-filter: blur(15px);
-
-      &::before {
-        opacity: 0.75 !important;
-
-        @supports not (backdrop-filter: blur(15px)) {
-          opacity: 1 !important;
-        }
-      }
-
-      &::after {
-        opacity: 1 !important;
-      }
-    }
-  }
-
-  .yui-button {
-    margin-left: 0;
-    margin-right: 0.5rem;
-  }
 }
 
 .top-sticker,
@@ -624,62 +389,6 @@ div.behavior-loading {
 .icon32x32 {
     width: 32px;
     height: 32px;
-}
-
-/* ====================== help ===================================== */
-
-.help {
-  position: relative;
-  display: none;  /* hidden until loaded */
-  padding: 1rem;
-  margin: 1rem 0;
-  word-break: break-word;
-  border-radius: 6px;
-  z-index: 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: var(--text-color);
-    opacity: 0.05;
-    z-index: -1;
-    border-radius: inherit;
-  }
-
-  p:first-of-type {
-    margin-top: 0;
-  }
-
-  p:last-of-type {
-    margin-bottom: 0;
-  }
-}
-
-.help a {
-  text-decoration: underline;
-}
-
-.help .from-plugin {
-    text-align: right;
-    color: #666;
-}
-
-.help-area {
-  /* this marker class is used by JavaScript to locate the area to display help text. */
-}
-
-.icon-help,
-.svg-icon.icon-help {
-  height: 1.25rem;
-  width: 1.25rem;
-}
-
-img.icon-help {
-  vertical-align: text-top;
 }
 
 /* ====================== project view tab bar ===================================== */
@@ -1363,11 +1072,6 @@ table.progress-bar.red td.progress-bar-done {
   to { transform: rotate(360deg) translateZ(0); }
 }
 
-@keyframes spin-reverse {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
-
 /* ========================= YUI dialog ========================= */
 
 /* discovered this margin fix by a trial and error. This can very well be a totally wrong fix, or perhaps updating
@@ -1384,20 +1088,6 @@ table.progress-bar.red td.progress-bar-done {
 .dialog .ft {
     margin: 0 !important;
 }
-
-/* ========================= tags/labels ================== */
-
-/* tag0 is the least important tag in a tag cloud */
-.tag0 { font-size: 1em; }
-.tag1 { font-size: 1.1em; }
-.tag2 { font-size: 1.2em; }
-.tag3 { font-size: 1.3em; }
-.tag4 { font-size: 1.4em; }
-.tag5 { font-size: 1.5em; }
-.tag6 { font-size: 1.6em; }
-.tag7 { font-size: 1.7em; }
-.tag8 { font-size: 1.8em; }
-.tag9 { font-size: 1.9em; }
 
 /* ========================= textarea.jelly ================== */
 
@@ -1494,16 +1184,6 @@ select.select-ajax-pending {
   background-position: 2px;
 }
 
-/* ========================= Button styles ================= */
-.btn-box {
-  display: block;
-  margin-top: 2em;
-}
-
-#disable-project {
-    margin-top: 6px;
-}
-
 .i18n {
     display: none;
 }
@@ -1557,20 +1237,6 @@ select.select-ajax-pending {
 
 .alert-danger p {
     color: var(--alert-danger-text-color);
-}
-
-body.no-decoration #main-panel {
-    margin: 0 auto !important;
-}
-
-body.no-decoration #page-header,
-body.no-decoration #side-panel,
-body.no-decoration footer {
-    display: none;
-}
-
-body.no-sticker #bottom-sticker {
-    display: none;
 }
 
 /* see the Icon class for the definition of these CSS classes */
