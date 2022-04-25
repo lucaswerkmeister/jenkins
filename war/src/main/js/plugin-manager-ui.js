@@ -4,6 +4,18 @@ import requestAnimationFrame from 'raf';
 import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 
+const filterInput = document.getElementById('filter-box');
+const refreshServerButton = document.getElementById('button-refresh-server');
+
+refreshServerButton.addEventListener("click", function () {
+  refreshServerButton.classList.add("jenkins-button--loading");
+  refreshServerButton.disabled = true;
+  pluginManager.refreshServer(function() {
+    applyFilter(filterInput.value);
+    refreshServerButton.classList.remove("jenkins-button--loading");
+  });
+});
+
 function applyFilter(searchQuery) {
     // debounce reduces number of server side calls while typing
     pluginManager.availablePluginsSearch(searchQuery.toLowerCase().trim(), 50, function (plugins) {
@@ -57,7 +69,6 @@ var handleFilter = function (e) {
 var debouncedFilter = debounce(handleFilter, 150);
 
 document.addEventListener("DOMContentLoaded", function () {
-    var filterInput = document.getElementById('filter-box');
     filterInput.addEventListener('input', function (e) {
         debouncedFilter(e);
         filterInput.parentElement.classList.add("app-plugin-manager__search--loading");
@@ -66,8 +77,4 @@ document.addEventListener("DOMContentLoaded", function () {
     filterInput.focus();
 
     applyFilter(filterInput.value);
-
-    setTimeout(function () {
-        layoutUpdateCallback.call();
-    }, 350)
 });
