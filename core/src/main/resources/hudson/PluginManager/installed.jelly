@@ -128,14 +128,6 @@ THE SOFTWARE.
                         </j:otherwise>
                       </j:choose>
                     </div>
-                    <j:set var="issueTrackerReportUrl" value="${p.getIssueTrackerReportUrl()}"/>
-                    <j:if test="${issueTrackerReportUrl != null}">
-                      <div class="excerpt">
-                        <a href="${issueTrackerReportUrl}" rel="noopener nofollow noreferrer" target="_blank" class="jenkins-label jenkins-label--tertiary">
-                          ${%reportIssue}
-                        </a>
-                      </div>
-                    </j:if>
                     <j:if test="${!p.getActiveWarnings().isEmpty()}">
                       <div class="alert alert-danger">${%securityWarning}
                         <ul>
@@ -177,9 +169,8 @@ THE SOFTWARE.
                     <td class="jenkins-table__cell--tight">
                       <div class="jenkins-table__cell__button-wrapper">
                         <j:if test="${p.downgradable}">
-                          <form class="jenkins-buttons-row" method="post"
-                                action="${rootURL}/updateCenter/plugin/${p.shortName}/downgrade">
-                            <button class="jenkins-table__button  jenkins-table__button--orange" tooltip="${%downgradeTo(p.backupVersion)}">
+                          <form class="jenkins-containerless" method="post" action="${rootURL}/updateCenter/plugin/${p.shortName}/downgrade">
+                            <button class="jenkins-table__button jenkins-table__button--orange" tooltip="${%downgradeTo(p.backupVersion)}">
                               <l:icon src="symbol-downgrade-circle"/>
                               <span class="jenkins-!-margin-left-1"
                                     style="font-size: 0.75rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50px;">
@@ -189,6 +180,16 @@ THE SOFTWARE.
                           </form>
                         </j:if>
                       </div>
+                    </td>
+                    <td class="jenkins-table__cell--tight">
+                      <j:set var="issueTrackerReportUrl" value="${p.getIssueTrackerReportUrl()}"/>
+                      <j:if test="${issueTrackerReportUrl != null}">
+                        <div class="jenkins-table__cell__button-wrapper">
+                          <a tooltip="${%reportIssue}" href="${issueTrackerReportUrl}" rel="noopener nofollow noreferrer" target="_blank" class="jenkins-table__button jenkins-table__button--orange">
+                            <l:icon src="symbol-report"/>
+                          </a>
+                        </div>
+                      </j:if>
                     </td>
                     <td class="jenkins-table__cell--tight uninstall">
                       <div class="jenkins-table__cell__button-wrapper">
@@ -224,7 +225,7 @@ THE SOFTWARE.
                                 </j:forEach>
                               </div>
                             </j:if>
-                            <form class="jenkins-buttons-row" method="post" action="plugin/${p.shortName}/uninstall">
+                            <form class="jenkins-containerless" method="post" action="plugin/${p.shortName}/uninstall">
                               <button class="jenkins-table__button jenkins-table__button--red uninstall" tooltip="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}">
                                 <l:icon src="symbol-close-circle"/>
                               </button>
