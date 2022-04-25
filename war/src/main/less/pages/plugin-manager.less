@@ -117,10 +117,60 @@
   }
 }
 
+.banana {
+  margin: 0.5rem 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 
-.dependent-list,
-.dependency-list {
-  span {
+  p:last-of-type {
+    opacity: 0.75;
+  }
+}
+
+.test {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.jenkins-containerless {
+  display: contents;
+}
+
+.longhorn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  max-width: 350px;
+  margin: 0.1rem 0 -0.05rem 0;
+
+  a {
+    position: relative;
     display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: currentColor;
+      opacity: 0.1;
+      border-radius: inherit;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid currentColor;
+      opacity: 0.025;
+      border-radius: inherit;
+    }
   }
 }

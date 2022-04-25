@@ -200,33 +200,37 @@ THE SOFTWARE.
                             <j:set var="tooltip">
                               <j:choose>
                                 <j:when test="${p.hasMandatoryDependents() or p.hasImpliedDependents() or p.hasMandatoryDependencies()}">
-                                  ${%This plugin cannot be uninstalled}<br />
-                                  ${%It has one or more installed dependents}<br />
-                                  <j:if test="${p.hasMandatoryDependents() or p.hasImpliedDependents()}">
-                                    <div class="dependent-list">
-                                      <j:forEach var="dependent" items="${p.mandatoryDependents}">
-                                        <span data-plugin-id="${dependent}">${dependent}</span>
-                                      </j:forEach>
-                                      <j:set var="impliedDependents" value="${p.impliedDependents}"/>
-                                      <j:choose>
-                                        <j:when test="${impliedDependents.size() lt 15}">
-                                          <j:forEach var="dependent" items="${impliedDependents}">
-                                            <span data-plugin-id="${dependent}">${dependent}</span>
+                                  <div class="banana">
+                                    <p class="test">${%This plugin cannot be uninstalled}</p>
+                                    <p class="test">${%It has one or more installed dependents}:</p>
+                                    <div class="longhorn">
+                                      <j:if test="${p.hasMandatoryDependents() or p.hasImpliedDependents()}">
+                                        <div class="dependent-list jenkins-containerless">
+                                          <j:forEach var="dependent" items="${p.mandatoryDependents}">
+                                            <a data-plugin-id="${dependent}">${dependent}</a>
                                           </j:forEach>
-                                        </j:when>
-                                        <j:otherwise>
-                                          ${%detached-many-dependents(impliedDependents.size())}
-                                        </j:otherwise>
-                                      </j:choose>
+                                          <j:set var="impliedDependents" value="${p.impliedDependents}"/>
+                                          <j:choose>
+                                            <j:when test="${impliedDependents.size() lt 15}">
+                                              <j:forEach var="dependent" items="${impliedDependents}">
+                                                <a data-plugin-id="${dependent}">${dependent}</a>
+                                              </j:forEach>
+                                            </j:when>
+                                            <j:otherwise>
+                                              ${%detached-many-dependents(impliedDependents.size())}
+                                            </j:otherwise>
+                                          </j:choose>
+                                        </div>
+                                      </j:if>
+                                      <j:if test="${p.hasMandatoryDependencies()}">
+                                        <div class="dependency-list jenkins-containerless">
+                                          <j:forEach var="dependency" items="${p.mandatoryDependencies}">
+                                            <a data-plugin-id="${dependency.shortName}">${dependency.shortName}</a>
+                                          </j:forEach>
+                                        </div>
+                                      </j:if>
                                     </div>
-                                  </j:if>
-                                  <j:if test="${p.hasMandatoryDependencies()}">
-                                    <div class="dependency-list">
-                                      <j:forEach var="dependency" items="${p.mandatoryDependencies}">
-                                        <span data-plugin-id="${dependency.shortName}">${dependency.shortName}</span>
-                                      </j:forEach>
-                                    </div>
-                                  </j:if>
+                                  </div>
                                 </j:when>
                                 <j:otherwise>
                                   ${%Uninstall} ${p.updateInfo.displayName ?: p.displayName}

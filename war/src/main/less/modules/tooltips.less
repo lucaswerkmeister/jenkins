@@ -10,8 +10,8 @@
   z-index: 0;
 
   // The @supports can be removed when Firefox supports backdrop-filter
-  @supports (backdrop-filter: blur(15px)) {
-    backdrop-filter: saturate(2) blur(15px);
+  @supports (backdrop-filter: blur(25px)) {
+    backdrop-filter: saturate(2) blur(25px);
   }
 
   &::before {
@@ -22,7 +22,7 @@
     z-index: -1;
     border-radius: inherit;
 
-    @supports (backdrop-filter: blur(15px)) {
+    @supports (backdrop-filter: blur(25px)) {
       opacity: 0.55;
     }
   }
