@@ -23,7 +23,7 @@ THE SOFTWARE.
 -->
 
 <!--
-  List of available new plugins
+  List of available plugins
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:f="/lib/form">
@@ -46,6 +46,9 @@ THE SOFTWARE.
                    id="filter-box"
                    value="${request.getParameter('filter')}" />
           </div>
+        </div>
+        <div class="jenkins-app-bar__controls">
+          <st:include page="check.jelly"/>
         </div>
       </div>
 
@@ -76,7 +79,6 @@ THE SOFTWARE.
               <span style="margin-left:2em;"></span>
               <f:submit value="${%Download now and install after restart}"/>
             </l:isAdmin>
-            <st:include page="check.jelly"/>
           </div>
         </div>
       </form>
