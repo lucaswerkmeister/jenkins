@@ -908,8 +908,8 @@ var Enumerable = (function() {
 
   function findAll(iterator, context) {
     var results = [];
-    this.each(function(value, index) {
-      if (iterator.call(context, value, index))
+    this.forEach(function(value, index, self) {
+      if (iterator.call(context, value, index, self))
         results.push(value);
     });
     return results;
