@@ -11,7 +11,7 @@
   tr.already-upgraded {
     background-color: var(--plugin-manager-bg-color-already-upgraded);
   }
-  
+
   tr.unavailable {
     background-color: var(--plugin-manager-unavailable-bg-color);
   }
@@ -44,7 +44,7 @@
   tr.has-dependents button,
   tr.has-dependents .enable button,
   tr.has-dependents .enable .jenkins-toggle-switch label {
-    pointer-events: none;
+    //pointer-events: none;
     opacity: 0.25;
   }
 
@@ -68,10 +68,10 @@
     visibility: hidden !important;
   }
 
-  .dependent-list,
-  .dependency-list {
-    display: none;
-  }
+  //.dependent-list,
+  //.dependency-list {
+  //  //display: none;
+  //}
 
   .enable-state-info,
   .uninstall-state-info {
@@ -114,5 +114,13 @@
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: 0.25em;
+  }
+}
+
+
+.dependent-list,
+.dependency-list {
+  span {
+    display: block;
   }
 }
