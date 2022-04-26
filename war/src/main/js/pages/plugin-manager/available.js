@@ -1,20 +1,11 @@
 import debounce from 'lodash/debounce'
 import requestAnimationFrame from 'raf';
 
-import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
-import pluginManager from './api/pluginManager';
+import pluginManager from "@/api/pluginManager";
+import pluginManagerAvailable from "@/templates/plugin-manager/available.hbs"
+import {registerRefreshServerButton} from "@/pages/plugin-manager/shared"
 
 const filterInput = document.getElementById('filter-box');
-const refreshServerButton = document.getElementById('button-refresh-server');
-
-refreshServerButton.addEventListener("click", function () {
-  refreshServerButton.classList.add("jenkins-button--loading");
-  refreshServerButton.disabled = true;
-  pluginManager.refreshServer(function() {
-    applyFilter(filterInput.value);
-    refreshServerButton.classList.remove("jenkins-button--loading");
-  });
-});
 
 function applyFilter(searchQuery) {
     // debounce reduces number of server side calls while typing
@@ -78,3 +69,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
     applyFilter(filterInput.value);
 });
+
+registerRefreshServerButton(() => applyFilter(filterInput.value));

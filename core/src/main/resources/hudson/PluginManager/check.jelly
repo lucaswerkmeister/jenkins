@@ -26,6 +26,7 @@ THE SOFTWARE.
 
   <button id="button-refresh-server" class="jenkins-button" tooltip="${%lastUpdated(app.updateCenter.lastUpdatedString)}" type="button">
     <l:icon src="symbol-refresh" />
+    <span class="jenkins-button__loading-symbol" />
   </button>
 
   <j:if test="${app.pluginManager.lastErrorCheckUpdateCenters != null}">

@@ -59,7 +59,7 @@ THE SOFTWARE.
         </div>
       </div>
 
-      <st:adjunct includes="hudson.PluginManager._table"/>
+      <script src="${resURL}/jsbundles/plugin-manager/updates.js" type="text/javascript"/>
 
       <form method="post" action="install">
         <j:set var="isUpdates" value="${attrs.page=='updates'}"/>

@@ -61,8 +61,9 @@
   }
 
   svg {
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
+    transition: var(--standard-transition);
   }
 }
 
@@ -132,6 +133,47 @@ each(@variants, {
   }
 });
 
+.jenkins-button__loading-symbol {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  opacity: 0;
+  transform: scale(0);
+  transition: var(--standard-transition);
+}
+
 .jenkins-button--loading {
-  background: red;
+  pointer-events: none;
+
+  svg {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  .jenkins-button__loading-symbol {
+    transform: scale(1);
+    opacity: 1;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 100%;
+      border: 2px solid currentColor;
+      animation: loading-spinner 1s infinite linear;
+
+      @media (prefers-reduced-motion) {
+        animation-duration: 2s;
+      }
+    }
+
+    &::before {
+      opacity: 0.2;
+    }
+
+    &::after {
+      clip-path: inset(0 0 50% 50%);
+    }
+  }
 }
