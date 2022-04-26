@@ -17,6 +17,9 @@ module.exports = (env, argv) => ({
     "plugin-manager/available": [
       path.join(__dirname, "src/main/js/pages/plugin-manager/available.js")
     ],
+    "plugin-manager/installed": [
+      path.join(__dirname, "src/main/js/pages/plugin-manager/installed.js")
+    ],
     "plugin-manager/updates": [
       path.join(__dirname, "src/main/js/pages/plugin-manager/updates.js")
     ],
