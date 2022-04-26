@@ -59,8 +59,6 @@ THE SOFTWARE.
         </div>
       </div>
 
-      <script src="${resURL}/jsbundles/plugin-manager/updates.js" type="text/javascript"/>
-
       <form method="post" action="install">
         <j:set var="isUpdates" value="${attrs.page=='updates'}"/>
 
@@ -334,6 +332,8 @@ THE SOFTWARE.
         </div>
         <d:invokeBody/>
       </form>
+
+      <script src="${resURL}/jsbundles/plugin-manager/updates.js" type="text/javascript"/>
     </l:main-panel>
     <div class="grey-anime-preload" style="display:none">
       <l:icon class="icon-grey-anime icon-md"/>
