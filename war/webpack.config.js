@@ -14,8 +14,11 @@ module.exports = (env, argv) => ({
       path.join(__dirname, "src/main/js/pluginSetupWizard.js"),
       path.join(__dirname, "src/main/less/pluginSetupWizard.less"),
     ],
-    "plugin-manager-ui": [
-      path.join(__dirname, "src/main/js/plugin-manager-ui.js"),
+    "plugin-manager/available": [
+      path.join(__dirname, "src/main/js/pages/plugin-manager/available.js")
+    ],
+    "plugin-manager/updates": [
+      path.join(__dirname, "src/main/js/pages/plugin-manager/updates.js")
     ],
     "add-item": [
       path.join(__dirname, "src/main/js/add-item.js"),
@@ -154,8 +157,9 @@ module.exports = (env, argv) => ({
   },
   resolve: {
     alias:{
+      '@': path.resolve(__dirname, 'src/main/js'),
       // Needed to be able to register helpers at runtime
-      handlebars: 'handlebars/runtime',
+      handlebars: 'handlebars/runtime'
     },
   },
 });

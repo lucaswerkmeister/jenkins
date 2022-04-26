@@ -41,8 +41,6 @@ THE SOFTWARE.
 
     <st:include page="sidepanel.jelly"/>
     <l:main-panel>
-      <st:adjunct includes="hudson.PluginManager._table"/>
-
       <form method="post" action="install">
         <j:set var="isUpdates" value="${attrs.page=='updates'}"/>
         <local:tabBar xmlns:local="/hudson/PluginManager" page="${attrs.page}"/>
@@ -330,6 +328,8 @@ THE SOFTWARE.
         </div>
         <d:invokeBody/>
       </form>
+
+      <script src="${resURL}/jsbundles/plugin-manager/updates.js" type="text/javascript"/>
     </l:main-panel>
     <div class="grey-anime-preload" style="display:none">
       <l:icon class="icon-grey-anime icon-md"/>
