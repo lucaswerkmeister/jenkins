@@ -13,8 +13,7 @@ function applyFilter(searchQuery) {
     const admin = pluginsTable.dataset.hasadmin === 'true';
     let selectedPlugins = [];
 
-    const filterInput = document.getElementById('filter-box');
-    filterInput.parentElement.classList.remove("app-plugin-manager__search--loading");
+    searchBar.parentElement.classList.remove("app-plugin-manager__search--loading");
 
     function clearOldResults() {
       if (!admin) {
@@ -57,8 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
     debouncedFilter(e);
     searchBar.parentElement.classList.add("app-plugin-manager__search--loading");
   });
-
-  searchBar.focus();
 
   applyFilter(searchBar.value);
 });
