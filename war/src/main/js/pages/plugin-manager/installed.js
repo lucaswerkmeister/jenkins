@@ -1,25 +1,24 @@
 const searchBar = document.querySelector("#filter-box");
 
 searchBar.addEventListener("input", () => {
-  var filter = searchBar.value.toLowerCase().trim();
-  var filterParts = filter.split(/ +/).filter(function (word) {
+  const filter = searchBar.value.toLowerCase().trim();
+  const filterParts = filter.split(/ +/).filter(function (word) {
     return word.length > 0;
   });
-  var items = document.getElementsBySelector("TR.plugin").concat(document.getElementsBySelector("TR.unavailable"));
-  var anyVisible = false;
+  const items = document.getElementsBySelector("TR.plugin").concat(document.getElementsBySelector("TR.unavailable"));
 
-  for (var i = 0; i < items.length; i++) {
+  for (let i = 0; i < items.length; i++) {
     if ((filterParts.length < 1 || filter.length < 2) && items[i].hasClassName("hidden-by-default")) {
       items[i].addClassName("jenkins-hidden");
       continue;
     }
-    var makeVisible = true;
+    let makeVisible = true;
 
-    var pluginId = items[i].getAttribute('data-plugin-id');
-    var content = (items[i].querySelector('.details').innerText + " " + pluginId).toLowerCase();
+    const pluginId = items[i].getAttribute('data-plugin-id');
+    const content = (items[i].querySelector('.details').innerText + " " + pluginId).toLowerCase();
 
-    for (var j = 0; j < filterParts.length; j++) {
-      var part = filterParts[j];
+    for (let j = 0; j < filterParts.length; j++) {
+      const part = filterParts[j];
       if (content.indexOf(part) < 0) {
         makeVisible = false;
         break;
@@ -28,7 +27,6 @@ searchBar.addEventListener("input", () => {
 
     if (makeVisible) {
       items[i].classList.remove("jenkins-hidden");
-      anyVisible = true;
     } else {
       items[i].classList.add("jenkins-hidden");
     }
@@ -49,7 +47,7 @@ searchBar.addEventListener("input", () => {
   }
 
   function select(selector, element) {
-    var elementsBySelector = selectAll(selector, element);
+    const elementsBySelector = selectAll(selector, element);
     if (elementsBySelector.length > 0) {
       return elementsBySelector[0];
     } else {
@@ -61,24 +59,24 @@ searchBar.addEventListener("input", () => {
    * Wait for document onload.
    */
   Element.observe(window, "load", function () {
-    var pluginsTable = select('#plugins');
-    var pluginTRs = selectAll('.plugin', pluginsTable);
+    const pluginsTable = select('#plugins');
+    const pluginTRs = selectAll('.plugin', pluginsTable);
 
     if (!pluginTRs) {
       return;
     }
 
-    var pluginI18n = select('.plugins.i18n');
+    const pluginI18n = select('.plugins.i18n');
 
     function i18n(messageId) {
       return pluginI18n.getAttribute('data-' + messageId);
     }
 
     // Create a map of the plugin rows, making it easy to index them.
-    var plugins = {};
-    for (var i = 0; i < pluginTRs.length; i++) {
-      var pluginTR = pluginTRs[i];
-      var pluginId = pluginTR.getAttribute('data-plugin-id');
+    const plugins = {};
+    for (let i = 0; i < pluginTRs.length; i++) {
+      const pluginTR = pluginTRs[i];
+      const pluginId = pluginTR.getAttribute('data-plugin-id');
 
       plugins[pluginId] = pluginTR;
     }
@@ -88,7 +86,7 @@ searchBar.addEventListener("input", () => {
     }
 
     function getPluginName(pluginId) {
-      var pluginTR = getPluginTR(pluginId);
+      const pluginTR = getPluginTR(pluginId);
       if (pluginTR) {
         return pluginTR.getAttribute('data-plugin-name');
       } else {
@@ -97,11 +95,11 @@ searchBar.addEventListener("input", () => {
     }
 
     function processSpanSet(spans) {
-      var ids = [];
-      for (var i = 0; i < spans.length; i++) {
-        var span = spans[i];
-        var pluginId = span.getAttribute('data-plugin-id');
-        var pluginName = getPluginName(pluginId);
+      const ids = [];
+      for (let i = 0; i < spans.length; i++) {
+        const span = spans[i];
+        const pluginId = span.getAttribute('data-plugin-id');
+        const pluginName = getPluginName(pluginId);
 
         span.update(pluginName);
         ids.push(pluginId);
@@ -110,8 +108,8 @@ searchBar.addEventListener("input", () => {
     }
 
     function markAllDependentsDisabled(pluginTR) {
-      var jenkinsPluginMetadata = pluginTR.jenkinsPluginMetadata;
-      var dependentIds = jenkinsPluginMetadata.dependentIds;
+      const jenkinsPluginMetadata = pluginTR.jenkinsPluginMetadata;
+      const dependentIds = jenkinsPluginMetadata.dependentIds;
 
       if (dependentIds) {
         // If the only dependent is jenkins-core (it's a bundle plugin), then lets
@@ -123,8 +121,8 @@ searchBar.addEventListener("input", () => {
           return;
         }
 
-        for (var i = 0; i < dependentIds.length; i++) {
-          var dependentId = dependentIds[i];
+        for (let i = 0; i < dependentIds.length; i++) {
+          const dependentId = dependentIds[i];
 
           if (dependentId === 'jenkins-core') {
             // Jenkins core is always enabled. So, make sure it's not possible to disable/uninstall
@@ -134,7 +132,7 @@ searchBar.addEventListener("input", () => {
           }
 
           // The dependent is a plugin....
-          var dependentPluginTr = getPluginTR(dependentId);
+          const dependentPluginTr = getPluginTR(dependentId);
           if (dependentPluginTr && dependentPluginTr.jenkinsPluginMetadata.enableInput.checked) {
             // One of the plugins that depend on this plugin, is marked as enabled.
             pluginTR.removeClassName('all-dependents-disabled');
@@ -147,12 +145,12 @@ searchBar.addEventListener("input", () => {
     }
 
     function markHasDisabledDependencies(pluginTR) {
-      var jenkinsPluginMetadata = pluginTR.jenkinsPluginMetadata;
-      var dependencyIds = jenkinsPluginMetadata.dependencyIds;
+      const jenkinsPluginMetadata = pluginTR.jenkinsPluginMetadata;
+      const dependencyIds = jenkinsPluginMetadata.dependencyIds;
 
       if (dependencyIds) {
-        for (var i = 0; i < dependencyIds.length; i++) {
-          var dependencyPluginTr = getPluginTR(dependencyIds[i]);
+        for (let i = 0; i < dependencyIds.length; i++) {
+          const dependencyPluginTr = getPluginTR(dependencyIds[i]);
           if (dependencyPluginTr && !dependencyPluginTr.jenkinsPluginMetadata.enableInput.checked) {
             // One of the plugins that this plugin depend on, is marked as disabled.
             pluginTR.addClassName('has-disabled-dependency');
@@ -165,8 +163,8 @@ searchBar.addEventListener("input", () => {
     }
 
     function setEnableWidgetStates() {
-      for (var i = 0; i < pluginTRs.length; i++) {
-        var pluginMetadata = pluginTRs[i].jenkinsPluginMetadata;
+      for (let i = 0; i < pluginTRs.length; i++) {
+        const pluginMetadata = pluginTRs[i].jenkinsPluginMetadata;
         if (pluginTRs[i].hasClassName('has-dependents-but-disabled')) {
           if (pluginMetadata.enableInput.checked) {
             pluginTRs[i].removeClassName('has-dependents-but-disabled');
@@ -185,9 +183,9 @@ searchBar.addEventListener("input", () => {
     }
 
     function removeDependencyInfoRow(pluginTR) {
-      var nextRows = pluginTR.nextSiblings();
+      const nextRows = pluginTR.nextSiblings();
       if (nextRows && nextRows.length > 0) {
-        var nextRow = nextRows[0];
+        const nextRow = nextRows[0];
         if (nextRow.hasClassName('plugin-dependency-info')) {
           nextRow.remove();
         }
@@ -195,27 +193,27 @@ searchBar.addEventListener("input", () => {
     }
 
     function populateEnableDisableInfo(pluginTR, infoContainer) {
-      var pluginMetadata = pluginTR.jenkinsPluginMetadata;
+      const pluginMetadata = pluginTR.jenkinsPluginMetadata;
 
       // Remove all existing class info
       infoContainer.removeAttribute('class');
       infoContainer.addClassName('enable-state-info');
 
       if (pluginTR.hasClassName('has-disabled-dependency')) {
-        var dependenciesDiv = pluginMetadata.dependenciesDiv;
-        var dependencySpans = pluginMetadata.dependencies;
+        const dependenciesDiv = pluginMetadata.dependenciesDiv;
+        const dependencySpans = pluginMetadata.dependencies;
 
         infoContainer.update('<div class="title">' + i18n('cannot-enable') + '</div><div class="subtitle">' + i18n('disabled-dependencies') + '.</div>');
 
         // Go through each dependency <span> element. Show the spans where the dependency is
         // disabled. Hide the others.
-        for (var i = 0; i < dependencySpans.length; i++) {
-          var dependencySpan = dependencySpans[i];
-          var pluginId = dependencySpan.getAttribute('data-plugin-id');
-          var depPluginTR = getPluginTR(pluginId);
-          var enabled = false;
+        for (let i = 0; i < dependencySpans.length; i++) {
+          const dependencySpan = dependencySpans[i];
+          const pluginId = dependencySpan.getAttribute('data-plugin-id');
+          const depPluginTR = getPluginTR(pluginId);
+          let enabled = false;
           if (depPluginTR) {
-            var depPluginMetadata = depPluginTR.jenkinsPluginMetadata;
+            const depPluginMetadata = depPluginTR.jenkinsPluginMetadata;
             enabled = depPluginMetadata.enableInput.checked;
           }
           if (enabled) {
@@ -234,7 +232,7 @@ searchBar.addEventListener("input", () => {
       }
       if (pluginTR.hasClassName('has-dependents')) {
         if (!pluginTR.hasClassName('all-dependents-disabled')) {
-          var dependentIds = pluginMetadata.dependentIds;
+          const dependentIds = pluginMetadata.dependentIds;
 
           // If the only dependent is jenkins-core (it's a bundle plugin), then lets
           // treat it like all its dependents are disabled. We're really only interested in
@@ -281,21 +279,21 @@ searchBar.addEventListener("input", () => {
     }
 
     function getDependentsDiv(pluginTR, hideDisabled) {
-      var pluginMetadata = pluginTR.jenkinsPluginMetadata;
-      var dependentsDiv = pluginMetadata.dependentsDiv;
-      var dependentSpans = pluginMetadata.dependents;
+      const pluginMetadata = pluginTR.jenkinsPluginMetadata;
+      const dependentsDiv = pluginMetadata.dependentsDiv;
+      const dependentSpans = pluginMetadata.dependents;
 
       // Go through each dependent <span> element. If disabled should be hidden, show the spans where
       // the dependent is enabled and hide the others. Otherwise show them all.
-      for (var i = 0; i < dependentSpans.length; i++) {
-        var dependentSpan = dependentSpans[i];
-        var dependentId = dependentSpan.getAttribute('data-plugin-id');
+      for (let i = 0; i < dependentSpans.length; i++) {
+        const dependentSpan = dependentSpans[i];
+        const dependentId = dependentSpan.getAttribute('data-plugin-id');
 
         if (!hideDisabled || dependentId === 'jenkins-core') {
           dependentSpan.setStyle({display: 'inline-block'});
         } else {
-          var depPluginTR = getPluginTR(dependentId);
-          var depPluginMetadata = depPluginTR.jenkinsPluginMetadata;
+          const depPluginTR = getPluginTR(dependentId);
+          const depPluginMetadata = depPluginTR.jenkinsPluginMetadata;
           if (depPluginMetadata.enableInput.checked) {
             // It's enabled ... show the span
             dependentSpan.setStyle({display: 'inline-block'});
@@ -311,11 +309,11 @@ searchBar.addEventListener("input", () => {
     }
 
     function initPluginRowHandling(pluginTR) {
-      var enableInput = select('.enable input', pluginTR);
-      var dependenciesDiv = select('.dependency-list', pluginTR);
-      var dependentsDiv = select('.dependent-list', pluginTR);
-      var enableTD = select('td.enable', pluginTR);
-      var uninstallTD = select('td.uninstall', pluginTR);
+      const enableInput = select('.enable input', pluginTR);
+      const dependenciesDiv = select('.dependency-list', pluginTR);
+      const dependentsDiv = select('.dependent-list', pluginTR);
+      const enableTD = select('td.enable', pluginTR);
+      const uninstallTD = select('td.uninstall', pluginTR);
 
       pluginTR.jenkinsPluginMetadata = {
         enableInput: enableInput,
@@ -342,18 +340,18 @@ searchBar.addEventListener("input", () => {
       }
 
       //
-      var infoTR = document.createElement("tr");
-      var infoTD = document.createElement("td");
-      var infoDiv = document.createElement("div");
+      const infoTR = document.createElement("tr");
+      const infoTD = document.createElement("td");
+      const infoDiv = document.createElement("div");
       infoTR.appendChild(infoTD)
       infoTD.appendChild(infoDiv)
       infoTD.setAttribute('colspan', '6'); // This is the cell that all info will be added to.
-      infoDiv.setStyle({display: 'inherit'});
+      infoDiv.style.display = "inherit";
 
       // We don't want the info row to appear immediately. We wait for e.g. 1 second and if the mouse
       // is still in there (hasn't left the cell) then we show. The following code is for clearing the
       // show timeout where the mouse has left before the timeout has fired.
-      var showInfoTimeout = undefined;
+      let showInfoTimeout = undefined;
 
       function clearShowInfoTimeout() {
         if (showInfoTimeout) {
@@ -397,7 +395,7 @@ searchBar.addEventListener("input", () => {
       }
     }
 
-    for (var i = 0; i < pluginTRs.length; i++) {
+    for (let i = 0; i < pluginTRs.length; i++) {
       initPluginRowHandling(pluginTRs[i]);
     }
 

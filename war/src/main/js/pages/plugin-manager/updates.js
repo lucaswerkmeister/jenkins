@@ -24,8 +24,8 @@ searchBar.addEventListener("input", () => {
     }
     let makeVisible = true;
 
-    const pluginId = items[i].getAttribute('data-plugin-id');
-    const content = (items[i].querySelector('.details').innerText + " " + pluginId).toLowerCase();
+    const pluginId = items[i].getAttribute("data-plugin-id");
+    const content = (items[i].querySelector(".details").innerText + " " + pluginId).toLowerCase();
 
     for (let j = 0; j < filterParts.length; j++) {
       const part = filterParts[j];

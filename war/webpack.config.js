@@ -162,7 +162,7 @@ module.exports = (env, argv) => ({
     alias:{
       '@': path.resolve(__dirname, 'src/main/js'),
       // Needed to be able to register helpers at runtime
-      handlebars: 'handlebars/runtime'
+      handlebars: 'handlebars/runtime',
     },
   },
 });
