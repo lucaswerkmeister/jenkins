@@ -11,24 +11,24 @@ selectCompatiblePlugins.addEventListener("click", () => {
 });
 
 searchBar.addEventListener("input", () => {
-  var filter = searchBar.value.toLowerCase().trim();
-  var filterParts = filter.split(/ +/).filter(function (word) {
+  const filter = searchBar.value.toLowerCase().trim();
+  const filterParts = filter.split(/ +/).filter(function (word) {
     return word.length > 0;
   });
-  var items = document.getElementsBySelector("TR.plugin").concat(document.getElementsBySelector("TR.unavailable"));
+  const items = document.getElementsBySelector("TR.plugin").concat(document.getElementsBySelector("TR.unavailable"));
 
-  for (var i = 0; i < items.length; i++) {
+  for (let i = 0; i < items.length; i++) {
     if ((filterParts.length < 1 || filter.length < 2) && items[i].hasClassName("hidden-by-default")) {
       items[i].addClassName("jenkins-hidden");
       continue;
     }
-    var makeVisible = true;
+    let makeVisible = true;
 
-    var pluginId = items[i].getAttribute('data-plugin-id');
-    var content = (items[i].querySelector('.details').innerText + " " + pluginId).toLowerCase();
+    const pluginId = items[i].getAttribute('data-plugin-id');
+    const content = (items[i].querySelector('.details').innerText + " " + pluginId).toLowerCase();
 
-    for (var j = 0; j < filterParts.length; j++) {
-      var part = filterParts[j];
+    for (let j = 0; j < filterParts.length; j++) {
+      const part = filterParts[j];
       if (content.indexOf(part) < 0) {
         makeVisible = false;
         break;
