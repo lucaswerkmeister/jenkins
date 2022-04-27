@@ -13,7 +13,7 @@ function applyFilter(searchQuery) {
     const admin = pluginsTable.dataset.hasadmin === 'true';
     let selectedPlugins = [];
 
-    searchBar.parentElement.classList.remove("app-plugin-manager__search--loading");
+    searchBar.parentElement.classList.remove("jenkins-search--loading");
 
     function clearOldResults() {
       if (!admin) {
@@ -54,7 +54,7 @@ const debouncedFilter = debounce(handleFilter, 150);
 document.addEventListener("DOMContentLoaded", function () {
   searchBar.addEventListener('input', function (e) {
     debouncedFilter(e);
-    searchBar.parentElement.classList.add("app-plugin-manager__search--loading");
+    searchBar.parentElement.classList.add("jenkins-search--loading");
   });
 
   applyFilter(searchBar.value);
