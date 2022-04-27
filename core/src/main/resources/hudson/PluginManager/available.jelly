@@ -43,6 +43,7 @@ THE SOFTWARE.
             class="jenkins-search__input"
             type="search"
             id="filter-box"
+            autofocus="true"
             value="${request.getParameter('filter')}"
             placeholder="${%Search}"/>
           <div class="jenkins-search__icon">
