@@ -127,7 +127,8 @@ module.exports = (env, argv) => ({
               'inSelectedPlugins',
               'dependencyCount',
               'eachDependency',
-              'ifVisibleDependency'
+              'ifVisibleDependency',
+              'soeasy'
             ]
           },
         },

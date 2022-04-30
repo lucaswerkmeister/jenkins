@@ -4,6 +4,7 @@ import requestAnimationFrame from 'raf';
 import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 import il8n from './util/il8n';
+import Handlebars from "handlebars";
 
 function applyFilter(searchQuery) {
     // debounce reduces number of server side calls while typing
@@ -35,6 +36,13 @@ function applyFilter(searchQuery) {
                 }
             }
         }
+        
+        Handlebars.registerHelper('soeasy', function(downloadCount) {
+          return Intl.NumberFormat('en-US', {
+            notation: "compact",
+            maximumFractionDigits: 1
+          }).format(downloadCount).toLowerCase();
+        });
 
         clearOldResults()
         var rows = pluginManagerAvailable({

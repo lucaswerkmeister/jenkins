@@ -64,10 +64,8 @@ THE SOFTWARE.
                 <th width="32">${%Install}</th>
               </l:isAdmin>
               <th initialSortDir="down">${%Name}</th>
+              <th>${%Popularity}</th>
               <th>${%Released}</th>
-              <j:if test="${isUpdates}">
-                <th>${%Installed}</th>
-              </j:if>
             </tr>
           </thead>
           <tbody/>

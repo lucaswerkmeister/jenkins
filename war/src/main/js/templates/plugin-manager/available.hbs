@@ -6,13 +6,11 @@
             </td>
         {{/if}}
         <td>
-            <div>
-                <a href="{{ this.wiki }}" class="jenkins-table__link" target="_blank" rel="noopener noreferrer">
-                    {{ this.displayName }}
-                    <span class="jenkins-visually-hidden">Version</span>
-                    <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">{{ this.version }}</span>
-                </a>
-            </div>
+            <a href="{{ this.wiki }}" class="jenkins-table__link longhorn" target="_blank" rel="noopener noreferrer">
+                {{ this.displayName }}
+                <span class="jenkins-visually-hidden">Version</span>
+                <span class="jenkins-label jenkins-label--tertiary">{{ this.version }}</span>
+            </a>
             <div class="app-plugin-manager__categories">
               {{#each this.categories }}
                 <a href="?filter={{ this }}" class="jenkins-table__link jenkins-table__badge">
@@ -66,7 +64,12 @@
                 </div>
             {{/if}}
         </td>
-        <td width="25%">
+        <td width="10%" data="{{ this.popularity }}">
+          <span tooltip="{{ this.popularity }} downloads">
+            {{{ soeasy this.popularity }}}
+          </span>
+        </td>
+        <td width="12.5%">
             {{#if this.releaseTimestamp }}
                 <time datetime="{{ this.releaseTimestamp.iso8601 }}">
                     {{ this.releaseTimestamp.displayValue }}
