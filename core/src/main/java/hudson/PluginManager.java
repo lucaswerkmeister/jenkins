@@ -1350,6 +1350,22 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
     }
 
     @Restricted(NoExternalUse.class)
+    public HttpResponse doCategories() {
+        Set<String> categories = new HashSet<>();
+
+        for (UpdateSite site : Jenkins.get().getUpdateCenter().getSiteList()) {
+            Set<String> siteCategories = site.getAvailables().stream()
+                    .flatMap(UpdateSite.Plugin::getCategoriesStream)
+                    .filter(PluginManager::isNonMetaLabel)
+                    .map(UpdateCenter::getCategoryDisplayName)
+                    .collect(Collectors.toSet());
+            categories.addAll(siteCategories);
+        }
+
+        return hudson.util.HttpResponses.okJSON(JSONObject.fromObject(categories));
+    }
+
+    @Restricted(NoExternalUse.class)
     public HttpResponse doPluginsSearch(@QueryParameter String query, @QueryParameter Integer limit) {
         List<JSONObject> plugins = new ArrayList<>();
         for (UpdateSite site : Jenkins.get().getUpdateCenter().getSiteList()) {
