@@ -49,6 +49,10 @@ THE SOFTWARE.
         </div>
       </div>
 
+      <div id="categories" style="display: flex; flex-wrap: wrap; gap: 1rem 0.5rem; margin-bottom: 2rem;">
+
+      </div>
+
       <script src="${resURL}/jsbundles/plugin-manager-ui.js" type="text/javascript"/>
 
       <form method="post" action="install">

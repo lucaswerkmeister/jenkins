@@ -4,11 +4,27 @@ import requestAnimationFrame from 'raf';
 import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 
-function applyFilter(searchQuery) {
 
-  pluginManager.categories(function (categories) {
-    console.log(categories)
-  });
+pluginManager.categories(function (categories) {
+  const multiplier = 360 / categories.length;
+  const newCats = categories.sort().map((e, i) => ({name: e, color: `hsl(${i * multiplier}, 60%, 55%)`}))
+  console.log(newCats)
+
+  const categoriesDiv = document.getElementById("categories");
+  categories.clear();
+  newCats.forEach(cat => {
+    categoriesDiv.insertAdjacentHTML('beforeend',
+      `<a class="jenkins-table__link jenkins-table__badge" style="font-weight: 500; font-size: 0.75rem; color: ${cat.color} !important;">${cat.name}</a>`)
+  })
+
+  categoriesDiv.querySelectorAll("a").forEach(e => e.addEventListener("click", () => {
+    var filterInput = document.getElementById('filter-box');
+    filterInput.value = e.textContent
+  }))
+
+});
+
+function applyFilter(searchQuery) {
 
     // debounce reduces number of server side calls while typing
     pluginManager.availablePluginsSearch(searchQuery.toLowerCase().trim(), 50, function (plugins) {
