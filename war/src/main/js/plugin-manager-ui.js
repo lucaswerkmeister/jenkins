@@ -5,6 +5,11 @@ import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
 
 function applyFilter(searchQuery) {
+
+  pluginManager.categories(function (categories) {
+    console.log(categories)
+  });
+
     // debounce reduces number of server side calls while typing
     pluginManager.availablePluginsSearch(searchQuery.toLowerCase().trim(), 50, function (plugins) {
         var pluginsTable = document.getElementById('plugins');

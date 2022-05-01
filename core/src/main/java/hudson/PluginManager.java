@@ -1362,7 +1362,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
             categories.addAll(siteCategories);
         }
 
-        return hudson.util.HttpResponses.okJSON(JSONObject.fromObject(categories));
+        return hudson.util.HttpResponses.okJSON(JSONArray.fromObject(categories));
     }
 
     @Restricted(NoExternalUse.class)
