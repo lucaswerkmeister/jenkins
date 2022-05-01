@@ -2,9 +2,7 @@ const searchBar = document.querySelector("#filter-box");
 
 searchBar.addEventListener("input", () => {
   const filter = searchBar.value.toLowerCase().trim();
-  const filterParts = filter.split(/ +/).filter(function (word) {
-    return word.length > 0;
-  });
+  const filterParts = filter.split(/ +/).filter(word => word.length > 0);
   const items = document.getElementsBySelector("TR.plugin").concat(document.getElementsBySelector("TR.unavailable"));
 
   for (const item of items) {
