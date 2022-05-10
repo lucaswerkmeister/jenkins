@@ -67,16 +67,18 @@ THE SOFTWARE.
   <j:set var="default" value="${attrs.default ?: false}"/>
   <j:set var="value" value="${attrs.checked ?: instance[attrs.field] ?: default}"/>
 
+  <j:set var="itemId" value="${attrs.id ?: h.generateItemId()}" />
   <span class="jenkins-checkbox">
     <input type="checkbox"
            name="${name}"
            value="${attrs.value}"
            title="${attrs.tooltip}"
-           onclick="${attrs.readonly=='true' ? 'return false;' : attrs.onclick}" id="${attrs.id}" class="${attrs.class} ${attrs.negative!=null ? 'negative' : null} ${attrs.checkUrl!=null?'validated':''}"
+           id="${itemId}"
+           onclick="${attrs.readonly=='true' ? 'return false;' : attrs.onclick}" class="${attrs.class} ${attrs.negative!=null ? 'negative' : null} ${attrs.checkUrl!=null?'validated':''}"
            checkUrl="${attrs.checkUrl}" checkDependsOn="${attrs.checkDependsOn}" json="${attrs.json}"
            disabled="${readOnlyMode ? 'true' : null}"
            checked="${value ? 'true' : null}"/>
-    <label class="attach-previous ${attrs.title == null ? 'js-checkbox-label-empty' : ''}"
+    <label for="${itemId}" class="${attrs.title == null ? 'js-checkbox-label-empty' : ''}"
            title="${attrs.tooltip}">${attrs.title}</label>
   </span>
   <j:if test="${customizedFields != null and attrs.field != null and value != default}">
