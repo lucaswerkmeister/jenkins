@@ -40,33 +40,10 @@ window.addEventListener("load", () => {
 })
 
 /**
- * Translates a given keyboard shortcut, e.g. CMD+K, into an OS friendly version, e.g. CTRL+K
+ * Translates a given keyboard shortcut, e.g. CMD+K, into an OS neutral version, e.g. CTRL+K
  * @param {string} keyboardShortcut The shortcut for translation
  */
 function translateKeyboardShortcutForOS(keyboardShortcut) {
   const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0
   return keyboardShortcut.replace("CMD", isMac ? "CMD" : "CTRL")
 }
-
-/**
- * Translates a given keyboard shortcut, e.g. CMD+K, into a UI friendly version, e.g. ⌘+K
- * @param {string} keyboardShortcut The shortcut for translation
- */
-function translateKeyboardShortcutForUI(keyboardShortcut) {
-  const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0
-  return keyboardShortcut.replace("CMD", isMac ? "⌘" : "CTRL")
-}
-
-/**
- * Generates a UI representation of the given keyboard shortcut
- * @param {string} keyboardShortcut The shortcut for generation
- */
-export function generateKeyboardShortcutUI(keyboardShortcut) {
-  return translateKeyboardShortcutForUI(keyboardShortcut)
-    .split("+")
-    .map(shortcut => `<span class="shortcut">${shortcut}</span>`)
-    .join(ADD_SVG)
-}
-
-
-export default { generateKeyboardShortcutUI }
