@@ -80,7 +80,7 @@ THE SOFTWARE.
                 </j:if>
                 <j:choose>
                 <j:when test="${!empty(healthReports)}">
-                    <a data-keyboard-shortcut="L" class="build-health-link jenkins-table__button" href="${empty(link)?'#':link}" style="${attrs.style}">
+                    <a class="build-health-link jenkins-table__button" href="${empty(link)?'#':link}" style="${attrs.style}">
                        <l:svgIcon href="${resURL}/images/${icons.getIconByClassSpec(buildHealth.iconClassName + ' icon-md').url}" ariaHidden="true"/>
                     </a>
                 </j:when>
