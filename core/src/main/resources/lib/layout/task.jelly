@@ -82,7 +82,7 @@ THE SOFTWARE.
       (since 1.512)
     </st:attribute>
     <st:attribute name="keyboardShortcut">
-      TODO - in Mac format TODO CMD+K
+      Optional keyboard shortcut to use to access this task
       (since TODO)
     </st:attribute>
   </st:documentation>
