@@ -39,7 +39,9 @@ THE SOFTWARE.
   </st:documentation>
   <f:prepareDatabinding />
 
-  <f:radio name="_.${attrs.field}" title="${attrs['true']?:'%Yes'}" value="true" checked="${instance[field]}" />
-  <f:radio name="_.${attrs.field}" title="${attrs['false']?:'%No'}" value="false" checked="${!instance[field]}" />
+  <div class="jenkins-radios">
+    <f:radio name="_.${attrs.field}" title="${attrs['true']?:'%Yes'}" value="true" checked="${instance[field]}" />
+    <f:radio name="_.${attrs.field}" title="${attrs['false']?:'%No'}" value="false" checked="${!instance[field]}" />
+  </div>
   <!-- TODO consider customizedFields -->
 </j:jelly>

@@ -1,3 +1,15 @@
+.jenkins-radios {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: calc(var(--section-padding) / 3);
+
+  & > .jenkins-radio {
+    margin: 0 !important;
+  }
+}
+
 .jenkins-radio-help-wrapper {
   display: flex;
   align-items: center;
@@ -56,8 +68,9 @@
     position: relative;
     display: inline-block;
     margin-bottom: 0;
-    padding: 0 0 5px 32px;
+    padding: 0 0 0 32px;
     cursor: pointer;
+    min-height: 22px;
     font-weight: var(--form-label-font-weight);
     // remove 300ms pause on mobile
     touch-action: manipulation;
@@ -111,6 +124,10 @@
       &::after {
         background: var(--focus-input-border);
       }
+    }
+
+    &:empty {
+      display: none;
     }
   }
 
