@@ -21,14 +21,6 @@ module.exports = (env, argv) => ({
       path.join(__dirname, "src/main/js/add-item.js"),
       path.join(__dirname, "src/main/js/add-item.less"),
     ],
-    "config-scrollspy": [
-      path.join(__dirname, "src/main/js/config-scrollspy.js"),
-      path.join(__dirname, "src/main/js/config-scrollspy.less"),
-    ],
-    "config-tabbar": [
-      path.join(__dirname, "src/main/js/config-tabbar.js"),
-      path.join(__dirname, "src/main/js/config-tabbar.less"),
-    ],
     "sortable-drag-drop": [path.join(__dirname, "src/main/js/sortable-drag-drop.js")],
     "section-to-sidebar-items": [path.join(__dirname, "src/main/js/section-to-sidebar-items.js")],
     "section-to-tabs": [path.join(__dirname, "src/main/js/section-to-tabs.js")],
