@@ -60,7 +60,7 @@ a.page-header__brand-link {
 
     // need to override an existing rule
     padding: 0.5rem;
-    margin-right: 0.25rem;
+    margin-right: 0.25rem !important;
     font-weight: bold;
     border-radius: var(--header-item-border-radius);
     color: var(--header-link-color);
@@ -90,6 +90,17 @@ a.page-header__brand-link {
       width: 18px;
       height: 18px;
     }
+
+  .jenkins-menu-dropdown-chevron {
+    position: relative;
+    top: unset !important;
+    right: unset !important;
+    margin-left: 0.5rem;
+
+    &::after {
+      opacity: 1;
+    }
+  }
 }
 
 .page-header__hyperlinks a span {
