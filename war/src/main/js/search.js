@@ -1,6 +1,5 @@
 import "core-js/stable"
 import "regenerator-runtime/runtime"
-import {generateKeyboardShortcutUI} from "./keyboard-shortcuts"
 
 window.addEventListener('load', () => {
   const i18n = document.getElementById("command-center-i18n")
@@ -10,7 +9,7 @@ window.addEventListener('load', () => {
   const commandBarMagnifyingGlass = commandCenter.querySelector(".jenkins-command-center__search .icon")
   const searchResults = document.getElementById("search-results")
   const searchResultsContainer = document.getElementById("search-results-container")
-  const commandBarKeyboardShortcut = document.getElementById("command-center-keyboard-shortcut")
+  // const commandBarKeyboardShortcut = document.getElementById("command-center-keyboard-shortcut")
 
   const hoverClass = "jenkins-command-center__results__item--hover"
 
