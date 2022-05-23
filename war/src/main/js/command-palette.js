@@ -1,42 +1,36 @@
-import "core-js/stable"
 import "regenerator-runtime/runtime"
+import Search from "./api/search";
 
 window.addEventListener('load', () => {
   const i18n = document.getElementById("command-center-i18n")
-  const spotlightButton = document.getElementById("button-spotlight")
-  const commandCenter = document.getElementById("command-center")
-  const commandBarInput = document.getElementById("command-bar")
-  const commandBarMagnifyingGlass = commandCenter.querySelector(".jenkins-command-center__search .icon")
+  const headerCommandPaletteButton = document.getElementById("button-spotlight")
+  const commandPalette = document.getElementById("command-center")
+  const commandPaletteInput = document.getElementById("command-bar")
+  const commandPaletteLoadingSymbol = commandPalette.querySelector(".jenkins-command-center__search .icon")
   const searchResults = document.getElementById("search-results")
   const searchResultsContainer = document.getElementById("search-results-container")
-  // const commandBarKeyboardShortcut = document.getElementById("command-center-keyboard-shortcut")
 
-  const hoverClass = "jenkins-command-center__results__item--hover"
+  const hoverClass = "jenkins-command-center__results__item--hover";
 
-// Update the keyboard shortcut text depending on OS
-//   commandBarKeyboardShortcut.innerHTML = generateKeyboardShortcutUI("CMD+K")
-
-// Events
-  spotlightButton.addEventListener("click", function () {
-    console.log("hello")
-
-    if (commandCenter.open) {
-      hideCommandCenter()
+  // Events
+  headerCommandPaletteButton.addEventListener("click", function () {
+    if (commandPalette.hasAttribute("open")) {
+      hideCommandCenter();
     } else {
-      showCommandCenter()
+      showCommandCenter();
     }
-  })
+  });
 
-  commandCenter.addEventListener("click", function (e) {
+  commandPalette.addEventListener("click", function (e) {
     if (e.target !== e.currentTarget) {
       return
     }
 
-    hideCommandCenter()
+    hideCommandCenter();
   })
 
-  commandBarInput.addEventListener("input", async (e) => {
-    commandBarMagnifyingGlass.classList.add("icon--loading")
+  commandPaletteInput.addEventListener("input", async (e) => {
+    commandPaletteLoadingSymbol.classList.add("icon--loading")
     let results
 
     if (e.target.value.length === 0) {
@@ -44,7 +38,7 @@ window.addEventListener('load', () => {
         [i18n.dataset.help]: [
           {
             icon: {
-              svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"ionicon\" viewBox=\"0 0 512 512\"><title>Help Circle</title><path d=\"M256 80a176 176 0 10176 176A176 176 0 00256 80z\" fill=\"none\" stroke=\"currentColor\" stroke-miterlimit=\"10\" stroke-width=\"32\"/><path d=\"M200 202.29s.84-17.5 19.57-32.57C230.68 160.77 244 158.18 256 158c10.93-.14 20.69 1.67 26.53 4.45 10 4.76 29.47 16.38 29.47 41.09 0 26-17 37.81-36.37 50.8S251 281.43 251 296\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-miterlimit=\"10\" stroke-width=\"28\"/><circle cx=\"250\" cy=\"348\" r=\"20\" fill=\"currentColor\"/></svg>"
+              svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"><path d=\"M256 80a176 176 0 10176 176A176 176 0 00256 80z\" fill=\"none\" stroke=\"currentColor\" stroke-miterlimit=\"10\" stroke-width=\"32\"/><path d=\"M200 202.29s.84-17.5 19.57-32.57C230.68 160.77 244 158.18 256 158c10.93-.14 20.69 1.67 26.53 4.45 10 4.76 29.47 16.38 29.47 41.09 0 26-17 37.81-36.37 50.8S251 281.43 251 296\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-miterlimit=\"10\" stroke-width=\"28\"/><circle cx=\"250\" cy=\"348\" r=\"20\" fill=\"currentColor\"/></svg>"
             },
             name: i18n.dataset.getHelp,
             url: document.getElementById("page-header").dataset.searchHelpUrl.escapeHTML()
@@ -52,10 +46,8 @@ window.addEventListener('load', () => {
         ]
       }
     } else {
-      let response = await fetch(document.getElementById("page-header").dataset.searchUrl.escapeHTML() + "?query=" + e.target.value)
-      let result = await response.json()
-
-      console.log(result)
+      const response = await Search.search(e.target.value);
+      const result = await response.json();
 
       // Group the results
       results = groupByKey(result["suggestions"], "category")
@@ -94,10 +86,10 @@ window.addEventListener('load', () => {
     }
 
     searchResultsContainer.style.height = searchResults.offsetHeight + "px"
-    commandBarMagnifyingGlass.classList.remove("icon--loading")
+    commandPaletteLoadingSymbol.classList.remove("icon--loading")
   })
 
-  commandBarInput.addEventListener("keyup", function (event) {
+  commandPaletteInput.addEventListener("keyup", function (event) {
     const maxLength = searchResults.getElementsByTagName("a").length
     let selectedIndex = -1
     let hoveredItem = document.querySelector("." + hoverClass)
@@ -137,24 +129,20 @@ window.addEventListener('load', () => {
     }
   })
 
-// Helper methods for visibility of command center
+  // Helper methods for visibility of command center
   function showCommandCenter() {
-    commandCenter.showModal()
-    // commandCenter.style.display = "flex"
-    // commandCenterBackdrop.style.display = "block"
-    commandBarInput.focus()
+    commandPalette.showModal();
+    commandPaletteInput.focus();
 
     // Fire empty input event to command bar to set appropriate UI states (OOBE, results, no results)
-    commandBarInput.dispatchEvent(new Event("input"))
+    commandPaletteInput.dispatchEvent(new Event("input"));
   }
 
   function hideCommandCenter() {
-    commandCenter.close()
-    // commandCenter.style.display = "none"
-    // commandCenterBackdrop.style.display = "none"
+    commandPalette.close();
   }
 
-// Group suggestions by 'category' field into map
+  // Group suggestions by 'category' field into map
   function groupByKey(array, key) {
     return array
       .reduce((hash, obj) => {

@@ -242,8 +242,6 @@ THE SOFTWARE.
       </div>
     </footer>
     </j:if>
-
-    <script src="${resURL}/jsbundles/search.js" type="text/javascript"/>
   </body>
 </html>
 </l:view>
