@@ -1,10 +1,10 @@
-// Group suggestions by 'category' field into map
-function groupByKey(array, key) {
+// Group results by 'category' field into map
+function groupResultsByCategory(array) {
   return array
     .reduce((hash, obj) => {
-      if (obj[key] === undefined) return hash
-      return Object.assign(hash, {[obj[key]]: (hash[obj[key]] || []).concat(obj)})
+      if (obj.category === undefined) return hash
+      return Object.assign(hash, {[obj.category]: (hash[obj.category] || []).concat(obj)})
     }, {})
 }
 
-export default {groupByKey: groupByKey};
+export default {groupResultsByCategory: groupResultsByCategory};

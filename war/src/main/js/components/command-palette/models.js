@@ -1,26 +1,11 @@
 import * as Symbols from "./symbols";
 
-class Result {
-  constructor(icon, label, description, category) {
+export class LinkResult {
+  constructor(icon, label, description, category, url, isExternal) {
     this.icon = icon;
     this.label = label;
     this.description = description;
     this.category = category;
-    console.log(this.icon)
-  }
-  render() {
-    return `<button class="jenkins-command-palette__results__item">
-        <div class="jenkins-command-palette__results__item__icon">${this.icon}"}</div>
-        ${this.label}
-        ${this.description ? `<span class="jenkins-command-palette__results__item__description">${this.description}</span>` : ``}
-        ${Symbols.CHEVRON_RIGHT}
-    </button>`
-  }
-}
-
-export class LinkResult extends Result {
-  constructor(icon, label, description, category, url, isExternal) {
-    super(icon, label, description, category);
     this.url = url;
     this.isExternal = isExternal;
   }

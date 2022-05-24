@@ -1,7 +1,10 @@
 import "regenerator-runtime/runtime";
-import CommandPaletteService from "./services";
 import {LinkResult} from "@/components/command-palette/models";
 import * as Symbols from "./symbols";
+import {JenkinsSearchSource} from "./datasources";
+import Helpers from './helpers';
+
+const datasources = [JenkinsSearchSource];
 
 window.addEventListener('load', () => {
   const i18n = document.getElementById("command-palette-i18n")
@@ -37,21 +40,23 @@ window.addEventListener('load', () => {
     let results;
 
     if (query.length === 0) {
-      results = {
-        [i18n.dataset.help]: [
+      results = [
           new LinkResult(
           {svg: Symbols.HELP},
           i18n.dataset.getHelp,
           undefined,
-          undefined,
+          "Help",
           document.getElementById("page-header").dataset.searchHelpUrl.escapeHTML(),
             true
           )
         ]
-      }
     } else {
-      results = await CommandPaletteService.getResults(query);
+      await Promise.all(datasources.map(ds => ds.execute(query))).then(response => {
+        results = response.flat();
+      });
     }
+
+    results = Helpers.groupResultsByCategory(results);
 
     // Clear current search results
     searchResults.innerHTML = ""
@@ -64,9 +69,15 @@ window.addEventListener('load', () => {
         searchResults.append(heading)
 
         items.forEach(function (obj) {
+          const renderedObject = obj.render();
+
           let link = document.createElement("DIV")
-          link.innerHTML = obj.render();
-          link = link.firstChild
+          if (renderedObject instanceof HTMLElement) {
+            link = renderedObject;
+          } else {
+            link.innerHTML = renderedObject;
+            link = link.firstChild;
+          }
           link.addEventListener("mouseenter", e => itemMouseEnter(e))
           searchResults.append(link)
         })
