@@ -28,26 +28,26 @@ THE SOFTWARE.
     The command center overlay for Jenkins
   </s:documentation>
 
-  <div id="command-center-i18n" class="i18n"
+  <div id="command-palette-i18n" class="i18n"
        data-no-results-for="${%No results for}"
        data-help="${%Help}"
        data-get-help="${%Get help using Jenkins search}"
   />
 
-  <dialog id="command-center" class="jenkins-command-center__wrapper">
-    <div class="jenkins-command-center">
-      <div class="jenkins-command-center__search">
+  <dialog id="command-palette" class="jenkins-command-palette__wrapper">
+    <div class="jenkins-command-palette">
+      <div class="jenkins-command-palette__search">
         <div class="icon">
           <l:icon src="symbol-search" />
         </div>
         <input id="command-bar" placeholder="${%Search}" type="search" autocomplete="off" autocorrect="off"
                autocapitalize="off" spellcheck="false" />
-        <div class="keyboard-shortcuts" id="command-center-keyboard-shortcut">
+        <div class="keyboard-shortcuts" id="command-palette-keyboard-shortcut">
 
         </div>
       </div>
-      <div id="search-results-container" class="jenkins-command-center__results-container">
-        <div id="search-results" class="jenkins-command-center__results" />
+      <div id="search-results-container" class="jenkins-command-palette__results-container">
+        <div id="search-results" class="jenkins-command-palette__results" />
       </div>
     </div>
   </dialog>

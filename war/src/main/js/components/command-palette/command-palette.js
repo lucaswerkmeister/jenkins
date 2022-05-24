@@ -1,16 +1,18 @@
-import "regenerator-runtime/runtime"
-import Search from "./api/search";
+import "regenerator-runtime/runtime";
+import CommandPaletteService from "./services";
+import {LinkResult} from "@/components/command-palette/models";
+import * as Symbols from "./symbols";
 
 window.addEventListener('load', () => {
-  const i18n = document.getElementById("command-center-i18n")
-  const headerCommandPaletteButton = document.getElementById("button-spotlight")
-  const commandPalette = document.getElementById("command-center")
+  const i18n = document.getElementById("command-palette-i18n")
+  const headerCommandPaletteButton = document.getElementById("button-open-command-palette");
+  const commandPalette = document.getElementById("command-palette")
   const commandPaletteInput = document.getElementById("command-bar")
-  const commandPaletteLoadingSymbol = commandPalette.querySelector(".jenkins-command-center__search .icon")
+  const commandPaletteLoadingSymbol = commandPalette.querySelector(".jenkins-command-palette__search .icon")
   const searchResults = document.getElementById("search-results")
   const searchResultsContainer = document.getElementById("search-results-container")
 
-  const hoverClass = "jenkins-command-center__results__item--hover";
+  const hoverClass = "jenkins-command-palette__results__item--hover";
 
   // Events
   headerCommandPaletteButton.addEventListener("click", function () {
@@ -31,46 +33,39 @@ window.addEventListener('load', () => {
 
   commandPaletteInput.addEventListener("input", async (e) => {
     commandPaletteLoadingSymbol.classList.add("icon--loading")
-    let results
+    const query = e.target.value;
+    let results;
 
-    if (e.target.value.length === 0) {
+    if (query.length === 0) {
       results = {
         [i18n.dataset.help]: [
-          {
-            icon: {
-              svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"><path d=\"M256 80a176 176 0 10176 176A176 176 0 00256 80z\" fill=\"none\" stroke=\"currentColor\" stroke-miterlimit=\"10\" stroke-width=\"32\"/><path d=\"M200 202.29s.84-17.5 19.57-32.57C230.68 160.77 244 158.18 256 158c10.93-.14 20.69 1.67 26.53 4.45 10 4.76 29.47 16.38 29.47 41.09 0 26-17 37.81-36.37 50.8S251 281.43 251 296\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-miterlimit=\"10\" stroke-width=\"28\"/><circle cx=\"250\" cy=\"348\" r=\"20\" fill=\"currentColor\"/></svg>"
-            },
-            name: i18n.dataset.getHelp,
-            url: document.getElementById("page-header").dataset.searchHelpUrl.escapeHTML()
-          }
+          new LinkResult(
+          {svg: Symbols.HELP},
+          i18n.dataset.getHelp,
+          undefined,
+          undefined,
+          document.getElementById("page-header").dataset.searchHelpUrl.escapeHTML(),
+            true
+          )
         ]
       }
     } else {
-      const response = await Search.search(e.target.value);
-      const result = await response.json();
-
-      // Group the results
-      results = groupByKey(result["suggestions"], "category")
+      results = await CommandPaletteService.getResults(query);
     }
 
     // Clear current search results
     searchResults.innerHTML = ""
 
-    if (e.target.value.length === 0 || Object.keys(results).length > 0) {
+    if (query.length === 0 || Object.keys(results).length > 0) {
       for (const [category, items] of Object.entries(results)) {
         const heading = document.createElement("p")
-        heading.className = "jenkins-command-center__results__heading"
+        heading.className = "jenkins-command-palette__results__heading"
         heading.innerText = category
         searchResults.append(heading)
 
         items.forEach(function (obj) {
           let link = document.createElement("DIV")
-          link.innerHTML = `<a class="jenkins-command-center__results__item" href="${obj.url}">
-                              <div class="jenkins-command-center__results__item__icon">${obj.icon ? `${obj.icon.svg ? obj.icon.svg : `<img src="${obj.icon.url}" alt="" />`}` : ``}</div>
-                              ${obj.name}
-                              ${obj.description ? `<span class="jenkins-command-center__results__item__description">${obj.description}</span>` : ``}
-                              <svg class="jenkins-command-center__results__item__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"/></svg>
-                          </a>`
+          link.innerHTML = obj.render();
           link = link.firstChild
           link.addEventListener("mouseenter", e => itemMouseEnter(e))
           searchResults.append(link)
@@ -80,7 +75,7 @@ window.addEventListener('load', () => {
       updateSelectedItem(0)
     } else {
       const label = document.createElement("p")
-      label.className = "jenkins-command-center__info"
+      label.className = "jenkins-command-palette__info"
       label.innerHTML = "<span>" + i18n.dataset.noResultsFor.escapeHTML() + "</span> " + e.target.value.escapeHTML()
       searchResults.append(label)
     }
@@ -140,15 +135,6 @@ window.addEventListener('load', () => {
 
   function hideCommandCenter() {
     commandPalette.close();
-  }
-
-  // Group suggestions by 'category' field into map
-  function groupByKey(array, key) {
-    return array
-      .reduce((hash, obj) => {
-        if (obj[key] === undefined) return hash
-        return Object.assign(hash, {[obj[key]]: (hash[obj[key]] || []).concat(obj)})
-      }, {})
   }
 
   function itemMouseEnter(item) {
