@@ -100,8 +100,8 @@ THE SOFTWARE.
 <x:doctype name="html" />
 <html>
   <head data-rooturl="${rootURL}" data-resurl="${resURL}" data-imagesurl="${imagesURL}" resURL="${resURL}"
-        data-extensions-available="${extensionsAvailable}" 
-        data-crumb-header="${h.getCrumbRequestField()}" data-crumb-value="${h.getCrumb(request)}" 
+        data-extensions-available="${extensionsAvailable}"
+        data-crumb-header="${h.getCrumbRequestField()}" data-crumb-value="${h.getCrumb(request)}"
         data-unit-test="${h.isUnitTest}">
     ${h.checkPermission(it,permission)}
     ${h.checkAnyPermission(it, permissions)}
@@ -144,7 +144,7 @@ THE SOFTWARE.
     <!--l:yui module="editor" suffix="-beta" /-->
 
     <script src="${resURL}/scripts/polyfills.js" type="text/javascript" />
-    
+
     <script src="${resURL}/scripts/hudson-behavior.js" type="text/javascript"></script>
     <script src="${resURL}/scripts/sortable.js" type="text/javascript"/>
 
@@ -173,6 +173,8 @@ THE SOFTWARE.
     <script src="${resURL}/jsbundles/sortable-drag-drop.js" type="text/javascript"/>
   </head>
   <body id="jenkins" class="yui-skin-sam ${layoutType} jenkins-${h.version}" data-version="${h.version}" data-model-type="${it.class.name}">
+
+    <l:search />
 
     <j:if test="${layoutType!='full-screen'}">
       <!-- for accessibility, skip the entire navigation bar and etc and go straight to the head of the content -->

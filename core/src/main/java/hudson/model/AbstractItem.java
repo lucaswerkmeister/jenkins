@@ -43,6 +43,7 @@ import hudson.model.listeners.SaveableListener;
 import hudson.model.queue.SubTask;
 import hudson.model.queue.Tasks;
 import hudson.model.queue.WorkUnit;
+import hudson.search.SearchItemCategory;
 import hudson.security.ACL;
 import hudson.security.ACLContext;
 import hudson.security.AccessControlled;
@@ -585,6 +586,11 @@ public abstract class AbstractItem extends Actionable implements Item, HttpDelet
     @Override
     public String getSearchUrl() {
         return getShortUrl();
+    }
+
+    @Override
+    public SearchItemCategory getSearchItemCategory() {
+        return SearchItemCategory.JOBS;
     }
 
     @Override
