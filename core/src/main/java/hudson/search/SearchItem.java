@@ -60,13 +60,17 @@ public interface SearchItem {
     }
 
     // TODO
-    default String getSearchItemCategory() {
+    default SearchItemCategory getSearchItemCategory() {
         return SearchItemCategory.OTHER;
     }
 
     // TODO
     // Overrides the icon from search item category
     default Icon getSearchItemIcon() {
+        if (getSearchItemCategory() != null) {
+            return getSearchItemCategory().getIcon();
+        }
+
         return null;
     }
 

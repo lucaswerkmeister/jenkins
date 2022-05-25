@@ -1,8 +1,8 @@
 import "regenerator-runtime/runtime";
 import {LinkResult} from "@/components/command-palette/models";
-import * as Symbols from "./symbols";
 import {JenkinsSearchSource} from "./datasources";
 import Helpers from './helpers';
+import debounce from "lodash/debounce";
 
 const datasources = [JenkinsSearchSource];
 
@@ -20,9 +20,9 @@ window.addEventListener('load', () => {
   // Events
   headerCommandPaletteButton.addEventListener("click", function () {
     if (commandPalette.hasAttribute("open")) {
-      hideCommandCenter();
+      hideCommandPalette();
     } else {
-      showCommandCenter();
+      showCommandPalette();
     }
   });
 
@@ -31,8 +31,18 @@ window.addEventListener('load', () => {
       return
     }
 
-    hideCommandCenter();
+    hideCommandPalette();
   })
+
+  // const debouncedFilter = debounce(handleFilter, 300);
+  //
+  // const handleFilter = function () {
+  //   loadPage({}, true);
+  // };
+  //
+  // function renderResults() {
+  //
+  // }
 
   commandPaletteInput.addEventListener("input", async (e) => {
     commandPaletteLoadingSymbol.classList.add("icon--loading")
@@ -42,7 +52,7 @@ window.addEventListener('load', () => {
     if (query.length === 0) {
       results = [
           new LinkResult(
-          {svg: Symbols.HELP},
+          "symbol-help-circle",
           i18n.dataset.getHelp,
           undefined,
           "Help",
@@ -135,8 +145,8 @@ window.addEventListener('load', () => {
     }
   })
 
-  // Helper methods for visibility of command center
-  function showCommandCenter() {
+  // Helper methods for visibility of command palette
+  function showCommandPalette() {
     commandPalette.showModal();
     commandPaletteInput.focus();
 
@@ -144,7 +154,7 @@ window.addEventListener('load', () => {
     commandPaletteInput.dispatchEvent(new Event("input"));
   }
 
-  function hideCommandCenter() {
+  function hideCommandPalette() {
     commandPalette.close();
   }
 

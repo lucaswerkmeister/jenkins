@@ -35,7 +35,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import hudson.search.SearchItem;
 import hudson.search.SearchItemCategory;
 import jenkins.model.ModelObjectWithContextMenu;
 import jenkins.model.TransientActionFactory;
@@ -357,7 +356,7 @@ public abstract class Actionable extends AbstractModelObject implements ModelObj
 
     private static final Logger LOGGER = Logger.getLogger(Actionable.class.getName());
 
-	public String getSearchItemCategory() {
+	public SearchItemCategory getSearchItemCategory() {
         return SearchItemCategory.OTHER;
     }
 }

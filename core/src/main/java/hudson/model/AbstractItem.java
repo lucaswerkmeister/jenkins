@@ -589,7 +589,7 @@ public abstract class AbstractItem extends Actionable implements Item, HttpDelet
     }
 
     @Override
-    public String getSearchItemCategory() {
+    public SearchItemCategory getSearchItemCategory() {
         return SearchItemCategory.JOBS;
     }
 

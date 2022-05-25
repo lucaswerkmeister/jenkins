@@ -129,8 +129,8 @@ public class Search implements StaplerProxy {
                     item.getPath(),
                     item.item.getSearchDescription(),
                     item.item.getSearchUrl(),
-                    item.item.getSearchItemIcon(),
-                    item.item.getSearchItemCategory()));
+                    item.item.getSearchItemIcon().getClassSpec(),
+                    item.item.getSearchItemCategory().getName()));
         }
 
         rsp.serveExposedBean(req, r, Flavor.JSON);
@@ -210,7 +210,7 @@ public class Search implements StaplerProxy {
         @Exported
         public String description;
         @Exported
-        public Icon icon;
+        public String icon;
         @Exported
         public String category;
 
@@ -218,7 +218,7 @@ public class Search implements StaplerProxy {
             this.name = name;
         }
 
-        public Item(String name, String description, String url, Icon icon, String category) {
+        public Item(String name, String description, String url, String icon, String category) {
             this.name = name;
             this.description = description;
             this.url = url;

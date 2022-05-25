@@ -1,13 +1,30 @@
 package hudson.search;
 
-public class SearchItemCategory {
-	public final static String PAGES = "Pages";
-	public final static String SETTINGS = "Settings";
-	public final static String VIEWS = "Views";
-	public final static String JOBS = "Jobs";
-	public final static String BUILDS = "Builds";
-	public final static String PEOPLE = "People";
-	public final static String NODES = "Nodes";
-	public final static String IN_PAGE_ACTIONS = "In-page action";
-	public final static String OTHER = "Other";
+import org.jenkins.ui.icon.Icon;
+
+public enum SearchItemCategory {
+    PAGES("Pages", "symbol-details"),
+    SETTINGS("Settings", "symbol-settings"),
+    VIEWS("Views", "symbol-settings"),
+    JOBS("Jobs", "symbol-reload"),
+    BUILDS("Builds", "symbol-settings"),
+    PEOPLE("People", "symbol-person"),
+    NODES("Nodes", "symbol-computer"),
+    OTHER("Other", "symbol-cube");
+
+    private final String name;
+    private final Icon icon;
+
+    SearchItemCategory(String name, String iconSource) {
+        this.name = name;
+        this.icon = new Icon(iconSource, "");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Icon getIcon() {
+        return icon;
+    }
 }
