@@ -2,7 +2,7 @@
 <svg width="24px" height="23px" viewBox="0 0 24 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
         <linearGradient x1="50%" y1="50%" x2="50%" y2="257.025754%" id="lightning-cloud-gradient">
-            <stop stop-color="var(--grey-lighter)" offset="0%"></stop>
+            <stop stop-color="var(--light-gray)" offset="0%"></stop>
             <stop stop-color="var(--yellow)" offset="100%"></stop>
         </linearGradient>
         <linearGradient x1="50%" y1="100%" x2="50%" y2="0%" id="lightning-gradient">

@@ -7,7 +7,7 @@
         </linearGradient>
         <radialGradient cx="104.353554%" cy="-26.5163924%" fx="104.353554%" fy="-26.5163924%" r="107.609936%" gradientTransform="translate(1.043536,-0.265164),scale(0.666667,1.000000),rotate(94.671260),translate(-1.043536,0.265164)" id="sun-cloud-gradient">
             <stop stop-color="var(--yellow)" offset="0%"></stop>
-            <stop stop-color="var(--grey-lighter)" offset="100%"></stop>
+            <stop stop-color="var(--light-gray)" offset="100%"></stop>
         </radialGradient>
         <linearGradient x1="50%" y1="69.063903%" x2="50%" y2="360.847343%" id="cloud-shadow">
             <stop stop-color="transparent" offset="0%"></stop>

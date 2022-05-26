@@ -312,9 +312,6 @@
   --call-to-action-link-color: #000;
   --call-to-action-text-color: var(--alert-info-text-color);
 
-  --grey-lighter: hsl(240deg, 9%, 90%);
-  --grey-darker: #747292;
-
   each(@colors, {
     --light-@{key}: lighten(@value, 20%);
     --@{key}: @value;
@@ -337,6 +334,7 @@
   purple: #af52de;
   red: #df001c;
   yellow: #ffcc00;
+  gray: #747292;
 }
 
 @semantics: {

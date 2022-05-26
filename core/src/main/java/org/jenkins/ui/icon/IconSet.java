@@ -89,9 +89,9 @@ public class IconSet {
 
         if (symbolsForLookup.containsKey(translatedName)) {
             String symbol = symbolsForLookup.get(translatedName);
-            symbol = symbol.replaceAll("(class=\")[^&]*?(\")", "$1$2");
+            symbol = symbol.replace("(class=\")[^&]*?(\")", "$1$2");
             symbol = symbol.replaceAll("(tooltip=\")[^&]*?(\")", "");
-            symbol = symbol.replaceAll("(id=\")[^&]*?(\")", "");
+            symbol = symbol.replace("(id=\")[^&]*?(\")", "");
             if (!tooltip.isEmpty()) {
                 symbol = symbol.replaceAll("<svg", "<svg tooltip=\"" + tooltip + "\"");
             }
@@ -118,9 +118,9 @@ public class IconSet {
         }
 
         symbol = symbol.replaceAll("(<title>)[^&]*(</title>)", "$1$2");
-        symbol = symbol.replaceAll("(class=\")[^&]*?(\")", "$1$2");
+        symbol = symbol.replace("(class=\")[^&]*?(\")", "$1$2");
         symbol = symbol.replaceAll("(tooltip=\")[^&]*?(\")", "$1$2");
-        symbol = symbol.replaceAll("(id=\")[^&]*?(\")", "");
+        symbol = symbol.replace("(id=\")[^&]*?(\")", "");
         if (!tooltip.isEmpty()) {
             symbol = symbol.replaceAll("<svg", "<svg tooltip=\"" + tooltip + "\"");
         }
