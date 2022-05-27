@@ -229,7 +229,7 @@ pre {
   word-wrap: break-word;
   margin: 0 0 var(--section-padding);
   padding: 0.8rem 1rem;
-  border-radius: 10px;
+  border-radius: var(--border-radius--medium);
   background-color: var(--pre-background);
   color: var(--pre-color) !important;
   font-family: var(--font-family-mono) !important;
@@ -404,7 +404,7 @@ pre.console {
 
 .changeset-message {
   padding: 0.8rem 1rem;
-  border-radius: 10px;
+  border-radius: var(--border-radius--medium);
   background-color: var(--pre-background);
 
   pre {
@@ -623,7 +623,7 @@ div.behavior-loading {
   padding: 1rem;
   margin: 1rem 0;
   word-break: break-word;
-  border-radius: 6px;
+  border-radius: var(--border-radius--small);
   z-index: 0;
 
   &::before {
@@ -869,7 +869,7 @@ table.parameters > tbody:hover {
   position: absolute;
   right: -28px;
   top: 96px;
-  border-radius: 6px;
+  border-radius: var(--border-radius--small);
   background: var(--input-color);
   border: 2px solid var(--input-border);
   visibility: hidden;
@@ -998,7 +998,7 @@ table.parameters > tbody:hover {
 .comboBoxList {
   overflow-y: scroll;
   color: var(--text-color);
-  border-radius: 10px;
+  border-radius: var(--border-radius--medium);
   box-shadow: 0 10px 20px rgba(black, 0.15);
   margin-top: 8px;
   margin-left: 3px;
@@ -1022,7 +1022,7 @@ table.parameters > tbody:hover {
     bottom: 0;
     right: 0;
     background: var(--text-color);
-    border-radius: 10px;
+    border-radius: var(--border-radius--medium);
     opacity: 0;
     transition: var(--standard-transition);
     z-index: -1;
@@ -1397,13 +1397,13 @@ table.progress-bar.red td.progress-bar-done {
 .textarea-preview {
     background-color: var(--very-light-grey);
     padding: 0.5em;
-    border-radius: 10px;
+    border-radius: var(--border-radius--medium);
 }
 
 /* ========================= logRecords.jelly ================== */
 
 .logrecord-container {
-  border-radius: 10px;
+  border-radius: var(--border-radius--medium);
   overflow: hidden;
 
   pre {
