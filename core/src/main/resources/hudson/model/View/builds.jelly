@@ -24,21 +24,267 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-  <l:layout title="${it.displayName}">
-    <st:include page="sidepanel.jelly" />
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:t="/lib/hudson">
+  <l:layout title="${it.displayName}" type="one-pane">
+    <st:include page="sidepanel.jelly"/>
     <l:main-panel>
+
+    <div class="jenkins-masthead">
       <div class="jenkins-app-bar">
         <div class="jenkins-app-bar__content">
           <h1>
             ${%buildHistory(it.class.name=='hudson.model.AllView' ? app.displayName : it.displayName)}
           </h1>
         </div>
+        <div>
+          <select>
+            <option>All</option>
+            <option>This week</option>
+            <option>This month</option>
+            <option>This year</option>
+            <option>All time</option>
+          </select>
+          <select>
+            <option>Today</option>
+            <option>This week</option>
+            <option>This month</option>
+            <option>This year</option>
+            <option>All time</option>
+          </select>
+          <select>
+            <option>User</option>
+            <option>This week</option>
+            <option>This month</option>
+            <option>This year</option>
+            <option>All time</option>
+          </select>
+          <select>
+            <option>Project</option>
+            <option>This week</option>
+            <option>This month</option>
+            <option>This year</option>
+            <option>All time</option>
+          </select>
+        </div>
       </div>
+          <div class="app-thunder">
+            <div class="week" id="week"></div>
+            <div class="app-idk">
+              <div class="longhorn" id="successful">
+                <p>21</p>
+                <p>successful builds</p>
+              </div>
+              <div class="longhorn" id="failed">
+                <p>21</p>
+                <p>failed builds</p>
+              </div>
+              <div class="longhorn" id="unstable">
+                <p>21</p>
+                <p>unstable builds</p>
+              </div>
+              <div class="longhorn" id="aborted">
+                <p>21</p>
+                <p>aborted builds</p>
+              </div>
+            </div>
+          </div>
+    </div>
 
-      <j:if test="${!request.getParameter('suppressTimelineControl')}"> <!-- cf. BuildListTableTest; breaks HtmlUnit -->
-        <st:include page="control.jelly" it="${it.timeline}"/>
-      </j:if>
+      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+      <script>
+
+        const passingSeries = {
+          name: 'Successful',
+          data: [25, 31, 45, 50, 60, 65, 62],
+          color: 'var(--light-green)'
+        };
+        const failingSeries = {
+          name: 'Failed',
+          data: [10, 13, 8, 9, 15, 10, 20],
+          color: 'var(--light-red)'
+        };
+        const unstableSeries = {
+          name: 'Unstable',
+          data: [5, 10, 3, 2, 5, 6, 10],
+          color: 'var(--light-orange)'
+        };
+        const abortedSeries = {
+          name: 'Aborted',
+          data: [0, 2, 0, 0, 0, 0, 4],
+          color: 'currentColor'
+        };
+
+        var options = {
+          series: [passingSeries, failingSeries, unstableSeries, abortedSeries],
+          fill: {
+            type: 'gradient',
+            gradient: {
+              opacityFrom: 1,
+              opacityTo: 1,
+              stops: [0, 100],
+              gradientToColors: ["var(--background)", "var(--background)", "var(--background)", "var(--background)"]
+            }
+          },
+          chart: {
+            height: '100%',
+            type: 'area',
+            sparkline: {
+              enabled: true
+            },
+            animations: {
+              enabled: false
+            }
+          },
+          stroke: {
+            curve: 'smooth'
+          }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#week"), options);
+        chart.render();
+
+        {
+          var options = {
+            series: [passingSeries],
+            fill: {
+              type: 'gradient',
+              gradient: {
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 100],
+                gradientToColors: ["var(--background)", "var(--background)", "var(--background)", "var(--background)"]
+              }
+            },
+            chart: {
+              width: '200px',
+              height: '140px',
+              type: 'area',
+              sparkline: {
+                enabled: true
+              },
+              animations: {
+                enabled: false
+              }
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            tooltip: {
+              enabled: false,
+            },
+          };
+
+          var chart = new ApexCharts(document.querySelector("#successful"), options);
+          chart.render();
+        }
+        {
+          var options = {
+            series: [failingSeries],
+            fill: {
+              type: 'gradient',
+              gradient: {
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 100],
+                gradientToColors: ["var(--background)", "var(--background)", "var(--background)", "var(--background)"]
+              }
+            },
+            chart: {
+              width: '200px',
+              height: '140px',
+              type: 'area',
+              sparkline: {
+                enabled: true
+              },
+              animations: {
+                enabled: false
+              }
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            tooltip: {
+              enabled: false,
+            },
+          };
+
+          var chart = new ApexCharts(document.querySelector("#failed"), options);
+          chart.render();
+        }
+        {
+          var options = {
+            series: [unstableSeries],
+            fill: {
+              type: 'gradient',
+              gradient: {
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 100],
+                gradientToColors: ["var(--background)", "var(--background)", "var(--background)", "var(--background)"]
+              }
+            },
+            chart: {
+              width: '200px',
+              height: '140px',
+              type: 'area',
+              sparkline: {
+                enabled: true
+              },
+              animations: {
+                enabled: false
+              }
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            tooltip: {
+              enabled: false,
+            },
+          };
+
+          var chart = new ApexCharts(document.querySelector("#unstable"), options);
+          chart.render();
+        }
+        {
+          var options = {
+            series: [abortedSeries],
+            fill: {
+              type: 'gradient',
+              gradient: {
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 100],
+                gradientToColors: ["var(--background)", "var(--background)", "var(--background)", "var(--background)"]
+              }
+            },
+            chart: {
+              width: '200px',
+              height: '140px',
+              type: 'area',
+              sparkline: {
+                enabled: true
+              },
+              animations: {
+                enabled: false
+              }
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            tooltip: {
+              enabled: false,
+            },
+          };
+
+          var chart = new ApexCharts(document.querySelector("#aborted"), options);
+          chart.render();
+        }
+
+      </script>
+
+      <!--      <j:if test="${!request.getParameter('suppressTimelineControl')}"> &lt;!&ndash; cf. BuildListTableTest; breaks HtmlUnit &ndash;&gt;-->
+      <!--        <st:include page="control.jelly" it="${it.timeline}"/>-->
+      <!--      </j:if>-->
 
       <t:buildListTable builds="${it.builds}"/>
     </l:main-panel>

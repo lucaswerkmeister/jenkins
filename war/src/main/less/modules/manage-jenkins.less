@@ -59,3 +59,95 @@
 .manage-messages .alert form span {
   margin: 0 0 0 4px !important;
 }
+
+@keyframes slow-disco {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-thunder {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: calc(var(--section-padding) / 2);
+}
+
+.week {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: black;
+    opacity: 0.25;
+  }
+}
+
+.app-idk {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: calc(var(--section-padding) / 2);
+  aspect-ratio: 1;
+}
+
+.longhorn {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 1rem;
+  z-index: 0;
+  gap: 0.5rem;
+  overflow: hidden;
+
+  .apexcharts-canvas {
+    position: absolute;
+    inset: 60px 0 0 0;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: black;
+    opacity: 0.25;
+  }
+
+  p {
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    color: currentColor;
+    z-index: 1;
+
+    &:first-of-type {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    &:last-of-type {
+      font-size: 0.95rem;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+  }
+}
+
+.jenkins-masthead {
+  padding: 2rem;
+  background: var(--table-background);
+  margin: -2rem -2rem 2rem;
+}
