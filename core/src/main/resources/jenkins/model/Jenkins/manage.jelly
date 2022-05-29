@@ -40,6 +40,9 @@ THE SOFTWARE.
           <st:include page="message.jelly" it="${am}" />
         </j:forEach>
         <st:include page="downgrade.jelly" />
+        <div>
+          
+        </div>
       </section>
 
       <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
