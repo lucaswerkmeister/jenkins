@@ -155,3 +155,57 @@
   top: -4rem;
   right: -2rem;
 }
+
+.radioBlock-container {
+  margin-bottom: calc(var(--section-padding) / 3);
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.optionalBlock-container > .form-container,
+.radioBlock-container > .form-container,
+.dropdownList-container {
+  position: relative;
+  padding-left: 32px;
+  transition: var(--standard-transition);
+  margin-top: calc(var(--section-padding) / 3);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10px;
+    bottom: 0;
+    width: 2px;
+    background: var(--input-border);
+    border-radius: 2px;
+    transition: var(--standard-transition);
+  }
+
+  &:empty {
+    display: none;
+  }
+
+  &:focus-within {
+    &::after {
+      background: var(--focus-input-border);
+    }
+  }
+}
+
+.dropdownList-container {
+  margin-bottom: var(--section-padding);
+}
+
+.form-container--hidden {
+  visibility: hidden !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  max-height: 0 !important;
+  height: 0 !important;
+  overflow: hidden;
+}
+
+.row-set-end { display: none; }
