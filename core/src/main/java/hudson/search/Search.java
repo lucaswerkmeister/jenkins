@@ -44,7 +44,6 @@ import javax.servlet.ServletException;
 import jenkins.model.Jenkins;
 import jenkins.util.MemoryReductionUtil;
 import jenkins.util.SystemProperties;
-import org.jenkins.ui.icon.Icon;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.Ancestor;

@@ -57,7 +57,6 @@ import hudson.model.Descriptor.FormException;
 import hudson.model.listeners.RunListener;
 import hudson.model.listeners.SaveableListener;
 import hudson.model.queue.SubTask;
-import hudson.search.SearchIndexBuilder;
 import hudson.security.ACL;
 import hudson.security.AccessControlled;
 import hudson.security.Permission;
