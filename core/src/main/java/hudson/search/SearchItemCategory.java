@@ -5,9 +5,9 @@ import org.jenkins.ui.icon.Icon;
 public enum SearchItemCategory {
     PAGES("Pages", "symbol-details"),
     SETTINGS("Settings", "symbol-settings"),
-    VIEWS("Views", "symbol-settings"),
-    JOBS("Jobs", "symbol-reload"),
-    BUILDS("Builds", "symbol-settings"),
+    VIEWS("Views", "symbol-folder"),
+    PROJECTS("Projects", "symbol-project"),
+    BUILDS("Builds", "symbol-list"),
     PEOPLE("People", "symbol-person"),
     NODES("Nodes", "symbol-computer"),
     OTHER("Other", "symbol-cube");

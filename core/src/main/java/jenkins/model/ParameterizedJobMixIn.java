@@ -47,7 +47,6 @@ import hudson.model.Queue;
 import hudson.model.Run;
 import hudson.model.listeners.ItemListener;
 import hudson.model.queue.QueueTaskFuture;
-import hudson.search.SearchIndexBuilder;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
 import hudson.util.AlternativeUiTextProvider;
@@ -82,7 +81,6 @@ import org.kohsuke.stapler.interceptor.RequirePOST;
  * Stateless so there is no need to keep an instance of it in a field.
  * Besides implementing {@link ParameterizedJob}, you should
  * <ul>
- * <li>override {@link Job#makeSearchIndex} to call {@link #extendSearchIndex}
  * <li>override {@link Job#performDelete} to call {@link ParameterizedJob#makeDisabled}
  * <li>override {@link Job#getIconColor} to call {@link ParameterizedJob#isDisabled}
  * <li>use {@code <p:config-disableBuild/>}
@@ -251,18 +249,6 @@ public abstract class ParameterizedJobMixIn<JobT extends Job<JobT, RunT> & Param
         asJob().checkPermission(Item.CANCEL);
         Jenkins.get().getQueue().cancel(asJob());
         rsp.forwardToPreviousPage(req);
-    }
-
-    /**
-     * Use from a {@link Job#makeSearchIndex} override.
-     * @param sib the super value
-     * @return the value to return
-     */
-    public final SearchIndexBuilder extendSearchIndex(SearchIndexBuilder sib) {
-        if (asJob().isBuildable() && asJob().hasPermission(Item.BUILD)) {
-            sib.add("build", "build");
-        }
-        return sib;
     }
 
     /**
