@@ -1,75 +1,62 @@
-import "regenerator-runtime/runtime";
-import {LinkResult} from "@/components/command-palette/models";
-import {JenkinsSearchSource} from "./datasources";
-import Helpers from './helpers';
-import debounce from "lodash/debounce";
+import "regenerator-runtime/runtime"
+import {LinkResult} from "@/components/command-palette/models"
+import {JenkinsSearchSource} from "./datasources"
+import Helpers from './helpers'
+import debounce from "lodash/debounce"
 
-const datasources = [JenkinsSearchSource];
+const datasources = [JenkinsSearchSource]
 
 window.addEventListener('load', () => {
   const i18n = document.getElementById("command-palette-i18n")
-  const headerCommandPaletteButton = document.getElementById("button-open-command-palette");
+  const headerCommandPaletteButton = document.getElementById("button-open-command-palette")
   const commandPalette = document.getElementById("command-palette")
-  const commandPaletteWrapper = commandPalette.querySelector(".jenkins-command-palette__wrapper");
+  const commandPaletteWrapper = commandPalette.querySelector(".jenkins-command-palette__wrapper")
   const commandPaletteInput = document.getElementById("command-bar")
   const commandPaletteLoadingSymbol = commandPalette.querySelector(".jenkins-command-palette__search .icon")
   const searchResults = document.getElementById("search-results")
   const searchResultsContainer = document.getElementById("search-results-container")
 
-  const hoverClass = "jenkins-command-palette__results__item--hover";
+  const hoverClass = "jenkins-command-palette__results__item--hover"
 
   // Events
-  headerCommandPaletteButton.addEventListener("click", function () {
+  headerCommandPaletteButton.addEventListener("click", async function () {
     if (commandPalette.hasAttribute("open")) {
-      hideCommandPalette();
+      hideCommandPalette()
     } else {
-      showCommandPalette();
+      await showCommandPalette()
     }
-  });
+  })
 
   commandPaletteWrapper.addEventListener("click", function (e) {
-    console.log(e.target)
-    console.log(e.currentTarget)
     if (e.target !== e.currentTarget) {
       return
     }
 
-    hideCommandPalette();
+    hideCommandPalette()
   })
 
-  // const debouncedFilter = debounce(handleFilter, 300);
-  //
-  // const handleFilter = function () {
-  //   loadPage({}, true);
-  // };
-  //
-  // function renderResults() {
-  //
-  // }
-
-  commandPaletteInput.addEventListener("input", async (e) => {
-    commandPaletteLoadingSymbol.classList.add("icon--loading")
-    const query = e.target.value;
-    let results;
+  async function renderResults() {
+    const query = commandPaletteInput.value
+    let results
 
     if (query.length === 0) {
       results = [
-          new LinkResult(
+        new LinkResult(
           "symbol-help-circle",
           i18n.dataset.getHelp,
           undefined,
           "Help",
           document.getElementById("page-header").dataset.searchHelpUrl.escapeHTML(),
-            true
-          )
-        ]
+          true
+        )
+      ]
     } else {
       await Promise.all(datasources.map(ds => ds.execute(query))).then(response => {
-        results = response.flat();
-      });
+        results = response.flat()
+      })
     }
 
-    results = Helpers.groupResultsByCategory(results);
+    results = Helpers.groupResultsByCategory(results)
 
     // Clear current search results
     searchResults.innerHTML = ""
@@ -82,14 +69,14 @@ window.addEventListener('load', () => {
         searchResults.append(heading)
 
         items.forEach(function (obj) {
-          const renderedObject = obj.render();
+          const renderedObject = obj.render()
 
           let link = document.createElement("DIV")
           if (renderedObject instanceof HTMLElement) {
-            link = renderedObject;
+            link = renderedObject
           } else {
-            link.innerHTML = renderedObject;
-            link = link.firstChild;
+            link.innerHTML = renderedObject
+            link = link.firstChild
           }
           link.addEventListener("mouseenter", e => itemMouseEnter(e))
           searchResults.append(link)
@@ -100,12 +87,17 @@ window.addEventListener('load', () => {
     } else {
       const label = document.createElement("p")
       label.className = "jenkins-command-palette__info"
-      label.innerHTML = "<span>" + i18n.dataset.noResultsFor.escapeHTML() + "</span> " + e.target.value.escapeHTML()
+      label.innerHTML = "<span>" + i18n.dataset.noResultsFor.escapeHTML() + "</span> " + commandPaletteInput.value.escapeHTML()
       searchResults.append(label)
     }
 
     searchResultsContainer.style.height = searchResults.offsetHeight + "px"
     commandPaletteLoadingSymbol.classList.remove("icon--loading")
+  }
+
+  commandPaletteInput.addEventListener("input", () => {
+    commandPaletteLoadingSymbol.classList.add("icon--loading")
+    debounce(renderResults, 200)()
   })
 
   commandPaletteInput.addEventListener("keyup", function (event) {
@@ -149,17 +141,16 @@ window.addEventListener('load', () => {
   })
 
   // Helper methods for visibility of command palette
-  function showCommandPalette() {
-    commandPalette.showModal();
-    commandPaletteInput.focus();
-    commandPaletteInput.setSelectionRange(commandPaletteInput.value.length, commandPaletteInput.value.length);
+  async function showCommandPalette() {
+    commandPalette.showModal()
+    commandPaletteInput.focus()
+    commandPaletteInput.setSelectionRange(commandPaletteInput.value.length, commandPaletteInput.value.length)
 
-    // Fire empty input event to command bar to set appropriate UI states (OOBE, results, no results)
-    commandPaletteInput.dispatchEvent(new Event("input"));
+    await renderResults()
   }
 
   function hideCommandPalette() {
-    commandPalette.close();
+    commandPalette.close()
   }
 
   function itemMouseEnter(item) {
