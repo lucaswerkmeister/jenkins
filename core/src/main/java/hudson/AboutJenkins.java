@@ -36,11 +36,6 @@ public class AboutJenkins extends ManagementLink {
         return Messages.AboutJenkins_Description();
     }
 
-//    @Override
-//    public String getSearchDescription() {
-//        return "Version " + Functions.getVersion();
-//    }
-
     @Restricted(NoExternalUse.class)
     public URL getLicensesURL() {
         return AboutJenkins.class.getResource("/META-INF/licenses.xml");
