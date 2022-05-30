@@ -1574,18 +1574,6 @@ public abstract class Run<JobT extends Job<JobT, RunT>, RunT extends Run<JobT, R
         return new AnnotatedLargeText(getLogFile(), getCharset(), !isLogUpdated(), this);
     }
 
-    @Override
-    protected @NonNull SearchIndexBuilder makeSearchIndex() {
-        SearchIndexBuilder builder = super.makeSearchIndex()
-                .add("console")
-                .add("changes");
-        for (Action a : getAllActions()) {
-            if (a.getIconFileName() != null)
-                builder.add(a.getUrlName());
-        }
-        return builder;
-    }
-
     public @NonNull Api getApi() {
         return new Api(this);
     }
