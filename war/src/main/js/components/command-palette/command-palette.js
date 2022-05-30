@@ -10,6 +10,7 @@ window.addEventListener('load', () => {
   const i18n = document.getElementById("command-palette-i18n")
   const headerCommandPaletteButton = document.getElementById("button-open-command-palette");
   const commandPalette = document.getElementById("command-palette")
+  const commandPaletteWrapper = commandPalette.querySelector(".jenkins-command-palette__wrapper");
   const commandPaletteInput = document.getElementById("command-bar")
   const commandPaletteLoadingSymbol = commandPalette.querySelector(".jenkins-command-palette__search .icon")
   const searchResults = document.getElementById("search-results")
@@ -26,7 +27,9 @@ window.addEventListener('load', () => {
     }
   });
 
-  commandPalette.addEventListener("click", function (e) {
+  commandPaletteWrapper.addEventListener("click", function (e) {
+    console.log(e.target)
+    console.log(e.currentTarget)
     if (e.target !== e.currentTarget) {
       return
     }
@@ -149,6 +152,7 @@ window.addEventListener('load', () => {
   function showCommandPalette() {
     commandPalette.showModal();
     commandPaletteInput.focus();
+    commandPaletteInput.setSelectionRange(commandPaletteInput.value.length, commandPaletteInput.value.length);
 
     // Fire empty input event to command bar to set appropriate UI states (OOBE, results, no results)
     commandPaletteInput.dispatchEvent(new Event("input"));
