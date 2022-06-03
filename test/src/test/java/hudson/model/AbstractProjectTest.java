@@ -80,6 +80,8 @@ import jenkins.model.Jenkins;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
+import org.jenkinsci.plugins.matrixauth.AuthorizationType;
+import org.jenkinsci.plugins.matrixauth.PermissionEntry;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.Issue;
@@ -87,7 +89,6 @@ import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.MockAuthorizationStrategy;
 import org.jvnet.hudson.test.MockFolder;
 import org.jvnet.hudson.test.TestExtension;
-import org.jvnet.hudson.test.TestPluginManager;
 import org.jvnet.hudson.test.recipes.PresetData;
 import org.jvnet.hudson.test.recipes.PresetData.DataSet;
 import org.kohsuke.args4j.CmdLineException;
@@ -128,9 +129,9 @@ public class AbstractProjectTest {
      * Makes sure that the workspace deletion is protected.
      */
     @Test
-    @PresetData(DataSet.NO_ANONYMOUS_READACCESS)
     public void wipeWorkspaceProtected() throws Exception {
         FreeStyleProject project = j.createFreeStyleProject();
+        j.createDummySecurityRealm();
         project.getBuildersList().add(Functions.isWindows() ? new BatchFile("echo hello") : new Shell("echo hello"));
 
         FreeStyleBuild b = j.buildAndAssertSuccess(project);
@@ -151,7 +152,7 @@ public class AbstractProjectTest {
     @Test
     @PresetData(DataSet.ANONYMOUS_READONLY)
     public void wipeWorkspaceProtected2() throws Exception {
-        ((GlobalMatrixAuthorizationStrategy) j.jenkins.getAuthorizationStrategy()).add(Item.WORKSPACE, "anonymous");
+        ((GlobalMatrixAuthorizationStrategy) j.jenkins.getAuthorizationStrategy()).add(Item.WORKSPACE, new PermissionEntry(AuthorizationType.EITHER, "anonymous"));
 
         // make sure that the deletion is protected in the same way
         wipeWorkspaceProtected();
@@ -432,25 +433,6 @@ public class AbstractProjectTest {
      */
     @Test
     public void configDotXmlSubmissionToDifferentType() throws Exception {
-        TestPluginManager tpm = (TestPluginManager) j.jenkins.pluginManager;
-        tpm.installDetachedPlugin("structs");
-        tpm.installDetachedPlugin("workflow-step-api");
-        tpm.installDetachedPlugin("scm-api");
-        tpm.installDetachedPlugin("workflow-api");
-        tpm.installDetachedPlugin("script-security");
-        tpm.installDetachedPlugin("jquery3-api");
-        tpm.installDetachedPlugin("snakeyaml-api");
-        tpm.installDetachedPlugin("jackson2-api");
-        tpm.installDetachedPlugin("popper-api");
-        tpm.installDetachedPlugin("plugin-util-api");
-        tpm.installDetachedPlugin("font-awesome-api");
-        tpm.installDetachedPlugin("bootstrap4-api");
-        tpm.installDetachedPlugin("echarts-api");
-        tpm.installDetachedPlugin("display-url-api");
-        tpm.installDetachedPlugin("checks-api");
-        tpm.installDetachedPlugin("junit");
-        tpm.installDetachedPlugin("matrix-project");
-
         j.jenkins.setCrumbIssuer(null);
         FreeStyleProject p = j.createFreeStyleProject();
 
