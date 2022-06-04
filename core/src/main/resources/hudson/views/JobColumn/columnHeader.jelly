@@ -24,5 +24,7 @@ THE SOFTWARE.
 
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core">
-    <th initialSortDir="down">${it.descriptor.displayName}</th>
+    <th initialSortDir="down" class="jenkins-table__cell--mobile-only">
+      ${it.descriptor.displayName}
+    </th>
 </j:jelly>
