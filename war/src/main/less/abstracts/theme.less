@@ -20,7 +20,11 @@
   --black: #333;
 
   // branding
-  --primary: #024cb6;
+  --primary: #0063db;
+  @supports (color: color(display-p3 1 1 1)) {
+    --primary: ~"color(display-p3 0.098 0.361 0.89)";
+  }
+
   --secondary: #4d545d;
   --success: var(--green);
   --danger: var(--red);
@@ -29,8 +33,8 @@
   --focus-btn-primary: fade(#0b6aa2, 50%);
   --focus-btn-secondary: fade(#0b6aa2, 50%);
   --focus-btn-danger: fade(#cc0003, 50%);
-  --focus-input-border: #063F61;
-  --focus-input-glow: fade(#0b6aa2, 25%);
+  --focus-input-border: hsl(204, 20%, 25%);
+  --focus-input-glow: hsla(204, 20%, 40%, 0.25);
 
   // State colors
   --primary-hover: #0587d4;
@@ -127,7 +131,7 @@
   --btn-large-line-height: 1.25rem;
   // Button primary
   --button-color--primary: var(--background);
-  --btn-primary-bg: #063F61;
+  --btn-primary-bg: var(--primary);
   --btn-primary-bg-hover: lighten(#063F61, 7.5%);
   --btn-primary-bg-active: lighten(#063F61, 12%);
   // Button primary
@@ -256,14 +260,14 @@
   // Form
   --section-padding: 1.85rem;
   --input-color: var(--white);
-  --input-border: #C3CCD1;
-  --input-border-hover: #5C7889;
+  --input-border: hsl(204, 15%, 88%);
+  --input-border-hover: hsl(204, 15%, 70%);
   --input-hidden-password-bg-color: #f9f9f9;
   --form-item-max-width: ~"min(65vw, 1600px)";
   --form-item-max-width--medium: ~"min(50vw, 1400px)";
   --form-item-max-width--small: ~"min(35vw, 1200px)";
   --form-label-font-weight: 500;
-  --form-input-padding: 0.5rem;
+  --form-input-padding: 0.65rem;
   --form-input-border-radius: var(--border-radius--small);
   --form-input-glow: 0 0 0 10px transparent;
   --form-input-glow--focus: 0 0 0 5px var(--focus-input-glow);
