@@ -69,20 +69,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -915,6 +902,88 @@ public abstract class View extends AbstractModelObject implements AccessControll
             }
         }
 
+        @ExportedBean
+        public static class UserIcon {
+            @Exported
+            String initials;
+            @Exported
+            String primaryColor;
+            @Exported
+            String secondaryColor;
+            @Exported
+            int angle;
+
+            private static final List<String> primaryColors = Arrays.asList("orange",
+                    "red", "green", "blue", "pink", "brown", "cyan", "indigo", "yellow", "purple");
+            private static final List<String> secondaryColors = new ArrayList<>(primaryColors);
+
+            static {
+                Collections.reverse(secondaryColors);
+            }
+
+            private static long stringToSeed(String s) {
+                if (s == null) {
+                    return 0;
+                }
+                long hash = 0;
+                for (char c : s.toCharArray()) {
+                    hash = 31L*hash + c;
+                }
+                return hash;
+            }
+
+            public UserIcon(String fullName) {
+                Random random = new Random(stringToSeed(fullName));
+                this.setInitials(Arrays.stream(fullName.split(" "))
+                        .map(e -> String.valueOf(e.charAt(0))).collect(Collectors.joining()));
+                this.setPrimaryColor(primaryColors.get(random.nextInt(primaryColors.size())));
+                this.setSecondaryColor(secondaryColors.get(random.nextInt(secondaryColors.size())));
+                this.setAngle(random.nextInt(360));
+            }
+
+            public String getInitials() {
+                return initials;
+            }
+
+            public void setInitials(String initials) {
+                this.initials = initials;
+            }
+
+            public String getPrimaryColor() {
+                return primaryColor;
+            }
+
+            public void setPrimaryColor(String primaryColor) {
+                this.primaryColor = primaryColor;
+            }
+
+            public String getSecondaryColor() {
+                return secondaryColor;
+            }
+
+            public void setSecondaryColor(String secondaryColor) {
+                this.secondaryColor = secondaryColor;
+            }
+
+            public int getAngle() {
+                return angle;
+            }
+
+            public void setAngle(int angle) {
+                this.angle = angle;
+            }
+
+            @Override
+            public String toString() {
+                return "UserIcon{" +
+                        "initials='" + initials + '\'' +
+                        ", primaryColor='" + primaryColor + '\'' +
+                        ", secondaryColor='" + secondaryColor + '\'' +
+                        ", angle=" + angle +
+                        '}';
+            }
+        }
+
         @NonNull
         @Override protected synchronized JSON data() {
             JSONArray r = new JSONArray();
@@ -924,6 +993,7 @@ public abstract class View extends AbstractModelObject implements AccessControll
                         accumulate("id", u.getId()).
                         accumulate("fullName", u.getFullName()).
                         accumulate("url", u.getUrl() + "/").
+                        accumulate("icon", new UserIcon(u.getFullName())).
                         accumulate("avatar", i.avatar != null ? i.avatar : Stapler.getCurrentRequest().getContextPath() + Functions.getResourcePath() + "/images/svgs/person.svg").
                         accumulate("timeSortKey", i.getTimeSortKey()).
                         accumulate("lastChangeTimeString", i.getLastChangeTimeString());

@@ -20,8 +20,23 @@ function display(data) {
         var wrapper = document.createElement('div');
         wrapper.className = 'jenkins-table__cell__button-wrapper';
         d.className = 'jenkins-table__cell--tight jenkins-table__icon';
-        var icon = document.getElementById('person-circle')
-        wrapper.innerHTML = icon.children[0].outerHTML;
+
+        var icon = document.createElement("div")
+        icon.className = "jenkins-user-avatar"
+
+        const iconBackplate = document.createElement("div")
+        iconBackplate.className = "jenkins-user-avatar__backplate"
+        iconBackplate.style.background = `linear-gradient(${e.icon.angle}deg, var(--${e.icon.primaryColor}), var(--${e.icon.secondaryColor}))`;
+        icon.appendChild(iconBackplate)
+
+        const iconInitials = document.createElement("p")
+        iconInitials.className = "jenkins-user-avatar__initials"
+        iconInitials.style.background = `linear-gradient(${e.icon.angle}deg, var(--${e.icon.primaryColor}), var(--${e.icon.secondaryColor}))`;
+        iconInitials.style.setProperty("-webkit-background-clip", "text")
+        iconInitials.textContent = e.icon.initials;
+        icon.appendChild(iconInitials)
+
+        wrapper.appendChild(icon)
         d.appendChild(wrapper);
         r.appendChild(d);
 

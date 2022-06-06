@@ -57,3 +57,48 @@ html {
 @import './pages/about';
 @import './pages/plugin-manager';
 @import './pages/setupWizardFirstUser';
+
+.jenkins-user-avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.95rem;
+  height: 1.95rem;
+  border-radius: 100%;
+  z-index: 0;
+
+  &__backplate {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0.25;
+    z-index: -1;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: overlay;
+      border-radius: inherit;
+    }
+
+    &::before {
+      background: radial-gradient(var(--background), transparent);
+    }
+
+    &::after {
+      background: radial-gradient(var(--background), transparent);
+      border: 1px solid currentColor;
+      opacity: 0.125;
+    }
+  }
+
+  &__initials {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+}
