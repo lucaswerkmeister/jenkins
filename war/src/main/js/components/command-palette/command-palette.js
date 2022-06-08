@@ -1,10 +1,10 @@
 import "regenerator-runtime/runtime"
 import {LinkResult} from "@/components/command-palette/models"
-import {JenkinsSearchSource} from "./datasources"
+import {JenkinsSearchSource, SidebarSource} from "./datasources"
 import Helpers from './helpers'
 import debounce from "lodash/debounce"
 
-const datasources = [JenkinsSearchSource]
+const datasources = [JenkinsSearchSource, SidebarSource]
 
 window.addEventListener('load', () => {
   const i18n = document.getElementById("command-palette-i18n")
