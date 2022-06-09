@@ -37,6 +37,19 @@ THE SOFTWARE.
             <j:if test="${!isAll}">- ${it.parent.displayName}</j:if>
           </h1>
         </div>
+        <div class="jenkins-app-bar__controls">
+          <div class="jenkins-search">
+            <input
+              class="jenkins-search__input"
+              type="search"
+              id="filter-box"
+              value="${request.getParameter('filter')}"
+              placeholder="${%Search}"/>
+            <div class="jenkins-search__icon">
+              <l:icon src="symbol-search"/>
+            </div>
+          </div>
+        </div>
       </div>
       <p class="jenkins-leading-paragraph">${%blurb}</p>
       <st:adjunct includes="hudson.model.View.AsynchPeople.people-resources" />
