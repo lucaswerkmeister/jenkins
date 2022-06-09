@@ -41,7 +41,7 @@ f.section(title: _("Administrative monitors configuration")) {
                             checked: am.enabled,
                             json: am.id)
                     if (am.isSecurity()) {
-                        span(class: 'jenkins-badge', _("Security"))
+                        span(class: 'jenkins-badge jenkins-!-margin-left-2', _("Security"))
                     }
                 }
                 div(class: "jenkins-checkbox__description") {
