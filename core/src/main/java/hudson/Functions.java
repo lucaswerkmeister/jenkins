@@ -73,6 +73,7 @@ import hudson.security.captcha.CaptchaSupport;
 import hudson.security.csrf.CrumbIssuer;
 import hudson.slaves.Cloud;
 import hudson.slaves.ComputerLauncher;
+import hudson.slaves.JNLPLauncher;
 import hudson.slaves.NodeProperty;
 import hudson.slaves.NodePropertyDescriptor;
 import hudson.slaves.RetentionStrategy;
@@ -134,6 +135,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -187,10 +189,6 @@ import org.springframework.security.access.AccessDeniedException;
 public class Functions {
     private static final AtomicLong iota = new AtomicLong();
     private static Logger LOGGER = Logger.getLogger(Functions.class.getName());
-
-    @Restricted(NoExternalUse.class)
-    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL", justification = "for script console")
-    public static /* non-final */ boolean UI_REFRESH = SystemProperties.getBoolean("jenkins.ui.refresh");
 
     public Functions() {
     }
@@ -520,16 +518,6 @@ public class Functions {
         return SystemProperties.getString(key);
     }
 
-    /**
-     * Returns true if and only if the UI refresh is enabled.
-     *
-     * @since 2.222
-     */
-    @Restricted(DoNotUse.class)
-    public static boolean isUiRefreshEnabled() {
-        return UI_REFRESH;
-    }
-
     public static Map getEnvVars() {
         return new TreeMap<>(EnvVars.masterEnvVars);
     }
@@ -710,6 +698,13 @@ public class Functions {
 
         TimeZone tz = TimeZone.getTimeZone(getUserTimeZone());
         return tz.getDisplayName(tz.observesDaylightTime(), TimeZone.SHORT);
+    }
+
+    @Restricted(NoExternalUse.class)
+    public static long getHourLocalTimezone() {
+        // Work around JENKINS-68215. When JENKINS-68215 is resolved, this logic can be moved back to Jelly.
+        TimeZone tz = TimeZone.getDefault();
+        return TimeUnit.MILLISECONDS.toHours(tz.getRawOffset() + tz.getDSTSavings());
     }
 
     /**
@@ -1266,7 +1261,12 @@ public class Functions {
 
     public static String getIconFilePath(Action a) {
         String name = a.getIconFileName();
-        if (name == null)     return null;
+        if (name == null) {
+            return null;
+        }
+        if (name.startsWith("symbol-")) {
+            return name;
+        }
         if (name.startsWith("/"))
             return name.substring(1);
         else
@@ -1875,9 +1875,12 @@ public class Functions {
     /**
      * Obtains the host name of the Hudson server that clients can use to talk back to.
      * <p>
-     * This is primarily used in {@code jenkins-agent.jnlp.jelly} to specify the destination
+     * This was primarily used in {@code jenkins-agent.jnlp.jelly} to specify the destination
      * that the agents talk to.
+     *
+     * @deprecated use {@link JNLPLauncher#getInboundAgentUrl}
      */
+    @Deprecated
     public String getServerName() {
         // Try to infer this from the configured root URL.
         // This makes it work correctly when Hudson runs behind a reverse proxy.
@@ -2298,12 +2301,17 @@ public class Functions {
             return null;
         }
 
-        StaplerRequest currentRequest = Stapler.getCurrentRequest();
-        currentRequest.getWebApp().getDispatchValidator().allowDispatch(currentRequest, Stapler.getCurrentResponse());
         Icon iconMetadata = IconSet.icons.getIconByClassSpec(iconGuess);
 
+        // `iconGuess` must be class names if it contains a whitespace.
+        //  It may contains extra css classes unrelated to icons.
+        // Filter classes with `icon-` prefix.
+        if (iconMetadata == null && iconGuess.contains(" ")) {
+            iconMetadata = IconSet.icons.getIconByClassSpec(filterIconNameClasses(iconGuess));
+        }
+
         if (iconMetadata == null) {
-            // Icon could be provided as a simple iconFileName e.g. "settings.png"
+            // Icon could be provided as a simple iconFileName e.g. "help.svg"
             iconMetadata = IconSet.icons.getIconByClassSpec(IconSet.toNormalizedIconNameClass(iconGuess) + " icon-md");
         }
 
@@ -2313,6 +2321,32 @@ public class Functions {
         }
 
         return iconMetadata;
+    }
+
+    private static @NonNull String filterIconNameClasses(@NonNull String classNames) {
+        return Arrays.stream(StringUtils.split(classNames, ' '))
+            .filter(className -> className.startsWith("icon-"))
+            .collect(Collectors.joining(" "));
+    }
+
+    @Restricted(NoExternalUse.class)
+    public static String extractPluginNameFromIconSrc(String iconSrc) {
+        if (iconSrc == null) {
+            return "";
+        }
+
+        if (!iconSrc.contains("plugin-")) {
+            return "";
+        }
+
+        String[] arr = iconSrc.split(" ");
+        for (String element : arr) {
+            if (element.startsWith("plugin-")) {
+                return element.replace("plugin-", "");
+            }
+        }
+
+        return "";
     }
 
     @Restricted(NoExternalUse.class)
@@ -2336,10 +2370,13 @@ public class Functions {
         }
 
         if (iconMetadata == null) {
-            if (!iconGuess.startsWith("/") && !iconGuess.startsWith("http")) {
+            //noinspection HttpUrlsUsage
+            if (iconGuess.startsWith("http://") || iconGuess.startsWith("https://")) {
+                return iconGuess;
+            }
+            if (!iconGuess.startsWith("/")) {
                 iconGuess = "/" + iconGuess;
             }
-
             iconSource = rootURL + (iconGuess.startsWith("/images/") || iconGuess.startsWith("/plugin/") ? getResourcePath() : "") + iconGuess;
         }
 

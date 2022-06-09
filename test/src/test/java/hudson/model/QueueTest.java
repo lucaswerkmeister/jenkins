@@ -57,6 +57,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlFormUtil;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.xml.XmlPage;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.ExtensionList;
 import hudson.Functions;
 import hudson.Launcher;
@@ -338,7 +339,7 @@ public class QueueTest {
             @SuppressWarnings("deprecation")
             HtmlPage p = (HtmlPage) wc.getPage("http://localhost:" + connector.getLocalPort() + '/');
             HtmlForm f = p.getFormByName("main");
-            HtmlFileInput input = (HtmlFileInput) f.getInputByName("test");
+            HtmlFileInput input = f.getInputByName("test");
             input.setData(testData);
             HtmlFormUtil.submit(f);
         } finally {
@@ -1316,6 +1317,7 @@ public class QueueTest {
                 return new BrokenAffinityKeyProject(parent, name);
             }
 
+            @NonNull
             @Override
             public String getDisplayName() {
                 return "Broken Affinity Key Project";
