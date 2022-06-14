@@ -282,6 +282,10 @@ THE SOFTWARE.
         </form>
       </div>
 
+      <div class="app-plugin-manager__drag-drop-overlay">
+        Drop to install plugin
+      </div>
+
       <script src="${resURL}/jsbundles/plugin-manager/installed.js" type="text/javascript"/>
 
       <script>

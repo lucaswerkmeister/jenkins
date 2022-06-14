@@ -1,3 +1,5 @@
+import jenkins from "@/util/jenkins";
+
 const searchBar = document.querySelector("#filter-box");
 
 searchBar.addEventListener("input", () => {
@@ -388,3 +390,62 @@ searchBar.addEventListener("input", () => {
     setEnableWidgetStates();
   });
 }());
+
+// Drag drop install prototype
+document.querySelector("body").addEventListener("dragenter", (event) => {
+  document.querySelector(".app-plugin-manager__drag-drop-overlay").classList
+    .add("app-plugin-manager__drag-drop-overlay--visible")
+
+  // Prevent default behavior (Prevent file from being opened)
+  event.preventDefault();
+})
+
+document.querySelector(".app-plugin-manager__drag-drop-overlay").addEventListener("dragleave", (event) => {
+  document.querySelector(".app-plugin-manager__drag-drop-overlay").classList
+    .remove("app-plugin-manager__drag-drop-overlay--visible")
+
+  // Prevent default behavior (Prevent file from being opened)
+  event.preventDefault();
+})
+
+document.querySelector("body, .app-plugin-manager__drag-drop-overlay").addEventListener("drop", (event) => {
+  console.log("of course")
+
+  // Use DataTransferItemList interface to access the file(s)
+  for (let i = 0; i < event.dataTransfer.items.length; i++) {
+    // If dropped items aren't files, reject them
+    if (event.dataTransfer.items[i].kind === 'file') {
+      const file = event.dataTransfer.items[i].getAsFile();
+      uploadFile(file);
+    }
+  }
+
+  // Hide the overlay
+  document.querySelector(".app-plugin-manager__drag-drop-overlay").classList
+    .remove("app-plugin-manager__drag-drop-overlay--visible")
+
+  // Prevent default behavior (Prevent file from being opened)
+  event.preventDefault();
+})
+
+function uploadFile(file) {
+  let url = `http://localhost:8080/jenkins/pluginManager/uploadPlugin?Jenkins-Crumb=${jenkins.getFormCrumb().value}`
+  let formData = new FormData()
+
+  if (!file.name.endsWith("jpi") && !file.name.endsWith("hpi")) {
+    notificationBar.show('The plugin needs to be of type JPI or HPI', notificationBar.ERROR)
+    return;
+  }
+
+  formData.append('file', file)
+  formData.append('pluginUrl', '')
+
+  fetch(url, {
+    method: 'POST',
+    body: formData
+  })
+    .then(() => {
+      window.location.href = "../updateCenter";
+    })
+    .catch(() => { /* Error. Inform the user */ })
+}

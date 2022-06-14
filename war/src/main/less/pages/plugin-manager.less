@@ -11,7 +11,7 @@
   tr.already-upgraded {
     background-color: var(--plugin-manager-bg-color-already-upgraded);
   }
-  
+
   tr.unavailable {
     background-color: var(--plugin-manager-unavailable-bg-color);
   }
@@ -114,5 +114,26 @@
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: 0.25em;
+  }
+}
+
+.app-plugin-manager__drag-drop-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--background);
+  opacity: 0;
+  visibility: collapse;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  z-index: 1000;
+
+  &--visible {
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }
