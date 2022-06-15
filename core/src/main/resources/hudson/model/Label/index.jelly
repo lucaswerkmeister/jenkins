@@ -47,7 +47,7 @@ THE SOFTWARE.
           <nobr>
             <a href="${url}" class="jenkins-link--with-icon"><l:icon src="${c.iconClassName}" /></a>
             <st:nbsp/>
-            <a href="${url}" class="model-link inside">${c.displayName}</a>
+            <a href="${url}" class="model-link">${c.displayName}</a>
           </nobr>
           <wbr/>
         </j:forEach>

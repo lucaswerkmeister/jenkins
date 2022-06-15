@@ -13,7 +13,7 @@ function buildTimeTrend_displayBuilds(data) {
 		insert(new Element('a', {class: 'build-status-link', href: e.number + '/console'}).
 		insert(generateSVGIcon(e.iconName))));
 		tr.insert(new Element('td', {data: e.number}).
-		insert(new Element('a', {href: e.number + '/', 'class': 'model-link inside'}).
+		insert(new Element('a', {href: e.number + '/', 'class': 'model-link'}).
 		update(e.displayName.escapeHTML())));
 		tr.insert(new Element('td', {data: e.duration}).
 		update(e.durationString.escapeHTML()));
@@ -21,7 +21,7 @@ function buildTimeTrend_displayBuilds(data) {
 			var buildInfo = null;
 			var buildInfoStr = (e.builtOnStr || '').escapeHTML();
 			if(e.builtOn) {
-				buildInfo = new Element('a', {href: rootURL + '/computer/' + e.builtOn, 'class': 'model-link inside'}).update(buildInfoStr);
+				buildInfo = new Element('a', {href: rootURL + '/computer/' + e.builtOn, 'class': 'model-link'}).update(buildInfoStr);
 			} else {
 				buildInfo = buildInfoStr;
 			}

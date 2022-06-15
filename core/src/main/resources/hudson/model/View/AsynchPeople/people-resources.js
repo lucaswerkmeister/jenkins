@@ -46,7 +46,7 @@ function display(data) {
         if (e.projectUrl != null) {
             a = document.createElement('a');
             a.href = rootURL + "/" + e.projectUrl;
-            a.className = 'jenkins-table__link model-link inside';
+            a.className = 'jenkins-table__link model-link';
             a.appendChild(document.createTextNode(e.projectFullDisplayName));
             d.appendChild(a);
         }

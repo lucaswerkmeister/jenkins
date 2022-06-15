@@ -71,7 +71,7 @@ THE SOFTWARE.
           </td>
 
           <td>
-            <a href="${rootURL}/${c.url}" class="jenkins-table__link model-link inside">${c.displayName}</a>
+            <a href="${rootURL}/${c.url}" class="jenkins-table__link model-link">${c.displayName}</a>
           </td>
 
           <j:forEach var="m" items="${monitors}">

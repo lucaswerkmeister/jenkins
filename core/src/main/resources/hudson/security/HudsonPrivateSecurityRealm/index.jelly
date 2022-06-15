@@ -55,7 +55,7 @@ THE SOFTWARE.
                 </div>
               </td>
               <td>
-                <a href="${user.url}/" class="jenkins-table__link model-link inside">${user.id}</a>
+                <a href="${user.url}/" class="jenkins-table__link model-link">${user.id}</a>
               </td>
               <td>
                 ${user.fullName}

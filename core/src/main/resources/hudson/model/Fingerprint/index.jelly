@@ -73,7 +73,7 @@ THE SOFTWARE.
               <j:if test="${job!=null}"> <!--Otherwise we don't display links at all-->
                 <tr>
                   <td class="fingerprint-summary-header">
-                    <a href="${rootURL}/${job.url}" class="model-link inside">${j}</a>
+                    <a href="${rootURL}/${job.url}" class="model-link">${j}</a>
                     <td>
                       <t:buildRangeLink job="${job}" range="${range}" />
                     </td>
