@@ -32,6 +32,8 @@ THE SOFTWARE.
       <t:help tooltip="${%Additional information on log levels}" href="${%url}"/>
     </l:app-bar>
 
+    <f:breadcrumb-config-outline title="${%Log levels}" />
+
     <st:include page="sidepanel.jelly"/>
 
     <l:main-panel>
