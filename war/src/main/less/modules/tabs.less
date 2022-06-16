@@ -1,3 +1,108 @@
+.jenkins-tabs {
+  position: relative;
+  display: flex;
+  margin-bottom: var(--section-padding);
+  gap: calc(var(--section-padding) / 2.5);
+  padding: 5px var(--section-padding);
+  overflow-x: auto;
+  margin-left: calc(var(--section-padding) * -1);
+  margin-right: calc(var(--section-padding) * -1);
+
+  &__tab {
+    position: relative;
+    cursor: pointer;
+    color: var(--text-color-secondary);
+    line-height: 1 !important;
+    transition: var(--standard-transition);
+    z-index: 0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.7rem 0.8rem;
+    flex-shrink: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      z-index: -1;
+      transition: var(--standard-transition);
+      opacity: 0;
+    }
+
+    &::before {
+      box-shadow: inset 0 0 0 2px var(--text-color);
+      opacity: 0.05;
+    }
+
+    &::after {
+      box-shadow: 0 0 0 10px var(--text-color);
+    }
+
+    &:not(&--active) {
+      &:hover {
+        text-decoration: none !important;
+
+        &::before {
+          opacity: 0.075 !important;
+          background: var(--text-color);
+        }
+      }
+
+      &:focus,
+      &:active {
+        &::before {
+          opacity: 0.125 !important;
+        }
+
+        &::after {
+          opacity: 0.05;
+          box-shadow: 0 0 0 5px var(--text-color);
+        }
+      }
+    }
+
+    &--active {
+      cursor: default;
+      color: var(--text-color);
+      //font-weight: 600;
+
+      &::before {
+        opacity: 0.05 !important;
+        background: currentColor;
+      }
+    }
+  }
+
+  &__tab-backdrop {
+    position: absolute;
+    top: 5px;
+    left: var(--section-padding);
+    bottom: 5px;
+    transition: var(--standard-transition);
+    border-radius: 10px;
+    background: currentColor;
+    opacity: 0.05;
+  }
+}
+
+.jenkins-tabs--js {
+  .jenkins-tabs__tab--active {
+    &::before {
+      opacity: 0 !important;
+    }
+  }
+}
+
+.jenkins-tab-pane__title {
+  font-size: 1.6rem;
+  margin: 2.2rem 0 1.4rem 0;
+  padding: 0;
+}
+
+// The below stylings are deprecated, use the .jenkins-tabs above
+
 .tabBarFrame {
   position: relative;
 }
@@ -74,10 +179,4 @@
 
 .tabBarFrame.showBaseline .tabBarBaseline {
   display: block;
-}
-
-.jenkins-tab-pane__title {
-  font-size: 1.6rem;
-  margin: 2.2rem 0 1.4rem 0;
-  padding: 0;
 }
