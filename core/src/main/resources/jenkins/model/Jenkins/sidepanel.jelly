@@ -25,22 +25,11 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <l:side-panel>
-    <!-- TODO - Remove this when all tasks (Jenkins' sidepanel items) are styled like this -->
-    <style>
-      #side-panel {
-        border-right: none;
-        padding-right: 0;
-        width: 370px !important;
-      }
-
-      #inpage-nav {
-        display: none !important;
-      }
-    </style>
-
-    <div class="jenkins-side-nav jenkins-side-nav--non-sticky">
+    <div id="tasks">
       <div class="jenkins-app-bar">
-        <h1>${%Manage Jenkins}</h1>
+        <div class="jenkins-app-bar__content">
+          <h1>${%Manage Jenkins}</h1>
+        </div>
       </div>
 
       <section class="manage-messages" style="display: none;">
@@ -51,11 +40,9 @@ THE SOFTWARE.
       </section>
 
       <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
-      <section class="jenkins-side-nav__items">
         <h2 class="jenkins-side-nav__heading">${category.key.label}</h2>
         ${taskTags!=null and attrs.contextMenu!='false' ? taskTags.addHeader(category.key.label) : null}
-        <div class="jenkins-side-nav__items">
-          <j:forEach var="m" items="${category.value}">
+        <j:forEach var="m" items="${category.value}">
             <j:choose>
               <j:when test="${m.requiresConfirmation}">
                 <l:confirmationLink tooltip="${m.description}" class="jenkins-side-nav__item" href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
@@ -93,9 +80,7 @@ THE SOFTWARE.
                 </j:otherwise>
             </j:choose>
           </j:forEach>
-        </div>
-      </section>
-    </j:forEach>
+      </j:forEach>
     </div>
   </l:side-panel>
 </j:jelly>
