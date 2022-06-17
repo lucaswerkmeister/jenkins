@@ -567,19 +567,7 @@ div.behavior-loading {
   word-break: break-word;
   border-radius: var(--border-radius--small);
   z-index: 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: var(--text-color);
-    opacity: 0.05;
-    z-index: -1;
-    border-radius: inherit;
-  }
+  background: var(--help-box-background);
 
   p:first-of-type {
     margin-top: 0;
@@ -1281,18 +1269,6 @@ table.progress-bar.red td.progress-bar-done {
 .tag7 { font-size: 1.7em; }
 .tag8 { font-size: 1.8em; }
 .tag9 { font-size: 1.9em; }
-
-/* ========================= textarea.jelly ================== */
-
-.textarea-preview-container {
-    text-align: left;
-}
-
-.textarea-preview {
-    background-color: var(--very-light-grey);
-    padding: 0.5em;
-    border-radius: var(--border-radius--medium);
-}
 
 /* ========================= logRecords.jelly ================== */
 
