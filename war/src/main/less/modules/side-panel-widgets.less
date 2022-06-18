@@ -8,6 +8,13 @@
   border-width: 1px;
 }
 
+#buildQueue,
+#executors {
+  @media screen and (max-width: @tablet-breakpoint) {
+    display: none;
+  }
+}
+
 #side-panel .pane-header {
   font-size: var(--font-size-sm);
   display: inline-flex;
