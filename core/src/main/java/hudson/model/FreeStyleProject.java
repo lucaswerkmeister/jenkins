@@ -24,6 +24,7 @@
 
 package hudson.model;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Extension;
 import jenkins.model.Jenkins;
@@ -80,6 +81,7 @@ public class FreeStyleProject extends Project<FreeStyleProject, FreeStyleBuild> 
             DESCRIPTOR = this;
         }
 
+        @NonNull
         @Override
         public String getDisplayName() {
             return Messages.FreeStyleProject_DisplayName();
