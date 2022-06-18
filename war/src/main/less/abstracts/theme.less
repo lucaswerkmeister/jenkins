@@ -255,6 +255,10 @@
 
   // Form
   --section-padding: 1.85rem;
+  @media screen and (max-width: 992px) {
+    --section-padding: 1.5rem;
+  }
+
   --input-color: var(--white);
   --input-border: #C3CCD1;
   --input-border-hover: #5C7889;
@@ -312,7 +316,7 @@
   --call-to-action-link-color: #000;
   --call-to-action-text-color: var(--alert-info-text-color);
 
-  // Colors
+    // Colors
   each(@colors, {
     --light-@{key}: lighten(@value, 20%);
     --@{key}: @value;

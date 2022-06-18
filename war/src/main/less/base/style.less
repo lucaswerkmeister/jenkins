@@ -467,14 +467,14 @@ div.behavior-loading {
   // &--stuck class when the element is stuck to the bottom of the screen
   // https://css-tricks.com/how-to-detect-when-a-sticky-element-gets-pinned/
   bottom: -1px;
-  margin-left: -2rem;
-  width: calc(100% + 4rem);   /* it needs to occupy the entire width or else the underlying content will see through */
+  margin-left: calc(var(--section-padding) * -1);
+  width: calc(100% + (var(--section-padding) * 2));   /* it needs to occupy the entire width or else the underlying content will see through */
   z-index: 998; /* behind top-sticker */
 }
 
 .bottom-sticker-inner {
   position: relative;
-  padding: 1em 2rem;
+  padding: 1em var(--section-padding);
   z-index: 0;
 
   &::before {
@@ -500,7 +500,7 @@ div.behavior-loading {
     height: 30px;
     opacity: 0;
     transition: var(--standard-transition);
-    mask-image: linear-gradient(to right, transparent, white 2rem, white calc(100% - 2rem), transparent);
+    mask-image: linear-gradient(to right, transparent, white var(--section-padding), white calc(100% - var(--section-padding)), transparent);
     pointer-events: none;
   }
 
