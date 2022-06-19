@@ -54,7 +54,12 @@ body {
 #page-body {
   display: flex;
   align-items: stretch;
-  flex: 1 0 auto;
+  justify-content: flex-start;
+  min-height: calc(100vh - 98px);
+
+  @media (max-width: @mobile-breakpoint) {
+    flex-direction: column;
+  }
 }
 
 #page-body.clear::after {
