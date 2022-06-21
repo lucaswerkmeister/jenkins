@@ -101,7 +101,7 @@ public class SearchTest {
 
         // make sure we've fetched the testSearchByDisplayName project page
         String contents = result.getWebResponse().getContentAsString();
-        assertTrue(contents.contains(String.format("<title>%s [Jenkins]</title>", projectName)));
+        assertTrue(contents.contains(String.format("<title>%s - Jenkins</title>", projectName)));
     }
 
     @Issue("JENKINS-24433")
@@ -148,7 +148,7 @@ public class SearchTest {
 
         // make sure we've fetched the testSearchByDisplayName project page
         String contents = result.getWebResponse().getContentAsString();
-        assertTrue(contents.contains(String.format("<title>%s [Jenkins]</title>", displayName)));
+        assertTrue(contents.contains(String.format("<title>%s - Jenkins</title>", displayName)));
     }
 
     @Test
@@ -176,7 +176,7 @@ public class SearchTest {
 
         // make sure we've fetched the testSearchByDisplayName project page
         String contents = result.getWebResponse().getContentAsString();
-        assertTrue(contents.contains(String.format("<title>%s [Jenkins]</title>", displayName)));
+        assertTrue(contents.contains(String.format("<title>%s - Jenkins</title>", displayName)));
         assertFalse(contents.contains(otherDisplayName));
     }
 
@@ -208,7 +208,7 @@ public class SearchTest {
 
         // make sure we get the project with the name foo
         String contents = result.getWebResponse().getContentAsString();
-        assertTrue(contents.contains(String.format("<title>%s [Jenkins]</title>", project1DisplayName)));
+        assertTrue(contents.contains(String.format("<title>%s - Jenkins</title>", project1DisplayName)));
         // make sure projects 2 and 3 were not picked up
         assertFalse(contents.contains(project2Name));
         assertFalse(contents.contains(project3Name));
