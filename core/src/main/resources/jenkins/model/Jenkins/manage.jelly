@@ -26,85 +26,336 @@ THE SOFTWARE.
   Entrance to the configuration page
 -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <l:layout title="${%Manage Jenkins}" permissions="${app.MANAGE_AND_SYSTEM_READ}">
-    <l:app-bar title="${%Manage Jenkins}" />
-
-    <j:if test="${taskTags==null}">
-      <st:include page="sidepanel.jelly" />
-    </j:if>
-
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <l:layout title="${%Manage Jenkins}" permissions="${app.MANAGE_AND_SYSTEM_READ}" type="one-pane">
     <l:main-panel>
-      <section class="manage-messages">
-        <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
-          <st:include page="message.jelly" it="${am}" />
-        </j:forEach>
-        <st:include page="downgrade.jelly" />
-      </section>
-
-      <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
-        <section class="jenkins-section jenkins-section--bottom-padding">
-          <h2 class="jenkins-section__title">${category.key.label}</h2>
-          ${taskTags!=null and attrs.contextMenu!='false' ? taskTags.addHeader(category.key.label) : null}
-          <div class="jenkins-section__items">
-          <j:forEach var="m" items="${category.value}">
-            <j:if test="${m.iconFileName != null}">
-              <div class="jenkins-section__item">
-              <j:set var="alt" value="${icon.replaceAll('\\d*\\.[^.]+$', '')}"/>
-              <j:set var="iconSrc" value="${h.tryGetIconPath(m.iconFileName, context)}"/>
-              <j:set var="iconXml">
-                <l:icon src="${m.iconFileName}" />
-              </j:set>
-              ${taskTags!=null and attrs.contextMenu!='false' ? taskTags.add(m.urlName, iconSrc, iconXml, m.displayName, m.requiresPOST, m.requiresConfirmation) : null}
-              <j:choose>
-                <j:when test="${m.requiresConfirmation}">
-                  <l:confirmationLink href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
-                    <div class="jenkins-section__item__icon" aria-hidden="true">
-                      <l:icon src="${m.iconFileName}" class="icon" />
-                    </div>
-                    <dl>
-                      <dt>${m.displayName}</dt>
-                      <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                    </dl>
-                  </l:confirmationLink>
-                </j:when>
-                <j:when test="${m.requiresPOST}">
-                  <f:link href="${m.urlName}" post="${m.requiresPOST}">
-                    <div class="jenkins-section__item__icon" aria-hidden="true">
-                      <l:icon src="${m.iconFileName}" class="icon" />
-                    </div>
-                    <dl>
-                      <dt>${m.displayName}</dt>
-                      <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                    </dl>
-                  </f:link>
-                </j:when>
-                <j:otherwise>
-                  <a href="${m.urlName}">
-                    <div class="jenkins-section__item__icon" aria-hidden="true">
-                      <l:icon src="${m.iconFileName}" class="icon" />
-                      <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
-                        <div tooltip="${m.getUpdateCount() == 1 ? '%updateAvailable(m.getUpdateCount())' : '%updatesAvailable(m.getUpdateCount())'}" class="jenkins-section__item__icon__badge">
-                          ${m.getUpdateCount()}
-                        </div>
-                      </j:if>
-                    </div>
-                    <dl>
-                      <dt>${m.displayName}</dt>
-                      <dd><j:out value="${m.description}"/></dd>
-                      <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                    </dl>
-                  </a>
-                </j:otherwise>
-              </j:choose>
-              </div>
-            </j:if>
-          </j:forEach>
+      <div class="jenkins-app-bar">
+        <div class="jenkins-app-bar__content">
+          <p>Morning Jan</p>
+          <h1>Dashboard</h1>
+        </div>
+        <div class="jenkins-app-bar__controls">
+          <button class="jenkins-button">
+            <l:icon src="symbol-add"/>
+            New project
+          </button>
+          <button class="jenkins-button">
+            <l:icon src="symbol-edit"/>
+            Edit view
+          </button>
+          <button class="jenkins-button">
+            <l:icon src="symbol-overflow"/>
+          </button>
+        </div>
+      </div>
+      <div class="test">
+        <div class="sidebar">
+          <div class="jenkins-widget">
+            <div class="jenkins-description-widget">
+              The National is an American rock band of Cincinnati, Ohio natives, formed in Brooklyn, New York City in
+              1999. The band consists of Matt Berninger...
+            </div>
           </div>
-        </section>
-      </j:forEach>
+
+          <div id="tasks">
+            <l:task icon="symbol-github" title="View repository" href="google.com" />
+          </div>
+
+          <div class="jenkins-widget">
+            <div class="jenkins-widget__title">
+              Builds
+              <l:icon src="symbol-chevron-up"/>
+            </div>
+            <div class="jenkins-people-widget__people">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          <div class="jenkins-widget">
+            <div class="jenkins-widget__title">
+              21 people
+              <l:icon src="symbol-chevron-up"/>
+            </div>
+            <div class="jenkins-people-widget__people">
+              <span>
+                <span>JF</span>
+              </span>
+              <span>
+                <span>JF</span>
+              </span>
+              <span>
+                <span>JF</span>
+              </span>
+              <span>
+                <span>JF</span>
+              </span>
+              <span>
+                <span>JF</span>
+              </span>
+              <span>
+                <span>JF</span>
+              </span>
+              <span>
+                <span>JF</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <table class="jenkins-table">
+            <thead>
+              <tr>
+                <th>
+                  S
+                </th>
+                <th>
+                  W
+                </th>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Last Success
+                </th>
+                <th>
+                  Last Failure
+                </th>
+                <th>
+                  Last Duration
+                </th>
+                <th>
+
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  S
+                </td>
+                <td>
+                  W
+                </td>
+                <td>
+                  Example project
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <a class="jenkins-table__button jenkins-!-build-color">
+                      <l:icon src="symbol-play"/>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  S
+                </td>
+                <td>
+                  W
+                </td>
+                <td>
+                  Example project
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <a class="jenkins-table__button jenkins-!-build-color">
+                      <l:icon src="symbol-play"/>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  S
+                </td>
+                <td>
+                  W
+                </td>
+                <td>
+                  Example project
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <a class="jenkins-table__button jenkins-!-build-color">
+                      <l:icon src="symbol-play"/>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  S
+                </td>
+                <td>
+                  W
+                </td>
+                <td>
+                  Example project
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <a class="jenkins-table__button jenkins-!-build-color">
+                      <l:icon src="symbol-play"/>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  S
+                </td>
+                <td>
+                  W
+                </td>
+                <td>
+                  Example project
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <a class="jenkins-table__button jenkins-!-build-color">
+                      <l:icon src="symbol-play"/>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  S
+                </td>
+                <td>
+                  W
+                </td>
+                <td>
+                  Example project
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <a class="jenkins-table__button jenkins-!-build-color">
+                      <l:icon src="symbol-play"/>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  S
+                </td>
+                <td>
+                  W
+                </td>
+                <td>
+                  Example project
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <a class="jenkins-table__button jenkins-!-build-color">
+                      <l:icon src="symbol-play"/>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  S
+                </td>
+                <td>
+                  W
+                </td>
+                <td>
+                  Example project
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td>
+                  Name
+                </td>
+                <td class="jenkins-table__cell--tight">
+                  <div class="jenkins-table__cell__button-wrapper">
+                    <a class="jenkins-table__button jenkins-!-build-color">
+                      <l:icon src="symbol-play"/>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </l:main-panel>
   </l:layout>
 </j:jelly>
