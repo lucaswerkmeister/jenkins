@@ -14,13 +14,6 @@
 
 .jenkins-app-bar__content {
   margin-top: -2rem;
-
-  p {
-    font-weight: 600;
-    font-size: 0.925rem;
-    margin: 0 0 0.6rem 0;
-    color: var(--text-color-secondary);
-  }
 }
 
 #main-panel {
@@ -239,5 +232,48 @@
   button {
     justify-content: flex-start;
     margin: 0 -0.8rem;
+  }
+}
+
+.rotating-title {
+  position: relative;
+  height: 0.925rem;
+  margin: 0 0 0.6rem 0;
+
+  p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: 600;
+    font-size: 0.925rem;
+    color: var(--text-color-secondary);
+    margin: 0;
+    user-select: none;
+    pointer-events: none;
+
+    &:first-of-type {
+      animation: rotate-title-1 0.5s both 4s;
+    }
+
+    &:last-of-type {
+      font-family: "Georgia";
+      font-weight: bold;
+      animation: rotate-title-2 0.5s both 4s;
+    }
+  }
+}
+
+@keyframes rotate-title-1 {
+  to {
+    transform: translateY(-0.5rem);
+    opacity: 0;
+  }
+}
+
+
+@keyframes rotate-title-2 {
+  from {
+    transform: translateY(0.5rem);
+    opacity: 0;
   }
 }

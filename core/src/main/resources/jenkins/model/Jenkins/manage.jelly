@@ -32,7 +32,10 @@ THE SOFTWARE.
     <l:main-panel>
       <div class="jenkins-app-bar">
         <div class="jenkins-app-bar__content">
-          <p>Morning Jan</p>
+          <div class="rotating-title">
+            <p>Morning Jan</p>
+            <p>Jenkins</p>
+          </div>
           <h1>Dashboard</h1>
         </div>
         <div class="jenkins-app-bar__controls">
@@ -40,10 +43,10 @@ THE SOFTWARE.
             <l:icon src="symbol-add"/>
             New project
           </button>
-          <button class="jenkins-button">
+          <a href="http://localhost:8080/jenkins/view/Helo/configure" class="jenkins-button">
             <l:icon src="symbol-edit"/>
             Edit view
-          </button>
+          </a>
           <button class="jenkins-button">
             <l:icon src="symbol-overflow"/>
           </button>
