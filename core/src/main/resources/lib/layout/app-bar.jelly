@@ -28,11 +28,14 @@ THE SOFTWARE.
     <st:attribute name="title" use="required">
       The title for the application bar
     </st:attribute>
+    <st:attribute name="sticky">
+      TODO
+    </st:attribute>
     Generates a row containing the page title and an optional set of controls
   </st:documentation>
 
   <j:if test="${mode=='app-bar'}">
-    <div class="jenkins-app-bar">
+    <div class="jenkins-app-bar ${attrs.sticky == 'true' ? 'jenkins-app-bar--sticky' : ''}">
       <div class="jenkins-app-bar__content">
         <h1>${title}</h1>
       </div>

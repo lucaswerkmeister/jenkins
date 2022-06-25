@@ -671,6 +671,14 @@ public final class DirectoryBrowserSupport implements HttpResponse {
                 return isFolder ? "icon-folder-delete" : "icon-document-delete";
         }
 
+        public List<Path> getChildren() {
+            if (!this.isFolder) {
+                return null;
+            }
+
+            return List.of(new Path(this.href, "easy-to-find.jpg", false, this.size, true));
+        }
+
         public long getSize() {
             return size;
         }

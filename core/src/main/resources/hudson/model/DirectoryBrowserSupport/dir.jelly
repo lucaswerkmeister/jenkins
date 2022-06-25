@@ -25,9 +25,109 @@ THE SOFTWARE.
 <!-- Show files in the workspace -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-  <l:layout title="${it.title} : ${path}">
+  <l:layout title="${it.title} : ${path}" type="single-pane">
     <st:include page="sidepanel.jelly" it="${it.owner}"/>
+
+    <l:app-bar title="Build #74" sticky="true">
+      <button class="jenkins-button">
+        <l:icon src="symbol-download" />
+        Download all
+      </button>
+      <button class="jenkins-button jenkins-button--destructive">
+        <l:icon src="symbol-trash" />
+        Clear workspace
+      </button>
+    </l:app-bar>
+
+    <d:taglib uri="local">
+      <d:tag name="items">
+        <j:forEach var="t" items="${items}" varStatus="st">
+          <j:set var="x" value="${items.get(items.size() - 1)}"/>
+          <button class="longhorn-item" data-type="${t.folder ? 'folder' : 'file'}" data-href="${t.href}">
+            <div class="longhorn-item-icon">
+              <j:choose>
+                <j:when test="${t.children == null}">
+                  <l:icon class="${x.iconClassName}"/>
+                </j:when>
+                <j:otherwise>
+                  <l:icon src="symbol-chevron-right" class="folder-chevron" />
+                </j:otherwise>
+              </j:choose>
+            </div>
+            ${t.title}
+          </button>
+        </j:forEach>
+        <j:if test="${t.children != null}">
+          <div class="longhorn-folder-contents" xmlns:local="local">
+            <div>
+              <local:items items="${t.children}" />
+            </div>
+          </div>
+        </j:if>
+      </d:tag>
+    </d:taglib>
+
     <l:main-panel>
+      <div class="longhorn">
+        <div class="longhorn-sidebar" xmlns:local="local">
+
+
+          <j:forEach var="f" items="${files}">
+            <local:items items="${f}" />
+          </j:forEach>
+        </div>
+        <div class="longhorn-slider">
+
+        </div>
+        <div class="longhorn-preview">
+          <div class="no-file">
+            <l:icon src="symbol-search" />
+            <span>Select a file on the left to preview it here</span>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const folders = document.querySelectorAll("[data-type='folder']")
+        const files = document.querySelectorAll("[data-type='file']")
+
+        folders.forEach(folder => {
+            folder.addEventListener("click", () => {
+                const isOpen = folder.dataset.isOpen === "true";
+                const chevron = folder.querySelector(".folder-chevron");
+                const childrenContainer = folder.nextSibling
+                const childrenContainerInner = childrenContainer.firstChild
+
+                if (isOpen) {
+                  childrenContainer.style.height = "0px";
+                  childrenContainer.style.opacity = 0;
+                  childrenContainer.style.transform = "scale(0.95)";
+                  childrenContainer.style.overflow = "hidden";
+                  chevron.classList.remove("folder-chevron--visible");
+                  folder.dataset.isOpen = "false";
+                } else {
+                  childrenContainer.style.height = childrenContainerInner.offsetHeight + "px";
+                  childrenContainer.style.opacity = 1;
+                  childrenContainer.style.transform = "scale(1)";
+                  childrenContainer.style.overflow = "visible";
+                  chevron.classList.add("folder-chevron--visible");
+                  folder.dataset.isOpen = "true";
+                }
+            })
+        })
+
+        files.forEach(file => {
+          file.addEventListener("click", () => {
+            const selectedFile = document.querySelector(".longhorn-item--selected")
+            if (selectedFile) {
+              selectedFile.classList.remove("longhorn-item--selected")
+            }
+
+            file.classList.add("longhorn-item--selected")
+          })
+        })
+      </script>
+
       <h1><l:breakable value="${it.title}"/></h1>
       <div class="dirTree">
       <!-- parent path -->
