@@ -1,24 +1,33 @@
 @import "../abstracts/theme.less";
 
 .page-header {
-    display: block;
-    display: flex;
-    align-items: center;
-    height: 3.5rem;
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    background-color: var(--header-bg-classic);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--header-bg-classic);
+  padding: 0rem 0.5rem;
 }
 
 .page-header > * {
-    margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.page-header__brand {
-    display: inline-block;
-    height: 3.5rem;
-    position: relative;
-    flex: 1; // push controls to the end of the block
+#jenkins-home-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-family: "Georgia";
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 0.4rem 0.7rem !important;
+
+  img {
+    width: auto;
+    height: 2rem;
+  }
 }
 
 // Need to use the element selector to increase weight otherwise it will be overriden by the
@@ -46,41 +55,29 @@ a.page-header__brand-link {
 }
 
 .page-header__hyperlinks {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.page-header__hyperlinks a {
-    --text-color: var(--header-link-color);
-    display: inline-flex;
-    align-items: center;
+.page-header a {
+  .item();
 
-    // need to override an existing rule
-    padding-right: 0.5rem;
-    padding: 0.5rem;
-    margin-right: 0.25rem !important;
-    font-weight: bold;
-    outline-color: var(--header-link-outline);
+  --text-color: var(--header-link-color);
 
-    &:link,
-    &:visited {
-        color: var(--header-link-color);
-        border-radius: var(--header-item-border-radius);
-        text-decoration: none;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.75rem !important;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 !important;
 
-    &:hover,
-    &:focus,
-    &.mouseIsOverMenuSelector {
-        color: var(--header-link-color-active);
-        background-color: var(--header-link-bg-classic-hover);
-        text-decoration: underline;
-        text-decoration-color: var(--header-link-color-active);
-    }
-
-    &:active {
-        background-color: var(--header-link-bg-classic-active);
-    }
+  &::before,
+  &::after {
+    inset: 0 !important;
+  }
 
   .jenkins-menu-dropdown-chevron {
     position: relative;
@@ -92,11 +89,15 @@ a.page-header__brand-link {
       opacity: 1;
     }
   }
+
+  svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-right: 0.25rem;
+  }
 }
 
 .page-header__hyperlinks a span {
-    font-weight: bold;
-
     &:not(:first-child) {
         margin-left: 0.25rem;
     }
