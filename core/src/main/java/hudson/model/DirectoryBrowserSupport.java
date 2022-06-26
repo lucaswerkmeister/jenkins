@@ -60,6 +60,7 @@ import jenkins.security.ResourceDomainConfiguration;
 import jenkins.security.ResourceDomainRootAction;
 import jenkins.util.SystemProperties;
 import jenkins.util.VirtualFile;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tools.zip.ZipEntry;
@@ -657,18 +658,28 @@ public final class DirectoryBrowserSupport implements HttpResponse {
             return title;
         }
 
-        public String getIconName() {
-            if (isReadable)
-                return isFolder ? "folder.svg" : "document.svg";
-            else
-                return isFolder ? "folder-delete.svg" : "document-delete.svg";
-        }
+        public String getIcon() {
+            if (isFolder) {
+                return "symbol-folder";
+            }
 
-        public String getIconClassName() {
-            if (isReadable)
-                return isFolder ? "icon-folder" : "icon-document";
-            else
-                return isFolder ? "icon-folder-delete" : "icon-document-delete";
+            switch (FilenameUtils.getExtension(getTitle())) {
+                case "jpg":
+                case "jpeg":
+                case "bmp":
+                case "png":
+                case "gif":
+                    return "symbol-image";
+                case "xml":
+                case "json":
+                case "html":
+                    return "symbol-code-working";
+                case "war":
+                case "jar":
+                    return "symbol-coffee";
+                default:
+                    return "symbol-document-text";
+            }
         }
 
         public List<Path> getChildren() {

@@ -28,17 +28,6 @@ THE SOFTWARE.
   <l:layout title="${it.title} : ${path}" type="single-pane">
     <st:include page="sidepanel.jelly" it="${it.owner}"/>
 
-    <l:app-bar title="Build #74" sticky="true">
-      <button class="jenkins-button">
-        <l:icon src="symbol-download" />
-        Download all
-      </button>
-      <button class="jenkins-button jenkins-button--destructive">
-        <l:icon src="symbol-trash" />
-        Clear workspace
-      </button>
-    </l:app-bar>
-
     <d:taglib uri="local">
       <d:tag name="items">
         <j:forEach var="t" items="${items}" varStatus="st">
@@ -47,7 +36,7 @@ THE SOFTWARE.
             <div class="longhorn-item-icon">
               <j:choose>
                 <j:when test="${t.children == null}">
-                  <l:icon class="${x.iconClassName}"/>
+                  <l:icon src="${x.icon}"/>
                 </j:when>
                 <j:otherwise>
                   <l:icon src="symbol-chevron-right" class="folder-chevron" />
@@ -56,21 +45,37 @@ THE SOFTWARE.
             </div>
             ${t.title}
           </button>
-        </j:forEach>
-        <j:if test="${t.children != null}">
-          <div class="longhorn-folder-contents" xmlns:local="local">
-            <div>
-              <local:items items="${t.children}" />
+          <j:if test="${t.children != null}">
+            <div class="longhorn-folder-contents" xmlns:local="local">
+              <div>
+                <local:items items="${t.children}" />
+              </div>
             </div>
-          </div>
-        </j:if>
+          </j:if>
+        </j:forEach>
       </d:tag>
     </d:taglib>
 
     <l:main-panel>
       <div class="longhorn">
         <div class="longhorn-sidebar" xmlns:local="local">
-
+          <div class="jenkins-app-bar">
+            <div class="jenkins-app-bar__content">
+              <h1>${%Workspace}</h1>
+            </div>
+            <div class="jenkins-app-bar__controls">
+              <button class="jenkins-button">
+                <l:icon src="symbol-overflow" />
+              </button>
+<!--              <a class="jenkins-button" href="${backPath}${pattern!=''?pattern+'/':''}*zip*/${dir.name}.zip">-->
+<!--                <l:icon src="symbol-download"/>-->
+<!--                ${%Download all}-->
+<!--              </a>-->
+<!--              <a class="jenkins-button jenkins-button&#45;&#45;destructive" tooltip="${%Clear workspace}">-->
+<!--                <l:icon src="symbol-trash" />-->
+<!--              </a>-->
+            </div>
+          </div>
 
           <j:forEach var="f" items="${files}">
             <local:items items="${f}" />
@@ -80,10 +85,29 @@ THE SOFTWARE.
 
         </div>
         <div class="longhorn-preview">
-          <div class="no-file">
-            <l:icon src="symbol-search" />
-            <span>Select a file on the left to preview it here</span>
+
+          <div class="file-preview">
+            <div class="jenkins-app-bar">
+              <div class="jenkins-app-bar__content">
+                <h1>asda.txt</h1>
+              </div>
+              <div class="jenkins-app-bar__controls">
+                <a class="jenkins-button" href="${backPath}${pattern!=''?pattern+'/':''}*zip*/${dir.name}.zip">
+                  <l:icon src="symbol-download"/>
+                  ${%Download}
+                </a>
+              </div>
+            </div>
+            <div class="document">Bacon ipsum dolor amet tri-tip tail ham, flank pork burgdoggen brisket. Leberkas tri-tip alcatra landjaeger beef ribs chuck, beef prosciutto kielbasa ribeye picanha ham hock jerky. Sausage salami picanha pork short ribs, ground round ham tail kielbasa ham hock strip steak chicken. Cow strip steak picanha tail sausage. Pork loin ham hock beef ribs burgdoggen, jerky rump spare ribs corned beef tri-tip shank bresaola salami. Pork loin ham hock turkey t-bone.
+
+              Cow biltong doner salami shankle. Beef ribs chicken meatball strip steak. Venison bresaola tail, drumstick beef fatback porchetta beef ribs capicola. Short loin bacon pig pork loin, capicola porchetta chicken cupim shoulder tri-tip rump landjaeger ground round. Sausage doner filet mignon bacon corned beef meatloaf. Chislic salami jerky pork chop turkey fatback bacon.
+            </div>
           </div>
+
+<!--          <div class="no-file">-->
+<!--            <l:icon src="symbol-search" />-->
+<!--            <span>Select a file on the left to preview it here</span>-->
+<!--          </div>-->
         </div>
       </div>
 
@@ -128,102 +152,92 @@ THE SOFTWARE.
         })
       </script>
 
-      <h1><l:breakable value="${it.title}"/></h1>
-      <div class="dirTree">
-      <!-- parent path -->
-        <div class="parentPath">
-          <form action="${backPath}" method="get">
-            <a href="${topPath}">${it.owner.name}</a> /
-            <j:forEach var="p" items="${parentPath}">
-              <a href="${p.href}">${p.title}</a>
-              /
-            </j:forEach>
-            <input type="text" name="pattern" value="${pattern}" class="jenkins-input" />
-            <button class="jenkins-button">
-              <l:icon src="symbol-arrow-right" />
-            </button>
-          </form>
-        </div>
-        <j:choose>
-          <j:when test="${empty(files)}">
-            ${%No files in directory}
-           <j:if test="${showSymlinkWarning}">
-             <p>
-                <img id="symlinkalert" src="${imagesURL}/svgs/warning.svg" width="16" height="16" />
-               ${%Symlinks are hidden}
-             </p>
-            </j:if>
-          </j:when>
-          <j:otherwise>
-            <table class="fileList">
-              <j:forEach var="f" items="${files}">
-                <j:set var="x" value="${f.get(f.size()-1)}"/>
-                <tr>
-                  <td>
-                    <l:icon class="${x.iconClassName} icon-sm"/>
-                  </td>
-                  <td>
-                    <j:forEach var="t" items="${f}" varStatus="st">
+<!--      <h1><l:breakable value="${it.title}"/></h1>-->
+<!--      <div class="dirTree">-->
+<!--      &lt;!&ndash; parent path &ndash;&gt;-->
+<!--        <div class="parentPath">-->
+<!--          <form action="${backPath}" method="get">-->
+<!--            <a href="${topPath}">${it.owner.name}</a> /-->
+<!--            <j:forEach var="p" items="${parentPath}">-->
+<!--              <a href="${p.href}">${p.title}</a>-->
+<!--              /-->
+<!--            </j:forEach>-->
+<!--            <input type="text" name="pattern" value="${pattern}" class="jenkins-input" />-->
+<!--            <button class="jenkins-button">-->
+<!--              <l:icon src="symbol-arrow-right" />-->
+<!--            </button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--        <j:choose>-->
+<!--          <j:when test="${empty(files)}">-->
+<!--            ${%No files in directory}-->
+<!--           <j:if test="${showSymlinkWarning}">-->
+<!--             <p>-->
+<!--                <img id="symlinkalert" src="${imagesURL}/svgs/warning.svg" width="16" height="16" />-->
+<!--               ${%Symlinks are hidden}-->
+<!--             </p>-->
+<!--            </j:if>-->
+<!--          </j:when>-->
+<!--          <j:otherwise>-->
+<!--            <table class="fileList">-->
+<!--              <j:forEach var="f" items="${files}">-->
+<!--                <j:set var="x" value="${f.get(f.size()-1)}"/>-->
+<!--                <tr>-->
+<!--                  <td>-->
+<!--                    <l:icon class="${x.iconClassName} icon-sm"/>-->
+<!--                  </td>-->
+<!--                  <td>-->
+<!--                    <j:forEach var="t" items="${f}" varStatus="st">-->
 
-                      <j:choose>
-                        <j:when test="${x.readable}">
-                          <a href="${t.href}">${t.title}</a>
-                        </j:when>
-                        <j:otherwise>
-                          ${t.title}
-                        </j:otherwise>
-                      </j:choose>
+<!--                      <j:choose>-->
+<!--                        <j:when test="${x.readable}">-->
+<!--                          <a href="${t.href}">${t.title}</a>-->
+<!--                        </j:when>-->
+<!--                        <j:otherwise>-->
+<!--                          ${t.title}-->
+<!--                        </j:otherwise>-->
+<!--                      </j:choose>-->
 
-                      <j:if test="${!st.last}">/</j:if>
-                    </j:forEach>
-                  </td>
-                  <j:if test="${!x.folder}">
-                    <td class="fileSize">
-                      <j:if test="${x.lastModifiedAsCalendar.timeInMillis &gt; 0}">
-                        <i:formatDate value="${x.lastModifiedAsCalendar.time}" type="both" dateStyle="medium" timeStyle="medium"/>
-                      </j:if>
-                      <j:if test="${x.lastModifiedAsCalendar.timeInMillis &lt;= 0}">
-                        ${%N/A}
-                      </j:if>
-                    </td>
-                    <td class="fileSize">
-                      ${h.humanReadableByteSize(x.getSize())}
-                    </td>
-                    <td style="display: flex; gap: 1rem;">
-                      <j:if test="${x.readable}">
-                        <j:if test="${app.fingerprintMap.ready}">
-                          <a class="jenkins-link--with-icon" href="${x.href}/*fingerprint*/" tooltip="${%View fingerprint}">
-                            <l:icon class="symbol-fingerprint" />
-                          </a>
-                        </j:if>
-                        <a class="jenkins-link--with-icon" href="${x.href}/*view*/" tooltip="${%View}">
-                          <l:icon src="symbol-view" />
-                        </a>
-                      </j:if>
-                    </td>
-                  </j:if>
-                </tr>
-              </j:forEach>
-              <tr>
-                <td style="text-align:right;" colspan="3">
-                  <div style="margin-top: 1em;">
-                    <a class="jenkins-link--with-icon" href="${backPath}${pattern!=''?pattern+'/':''}*zip*/${dir.name}.zip">
-                      <l:icon src="symbol-download"/>
-                      (${%all files in zip})
-                    </a>
-                  </div>
-                </td>
-              </tr>
-           </table>
-           <j:if test="${showSymlinkWarning}">
-             <p>
-                <img id="alert" src="${imagesURL}/svgs/warning.svg" width="16" height="16" />
-               ${%Symlinks are hidden}
-             </p>
-            </j:if>
-          </j:otherwise>
-        </j:choose>
-      </div>
+<!--                      <j:if test="${!st.last}">/</j:if>-->
+<!--                    </j:forEach>-->
+<!--                  </td>-->
+<!--                  <j:if test="${!x.folder}">-->
+<!--                    <td class="fileSize">-->
+<!--                      <j:if test="${x.lastModifiedAsCalendar.timeInMillis &gt; 0}">-->
+<!--                        <i:formatDate value="${x.lastModifiedAsCalendar.time}" type="both" dateStyle="medium" timeStyle="medium"/>-->
+<!--                      </j:if>-->
+<!--                      <j:if test="${x.lastModifiedAsCalendar.timeInMillis &lt;= 0}">-->
+<!--                        ${%N/A}-->
+<!--                      </j:if>-->
+<!--                    </td>-->
+<!--                    <td class="fileSize">-->
+<!--                      ${h.humanReadableByteSize(x.getSize())}-->
+<!--                    </td>-->
+<!--                    <td style="display: flex; gap: 1rem;">-->
+<!--                      <j:if test="${x.readable}">-->
+<!--                        <j:if test="${app.fingerprintMap.ready}">-->
+<!--                          <a class="jenkins-link&#45;&#45;with-icon" href="${x.href}/*fingerprint*/" tooltip="${%View fingerprint}">-->
+<!--                            <l:icon class="symbol-fingerprint" />-->
+<!--                          </a>-->
+<!--                        </j:if>-->
+<!--                        <a class="jenkins-link&#45;&#45;with-icon" href="${x.href}/*view*/" tooltip="${%View}">-->
+<!--                          <l:icon src="symbol-view" />-->
+<!--                        </a>-->
+<!--                      </j:if>-->
+<!--                    </td>-->
+<!--                  </j:if>-->
+<!--                </tr>-->
+<!--              </j:forEach>-->
+<!--           </table>-->
+<!--           <j:if test="${showSymlinkWarning}">-->
+<!--             <p>-->
+<!--                <img id="alert" src="${imagesURL}/svgs/warning.svg" width="16" height="16" />-->
+<!--               ${%Symlinks are hidden}-->
+<!--             </p>-->
+<!--            </j:if>-->
+<!--          </j:otherwise>-->
+<!--        </j:choose>-->
+<!--      </div>-->
     </l:main-panel>
   </l:layout>
 </j:jelly>
