@@ -228,3 +228,29 @@ var breadcrumbs = (function() {
         "ContextMenu" : ContextMenu
     };
 })();
+
+function createElementFromHtml(html) {
+  const template = document.createElement("template");
+  template.innerHTML = html.trim();
+  return template.content.firstElementChild;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const [header] = document.querySelectorAll("h1")
+  if (header) {
+    const breadcrumbBarHeight = 43;
+    const headerBoxBottom = header.getBoundingClientRect().bottom - breadcrumbBarHeight;
+
+    const breadcrumbsBar = document.querySelector("#breadcrumbs")
+    const breadcrumbItem = createElementFromHtml(`<li class="item item--hidden"><a>${header.textContent}</a></li>`);
+    breadcrumbItem.addEventListener("click", () => {
+      window.scroll(0, 0)
+    })
+    breadcrumbsBar.append(breadcrumbItem)
+
+    document.addEventListener('scroll', function(e) {
+      const verticalOffset = window.scrollY;
+      breadcrumbItem.classList.toggle("item--hidden", headerBoxBottom > verticalOffset)
+    });
+  }
+})
