@@ -44,6 +44,14 @@ THE SOFTWARE.
       <!-- inject main part here -->
       <st:include page="main.jelly" />
 
+      <div>
+        <button id="green">Set to green</button>
+        <button id="orange">Set to orange</button>
+        <button id="red">Set to red</button>
+      </div>
+
+      <l:js src="jsbundles/pages/project.js" />
+
       <st:include page="permalinks.jelly" />
     </l:main-panel>
   </l:layout>
