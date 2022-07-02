@@ -1,4 +1,5 @@
 import debounce from 'lodash/debounce'
+import setFaviconStatus from "./util/favicon";
 
 const buildHistoryContainer = document.getElementById("buildHistory")
 const pageSearchInputContainer = buildHistoryContainer.querySelector('.build-search-row .jenkins-search')
@@ -18,6 +19,35 @@ const pageDown = buildHistoryPageNav.querySelectorAll('.pageDown')[0];
 
 const leftRightPadding = 4;
 const updateBuildsRefreshInterval = 5000;
+
+function longhorn() {
+  const lastBuild = document.querySelectorAll(".build-row .build-status-icon__wrapper")[0];
+  const lastBuildClasslist = document.querySelectorAll(".build-row .build-status-icon__wrapper")[0]?.classList;
+  const lastBuildColor = [...lastBuildClasslist].filter(e => e.startsWith("icon-"))[0]
+
+  console.log(window.getComputedStyle(lastBuild, null).getPropertyValue("color"))
+
+  // const mappings = {
+  //   "blue": "green",
+  //   "green-anime": "purple",
+  //   "yellow": "yellow",
+  //   "yellow-anime": "purple",
+  //   "red": "red",
+  //   "red-anime": "purple",
+  //   "aborted": "grey",
+  //   "aborted-anime": "grey",
+  //   "disabled": "grey",
+  //   "disabled-anime": "grey",
+  //   "grey": "grey",
+  //   "grey-anime": "grey",
+  //   "nobuilt": "grey",
+  //   "nobuilt-anime": "grey"
+  // }
+
+  setFaviconStatus(window.getComputedStyle(lastBuild, null).getPropertyValue("color"))
+
+  console.log(lastBuildColor)
+}
 
 function updateBuilds() {
     if (isPageVisible()) {
@@ -66,6 +96,8 @@ function updateBuilds() {
                     buildHistoryPage.setAttribute('page-entry-newest', newDataTable.getAttribute('page-entry-newest'));
                 }
 
+                longhorn()
+
                 // next update
                 buildHistoryContainer.headers = ["n", rsp.getResponseHeader("n")];
                 checkAllRowCellOverflows();
@@ -82,6 +114,8 @@ function createRefreshTimeout() {
     cancelRefreshTimeout();
     buildRefreshTimeout = window.setTimeout(updateBuilds, updateBuildsRefreshInterval);
 }
+
+longhorn()
 
 function cancelRefreshTimeout() {
     if (buildRefreshTimeout) {
