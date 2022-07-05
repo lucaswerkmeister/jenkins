@@ -96,70 +96,72 @@ THE SOFTWARE.
                 <tr
                   class="plugin ${p.hasMandatoryDependents()?'has-dependents':''} ${(p.hasMandatoryDependents() and !p.enabled)?'has-dependents-but-disabled':''} ${p.isDeleted()?'deleted':''} ${p.hasImpliedDependents() and p.enabled ? 'possibly-has-implied-dependents' : ''}"
                   data-plugin-id="${p.shortName}" data-plugin-name="${p.displayName}">
-                  <td class="details">
-                    <div class="plugin-name success-plugin">
-                      <a href="${p.url}" class="jenkins-table__link" target="_blank" rel="noopener noreferrer">
-                        ${p.updateInfo.displayName?:p.displayName}
-                        <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">
-                          <span class="jenkins-visually-hidden">${%Version}</span>
-                          ${p.version}
-                        </span>
-                      </a>
-                    </div>
-                    <div class="jenkins-!-margin-top-1">
-                      <j:set var="indexPage" value="${p.indexPage.toString()}"/>
-                      <j:set var="excerpt"
-                             value="${app.updateCenter.getPlugin(p.shortName).excerpt}"/>
-                      <j:set var="description"
-                             value="${p.manifest.mainAttributes.getValue('Specification-Title')}"/>
-                      <j:choose>
-                        <j:when
-                          test="${!empty(indexPage)}"> <!-- src/main/resources/index.jelly, preferred -->
-                          <j:include uri="${indexPage}"/>
-                        </j:when>
-                        <j:when test="${excerpt != null}"> <!-- HTML from {excerpt} in wiki page -->
-                          <j:out value="${excerpt}"/>
-                        </j:when>
-                        <j:when test="${description != null}"> <!-- last resort, from POM -->
-                          ${description}
-                        </j:when>
-                        <j:otherwise>
-                          ${%No description available.}
-                        </j:otherwise>
-                      </j:choose>
-                    </div>
-                    <j:set var="issueTrackerReportUrl" value="${p.getIssueTrackerReportUrl()}"/>
-                    <j:if test="${issueTrackerReportUrl != null}">
-                      <div class="excerpt">
-                        <a href="${issueTrackerReportUrl}" rel="noopener nofollow noreferrer" target="_blank" class="jenkins-label jenkins-label--tertiary">
-                          ${%reportIssue}
+                  <td class="no-vertical-padding details">
+                    <div class="app-plugin-manager__table-details banana">
+                      <div class="plugin-name success-plugin">
+                        <a href="${p.url}" class="jenkins-table__link" target="_blank" rel="noopener noreferrer">
+                          ${p.updateInfo.displayName?:p.displayName}
+                          <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">
+                            <span class="jenkins-visually-hidden">${%Version}</span>
+                            ${p.version}
+                          </span>
                         </a>
                       </div>
-                    </j:if>
-                    <j:if test="${!p.getActiveWarnings().isEmpty()}">
-                      <div class="alert alert-danger">${%securityWarning}
-                        <ul>
-                          <j:forEach var="warning" items="${p.getActiveWarnings()}">
-                            <li>
-                              <a href="${warning.url}" rel="noopener noreferrer"
-                                 target="_blank">${warning.message}
-                              </a>
-                            </li>
-                          </j:forEach>
-                        </ul>
+                      <div class="jenkins-!-margin-top-1">
+                        <j:set var="indexPage" value="${p.indexPage.toString()}"/>
+                        <j:set var="excerpt"
+                               value="${app.updateCenter.getPlugin(p.shortName).excerpt}"/>
+                        <j:set var="description"
+                               value="${p.manifest.mainAttributes.getValue('Specification-Title')}"/>
+                        <j:choose>
+                          <j:when
+                            test="${!empty(indexPage)}"> <!-- src/main/resources/index.jelly, preferred -->
+                            <j:include uri="${indexPage}"/>
+                          </j:when>
+                          <j:when test="${excerpt != null}"> <!-- HTML from {excerpt} in wiki page -->
+                            <j:out value="${excerpt}"/>
+                          </j:when>
+                          <j:when test="${description != null}"> <!-- last resort, from POM -->
+                            ${description}
+                          </j:when>
+                          <j:otherwise>
+                            ${%No description available.}
+                          </j:otherwise>
+                        </j:choose>
                       </div>
-                    </j:if>
-                    <j:if test="${p.isDeprecated()}">
-                      <div class="alert alert-warning">
-                        <!-- figure out a way how to present deprecations by multiple update sites instead of just the first one -->
-                        ${%deprecationWarning(p.getDeprecations().get(0).url)}
-                      </div>
-                    </j:if>
-                    <j:if test="${it.hasAdoptThisPluginLabel(p)}">
-                      <div class="alert alert-warning jenkins-!-margin-top-1 jenkins-!-margin-bottom-0">
-                        ${%adoptThisPlugin}
-                      </div>
-                    </j:if>
+                      <j:set var="issueTrackerReportUrl" value="${p.getIssueTrackerReportUrl()}"/>
+                      <j:if test="${issueTrackerReportUrl != null}">
+                        <div class="excerpt">
+                          <a href="${issueTrackerReportUrl}" rel="noopener nofollow noreferrer" target="_blank" class="jenkins-label jenkins-label--tertiary">
+                            ${%reportIssue}
+                          </a>
+                        </div>
+                      </j:if>
+                      <j:if test="${!p.getActiveWarnings().isEmpty()}">
+                        <div class="alert alert-danger">${%securityWarning}
+                          <ul>
+                            <j:forEach var="warning" items="${p.getActiveWarnings()}">
+                              <li>
+                                <a href="${warning.url}" rel="noopener noreferrer"
+                                   target="_blank">${warning.message}
+                                </a>
+                              </li>
+                            </j:forEach>
+                          </ul>
+                        </div>
+                      </j:if>
+                      <j:if test="${p.isDeprecated()}">
+                        <div class="alert alert-warning">
+                          <!-- figure out a way how to present deprecations by multiple update sites instead of just the first one -->
+                          ${%deprecationWarning(p.getDeprecations().get(0).url)}
+                        </div>
+                      </j:if>
+                      <j:if test="${it.hasAdoptThisPluginLabel(p)}">
+                        <div class="alert alert-warning jenkins-!-margin-top-1 jenkins-!-margin-bottom-0">
+                          ${%adoptThisPlugin}
+                        </div>
+                      </j:if>
+                    </div>
                   </td>
                   <j:set var="state" value="${p.enabled?'true':null}"/>
                   <td class="jenkins-table__cell--tight enable" data="${state}">
