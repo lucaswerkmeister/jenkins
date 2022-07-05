@@ -45,12 +45,13 @@ THE SOFTWARE.
   </st:documentation>
   <j:set var="itemId" value="${attrs.id ?: h.generateItemId()}" />
     <div class="jenkins-radio">
-        <input class="jenkins-radio__input" type="radio" name="${attrs.name}" onclick="${attrs.onclick}"
-               id="${itemId}" value="${attrs.value}" checked="${attrs.checked?'true':null}"
-               disabled="${readOnlyMode?'true':null}" />
-        <label class="jenkins-radio__label" for="${itemId}">${attrs.title}</label>
-        <div class="jenkins-radio__children">
-            <d:invokeBody />
-        </div>
+      <input class="jenkins-radio__input" type="radio" name="${attrs.name}" onclick="${attrs.onclick}"
+             id="${itemId}" value="${attrs.value}" checked="${attrs.checked?'true':null}"
+             disabled="${readOnlyMode?'true':null}" />
+      <label class="jenkins-radio__label" for="${itemId}">${attrs.title}</label>
+      <div class="jenkins-radio__description">${attrs.description}</div>
+      <div class="jenkins-radio__children">
+        <d:invokeBody />
+      </div>
     </div>
 </j:jelly>
