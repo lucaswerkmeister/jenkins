@@ -69,6 +69,10 @@ THE SOFTWARE.
           <label class="jenkins-radio__label" for="${name}-${value}">
             ${title}
           </label>
+          <div class="jenkins-radio__description" />
+          <div class="jenkins-radio__children">
+            <d:invokeBody />
+          </div>
         </div>
         <f:helpLink url="${help}" featureName="${title}" />
       </div>
@@ -76,9 +80,6 @@ THE SOFTWARE.
     <j:if test="${attrs.help!=null}">
       <f:helpArea />
     </j:if>
-    <div class="form-container tr">
-      <d:invokeBody />
-    </div>
     <!-- end marker -->
     <div class="tr ${attrs.inline?'':'row-set-end'} radio-block-end row-group-end" style="display:none"></div>
   </div>
