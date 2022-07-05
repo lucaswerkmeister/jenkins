@@ -1,17 +1,76 @@
+table {
+  --table-padding: 0.5rem !important;
+}
+
 #plugins {
+  .app-plugin-manager__table-details {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--table-padding);
+    margin: calc(var(--table-padding) * 2) 0;
+  }
+
+  .no-vertical-padding {
+    padding: 0 var(--table-padding) 0 0;
+    vertical-align: top;
+  }
+
+  .longhorn {
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color-secondary);
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin: calc(var(--table-padding) * 2) var(--table-padding);
+
+    time {
+      line-height: 1.375rem;
+    }
+  }
+
+  .asda-title {
+    display: flex;
+    justify-content: center;
+    height: 1.375rem;
+    padding: 0.25rem 0;
+  }
+
   .app-plugin-manager__categories {
     display: flex;
-    margin: 0.7rem 0;
-    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1.2rem 1.4rem;
+    margin: var(--table-padding) 0;
 
     &:empty {
       display: none;
     }
 
     a {
-      margin: 0 0 0 0 !important;
+      margin: 0!important;
       font-size: 0.75rem;
     }
+
+    &__separator {
+      position: relative;
+      width: 0.125rem;
+      height: 0.4rem;
+
+      &::before {
+        position: absolute;
+        content: "";
+        inset: -0.4rem 0;
+        background: currentColor;
+        opacity: 0.1;
+        border-radius: 0.125rem;
+      }
+    }
+  }
+
+  .excerpt {
+    line-height: 1.66;
   }
 
   tr.already-upgraded {
