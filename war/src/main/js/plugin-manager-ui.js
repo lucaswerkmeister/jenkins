@@ -2,7 +2,7 @@ import debounce from 'lodash/debounce'
 
 import pluginManagerAvailable from './templates/plugin-manager/available.hbs'
 import pluginManager from './api/pluginManager';
-import il8n from './util/il8n';
+import i18n from './util/i18n';
 
 function applyFilter(searchQuery) {
     // debounce reduces number of server side calls while typing
@@ -38,7 +38,7 @@ function applyFilter(searchQuery) {
         clearOldResults()
         var rows = pluginManagerAvailable({
             plugins: plugins.filter(plugin => selectedPlugins.indexOf(plugin.name) === -1),
-            il8n: il8n(),
+            i18n: i18n(),
             admin
         });
 
