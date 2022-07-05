@@ -15,7 +15,7 @@ def f = namespace(lib.FormTagLib)
 
 def type = "${field}.type"
 
-div(name: field) {
+div(name: field, class: "jenkins-radios") {
     f.radio(name: type, value: "fixed", title: _("Fixed"), id: "radio-${field}-fixed", checked: port > 0) {
         input(type: "number", class: "jenkins-input", name: "value", id: "${field}Id", placeholder: _("Port"),
                 value: port > 0 ? port : null, min: 0, max: 65535, step: 1)

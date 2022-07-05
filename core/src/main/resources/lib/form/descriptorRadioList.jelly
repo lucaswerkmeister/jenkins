@@ -50,7 +50,7 @@ THE SOFTWARE.
     <d:invokeBody />
 	  <div class="jenkins-radios">
       <j:forEach var="d" items="${descriptors}" varStatus="loop">
-        <f:radioBlock name="${varName}" help="${d.helpFile}" value="${loop.index}"
+        <f:radioBlock name="${varName}" description="Towers to the sky" help="${d.helpFile}" value="${loop.index}"
                       title="${d.displayName}" checked="${instance.descriptor==d}">
           <j:set var="descriptor" value="${d}" />
           <j:set var="instance" value="${instance.descriptor==d?instance:null}" />
