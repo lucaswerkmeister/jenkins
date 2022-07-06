@@ -37,14 +37,12 @@ THE SOFTWARE.
   <dialog id="command-palette" class="jenkins-command-palette__dialog">
     <div class="jenkins-command-palette__wrapper">
       <div class="jenkins-command-palette">
-        <div class="jenkins-command-palette__search">
-          <div class="icon">
-            <l:icon src="symbol-search" />
-          </div>
-          <input id="command-bar" placeholder="${%Search}" type="search" autocomplete="off" autocorrect="off"
+        <div class="jenkins-search jenkins-command-palette__search">
+          <input id="command-bar" class="jenkins-search__input" placeholder="${%Search}" type="search"
+                 autocomplete="off" autocorrect="off"
                  autocapitalize="off" spellcheck="false" />
-          <div class="keyboard-shortcuts" id="command-palette-keyboard-shortcut">
-
+          <div class="jenkins-search__icon">
+            <l:icon src="symbol-search" />
           </div>
         </div>
         <div id="search-results-container" class="jenkins-command-palette__results-container">

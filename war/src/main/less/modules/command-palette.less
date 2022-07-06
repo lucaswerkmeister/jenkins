@@ -1,7 +1,7 @@
 :root {
   --command-palette-backdrop: rgba(125, 125, 125, 0.9);
   --command-palette-background: rgba(255, 255, 255, 0.8);
-  --command-palette-focus-color: var(--primary);
+  --command-palette-focus-color: var(--item-box-shadow--focus);
   --command-palette-drop-shadow: 0 0 60px rgba(5, 5, 20, 0.4);
   --command-palette-inset-shadow: inset 0 0 2px 2px rgba(white, 0.1);
 }
@@ -10,7 +10,6 @@
   :root {
     --command-palette-backdrop: rgba(20, 20, 25, 0.95);
     --command-palette-background: rgba(50, 50, 56, 0.7);
-    --command-palette-focus-color: rgba(83, 193, 255, 0.5);
     --command-palette-drop-shadow: 0 0 60px rgba(0, 0, 15, 0.4);
     --command-palette-inset-shadow: inset 0 0 2px 2px rgba(240, 240, 255, 0.025);
   }
@@ -53,150 +52,19 @@
     background: var(--command-palette-background);
     box-shadow: 0 0 0 20px transparent, var(--command-palette-inset-shadow);
     margin-bottom: 1.5rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
     border-radius: 10px;
     transition: var(--standard-transition);
     z-index: 10;
     backdrop-filter: saturate(2) blur(10px);
-
-    .icon {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px;
-      height: 100%;
-      overflow: hidden;
-
-      svg {
-        width: 18px;
-        height: 18px;
-        transition: var(--standard-transition);
-      }
-
-      &::before,
-      &::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        color: inherit;
-        border: 2px solid currentColor;
-        border-radius: 100%;
-        opacity: 0;
-        transition: var(--standard-transition);
-      }
-
-      &::after {
-        clip-path: inset(0 0 50% 50%);
-        animation: loading-spinner 1s infinite linear;
-
-        @media (prefers-reduced-motion) {
-          animation-duration: 2s;
-        }
-      }
-
-      &--loading {
-        svg {
-          opacity: 0;
-          transform: scale(0);
-        }
-
-        &::before,
-        &::after {
-          top: calc(50% - 0.55rem);
-          left: calc(50% - 0.55rem);
-          width: 1.1rem;
-          height: 1.1rem;
-        }
-
-        &::before {
-          opacity: 0.2;
-        }
-
-        &::after {
-          opacity: 1;
-        }
-      }
-    }
+    max-width: unset;
 
     input {
-      appearance: none;
-      width: 100%;
-      margin: 0;
       border: none;
-      outline: none;
-      padding: 1rem 1.5rem 1rem 0;
+      padding: 0.5rem 0.6rem 0.5rem 2.7rem;
       font-size: 0.9rem;
       font-weight: 500;
-      color: var(--text-color);
-      transition: var(--standard-transition);
       background: transparent;
-
-      // Safari adds unwanted padding - let's remove it
-      &::-webkit-search-decoration {
-        -webkit-appearance: none;
-      }
-
-      // Hide the clear button
-      &::-webkit-search-cancel-button {
-        display: none;
-      }
-    }
-
-    ::placeholder {
-      color: var(--text-color-secondary);
-      opacity: 1; /* Firefox */
-    }
-
-    .keyboard-shortcuts {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 15px;
-
-      .shortcut {
-        position: relative;
-        color: var(--text-color);
-        border-radius: 6px;
-        padding: 3px 10px 4px 10px;
-        font-weight: 600;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          background: var(--text-color);
-          opacity: 0.1;
-          border-radius: inherit;
-        }
-
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          border-bottom: 2px solid var(--text-color);
-          opacity: 0.1;
-          border-radius: inherit;
-        }
-      }
-
-      svg {
-        width: 14px;
-        height: 14px;
-        margin: 0 7px;
-      }
+      box-shadow: none !important;
     }
 
     &:focus-within {
@@ -234,7 +102,8 @@
     }
 
     &__item {
-      position: relative;
+      .item();
+
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -246,55 +115,12 @@
       color: var(--text-color) !important;
       transition: var(--standard-transition);
       box-shadow: 0 0 0 10px transparent;
-      z-index: 0;
       border: none;
       outline: none;
 
-      &::before,
-      &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        z-index: -1;
-        opacity: 0;
-        border-radius: inherit;
-        transition: var(--standard-transition);
-      }
-
-      &::before {
-        background: currentColor;
-      }
-
-      &::after {
-        box-shadow: 0 0 0 10px transparent;
-      }
-
       &--hover {
         &::before {
-          opacity: 0.06;
-        }
-      }
-
-      &:hover {
-        text-decoration: none;
-
-        &::before {
-          opacity: 0.12;
-        }
-      }
-
-      &:active,
-      &:focus {
-        &::before {
-          opacity: 0.15;
-        }
-
-        &::after {
-          box-shadow: 0 0 0 5px currentColor;
-          opacity: 0.075;
+          background-color: var(--item-background--hover);
         }
       }
 

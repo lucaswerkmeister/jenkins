@@ -12,7 +12,7 @@ window.addEventListener('load', () => {
   const commandPalette = document.getElementById("command-palette")
   const commandPaletteWrapper = commandPalette.querySelector(".jenkins-command-palette__wrapper")
   const commandPaletteInput = document.getElementById("command-bar")
-  const commandPaletteLoadingSymbol = commandPalette.querySelector(".jenkins-command-palette__search .icon")
+  const commandPaletteSearchBarContainer = commandPalette.querySelector(".jenkins-command-palette__search")
   const searchResults = document.getElementById("search-results")
   const searchResultsContainer = document.getElementById("search-results-container")
 
@@ -92,11 +92,11 @@ window.addEventListener('load', () => {
     }
 
     searchResultsContainer.style.height = searchResults.offsetHeight + "px"
-    commandPaletteLoadingSymbol.classList.remove("icon--loading")
+    commandPaletteSearchBarContainer.classList.remove("jenkins-search--loading")
   }
 
   commandPaletteInput.addEventListener("input", () => {
-    commandPaletteLoadingSymbol.classList.add("icon--loading")
+    commandPaletteSearchBarContainer.classList.add("jenkins-search--loading")
     debounce(renderResults, 200)()
   })
 
