@@ -2,6 +2,7 @@
 
 const path = require('path');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin: CleanPlugin } = require('clean-webpack-plugin');
@@ -35,6 +36,7 @@ module.exports = (env, argv) => ({
     "sortable-drag-drop": [path.join(__dirname, "src/main/js/sortable-drag-drop.js")],
     "section-to-tabs": [path.join(__dirname, "src/main/js/section-to-tabs.js")],
     "filter-build-history": [path.join(__dirname, "src/main/js/filter-build-history.js")],
+    "simple-page": [path.join(__dirname, "src/main/less/simple-page.less")],
     "styles": [path.join(__dirname, "src/main/less/styles.less")],
   },
   output: {
@@ -152,7 +154,19 @@ module.exports = (env, argv) => ({
            chunks: 'all'
          }
        }
-    }
+    },
+    minimizer: [
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          preset: [
+            "default",
+            {
+              svgo: {"exclude": true},
+            },
+          ],
+        },
+      }),
+    ],
   },
   resolve: {
     alias:{

@@ -6,7 +6,7 @@ function checkPluginsWithoutWarnings() {
     var inputs = document.getElementsByTagName('input');
     for(var i = 0; i < inputs.length; i++) {
         var candidate = inputs[i];
-        if(candidate.type === "checkbox") {
+        if(candidate.type === "checkbox" && !candidate.disabled) {
             candidate.checked = candidate.dataset.compatWarning === 'false';
         }
     }
@@ -50,7 +50,7 @@ Behaviour.specify("#filter-box", '_table', 0, function(e) {
 
         layoutUpdateCallback.call();
     }
-    e.onkeyup = applyFilter;
+    e.addEventListener("input", () => applyFilter());
 
     (function() {
         var instructionsTd = document.getElementById("hidden-by-default-instructions-td");

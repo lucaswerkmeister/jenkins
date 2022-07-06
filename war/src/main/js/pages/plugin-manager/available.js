@@ -1,5 +1,4 @@
 import debounce from 'lodash/debounce'
-import requestAnimationFrame from 'raf';
 
 import pluginManager from "@/api/pluginManager";
 import pluginManagerAvailable from "@/templates/plugin-manager/available.hbs"
@@ -45,11 +44,6 @@ function applyFilter(searchQuery) {
         });
 
         tbody.insertAdjacentHTML('beforeend', rows);
-
-        // @see JENKINS-64504 - Update the sticky buttons position after each search.
-        requestAnimationFrame(() => {
-            layoutUpdateCallback.call()
-        })
     })
 }
 
