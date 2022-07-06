@@ -43,6 +43,7 @@ function applyFilter(searchQuery) {
         });
 
         tbody.insertAdjacentHTML('beforeend', rows);
+        Behaviour.applySubtree(tbody);
     })
 }
 
