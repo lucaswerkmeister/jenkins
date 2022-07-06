@@ -113,5 +113,15 @@ THE SOFTWARE.
         </span>
       </div>
     </j:if>
+
+    <j:if test="${app.updateCenter.isRestartRequiredForCompletion()}">
+      <div class="alert alert-warning">
+        <span class="jenkins-visually-hidden">${%Warning}</span>
+        ${%requires.restart}
+        <button class="jenkins-button jenkins-!-color-black">
+          ${%Restart Jenkins}
+        </button>
+      </div>
+    </j:if>
   </div>
 </j:jelly>

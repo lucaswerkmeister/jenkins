@@ -51,10 +51,6 @@ THE SOFTWARE.
 
       <st:adjunct includes="hudson.PluginManager._table"/>
 
-      <j:if test="${app.updateCenter.isRestartRequiredForCompletion()}">
-        <div class="alert alert-warning"><strong>${%Warning}</strong>: ${%requires.restart}</div>
-      </j:if>
-
       <div class="plugins i18n"
            data-cannot-enable="${%This plugin cannot be enabled}"
            data-cannot-disable="${%This plugin cannot be disabled}"
