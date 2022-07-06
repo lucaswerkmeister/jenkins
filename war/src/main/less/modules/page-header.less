@@ -51,6 +51,7 @@ a.page-header__brand-link {
 
 .page-header__hyperlinks a, .page-header__hyperlinks button {
     --text-color: var(--header-link-color);
+
     display: inline-flex;
     align-items: center;
 
@@ -68,14 +69,13 @@ a.page-header__brand-link {
 
     transition: 0.2s ease;
 
-    &:link,
-    &:visited {
+    &:link, &:visited {
+        color: var(--header-link-color);
+        border-radius: var(--header-item-border-radius);
         text-decoration: none;
     }
 
-    &:hover,
-    &:focus,
-    &.mouseIsOverMenuSelector {
+    &:hover, &:focus, &.mouseIsOverMenuSelector {
         color: var(--header-link-color-active);
         background-color: var(--header-link-bg-classic-hover);
         text-decoration: underline;
@@ -148,8 +148,7 @@ a.page-header__brand-link {
     }
 }
 
-.main-search__icon-leading,
-.main-search__icon-trailing {
+.main-search__icon-leading, .main-search__icon-trailing {
     position: absolute;
     display: inline-flex;
     height: 2.5rem;
@@ -173,13 +172,11 @@ a.page-header__brand-link {
     right: 0;
     outline-color: var(--header-link-outline);
 
-    &:link,
-    &:visited {
+    &:link, &:visited {
         color: var(--search-input-color);
     }
 
-    &:hover,
-    &:focus {
+    &:hover, &:focus {
         color: var(--header-link-bg-classic-hover);
     }
 

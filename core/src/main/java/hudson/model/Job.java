@@ -76,6 +76,7 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -475,7 +476,7 @@ public abstract class Job<JobT extends Job<JobT, RunT>, RunT extends Run<JobT, R
 
     @Override
     public Collection<? extends Job> getAllJobs() {
-        return Collections.<Job>singleton(this);
+        return Set.of(this);
     }
 
     /**
@@ -593,7 +594,7 @@ public abstract class Job<JobT extends Job<JobT, RunT>, RunT extends Run<JobT, R
         return new HistoryWidget<Job, RunT>(this, getBuilds(), HISTORY_ADAPTER);
     }
 
-    public static final HistoryWidget.Adapter<Run> HISTORY_ADAPTER = new Adapter<Run>() {
+    public static final HistoryWidget.Adapter<Run> HISTORY_ADAPTER = new Adapter<>() {
         @Override
         public int compare(Run record, String key) {
             try {
@@ -1074,7 +1075,7 @@ public abstract class Job<JobT extends Job<JobT, RunT>, RunT extends Run<JobT, R
         RSS.forwardToRss(
                 getDisplayName() + scmDisplayName + " changes",
                 getUrl() + "changes",
-                entries, new FeedAdapter<FeedItem>() {
+                entries, new FeedAdapter<>() {
                     @Override
                     public String getEntryTitle(FeedItem item) {
                         return "#" + item.getBuild().number + ' ' + item.e.getMsg() + " (" + item.e.getAuthor() + ")";

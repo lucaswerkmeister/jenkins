@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -229,7 +230,7 @@ public abstract class Actionable extends AbstractModelObject implements ModelObj
             return false;
         }
         // CopyOnWriteArrayList does not support Iterator.remove, so need to do it this way:
-        return getActions().removeAll(Collections.singleton(a));
+        return getActions().removeAll(Set.of(a));
     }
 
     /**
