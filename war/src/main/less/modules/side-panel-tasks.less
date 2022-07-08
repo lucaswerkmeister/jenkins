@@ -22,8 +22,6 @@
   }
 
   .task {
-    margin: 0 0 0 -0.8rem;
-
     .task-link {
       .item();
     }
@@ -36,6 +34,10 @@
     padding: 10px var(--section-padding);
     margin: calc(var(--section-padding) - 10px) 0 -10px 0;
     gap: 0.6rem;
+
+    .jenkins-app-bar {
+      display: none;
+    }
 
     .task {
       display: inline-block;
@@ -97,6 +99,10 @@
 
   @media (min-width: @mobile-breakpoint + 1) and (max-width: @tablet-breakpoint - 1) {
     gap: 0.5rem;
+    
+    .jenkins-app-bar {
+      display: none;
+    }
 
     .task {
       margin: 0 0 0 -0.8rem;
@@ -118,6 +124,7 @@
         outline: none;
         border: none;
         text-decoration: none;
+        width: 100px;
         max-width: 100px;
         text-align: center;
 
@@ -179,6 +186,8 @@
         outline: none;
         border: none;
         text-decoration: none;
+        width: 100%;
+        margin: 0;
 
         .task-icon-link {
           display: contents;
