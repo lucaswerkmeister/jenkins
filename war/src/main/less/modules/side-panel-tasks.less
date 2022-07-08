@@ -1,7 +1,6 @@
-@import '../abstracts/breakpoints';
+@import "../abstracts/breakpoints";
 
-#tasks,
-.subtasks {
+#tasks, .subtasks {
   display: flex;
   flex-direction: column;
   margin: calc(var(--section-padding) - 0.4rem) 0 calc(var(--section-padding) - 0.8rem) var(--section-padding);
@@ -18,7 +17,13 @@
 }
 
 #tasks {
+  h1 {
+    margin-top: 0.4rem;
+  }
+
   .task {
+    margin: 0 0 0 -0.8rem;
+
     .task-link {
       .item();
     }
