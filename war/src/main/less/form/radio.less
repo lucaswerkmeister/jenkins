@@ -11,8 +11,10 @@
 }
 
 .jenkins-radio {
+  position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1.375rem 1fr auto;
+  grid-template-rows: auto auto auto;
   gap: 0.25rem 0.75rem;
 
   &__input {
@@ -56,17 +58,18 @@
   }
 
   &__label {
-    position: relative;
-    display: contents;
+    grid-row: 1;
+    grid-column: 2;
     margin-bottom: 0;
     cursor: pointer;
     font-weight: var(--form-label-font-weight);
     // remove 300ms pause on mobile
     touch-action: manipulation;
+    border: 2px solid orange;
 
     &::before {
       content: "";
-      position: relative;
+      position: absolute;
       width: 1.375rem;
       height: 1.375rem;
       border-radius: 50%;
@@ -74,13 +77,19 @@
       box-shadow: 0 0 0 10px transparent, inset 0 0 0 2px var(--input-border);
       transition: box-shadow var(--standard-transition);
       cursor: pointer;
+      grid-row: 1;
+      grid-column: 1;
+      top: 0;
+      left: 0;
     }
   }
 
   &__description {
-    grid-column: 2;
+    grid-row: 2;
+    grid-column: 2 / span 2;
     color: var(--text-color-secondary);
     line-height: 1.66;
+    border: 2px solid blue;
 
     &:empty {
       display: none;
@@ -88,20 +97,25 @@
   }
 
   &__children {
-    transition: var(--standard-transition);
-    grid-column: span 2;
     display: none;
+    transition: var(--standard-transition);
+    grid-row: 3;
+    grid-column: 2 / span 2;
+    border: 2px solid red;
 
     &::before {
       content: "";
-      position: relative;
+      position: absolute;
       width: 0.125rem;
       height: calc(100% - 0.3rem);
-      margin: 0.3rem auto auto;
+      //margin: 0.3rem auto auto;
       background: var(--input-border);
       border-radius: 2px;
       transition: var(--standard-transition);
-      grid-row: 2 / span 2
+      grid-column: 1;
+      grid-row: 2 / span 2;
+      top: 0.3rem;
+      left: 0.625rem;
     }
 
     &:focus-within {
@@ -116,18 +130,12 @@
   }
 
   &__input:checked + &__label + &__children, &__input:checked + &__label + &__description + &__children {
-    display: contents;
+    display: block;
   }
 }
 
 .radioBlock-container {
   display: contents;
-
-  //margin-bottom: calc(var(--section-padding) / 3);
-  //
-  //&:last-of-type {
-  //  margin-bottom: var(--section-padding);
-  //}
 }
 
 .longhorn {
