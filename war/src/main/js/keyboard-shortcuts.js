@@ -1,5 +1,7 @@
 import hotkeys from "hotkeys-js"
 
+const registeredShortcuts = {}
+
 window.addEventListener("load", () => {
   hotkeys("*", ({key}) => {
     if (key === "Meta") {
@@ -18,11 +20,21 @@ window.addEventListener("load", () => {
   })
 
   document.querySelectorAll("[data-keyboard-shortcut]").forEach(function(element) {
-    hotkeys(translateKeyboardShortcutForOS(element.dataset.keyboardShortcut), () => {
+    const shortcut = translateKeyboardShortcutForOS(element.dataset.keyboardShortcut)
+
+    if (registeredShortcuts[shortcut]) {
+      console.warn(`Shortcut '${shortcut}' is already registered by`, element)
+      return
+    }
+
+    registeredShortcuts[shortcut] = element
+
+    hotkeys(shortcut, () => {
       // Small delay to show animation
       setTimeout(function() {
         switch (element.tagName) {
           case "A":
+          case "BUTTON":
             element.click()
             break;
           case "INPUT":
