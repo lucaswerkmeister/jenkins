@@ -1,51 +1,15 @@
 import hotkeys from "hotkeys-js"
 
-const registeredShortcuts = {}
-
 window.addEventListener("load", () => {
-  hotkeys("*", ({key}) => {
-    if (key === "Meta") {
-      key = "CMD";
-    }
+  const searchBar = document.querySelector("#search-box")
+  searchBar.placeholder = searchBar.placeholder + ` (${translateKeyboardShortcutForOS("CMD+K")
+    .replace("CMD", "⌘")})`
 
-    [...document.querySelectorAll(".jenkins-keyboard-shortcut__item")]
-      .filter(shortcut => shortcut.textContent.toLowerCase() === key.toLowerCase())
-      .forEach(shortcut => {
-        shortcut.classList.add("jenkins-keyboard-shortcut__item--chosen")
+  hotkeys(translateKeyboardShortcutForOS("CMD+K"), () => {
+    searchBar.focus()
 
-        setTimeout(function() {
-          shortcut.classList.remove("jenkins-keyboard-shortcut__item--chosen");
-        }, 500);
-      })
-  })
-
-  document.querySelectorAll("[data-keyboard-shortcut]").forEach(function(element) {
-    const shortcut = translateKeyboardShortcutForOS(element.dataset.keyboardShortcut)
-
-    if (registeredShortcuts[shortcut]) {
-      console.warn(`Shortcut '${shortcut}' is already registered by`, element)
-      return
-    }
-
-    registeredShortcuts[shortcut] = element
-
-    hotkeys(shortcut, () => {
-      // Small delay to show animation
-      setTimeout(function() {
-        switch (element.tagName) {
-          case "A":
-          case "BUTTON":
-            element.click()
-            break;
-          case "INPUT":
-            element.focus()
-            break;
-        }
-
-        // Returning false stops the event and prevents default browser events
-        return false
-      }, 50);
-    })
+    // Returning false stops the event and prevents default browser events
+    return false
   })
 })
 
