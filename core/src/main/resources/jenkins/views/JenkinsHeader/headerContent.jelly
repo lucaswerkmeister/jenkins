@@ -24,7 +24,7 @@
                 <!-- this div is used to calculate the width of the text box -->
                 <div id="search-box-sizer"/>
                 <div id="searchform">
-                    <input name="q" placeholder="${searchPlaceholder}" id="search-box" class="main-search__input" value="${request.getParameter('q')}" role="searchbox" data-keyboard-shortcut="CMD+K" />
+                    <input name="q" placeholder="${searchPlaceholder}" id="search-box" class="main-search__input" value="${request.getParameter('q')}" role="searchbox" />
 
                     <span class="main-search__icon-leading">
                         <l:icon src="symbol-search"/>
