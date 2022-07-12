@@ -41,6 +41,6 @@ THE SOFTWARE.
             A CSS class to use to style the link.
         </st:attribute>
     </st:documentation>
-    <a href="#" class="${class} confirmation-link" data-post="${post}" data-url="${attrs.href}" data-message="${message}" data-keyboard-shortcut="${attrs.keyboardShortcut}" tooltip="${attrs.keyboardShortcut}"><d:invokeBody/></a>
+    <a href="#" class="${class} confirmation-link" data-post="${post}" data-url="${attrs.href}" data-message="${message}" tooltip="${attrs.keyboardShortcut}"><d:invokeBody/></a>
     <st:adjunct includes="lib.layout.confirmationLink.adjunct "/>
 </j:jelly>

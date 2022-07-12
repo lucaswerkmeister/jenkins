@@ -171,17 +171,15 @@ THE SOFTWARE.
                     <l:icon src="${icon}" />
                   </span>
                   <span>${title}</span>
-                  <l:keyboardShortcut keys="${attrs.keyboardShortcut}" />
                 </l:confirmationLink>
               </j:when>
 
               <j:otherwise>
-                <a href="${href}" class="task-link ${isCurrent ? 'task-link--active' : ''}" onclick="${attrs.onclick ?: (post ? 'return postRequest_' + id + '(this)' : null)}" data-keyboard-shortcut="${attrs.keyboardShortcut}">
+                <a href="${href}" class="task-link ${isCurrent ? 'task-link--active' : ''}" onclick="${attrs.onclick ?: (post ? 'return postRequest_' + id + '(this)' : null)}">
                   <span class="task-icon-link">
                     <l:icon src="${icon}" />
                   </span>
                   <span class="task-link-text">${title}</span>
-                  <l:keyboardShortcut keys="${attrs.keyboardShortcut}" />
                 </a>
               </j:otherwise>
             </j:choose>
