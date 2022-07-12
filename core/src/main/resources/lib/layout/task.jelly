@@ -81,10 +81,6 @@ THE SOFTWARE.
       Message to use for confirmation, if requested; defaults to title.
       (since 1.512)
     </st:attribute>
-    <st:attribute name="keyboardShortcut">
-      Optional keyboard shortcut to use to access this task
-      (since TODO)
-    </st:attribute>
   </st:documentation>
 
   <!--
