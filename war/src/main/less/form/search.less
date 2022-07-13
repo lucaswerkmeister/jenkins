@@ -63,68 +63,70 @@
 
   &__icon {
     position: absolute;
-    top: 9px;
-    left: 9px;
-    width: 16px;
-    height: 16px;
-    fill: var(--input-border-hover);
-    transition: var(--standard-transition);
-  }
+    aspect-ratio: 1 / 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: grid;
+    pointer-events: none;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 17px;
-    left: 17px;
-    width: 0;
-    height: 0;
-    color: inherit;
-    border: 2px solid currentColor;
-    border-radius: 100%;
-    opacity: 0;
-    transition: var(--standard-transition);
-  }
+    svg {
+      width: 45%;
+      height: 45%;
+      max-width: 1.1rem;
+      max-height: 1.1rem;
+      grid-column-start: 1;
+      grid-row-start: 1;
+      justify-self: center;
+      align-self: center;
+      transition: var(--standard-transition);
+    }
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: 17px;
-    left: 17px;
-    width: 0;
-    height: 0;
-    color: inherit;
-    border: 2px solid currentColor;
-    border-radius: 100%;
-    clip-path: inset(0 0 50% 50%);
-    opacity: 0;
-    transition: var(--standard-transition);
-    animation: loading-spinner 1s infinite linear;
+    &::before, &::after {
+      content: "";
+      width: 0;
+      height: 0;
+      max-width: 1.1rem;
+      max-height: 1.1rem;
+      border: 0.125rem solid currentColor;
+      border-radius: 100%;
+      transition: var(--standard-transition);
+      grid-column-start: 1;
+      grid-row-start: 1;
+      justify-self: center;
+      align-self: center;
+      opacity: 0;
+    }
 
-    @media (prefers-reduced-motion) {
-      animation-duration: 2s;
+    &::after {
+      clip-path: inset(0 0 50% 50%);
+      transition: var(--standard-transition);
+      animation: loading-spinner 1s infinite linear;
+
+      @media (prefers-reduced-motion) {
+        animation-duration: 2s;
+      }
     }
   }
 
   &--loading {
     .jenkins-search__icon {
-      opacity: 0;
-      transform: scale(0);
-    }
+      svg {
+        opacity: 0;
+        transform: scale(0);
+      }
 
-    &::before {
-      opacity: 0.2;
-      top: 9px;
-      left: 9px;
-      width: 16px;
-      height: 16px;
-    }
+      &::before {
+        opacity: 0.2;
+        width: 45%;
+        height: 45%;
+      }
 
-    &::after {
-      opacity: 1;
-      top: 9px;
-      left: 9px;
-      width: 16px;
-      height: 16px;
+      &::after {
+        opacity: 1;
+        width: 45%;
+        height: 45%;
+      }
     }
   }
 
