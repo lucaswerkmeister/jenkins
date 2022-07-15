@@ -350,3 +350,31 @@
   destructive: var(--red);
   build: var(--green);
 }
+
+.jenkins-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: 10px;
+  background: var(--table-background);
+  text-align: center;
+  margin-bottom: var(--section-padding);
+  padding: calc(var(--section-padding) * 1.5) var(--section-padding);
+
+  &__title {
+    font-weight: 550;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+  }
+
+  &__paragraph {
+    font-weight: 550;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color-secondary);
+    font-size: 0.9rem;
+  }
+}
