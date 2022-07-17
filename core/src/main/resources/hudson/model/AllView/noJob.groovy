@@ -21,20 +21,16 @@ div {
             if (canSetUpDistributedBuilds || hasItemCreatePermission) {
                 h1(_("Welcome to Jenkins!"))
 
-                p(_("noJobDescription"))
+                p(_("noJobDescription"), class: "jenkins-leading-description")
                 
                 section(class: "empty-state-section") {
                     h2(_("startBuilding"), class: "h4")
 
                     ul(class: "empty-state-section-list") {
                         li(class: "content-block") {
-                            a(href: "newJob", class: "content-block__link") {
+                            a(href: "newJob", class: "jenkins-button content-block__link") {
                                 span(_("createJob"))
-                                span(class: "trailing-icon") {
-                                    l.svgIcon(
-                                            class: "icon-sm",
-                                            href: "${resURL}/images/material-icons/svg-sprite-navigation-symbol.svg#ic_arrow_forward_24px")
-                                }
+                                l.icon(src: "symbol-arrow-right")
                             }
                         }
                     }
@@ -45,25 +41,17 @@ div {
                         h2(_("setUpDistributedBuilds"), class: "h4")
                         ul(class: "empty-state-section-list") {
                             li(class: "content-block") {
-                                a(href: "computer/new", class: "content-block__link") {
+                                a(href: "computer/new", class: "jenkins-button content-block__link") {
                                     span(_("setUpAgent"))
-                                    span(class: "trailing-icon") {
-                                        l.svgIcon(
-                                                class: "icon-sm",
-                                                href: "${resURL}/images/material-icons/svg-sprite-navigation-symbol.svg#ic_arrow_forward_24px")
-                                    }
+                                    l.icon(src: "symbol-arrow-right")
                                 }
                             }
 
                             if (hasAdministerJenkinsPermission) {
                                 li(class: "content-block") {
-                                    a(href: "configureClouds", class: "content-block__link") {
+                                    a(href: "configureClouds", class: "jenkins-button content-block__link") {
                                         span(_("setUpCloud"))
-                                        span(class: "trailing-icon") {
-                                            l.svgIcon(
-                                                    class: "icon-sm",
-                                                    href: "${resURL}/images/material-icons/svg-sprite-navigation-symbol.svg#ic_arrow_forward_24px")
-                                        }
+                                        l.icon(src: "symbol-arrow-right")
                                     }
                                 }
                             }
@@ -71,13 +59,9 @@ div {
                             li(class: "content-block") {
                                 a(href: "https://www.jenkins.io/redirect/distributed-builds",
                                         target: "_blank",
-                                        class: "content-block__link content-block__help-link") {
+                                        class: "jenkins-button jenkins-button--tertiary content-block__link") {
                                     span(_("learnMoreDistributedBuilds"))
-                                    span(class: "trailing-icon") {
-                                        l.svgIcon(
-                                                class: "icon-sm",
-                                                href: "${resURL}/images/material-icons/svg-sprite-content-symbol.svg#ic_link_24px")
-                                    }
+                                    l.icon(src: "symbol-external")
                                 }
                             }
                         }
@@ -93,13 +77,9 @@ div {
 
                 ul(class: "empty-state-section-list") {
                     li(class: "content-block") {
-                        a(href: "newJob", class: "content-block__link") {
+                        a(href: "newJob", class: "jenkins-button content-block__link") {
                             span(_("createJob"))
-                            span(class: "trailing-icon") {
-                                l.svgIcon(
-                                        class: "icon-sm",
-                                        href: "${resURL}/images/material-icons/svg-sprite-navigation-symbol.svg#ic_arrow_forward_24px")
-                            }
+                            l.icon(src: "symbol-arrow-right")
                         }
                     }
                 }
@@ -122,26 +102,17 @@ div {
                 ul(class: "empty-state-section-list") {
                     li(class: "content-block") {
                         a(href: "${rootURL}/${app.securityRealm.loginUrl}?from=${request.requestURI}",
-                                class: "content-block__link") {
+                                class: "jenkins-button content-block__link") {
                             span(_("Log in to Jenkins"))
-                            span(class: "trailing-icon") {
-                                l.svgIcon(
-                                        class: "icon-sm",
-                                        href: "${resURL}/images/material-icons/svg-sprite-navigation-symbol.svg#ic_arrow_forward_24px")
-                            }
+                            l.icon(src: "symbol-arrow-right")
                         }
                     }
 
                     if (canSignUp) {
                         li(class: "content-block") {
-                            a(href: "signup", class: "content-block__link") {
+                            a(href: "signup", class: "jenkins-button content-block__link") {
                                 span(_("Sign up for Jenkins"))
-                                span(class: "trailing-icon") {
-                                    l.svgIcon(
-                                            class: "icon-sm",
-                                            href: "${resURL}/images/material-icons/svg-sprite-navigation-symbol.svg#ic_arrow_forward_24px")
-                                }
-
+                                l.icon(src: "symbol-arrow-right")
                             }
                         }
                     }
