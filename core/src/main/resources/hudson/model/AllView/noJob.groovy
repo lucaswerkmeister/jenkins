@@ -14,17 +14,18 @@ def canSetUpDistributedBuilds = Jenkins.get().hasPermission(Computer.CREATE) &&
 def hasAdministerJenkinsPermission = Jenkins.get().hasPermission(Jenkins.ADMINISTER);
 def hasItemCreatePermission = my.owner.itemGroup.hasPermission(Item.CREATE);
 
-div {
-
-    div(class: "empty-state-block") {
+div(class: "app-dashboard__oobe") {
         if (isTopLevelAllView) {
             if (canSetUpDistributedBuilds || hasItemCreatePermission) {
-                h1(_("Welcome to Jenkins!"))
+                h1 {
+                    span(_("Welcome to"))
+                    span("Jenkins", class: "elaine")
+                }
 
                 p(_("noJobDescription"), class: "jenkins-leading-description")
                 
                 section(class: "empty-state-section") {
-                    h2(_("startBuilding"), class: "h4")
+                    h2(_("startBuilding"), class: "empty-state-section__heading")
 
                     ul(class: "empty-state-section-list") {
                         li(class: "content-block") {
@@ -38,7 +39,7 @@ div {
 
                 if (canSetUpDistributedBuilds) {
                     section(class: "empty-state-section") {
-                        h2(_("setUpDistributedBuilds"), class: "h4")
+                        h2(_("setUpDistributedBuilds"), class: "empty-state-section__heading")
                         ul(class: "empty-state-section-list") {
                             li(class: "content-block") {
                                 a(href: "computer/new", class: "jenkins-button content-block__link") {
@@ -59,7 +60,7 @@ div {
                             li(class: "content-block") {
                                 a(href: "https://www.jenkins.io/redirect/distributed-builds",
                                         target: "_blank",
-                                        class: "jenkins-button jenkins-button--tertiary content-block__link") {
+                                        class: "jenkins-button content-block__link") {
                                     span(_("learnMoreDistributedBuilds"))
                                     l.icon(src: "symbol-external")
                                 }
@@ -73,7 +74,7 @@ div {
             // we're in a folder
 
             section(class: "empty-state-section") {
-                h2(_("This folder is empty"), class: "h4")
+                h2(_("This folder is empty"), class: "empty-state-section__heading")
 
                 ul(class: "empty-state-section-list") {
                     li(class: "content-block") {
@@ -120,4 +121,3 @@ div {
             }
         }
     }
-}

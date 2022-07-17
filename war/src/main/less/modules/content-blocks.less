@@ -22,10 +22,6 @@
 .content-block__link-list li {
   list-style: none;
   width: 100%;
-
-  &:not(:last-child) {
-    margin-bottom: 0.75rem;
-  }
 }
 
 .content-block__link {
@@ -40,18 +36,52 @@
 .empty-state-block {
   max-width: 600px;
   margin: 0 auto;
-  margin-top: 1.5rem;
 }
 
-.empty-state-section {
-  margin-top: 2rem;
+.empty-state-section__heading {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: calc(var(--section-padding) / 2);
 }
 
 .empty-state-section-list {
   padding: 0;
+  margin: 0;
 
   li {
     list-style: none;
     margin-bottom: 0.5rem;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
+}
+
+.app-dashboard__oobe {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-padding);
+  max-width: 600px;
+  margin: 5vh auto 0 auto;
+
+  & > * {
+    margin-bottom: 0;
+  }
+}
+
+h1 {
+  span:first-of-type {
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: calc(var(--section-padding) / 3);
+  }
+}
+
+.elaine {
+  font-family: "Georgia";
+  font-weight: 600;
+  font-size: 1.75rem;
 }
