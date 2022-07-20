@@ -42,7 +42,25 @@ THE SOFTWARE.
         <st:include page="downgrade.jelly" it="${app}" />
       </section>
 
-      <l:overflowButton />
+      <div class="jenkins-buttons-row">
+        <button class="jenkins-button jenkins-button--primary"
+                type="button">
+          <l:icon src="symbol-add" />
+          Hello world
+        </button>
+        <button class="jenkins-button"
+                type="button">
+          <l:icon src="symbol-edit" />
+        </button>
+        <button class="jenkins-button"
+                type="button">
+          <l:icon src="symbol-cube" />
+        </button>
+        <l:overflowButton />
+      </div>
+
+      <br />
+      <br />
 
       <j:forEach var="category" items="${app.categorizedManagementLinks.entrySet()}">
         <section class="jenkins-section jenkins-section--bottom-padding">

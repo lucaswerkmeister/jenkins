@@ -41,7 +41,20 @@ THE SOFTWARE.
   <button class="jenkins-button"
           tooltip="${attrs.tooltip ?: '%More actions'}"
           type="button">
-    <l:icon src="${attrs.icon ?: 'symbol-ellipsis'}" />
+
+    <j:choose>
+      <j:when test="${attrs.icon}">
+        <l:icon src="${attrs.icon}" />
+      </j:when>
+      <j:otherwise>
+        <div class="jenkins-overflow-button__ellipsis">
+          <span />
+          <span />
+          <span />
+        </div>
+      </j:otherwise>
+    </j:choose>
+
     ${attrs.text}
   </button>
 </j:jelly>
