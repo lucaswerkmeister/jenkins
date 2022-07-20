@@ -32,7 +32,7 @@ THE SOFTWARE.
   </st:documentation>
 
   <div class="jenkins-search ${attrs.clazz}">
-    <div class="jenkins-search__icon" aria-hidden="true">
+    <div class="jenkins-search__icon">
       <l:icon src="symbol-search" />
     </div>
     <input value="${attrs.value}"
