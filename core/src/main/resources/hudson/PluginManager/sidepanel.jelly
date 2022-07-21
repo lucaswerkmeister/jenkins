@@ -1,0 +1,117 @@
+<!--
+The MIT License
+
+Copyright (c) 2022, Jenkins contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+
+<!--
+  Sidepanel component for Plugins Manager
+-->
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+  <st:documentation>
+    <st:attribute name="page">
+      Adds the highlighted class to the current page item in the list
+    </st:attribute>
+  </st:documentation>
+
+  <div id="tasks" class="app-plugin-manager__sidebar">
+    <div class="jenkins-app-bar">
+      <div class="jenkins-app-bar__content">
+        <h1>${%Plugins}</h1>
+      </div>
+    </div>
+
+    <div class="task">
+      <span class="task-link-wrapper">
+        <a href="./" class="task-link ${page == 'updates' ? 'task-link--active' : ''}">
+          <div class="task-icon-link">
+            <l:icon src="symbol-download" />
+          </div>
+          <span class="task-icon-text">
+            ${%Updates}
+          </span>
+          <j:if test="${app.updateCenter.updates.size() != 0}">
+            <span class="task-icon-badge">
+              ${app.updateCenter.updates.size()}
+            </span>
+          </j:if>
+        </a>
+      </span>
+    </div>
+
+    <div class="task">
+      <span class="task-link-wrapper">
+        <a href="./available" class="task-link ${page == 'available' ? 'task-link--active' : ''}">
+          <div class="task-icon-link">
+            <l:icon src="symbol-shopping-bag" />
+          </div>
+          <span class="task-icon-text">
+            ${%Available plugins}
+          </span>
+        </a>
+      </span>
+    </div>
+
+    <div class="task">
+      <span class="task-link-wrapper">
+        <a href="./installed" class="task-link ${page == 'installed' ? 'task-link--active' : ''}">
+          <div class="task-icon-link">
+            <l:icon src="symbol-plugins" />
+          </div>
+          <span class="task-icon-text">
+            ${%Installed plugins}
+          </span>
+        </a>
+      </span>
+    </div>
+
+    <div class="task">
+      <span class="task-link-wrapper">
+        <a href="./advanced" class="task-link ${page == 'advanced' ? 'task-link--active' : ''}">
+          <div class="task-icon-link">
+            <l:icon src="symbol-settings" />
+          </div>
+          <span class="task-icon-text">
+            ${%Advanced settings}
+          </span>
+        </a>
+      </span>
+    </div>
+
+    <j:if test="${!app.updateCenter.jobs.isEmpty()}">
+      <hr />
+
+      <div class="task">
+        <span class="task-link-wrapper">
+          <a href="../updateCenter" class="task-link">
+            <div class="task-icon-link">
+              <l:icon src="symbol-list" />
+            </div>
+            <span class="task-icon-text">
+              ${%Update Center}
+            </span>
+          </a>
+        </span>
+      </div>
+    </j:if>
+  </div>
+</j:jelly>
