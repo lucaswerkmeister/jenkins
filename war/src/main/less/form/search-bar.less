@@ -1,4 +1,6 @@
 .jenkins-search {
+  --search-bar-height: 2.1875rem;
+
   position: relative;
   max-width: 420px;
 
@@ -10,12 +12,12 @@
     border-radius: 10px;
     width: 100%;
     margin: 0;
-    padding: 0 0.5rem 0 2.5rem;
+    padding: 0 0.5rem 0 var(--search-bar-height);
     line-height: 1;
     box-shadow: var(--form-input-glow);
     transition: var(--standard-transition);
     font-weight: 500;
-    height: 2.5rem;
+    height: var(--search-bar-height);
 
     // Safari adds unwanted padding - let's remove it
     &::-webkit-search-decoration {

@@ -28,6 +28,7 @@ THE SOFTWARE.
     <st:attribute name="value" />
     <st:attribute name="placeholder" />
     <st:attribute name="id" />
+    <st:attribute name="autofocus" />
     <st:attribute name="clazz" />
   </st:documentation>
 
@@ -40,6 +41,7 @@ THE SOFTWARE.
            class="jenkins-search__input"
            placeholder="${attrs.placeholder ?: '%Search'}"
            type="search"
+           autofocus="${attrs.autofocus}"
            autocomplete="off"
            autocorrect="off"
            autocapitalize="off"
