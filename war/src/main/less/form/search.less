@@ -4,15 +4,18 @@
 
   &__input {
     appearance: none;
-    background: var(--input-color);
-    border: 2px solid var(--input-border);
-    border-radius: var(--form-input-border-radius);
+    background: var(--item-background--hover);
+    border: none;
+    outline: none;
+    border-radius: 10px;
     width: 100%;
     margin: 0;
-    padding: 0 4px 0 29px;
-    line-height: 30px;
+    padding: 0 0.5rem 0 2.5rem;
+    line-height: 1;
     box-shadow: var(--form-input-glow);
     transition: var(--standard-transition);
+    font-weight: 500;
+    height: 2.5rem;
 
     // Safari adds unwanted padding - let's remove it
     &::-webkit-search-decoration {
@@ -21,9 +24,9 @@
 
     &::-webkit-search-cancel-button {
       -webkit-appearance: none;
-      height: 1rem;
-      width: 1rem;
-      margin-right: 2px;
+      height: 1.1rem;
+      width: 1.1rem;
+      margin-right: 0.2rem;
       background: currentColor;
       mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm75.31 260.69a16 16 0 11-22.62 22.62L256 278.63l-52.69 52.68a16 16 0 01-22.62-22.62L233.37 256l-52.68-52.69a16 16 0 0122.62-22.62L256 233.37l52.69-52.68a16 16 0 0122.62 22.62L278.63 256z'/%3E%3C/svg%3E");
       mask-size: contain;
@@ -44,12 +47,12 @@
     }
 
     &:hover {
-      border-color: var(--input-border-hover);
+      background: var(--item-background--active);
     }
 
     &:active, &:focus {
       outline: none;
-      border-color: var(--focus-input-border);
+      background: var(--item-background--active);
       box-shadow: var(--form-input-glow--focus);
 
       &::-webkit-search-cancel-button {
@@ -118,9 +121,9 @@
     align-items: center;
     justify-content: center;
     aspect-ratio: 1 / 1;
-    transition: 0.15s ease;
+    transition: 0.25s ease;
     text-align: center;
-    font-size: 0.75em;
+    font-size: 0.8em;
     font-weight: 500;
     line-height: 1;
     color: var(--text-color-secondary);

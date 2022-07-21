@@ -44,7 +44,7 @@ THE SOFTWARE.
            autocorrect="off"
            autocapitalize="off"
            spellcheck="false" />
-    <div class="jenkins-search__shortcut" tooltip="Press '/' on your keyboard to focus">
+    <div class="jenkins-search__shortcut" tooltip="Press / on your keyboard to focus">
       <l:icon src="symbol-search-shortcut" />
     </div>
   </div>
