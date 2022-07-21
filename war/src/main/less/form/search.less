@@ -4,7 +4,6 @@
 
   &__input {
     appearance: none;
-    display: block;
     background: var(--input-color);
     border: 2px solid var(--input-border);
     border-radius: var(--form-input-border-radius);
@@ -109,6 +108,40 @@
     }
   }
 
+  &__shortcut {
+    position: absolute;
+    aspect-ratio: 1 / 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    transition: 0.15s ease;
+    text-align: center;
+    font-size: 0.75em;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--text-color-secondary);
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 1em);
+      right: calc(50% - 1em);
+      width: 2em;
+      height: 2em;
+      border: 0.1rem solid var(--item-background--active);
+      border-radius: 0.3rem;
+    }
+
+    svg {
+      width: 1.2em;
+      height: 1.2em;
+    }
+  }
+
   &--loading {
     .jenkins-search__icon {
       svg {
@@ -133,6 +166,11 @@
   &:focus-within {
     .jenkins-search__icon {
       fill: var(--focus-input-border);
+    }
+    .jenkins-search__shortcut {
+      opacity: 0;
+      transform: scale(0.9);
+      pointer-events: none;
     }
   }
 }
