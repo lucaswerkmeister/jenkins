@@ -1,17 +1,38 @@
 import hotkeys from "hotkeys-js"
 
 window.addEventListener("load", () => {
+  // Register search bar shortcut
   const searchBar = document.querySelector("#search-box")
   searchBar.placeholder = searchBar.placeholder + ` (${translateModifierKeysForUsersPlatform("CMD+K")
     .replace("CMD", "⌘")})`
+  registerShortcut("CMD+K", searchBar)
 
-  hotkeys(translateModifierKeysForUsersPlatform("CMD+K"), () => {
-    searchBar.focus()
-
-    // Returning false stops the event and prevents default browser events
-    return false
-  })
+  // Register last breadcrumb bar link shortcut
+  const breadcrumbLinks = document.querySelectorAll(".jenkins-breadcrumbs__list-item a")
+  if (breadcrumbLinks.length > 0) {
+    const lastClickableBreadcrumb = breadcrumbLinks[breadcrumbLinks.length - 1]
+    registerShortcut("U", lastClickableBreadcrumb)
+  }
 })
+
+function registerShortcut(keyboardShortcut, element) {
+  hotkeys(translateModifierKeysForUsersPlatform(keyboardShortcut), () => {
+    setTimeout(function () {
+      switch (element.tagName) {
+        case "A":
+        case "BUTTON":
+          element.click()
+          break;
+        case "INPUT":
+          element.focus()
+          break;
+      }
+
+      // Returning false stops the event and prevents default browser events
+      return false
+    })
+  })
+}
 
 /**
  * Given a keyboard shortcut, e.g. CMD+K, replace any included modifier keys for the user's
