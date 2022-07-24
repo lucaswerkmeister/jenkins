@@ -66,7 +66,7 @@ THE SOFTWARE.
         <j:set var="instance" value="${it}" />
 
         <div class="jenkins-section jenkins-section--no-border jenkins-!-margin-top-6">
-          <f:entry title="${%NewName}">
+          <f:entry title="${%Name}">
             <f:textbox name="newName" value="${it.name}" autocomplete="on" checkUrl="checkNewName" checkDependsOn="newName"/>
           </f:entry>
 

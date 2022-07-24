@@ -1768,6 +1768,14 @@ public abstract class AbstractProject<P extends AbstractProject<P, R>, R extends
         super.submit(req, rsp);
         JSONObject json = req.getSubmittedForm();
 
+        String newName = json.optString("newName");
+        FormValidation validationError = doCheckNewName(newName);
+        if (validationError.kind != FormValidation.Kind.OK) {
+            throw new Failure(validationError.getMessage());
+        }
+
+        renameTo(newName);
+
         makeDisabled(!json.optBoolean("enable"));
 
         jdk = json.optString("jdk", null);
