@@ -12,7 +12,6 @@ window.addEventListener("load", () => {
     return false
   })
 
-
   const pageSearchBar = document.querySelectorAll(".jenkins-search__input")
   if (pageSearchBar.length === 1) {
     hotkeys(translateModifierKeysForUsersPlatform("/"), () => {
@@ -33,5 +32,5 @@ function translateModifierKeysForUsersPlatform(keyboardShortcut) {
   const useCmdKey = navigator.platform.toUpperCase().indexOf("MAC") >= 0 ||
     navigator.platform.toUpperCase() === "IPHONE" ||
     navigator.platform.toUpperCase() === "IPAD"
-  return keyboardShortcut.replaceAll(/CMD|CTRL/ig, useCmdKey ? "CMD" : "CTRL")
+  return keyboardShortcut.replace(/CMD|CTRL/ig, useCmdKey ? "CMD" : "CTRL")
 }
