@@ -24,11 +24,9 @@ module.exports = (env, argv) => ({
     ],
     "config-scrollspy": [
       path.join(__dirname, "src/main/js/config-scrollspy.js"),
-      path.join(__dirname, "src/main/js/config-scrollspy.less"),
     ],
     "config-tabbar": [
       path.join(__dirname, "src/main/js/config-tabbar.js"),
-      path.join(__dirname, "src/main/js/config-tabbar.less"),
     ],
     "keyboard-shortcuts": [path.join(__dirname, "src/main/js/keyboard-shortcuts.js")],
     "sortable-drag-drop": [path.join(__dirname, "src/main/js/sortable-drag-drop.js")],
