@@ -38,7 +38,7 @@ THE SOFTWARE.
       <d:invokeBody />
     </j:set>
 
-    <j:if test="${contents.length() != 10}">
+    <j:if test="${contents.length() > 0}">
       <l:overflowButton icon="symbol-chevron-down" clazz="jenkins-button--tertiary jenkins-table__checkbox-options">
         <span class="jenkins-dropdown__heading">${%Select}</span>
         <button type="button" data-select="all" class="jenkins-dropdown__item">
