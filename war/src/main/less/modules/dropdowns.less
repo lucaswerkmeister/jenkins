@@ -63,75 +63,74 @@
   }
 
   &__item {
-    display: flex;
+    --item-background--hover: var(--button-background--hover);
+    --item-background--active: var(--button-background--active);
+    --item-box-shadow--focus: var(--button-box-shadow--focus);
+
+    .item();
+
+    appearance: none;
+    display: inline-flex;
     align-items: center;
     justify-content: flex-start;
-    color: var(--dropdown-color);
-    border-radius: 6px;
-    text-decoration: none !important;
-    transition: var(--standard-transition);
-    min-width: 180px;
-    position: relative;
-    padding: 0.55rem 3rem 0.55rem 0.7rem;
-    cursor: pointer;
-    z-index: 0;
-    font-weight: 500 !important;
-    font-size: 0.8rem;
-    background: transparent;
-    outline: none;
     border: none;
-    width: 100%;
+    outline: none;
+    margin: 0;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none !important;
+    background: transparent;
+    color: var(--text-color) !important;
+    border-radius: 0.66rem;
+    cursor: pointer;
+    min-height: 36px;
     white-space: nowrap;
-    gap: 0.6rem;
+    gap: 1ch;
+    min-width: 180px;
+    user-select: none;
 
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: var(--text-color);
-      border-radius: 10px;
-      opacity: 0;
-      transition: var(--standard-transition);
-      z-index: -1;
+    svg {
+      width: 1.1rem;
+      height: 1.1rem;
     }
 
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      border-radius: 10px;
-      opacity: 0.05;
-      transition: var(--standard-transition);
-      box-shadow: 0 0 0 10px transparent;
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.5;
+      filter: saturate(0.6);
     }
 
-    svg, img {
-      width: 1.1rem !important;
-      height: 1.1rem !important;
-    }
-
-    &:hover {
-      color: var(--text-color);
-      text-decoration: none;
+    &[class*="color"] {
+      background: transparent;
+      color: var(--color) !important;
 
       &::before {
-        opacity: 0.05;
+        background: currentColor !important;
+        opacity: 0;
       }
-    }
 
-    &:active,
-    &:focus {
-      &::before {
-        opacity: 0.1;
-      }
       &::after {
-        box-shadow: 0 0 0 5px var(--text-color);
+        box-shadow: 0 0 0 0.66rem currentColor;
+        opacity: 0;
+      }
+
+      &:hover {
+        &::before {
+          opacity: 0.15;
+        }
+      }
+
+      &:active,
+      &:focus {
+        &::before {
+          opacity: 0.2;
+        }
+
+        &::after {
+          box-shadow: 0 0 0 0.33rem currentColor;
+          opacity: 0.1;
+        }
       }
     }
 
