@@ -24,6 +24,10 @@
   white-space: nowrap;
   gap: 1ch;
 
+  &::before, &::after {
+    border-radius: inherit;
+  }
+
   &::before {
     background: var(--button-background);
   }
