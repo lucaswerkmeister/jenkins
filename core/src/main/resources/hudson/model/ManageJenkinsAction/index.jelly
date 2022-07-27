@@ -42,49 +42,6 @@ THE SOFTWARE.
         <st:include page="downgrade.jelly" it="${app}" />
       </section>
 
-      <div class="jenkins-buttons-row">
-        <button class="jenkins-button jenkins-button--primary"
-                type="button">
-          <l:icon src="symbol-add" />
-          Hello world
-        </button>
-        <button class="jenkins-button"
-                type="button">
-          <l:icon src="symbol-edit" />
-        </button>
-        <button class="jenkins-button"
-                type="button">
-          <l:icon src="symbol-cube" />
-        </button>
-        <l:overflowButton>
-          <a class="jenkins-dropdown__item jenkins-!-color-green">
-            <l:icon src="symbol-add" />
-            You like it!
-          </a>
-          <hr class="jenkins-dropdown__separator" />
-          <a class="jenkins-dropdown__item">
-            <l:icon src="symbol-cube" />
-            You like it!
-          </a>
-          <a class="jenkins-dropdown__item">
-            <l:icon src="symbol-cube" />
-            You like it!
-          </a>
-          <a class="jenkins-dropdown__item">
-            <l:icon src="symbol-cube" />
-            You like it!
-          </a>
-          <hr class="jenkins-dropdown__separator" />
-          <a class="jenkins-dropdown__item">
-            <l:icon src="symbol-cube" />
-            You like it!
-          </a>
-        </l:overflowButton>
-      </div>
-
-      <br />
-      <br />
-
       <j:forEach var="category" items="${app.categorizedManagementLinks.entrySet()}">
         <section class="jenkins-section jenkins-section--bottom-padding">
           <h2 class="jenkins-section__title">${category.key.label}</h2>
