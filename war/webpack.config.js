@@ -33,6 +33,7 @@ module.exports = (env, argv) => ({
     "keyboard-shortcuts": [path.join(__dirname, "src/main/js/keyboard-shortcuts.js")],
     "sortable-drag-drop": [path.join(__dirname, "src/main/js/sortable-drag-drop.js")],
     "section-to-sidebar-items": [path.join(__dirname, "src/main/js/section-to-sidebar-items.js")],
+    "dropdowns": [path.join(__dirname, "src/main/js/dropdowns.js")],
     "section-to-tabs": [path.join(__dirname, "src/main/js/section-to-tabs.js")],
     "components/row-selection-controller":
       [path.join(__dirname, "src/main/js/components/row-selection-controller")],

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:d="jelly:define">
   <st:documentation>
     <st:attribute name="text">
       Text to be copied into the clipboard.
@@ -40,8 +40,8 @@ THE SOFTWARE.
 
   <button class="jenkins-button"
           tooltip="${attrs.tooltip ?: '%More actions'}"
-          type="button">
-
+          type="button"
+          dropdown="dropdown" menu="dropdown">
     <j:choose>
       <j:when test="${attrs.icon}">
         <l:icon src="${attrs.icon}" />
@@ -57,4 +57,7 @@ THE SOFTWARE.
 
     ${attrs.text}
   </button>
+  <template class="jenkins-dropdown" id="dropdown">
+    <d:invokeBody />
+  </template>
 </j:jelly>
