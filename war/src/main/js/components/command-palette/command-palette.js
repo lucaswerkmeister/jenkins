@@ -1,4 +1,3 @@
-import "regenerator-runtime/runtime"
 import {LinkResult} from "@/components/command-palette/models"
 import {JenkinsSearchSource, SidebarSource} from "./datasources"
 import Helpers from './helpers'
