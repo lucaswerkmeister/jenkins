@@ -30,6 +30,7 @@ THE SOFTWARE.
     <st:attribute name="id" />
     <st:attribute name="autofocus" />
     <st:attribute name="clazz" />
+    <st:attribute name="useKeyboardShortcut" />
   </st:documentation>
 
   <div class="jenkins-search ${attrs.clazz}">
@@ -46,8 +47,10 @@ THE SOFTWARE.
            autocorrect="off"
            autocapitalize="off"
            spellcheck="false" />
-    <div class="jenkins-search__shortcut" tooltip="Press / on your keyboard to focus">
-      <l:icon src="symbol-search-shortcut" />
-    </div>
+    <j:if test="${attrs.useKeyboardShortcut != 'false'}">
+      <div class="jenkins-search__shortcut" tooltip="${%Press / on your keyboard to focus}">
+        <l:icon src="symbol-search-shortcut" />
+      </div>
+    </j:if>
   </div>
 </j:jelly>
