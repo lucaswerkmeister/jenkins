@@ -9,7 +9,7 @@
     background: var(--item-background--hover);
     border: none;
     outline: none;
-    border-radius: 10px;
+    border-radius: 0.625rem;
     width: 100%;
     margin: 0;
     padding: 0 0.5rem 0 var(--search-bar-height);
@@ -18,6 +18,10 @@
     transition: var(--standard-transition);
     font-weight: 500;
     height: var(--search-bar-height);
+
+    &::placeholder {
+      color: var(--text-color-secondary);
+    }
 
     // Safari adds unwanted padding - let's remove it
     &::-webkit-search-decoration {
