@@ -43,9 +43,14 @@ div(class: "alert alert-danger", role: "alert") {
     l.isAdmin() {
         form(method: "post", action: "${rootURL}/${my.url}/forward") {
             if (!pluginWarnings.isEmpty()) {
-                f.submit(name: 'fix', value: _("pluginManager.link"))
+                button(name: 'fix', class: 'jenkins-button') {
+                    l.icon(src: 'symbol-plugins')
+                    _("pluginManager.link")
+                }
             }
-            f.submit(name: 'configure', value: _("configureSecurity.link"))
+            button(name: 'configure', class: 'jenkins-button') {
+                _("configureSecurity.link")
+            }
         }
     }
 
