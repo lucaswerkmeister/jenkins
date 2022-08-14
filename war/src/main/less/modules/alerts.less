@@ -1,11 +1,11 @@
 .alert {
   position: relative;
-  font-size: 0.85rem;
-  padding: 1.1rem 1.3rem;
+  font-size: 0.9rem;
+  padding: calc(var(--section-padding) / 1.5);
   margin-bottom: var(--section-padding);
-  border-radius: 10px;
+  border-radius: 0.625rem;
   z-index: 0;
-  font-weight: 600;
+  font-weight: 500;
 
   a {
     color: inherit;
@@ -33,5 +33,5 @@
 
 .alert-danger {
   background-color: var(--error-color);
-  color: white;
+  color: var(--background);
 }

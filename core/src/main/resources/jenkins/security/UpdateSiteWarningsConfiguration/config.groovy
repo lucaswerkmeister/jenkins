@@ -41,7 +41,7 @@ def printEntry(warning, title, checked) {
     }
 }
 
-f.section(title:_("Hidden security warnings")) {
+f.section(title:_("Hidden security warnings"), anchor: "hidden-security-warnings") {
 
     f.advanced(title: _("Security warnings"), align:"left") {
         f.block {

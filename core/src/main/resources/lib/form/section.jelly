@@ -37,6 +37,9 @@ THE SOFTWARE.
     <st:attribute name="name">
       Optional attribute to create a JSON object from this section.
     </st:attribute>
+    <st:attribute name="anchor">
+      Sets the ID of the section title for anchoring
+    </st:attribute>
   </st:documentation>
 
   <st:adjunct includes="lib.form.section_" />
@@ -44,7 +47,7 @@ THE SOFTWARE.
   <f:rowSet name="${attrs.name}">
     <div class="${attrs.title!=null ? 'jenkins-section' : ''}">
       <j:if test="${attrs.title!=null}">
-        <div class="jenkins-section__title">
+        <div class="jenkins-section__title" id="${attrs.anchor}">
           <div class="jenkins-hidden">
             <l:icon src="${attrs.icon ?: 'symbol-settings'}" />
           </div>

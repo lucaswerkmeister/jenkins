@@ -39,21 +39,6 @@ def coreWarnings = my.activeCoreWarnings
 def pluginWarnings = my.activePluginWarningsByPlugin
 
 div(class: "alert alert-danger", role: "alert") {
-
-    l.isAdmin() {
-        form(method: "post", action: "${rootURL}/${my.url}/forward") {
-            if (!pluginWarnings.isEmpty()) {
-                button(name: 'fix', class: 'jenkins-button') {
-                    l.icon(src: 'symbol-plugins')
-                    _("pluginManager.link")
-                }
-            }
-            button(name: 'configure', class: 'jenkins-button') {
-                _("configureSecurity.link")
-            }
-        }
-    }
-
     text(_("blurb"))
 
     if (!coreWarnings.isEmpty()) {
@@ -77,5 +62,20 @@ div(class: "alert alert-danger", role: "alert") {
 
     if (my.hasApplicableHiddenWarnings()) {
         text(_("more"))
+    }
+
+    l.isAdmin() {
+        form(method: "post", class: "jenkins-buttons-row", action: "${rootURL}/${my.url}/forward") {
+            if (!pluginWarnings.isEmpty()) {
+                button(name: 'fix', class: 'jenkins-button jenkins-button--primary jenkins-!-inherit-color') {
+                    l.icon(src: 'symbol-plugins')
+                    span(_("pluginManager.link"))
+                }
+            }
+            a(href: "${rootURL}/manage/configureSecurity#hidden-security-warnings", class: 'jenkins-button jenkins-!-inherit-color') {
+                l.icon(src: 'symbol-settings')
+                span(_("configureSecurity.link"))
+            }
+        }
     }
 }

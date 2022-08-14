@@ -1,5 +1,11 @@
 @import "theme.less";
 
+.jenkins-\!-inherit-color {
+  --color: currentColor;
+
+  color: inherit;
+}
+
 // Generates a series of color override classes and their variations,
 // e.g. .jenkins-!-color-blue, .jenkins-!-color-light-blue, .jenkins-!-color-dark-blue
 each(@colors, {
