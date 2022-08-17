@@ -1407,9 +1407,9 @@ public abstract class Job<JobT extends Job<JobT, RunT>, RunT extends Run<JobT, R
         return getIconColor().getImage();
     }
 
-    public String getBuildStatusIconClassName() {
-        return getIconColor().getIconClassName();
-    }
+//    public String getBuildStatusIconClassName() {
+//        return getIconColor().getIconClassName();
+//    }
 
     private static class ChartLabel implements Comparable<ChartLabel> {
         final Run run;

@@ -26,7 +26,7 @@ THE SOFTWARE.
 <j:jelly xmlns:j="jelly:core" xmlns:t="/lib/hudson" xmlns:l="/lib/layout">
   <td class="jenkins-table__cell--tight jenkins-table__icon" data="${job.iconColor.ordinal()}">
     <div class="jenkins-table__cell__button-wrapper" tooltip="${job.iconColor.description}">
-      <l:icon src="symbol-status-${job.iconColor}" />
+      <l:icon src="${job.iconColor.image ?: job.iconColor.iconClassName}" />
     </div>
   </td>
 </j:jelly>
