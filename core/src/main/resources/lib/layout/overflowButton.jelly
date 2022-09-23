@@ -24,17 +24,17 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:d="jelly:define">
   <st:documentation>
+    <st:attribute name="icon">
+      Optional icon to be used for the button, defaults to three dots
+    </st:attribute>
     <st:attribute name="text">
       Optional text to be displayed on the button
     </st:attribute>
-    <st:attribute name="icon">
-      Optional icon to be used for the button, if not set it'll default to three dots
-    </st:attribute>
     <st:attribute name="tooltip">
-      Tooltip of the button
+      Optional tooltip of the button, defaults to 'More actions'
     </st:attribute>
     <st:attribute name="clazz">
-      Additional CSS class names
+      Additional CSS class names for the button
     </st:attribute>
   </st:documentation>
 
