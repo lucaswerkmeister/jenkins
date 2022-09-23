@@ -186,3 +186,5 @@ function init() {
     animation: "dropdown",
   });
 }
+
+export default { init };
