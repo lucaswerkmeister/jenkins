@@ -1,11 +1,15 @@
-const rowSelectionControllers = document.querySelectorAll(".jenkins-table__checkbox")
+const rowSelectionControllers = document.querySelectorAll(
+  ".jenkins-table__checkbox"
+);
 
-rowSelectionControllers.forEach(headerCheckbox => {
-  const table = headerCheckbox.closest(".jenkins-table")
-  const tableCheckboxes = table.querySelectorAll("input[type='checkbox']")
-  const moreOptionsButton = table.querySelector(".jenkins-table__checkbox-options")
-  const moreOptionsAllButton = table.querySelector("[data-select='all']")
-  const moreOptionsNoneButton = table.querySelector("[data-select='none']")
+rowSelectionControllers.forEach((headerCheckbox) => {
+  const table = headerCheckbox.closest(".jenkins-table");
+  const tableCheckboxes = table.querySelectorAll("input[type='checkbox']");
+  const moreOptionsButton = table.querySelector(
+    ".jenkins-table__checkbox-options"
+  );
+  const moreOptionsAllButton = table.querySelector("[data-select='all']");
+  const moreOptionsNoneButton = table.querySelector("[data-select='none']");
 
   if (tableCheckboxes.length === 0) {
     headerCheckbox.disabled = true;
@@ -15,48 +19,51 @@ rowSelectionControllers.forEach(headerCheckbox => {
   }
 
   const allCheckboxesSelected = () => {
-    return tableCheckboxes.length === [...tableCheckboxes].filter(e => e.checked).length
-  }
+    return (
+      tableCheckboxes.length ===
+      [...tableCheckboxes].filter((e) => e.checked).length
+    );
+  };
 
   const anyCheckboxesSelected = () => {
-    return [...tableCheckboxes].filter(e => e.checked).length > 0
-  }
+    return [...tableCheckboxes].filter((e) => e.checked).length > 0;
+  };
 
-  tableCheckboxes.forEach(checkbox => {
+  tableCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
-      updateIcon()
-    })
-  })
+      updateIcon();
+    });
+  });
 
   headerCheckbox.addEventListener("click", () => {
-    const newValue = !allCheckboxesSelected()
-    tableCheckboxes.forEach(e => e.checked = newValue)
-    updateIcon()
-  })
+    const newValue = !allCheckboxesSelected();
+    tableCheckboxes.forEach((e) => (e.checked = newValue));
+    updateIcon();
+  });
 
   moreOptionsAllButton?.addEventListener("click", () => {
-    tableCheckboxes.forEach(e => e.checked = true)
-    updateIcon()
-  })
+    tableCheckboxes.forEach((e) => (e.checked = true));
+    updateIcon();
+  });
 
   moreOptionsNoneButton?.addEventListener("click", () => {
-    tableCheckboxes.forEach(e => e.checked = false)
-    updateIcon()
-  })
+    tableCheckboxes.forEach((e) => (e.checked = false));
+    updateIcon();
+  });
 
   function updateIcon() {
-    headerCheckbox.classList.remove("jenkins-table__checkbox--all")
-    headerCheckbox.classList.remove("jenkins-table__checkbox--indeterminate")
+    headerCheckbox.classList.remove("jenkins-table__checkbox--all");
+    headerCheckbox.classList.remove("jenkins-table__checkbox--indeterminate");
 
     if (allCheckboxesSelected()) {
-      headerCheckbox.classList.add("jenkins-table__checkbox--all")
-      return
+      headerCheckbox.classList.add("jenkins-table__checkbox--all");
+      return;
     }
 
     if (anyCheckboxesSelected()) {
-      headerCheckbox.classList.add("jenkins-table__checkbox--indeterminate")
+      headerCheckbox.classList.add("jenkins-table__checkbox--indeterminate");
     }
   }
 
-  window.updateTableHeaderCheckbox = updateIcon
-})
+  window.updateTableHeaderCheckbox = updateIcon;
+});
