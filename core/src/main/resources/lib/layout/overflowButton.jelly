@@ -25,13 +25,13 @@ THE SOFTWARE.
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:d="jelly:define">
   <st:documentation>
     <st:attribute name="text">
-      Text to be copied into the clipboard.
+      Optional text to be displayed on the button
     </st:attribute>
     <st:attribute name="icon">
-      Confirmation message to be shown once the text is copied.
+      Optional icon to be used for the button, if not set it'll default to three dots
     </st:attribute>
     <st:attribute name="tooltip">
-      Tooltip of the button.
+      Tooltip of the button
     </st:attribute>
     <st:attribute name="clazz">
       Additional CSS class names
