@@ -82,20 +82,20 @@ const generateDropdownDetails = (isSubmenu) => {
                 x.url
               }">
                                       ${
-                                        x.icon
-                                          ? `<div class="jenkins-dropdown__item__icon">${
-                                              x.iconXml
-                                                ? x.iconXml
-                                                : '<img src="${x.icon}" alt="" />'
-                                            }</div>`
-                                          : ``
-                                      }
+                x.icon
+                  ? `<div class="jenkins-dropdown__item__icon">${
+                    x.iconXml
+                      ? x.iconXml
+                      : '<img src="${x.icon}" alt="" />'
+                  }</div>`
+                  : ``
+              }
                                       ${x.text || x.displayName}
                                       ${
-                                        x.subMenu != null
-                                          ? `<span class="jenkins-dropdown__item__chevron"></span>`
-                                          : ``
-                                      }
+                x.subMenu != null
+                  ? `<span class="jenkins-dropdown__item__chevron"></span>`
+                  : ``
+              }
                                   </${tagName}>`);
 
             if (x.post || x.requiresConfirmation) {
@@ -164,13 +164,11 @@ function combinePath(a, b) {
   return a + "/" + b + qs;
 }
 
-registerDropdowns();
-
 /**
  * Registers dropdowns for the page
  * If called again, destroys existing dropdowns and registers them again (useful for progressive rendering)
  */
-function registerDropdowns() {
+function init() {
   dropdownInstances.forEach((instance) => {
     instance.destroy();
   });
