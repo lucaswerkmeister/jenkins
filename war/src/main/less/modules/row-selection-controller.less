@@ -18,11 +18,14 @@
   padding: 0;
 
   &:hover {
-    box-shadow: 0 0 0 10px transparent, inset 0 0 0 0.3125rem var(--input-border-hover);
+    box-shadow: 0 0 0 10px transparent,
+      inset 0 0 0 0.3125rem var(--input-border-hover);
   }
 
-  &:active, &:focus {
-    box-shadow: 0 0 0 5px var(--focus-input-glow), inset 0 0 0 0.3125rem var(--focus-input-border);
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 5px var(--focus-input-glow),
+      inset 0 0 0 0.3125rem var(--focus-input-border);
   }
 
   svg {
@@ -54,14 +57,18 @@
   }
 
   &--all {
-    box-shadow: 0 0 0 10px transparent, inset 0 0 0 0.6875rem var(--focus-input-border);
+    box-shadow: 0 0 0 10px transparent,
+      inset 0 0 0 0.6875rem var(--focus-input-border);
 
     &:hover {
-      box-shadow: 0 0 0 10px transparent, inset 0 0 0 1.375rem var(--focus-input-border);
+      box-shadow: 0 0 0 10px transparent,
+        inset 0 0 0 1.375rem var(--focus-input-border);
     }
 
-    &:active, &:focus {
-      box-shadow: 0 0 0 5px var(--focus-input-glow), inset 0 0 0 1.375rem var(--focus-input-border);
+    &:active,
+    &:focus {
+      box-shadow: 0 0 0 5px var(--focus-input-glow),
+        inset 0 0 0 1.375rem var(--focus-input-border);
     }
 
     .jenkins-table__checkbox__all-symbol {
@@ -70,7 +77,8 @@
     }
   }
 
-  &[disabled], &:disabled {
+  &[disabled],
+  &:disabled {
     pointer-events: none;
     opacity: 0.2;
     transition: none;
@@ -96,19 +104,26 @@
     }
   }
 
+  &::before,
+  &::after {
+    border-radius: 0.33rem;
+  }
+
   &:hover {
     svg {
       color: var(--input-border-hover);
     }
   }
 
-  &:active, &:focus {
+  &:active,
+  &:focus {
     svg {
       color: var(--focus-input-border);
     }
   }
 
-  &[disabled], &:disabled {
+  &[disabled],
+  &:disabled {
     pointer-events: none;
     opacity: 0.2;
     transition: none;

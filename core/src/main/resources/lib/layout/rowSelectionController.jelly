@@ -48,7 +48,7 @@ THE SOFTWARE.
           ${%All}
         </button>
         <j:out value="${contents}" />
-        <button type="button" data-select="none" class="jenkins-dropdown__item">
+        <button type="button" data-select="none" class="jenkins-button jenkins-button--tertiary">
           <div class="jenkins-table__checkbox-dropdown__icon">
             <l:icon src="symbol-close" />
           </div>

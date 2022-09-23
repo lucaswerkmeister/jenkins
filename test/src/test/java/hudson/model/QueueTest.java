@@ -288,7 +288,7 @@ public class QueueTest {
         q.scheduleMaintenance().get();
         Queue.Item[] items = q.getItems();
         assertEquals(1, items.length);
-        assertTrue("Got " + items[0], items[0] instanceof BlockedItem);
+        assertThat(items[0], instanceOf(BlockedItem.class));
 
         q.save();
     }
@@ -971,7 +971,7 @@ public class QueueTest {
             }
             }, 2, TimeUnit.SECONDS);
 
-        assertThrows(CancellationException.class, () -> f.waitForStart());
+        assertThrows(CancellationException.class, f::waitForStart);
     }
 
     @Ignore("TODO flakes in CI")
