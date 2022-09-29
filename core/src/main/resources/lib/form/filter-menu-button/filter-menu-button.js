@@ -14,6 +14,11 @@ window.createFilterMenuButton = function (
 
   var filter = _createFilterMenuButton(menuButton._menu);
 
+  menuButton._button.parentNode.replaceWith(...menuButton._button.parentNode.childNodes);
+  menuButton._button.parentNode.classList.remove("yui-button");
+  menuButton._button.parentNode.style.display = "inline-flex";
+
+  // menuButton.classList.remove("yui-button")
   menuButton._menu.element.appendChild(filter);
   menuButton._menu.showEvent.subscribe(function () {
     _applyFilterKeyword(menuButton._menu, filter.firstElementChild);

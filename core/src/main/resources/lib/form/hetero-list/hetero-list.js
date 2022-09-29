@@ -14,7 +14,7 @@ Behaviour.specify(
 
     // components for the add button
     var menu = document.createElement("SELECT");
-    var btns = findElementsBySelector(e, "INPUT.hetero-list-add"),
+    var btns = findElementsBySelector(e, "INPUT.hetero-list-add,BUTTON.hetero-list-add"),
       btn = btns[btns.length - 1]; // In case nested content also uses hetero-list
     if (!btn) {
       return;
