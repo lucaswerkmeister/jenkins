@@ -12,7 +12,7 @@ var repeatableSupport = {
   name: null,
 
   // enable to display add button on top
-  enableTopButton: false,
+  // enableTopButton: false,
 
   withDragDrop: false,
 
@@ -25,11 +25,11 @@ var repeatableSupport = {
     master.parentNode.removeChild(master);
     this.insertionPoint = $(insertionPoint);
     this.name = master.getAttribute("name");
-    if (this.container.getAttribute("enableTopButton") == "true") {
-      this.enableTopButton = true;
-    } else {
-      this.enableTopButton = false;
-    }
+    // if (this.container.getAttribute("enableTopButton") == "true") {
+    //   this.enableTopButton = true;
+    // } else {
+    //   this.enableTopButton = false;
+    // }
     this.update();
     // Initialize drag & drop for this component
     this.withDragDrop = registerSortableDragDrop(container);
@@ -37,9 +37,9 @@ var repeatableSupport = {
 
   // insert one more block at the insertion position
   expand: function (addOnTop) {
-    if (addOnTop == null) {
-      addOnTop = false;
-    }
+    // if (addOnTop == null) {
+    //   addOnTop = false;
+    // }
 
     // importNode isn't supported in IE.
     // nc = document.importNode(node,true);
@@ -48,16 +48,18 @@ var repeatableSupport = {
     nc.setOpacity(0);
     nc.setAttribute("name", this.name);
     nc.innerHTML = this.blockHTML;
-    if (!addOnTop) {
-      this.insertionPoint.parentNode.insertBefore(nc, this.insertionPoint);
-    } else if (this.enableTopButton) {
-      var children = $(this.container)
-        .childElements()
-        .findAll(function (n) {
-          return n.hasClassName("repeated-chunk");
-        });
-      this.container.insertBefore(nc, children[0]);
-    }
+    // if (!addOnTop) {
+    this.insertionPoint.parentNode.insertBefore(nc, this.insertionPoint);
+    // }
+
+    // else if (this.enableTopButton) {
+    //   var children = $(this.container)
+    //     .childElements()
+    //     .findAll(function (n) {
+    //       return n.hasClassName("repeated-chunk");
+    //     });
+    //   this.container.insertBefore(nc, children[0]);
+    // }
     // Initialize drag & drop for this element
     if (this.withDragDrop) {
       registerSortableDragDrop(nc);
@@ -104,16 +106,16 @@ var repeatableSupport = {
             return b.hasClassName("repeatable-add");
           });
 
-        if (addButtonElements.length == 1 && this.enableTopButton) {
-          buttonElement = addButtonElements[0];
-          parentOfButton = buttonElement.parentNode;
-          var addTopButton = document.createElement("input");
-          addTopButton.type = "button";
-          addTopButton.value =
-            buttonElement.textContent || buttonElement.innerText;
-          addTopButton.className = "repeatable-add repeatable-add-top";
-          parentOfButton.insertBefore(addTopButton, parentOfButton.firstChild);
-          Behaviour.applySubtree(addTopButton, true);
+        if (addButtonElements.length == 1) {
+          // buttonElement = addButtonElements[0];
+          // parentOfButton = buttonElement.parentNode;
+          // var addTopButton = document.createElement("button");
+          // addTopButton.type = "button";
+          // addTopButton.textContent =
+          //   buttonElement.textContent || buttonElement.innerText;
+          // addTopButton.className = "jenkins-button repeatable-add repeatable-add-top";
+          // parentOfButton.insertBefore(addTopButton, parentOfButton.firstChild);
+          // Behaviour.applySubtree(addTopButton, true);
         }
         children[0].className = "repeated-chunk first last only";
       } else {
@@ -156,9 +158,9 @@ var repeatableSupport = {
     var addOnTop = false;
     while (n.tag == null) {
       n = n.parentNode;
-      if (n.hasClassName("repeatable-add-top")) {
-        addOnTop = true;
-      }
+      // if (n.hasClassName("repeatable-add-top")) {
+      //   addOnTop = true;
+      // }
     }
     n.tag.expand(addOnTop);
     // Hack to hide tool home when a new tool has some installers.
@@ -190,8 +192,8 @@ Behaviour.specify("DIV.repeated-container", "repeatable", -100, function (e) {
 });
 
 // button to add a new repeatable block
-Behaviour.specify("INPUT.repeatable-add", "repeatable", 0, function (e) {
-  makeButton(e, function (e) {
+Behaviour.specify("INPUT.repeatable-add, BUTTON.repeatable-add", "repeatable", 0, function (e) {
+  e.addEventListener('click', function(e) {
     repeatableSupport.onAdd(e.target);
   });
   e = null; // avoid memory leak

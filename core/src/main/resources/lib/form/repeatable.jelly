@@ -88,12 +88,12 @@ THE SOFTWARE.
       true if the default 'add' button (that adds a new copy) shouldn't be displayed.
       When you use this attribute,
     </st:attribute>
-    <st:attribute name="enableTopButton">
-      true if a new Add button, for adding new copy of repeatable item, should be displayed above repeatable form.
-      Display of top button depends also on number of items. If there is no item, only one button is displayed. When at least one item is present, there are two
-      buttons displayed (only when enableTopButton is true). One above and one below.
-      Top button adds item on top of repeatable form. Bottom button adds item on the bottom of repeatable form.
-    </st:attribute>
+<!--    <st:attribute name="enableTopButton">-->
+<!--      true if a new Add button, for adding new copy of repeatable item, should be displayed above repeatable form.-->
+<!--      Display of top button depends also on number of items. If there is no item, only one button is displayed. When at least one item is present, there are two-->
+<!--      buttons displayed (only when enableTopButton is true). One above and one below.-->
+<!--      Top button adds item on top of repeatable form. Bottom button adds item on the bottom of repeatable form.-->
+<!--    </st:attribute>-->
     <st:attribute name="add">
       If specified, this text will replace the standard "Add" text.
     </st:attribute>
@@ -142,12 +142,12 @@ THE SOFTWARE.
         <d:invokeBody />
       </j:scope>
     </div>
-    <j:if test="${!empty(items) and !attrs.noAddButton and attrs.enableTopButton}">
-      <button type="button" class="jenkins-button repeatable-add repeatable-add-top" menualign="${attrs.menuAlign}" suffix="${attrs.name}">
-        <l:icon src="symbol-add" />
-        ${attrs.add?:'%Add'}
-      </button>
-    </j:if>
+<!--    <j:if test="${!empty(items) and !attrs.noAddButton and attrs.enableTopButton}">-->
+<!--      <button type="button" class="jenkins-button repeatable-add repeatable-add-top" menualign="${attrs.menuAlign}" suffix="${attrs.name}">-->
+<!--        <l:icon src="symbol-add" />-->
+<!--        ${attrs.add?:'%Add'}-->
+<!--      </button>-->
+<!--    </j:if>-->
     <!-- then populate them for each item -->
     <j:forEach var="loop" varStatus="loopStatus" items="${items}">
       <div class="repeated-chunk" name="${name}">
