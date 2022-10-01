@@ -1,9 +1,9 @@
 import { LinkResult } from "@/components/command-palette/models";
-import { JenkinsSearchSource, SidebarSource } from "./datasources";
+import { JenkinsSearchSource } from "./datasources";
 import Helpers from "./helpers";
 import debounce from "lodash/debounce";
 
-const datasources = [JenkinsSearchSource, SidebarSource];
+const datasources = [JenkinsSearchSource];
 
 window.addEventListener("load", () => {
   const i18n = document.getElementById("command-palette-i18n");

@@ -21,29 +21,3 @@ export const JenkinsSearchSource = {
     });
   },
 };
-
-export const SidebarSource = {
-  async execute(query) {
-    const sidebarLinks = document.querySelectorAll(".task-link");
-
-    return [...sidebarLinks]
-      .filter((link) => link.dataset.post !== "true")
-      .filter((link) => !link.classList.contains("task-link--active"))
-      .filter((link) =>
-        link
-          .querySelector(".task-link-text")
-          .textContent.toLowerCase()
-          .includes(query.toLowerCase())
-      )
-      .map(
-        (link) =>
-          new LinkResult(
-            undefined,
-            link.querySelector(".task-link-text").textContent,
-            undefined,
-            "Sidebar",
-            link.href
-          )
-      );
-  },
-};
