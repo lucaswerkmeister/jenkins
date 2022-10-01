@@ -96,7 +96,7 @@ window.addEventListener('load', () => {
 
   commandPaletteInput.addEventListener("input", () => {
     commandPaletteSearchBarContainer.classList.add("jenkins-search--loading")
-    debounce(renderResults, 200)()
+    debounce(renderResults, 300)()
   })
 
   commandPaletteInput.addEventListener("keyup", function (event) {
