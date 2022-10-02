@@ -66,13 +66,13 @@ body {
 }
 
 #main-panel {
-  padding: 2rem;
+  padding: var(--section-padding);
   display: inline-block;
   width: 100%;
 }
 
 .app-page-body--one-column {
-  --form-item-max-width: calc(85vw - 4rem);
+  --form-item-max-width: calc(85vw - (var(--section-padding) * 2));
 
   max-width: 85vw;
 
