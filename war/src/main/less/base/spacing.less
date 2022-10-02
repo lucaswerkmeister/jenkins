@@ -1,47 +1,51 @@
 :root {
-  --unit: calc(var(--section-padding) / 5);
+  --unit: calc(var(--section-padding) / 6);
+
+  each(range(0, 6), {
+    --spacing-@{value}: calc(@value * var(--unit));
+  });
+
+  each(range(0, 6), {
+    .jenkins-\!-margin-@{value} {
+      margin: calc(@value * var(--unit)) !important;
+    }
+
+    .jenkins-\!-margin-top-@{value} {
+      margin-top: calc(@value * var(--unit)) !important;
+    }
+
+    .jenkins-\!-margin-left-@{value} {
+      margin-left: calc(@value * var(--unit)) !important;
+    }
+
+    .jenkins-\!-margin-bottom-@{value} {
+      margin-bottom: calc(@value * var(--unit)) !important;
+    }
+
+    .jenkins-\!-margin-right-@{value} {
+      margin-right: calc(@value * var(--unit)) !important;
+    }
+  });
+
+  each(range(0, 6), {
+    .jenkins-\!-padding-@{value} {
+      padding: calc(@value * var(--unit)) !important;
+    }
+
+    .jenkins-\!-padding-top-@{value} {
+      padding-top: calc(@value * var(--unit)) !important;
+    }
+
+    .jenkins-\!-padding-left-@{value} {
+      padding-left: calc(@value * var(--unit)) !important;
+    }
+
+    .jenkins-\!-padding-bottom-@{value} {
+      padding-bottom: calc(@value * var(--unit)) !important;
+    }
+
+    .jenkins-\!-padding-right-@{value} {
+      padding-right: calc(@value * var(--unit)) !important;
+    }
+  });
 }
-
-each(range(0, 6), {
-  .jenkins-\!-margin-@{value} {
-    margin: calc(@value * var(--unit)) !important;
-  }
-
-  .jenkins-\!-margin-top-@{value} {
-    margin-top: calc(@value * var(--unit)) !important;
-  }
-
-  .jenkins-\!-margin-left-@{value} {
-    margin-left: calc(@value * var(--unit)) !important;
-  }
-
-  .jenkins-\!-margin-bottom-@{value} {
-    margin-bottom: calc(@value * var(--unit)) !important;
-  }
-
-  .jenkins-\!-margin-right-@{value} {
-    margin-right: calc(@value * var(--unit)) !important;
-  }
-});
-
-each(range(0, 6), {
-  .jenkins-\!-padding-@{value} {
-    padding: calc(@value * var(--unit)) !important;
-  }
-
-  .jenkins-\!-padding-top-@{value} {
-    padding-top: calc(@value * var(--unit)) !important;
-  }
-
-  .jenkins-\!-padding-left-@{value} {
-    padding-left: calc(@value * var(--unit)) !important;
-  }
-
-  .jenkins-\!-padding-bottom-@{value} {
-    padding-bottom: calc(@value * var(--unit)) !important;
-  }
-
-  .jenkins-\!-padding-right-@{value} {
-    padding-right: calc(@value * var(--unit)) !important;
-  }
-});
