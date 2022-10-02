@@ -1,45 +1,47 @@
-@unit: 0.4rem;
+:root {
+  --unit: calc(var(--section-padding) / 5);
+}
 
 each(range(0, 6), {
   .jenkins-\!-margin-@{value} {
-    margin: @value * @unit !important;
+    margin: calc(@value * var(--unit)) !important;
   }
 
   .jenkins-\!-margin-top-@{value} {
-    margin-top: @value * @unit !important;
+    margin-top: calc(@value * var(--unit)) !important;
   }
 
   .jenkins-\!-margin-left-@{value} {
-    margin-left: @value * @unit !important;
+    margin-left: calc(@value * var(--unit)) !important;
   }
 
   .jenkins-\!-margin-bottom-@{value} {
-    margin-bottom: @value * @unit !important;
+    margin-bottom: calc(@value * var(--unit)) !important;
   }
 
   .jenkins-\!-margin-right-@{value} {
-    margin-right: @value * @unit !important;
+    margin-right: calc(@value * var(--unit)) !important;
   }
 });
 
 each(range(0, 6), {
   .jenkins-\!-padding-@{value} {
-    padding: @value * @unit !important;
+    padding: calc(@value * var(--unit)) !important;
   }
 
   .jenkins-\!-padding-top-@{value} {
-    padding-top: @value * @unit !important;
+    padding-top: calc(@value * var(--unit)) !important;
   }
 
   .jenkins-\!-padding-left-@{value} {
-    padding-left: @value * @unit !important;
+    padding-left: calc(@value * var(--unit)) !important;
   }
 
   .jenkins-\!-padding-bottom-@{value} {
-    padding-bottom: @value * @unit !important;
+    padding-bottom: calc(@value * var(--unit)) !important;
   }
 
   .jenkins-\!-padding-right-@{value} {
-    padding-right: @value * @unit !important;
+    padding-right: calc(@value * var(--unit)) !important;
   }
 });
