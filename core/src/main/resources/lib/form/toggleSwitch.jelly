@@ -23,11 +23,10 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
-         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <st:documentation>
-    &lt;input type="checkbox"> tag that takes true/false for @checked, which is more Jelly friendly.
-
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:f="/lib/form">
+  <st:documentation> <![CDATA[
+    <input type="checkbox"> tag that takes true/false for @checked, which is more Jelly friendly.
+    ]]>
     <st:attribute name="name"/>
     <st:attribute name="checked"/>
     <st:attribute name="value"/>
@@ -42,18 +41,9 @@ THE SOFTWARE.
       If this attribute is unspecified or null, it defaults to unchecked, otherwise checked.
     </st:attribute>
     <st:attribute name="id"/>
-    <st:attribute name="onclick"/>
     <st:attribute name="class"/>
     <st:attribute name="invertLabel">
       Move the label of the toggle switch to the opposite side
-    </st:attribute>
-    <st:attribute name="readonly">
-      If set to true, this will take precedence over the onclick attribute and prevent the state of the checkbox from
-      being changed.
-
-      Note: if you want an actual read only checkbox then add:
-      &lt;j:set var="readOnlyMode" value="true"/&gt; inside your entry tag
-      See https://www.jenkins.io/doc/developer/views/read-only/#enabling-read-only-view-support
     </st:attribute>
     <st:attribute name="field">
       Used for databinding. TBD.
@@ -80,7 +70,6 @@ THE SOFTWARE.
            name="${name}"
            value="${value}"
            id="${id}"
-           onclick="${readonly=='true' ? 'return false;' : onclick}"
            class="jenkins-toggle-switch__input ${attrs.class} ${checkUrl!=null?'validated':''}"
            checkUrl="${checkUrl}"
            checkDependsOn="${checkDependsOn}" json="${json}"

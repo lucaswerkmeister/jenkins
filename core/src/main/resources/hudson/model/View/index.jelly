@@ -28,33 +28,24 @@ THE SOFTWARE.
       <j:set var="view" value="${it}"/> <!-- expose view to the scripts we include from owner -->
         <st:include page="sidepanel.jelly" />
         <l:main-panel>
-          <j:set var="items" value="${it.items}"/>
-
           <st:include page="view-index-top.jelly" it="${it.owner}" optional="true">
             <!-- allow the owner to take over the top section, but we also need the default to be backward compatible -->
             <div id="view-message">
                 <div id="systemmessage">
                   <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />
                 </div>
-              <j:if test="${!items.isEmpty()}">
-                <t:editableDescription permission="${it.CONFIGURE}"/>
-              </j:if>
+              <t:editableDescription permission="${it.CONFIGURE}"/>
             </div>
           </st:include>
 
+          <j:set var="items" value="${it.items}"/>
           <st:include page="main.jelly" />
         </l:main-panel>
         <l:header>
-            <!-- for screen resolution detection -->
-            <l:yui module="cookie" />
-                <script id="screenResolution-script" data-use-secure-cookie="${request.secure}">
-                  var selfScript = document.querySelector('#screenResolution-script');
-                  var secureCookie = selfScript.getAttribute('data-use-secure-cookie');
-                  YAHOO.util.Cookie.set("screenResolution", screen.width+"x"+screen.height, {
-                    path: "/",
-                    secure: secureCookie === 'true'
-                  });
-                </script>
+          <!-- for screen resolution detection -->
+          <l:yui module="cookie" />
+          <script id="screenResolution-script" data-use-secure-cookie="${request.secure}"/>
+          <st:adjunct includes="hudson.model.View.screen-resolution"/>
         </l:header>
     </l:layout>
 </st:compress>

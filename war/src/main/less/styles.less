@@ -12,7 +12,7 @@
 @import "./form/layout";
 @import "./form/radio";
 @import "./form/reorderable-list";
-@import "./form/search";
+@import "./form/search-bar";
 @import "./form/select";
 @import "./form/toggle-switch";
 @import "./form/validation";
@@ -31,6 +31,7 @@
 @import "./modules/side-panel-widgets";
 @import "./modules/spinner";
 @import "./modules/progress-animation";
+@import "./modules/row-selection-controller";
 @import "./modules/table";
 @import "./modules/tabs";
 @import "./modules/tooltips";
@@ -39,6 +40,7 @@
 @import "./pages/manage-jenkins";
 @import "./pages/plugin-manager";
 @import "./pages/setupWizardFirstUser";
+@import "./pages/setupWizardConfigureInstance";
 
 html {
   // Ensure that the 1rem size is 16px and scales with the browser zoom
@@ -53,5 +55,6 @@ html {
   letter-spacing: -0.016em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
 }

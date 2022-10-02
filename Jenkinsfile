@@ -42,13 +42,14 @@ for (i = 0; i < buildTypes.size(); i++) {
         // Now run the actual build.
         stage("${buildType} Build / Test") {
           timeout(time: 6, unit: 'HOURS') {
-            realtimeJUnit(healthScaleFactor: 20.0, testResults: '*/target/surefire-reports/*.xml,war/target/jest-result.xml') {
+            realtimeJUnit(healthScaleFactor: 20.0, testResults: '*/target/surefire-reports/*.xml') {
               def mavenOptions = [
                 '-Pdebug',
                 '-Penable-jacoco',
                 '--update-snapshots',
                 "-Dmaven.repo.local=$m2repo",
                 '-Dmaven.test.failure.ignore',
+                '-DforkCount=2',
                 '-Dspotbugs.failOnError=false',
                 '-Dcheckstyle.failOnViolation=false',
                 '-Dset.changelist',
