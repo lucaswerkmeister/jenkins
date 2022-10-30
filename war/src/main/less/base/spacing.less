@@ -1,27 +1,37 @@
 :root {
+  // Use var(--spacing-*) instead of directly accessing this
+  --spacing-unit: 0.3rem;
+
+  @media screen and (max-width: 576px) {
+    --spacing-unit: 0.2rem;
+  }
+
+  // Deprecated - use var(--spacing-6) instead
+  --section-padding: calc(var(--spacing-unit) * 6);
+
   each(range(0, 6), {
-    --spacing-@{value}: calc(@value * var(--spacing-unit));
+    --spacing-@{value}: calc(var(--spacing-unit) * @value);
   });
 
   each(range(0, 6), {
     .jenkins-\!-margin-@{value} {
-      margin: calc(@value * var(--spacing-unit)) !important;
+      margin: ~"var(--spacing-@{value})" !important;
     }
 
     .jenkins-\!-margin-top-@{value} {
-      margin-top: calc(@value * var(--spacing-unit)) !important;
+      margin-top: ~"var(--spacing-@{value})" !important;
     }
 
     .jenkins-\!-margin-left-@{value} {
-      margin-left: calc(@value * var(--spacing-unit)) !important;
+      margin-left: ~"var(--spacing-@{value})" !important;
     }
 
     .jenkins-\!-margin-bottom-@{value} {
-      margin-bottom: calc(@value * var(--spacing-unit)) !important;
+      margin-bottom: ~"var(--spacing-@{value})" !important;
     }
 
     .jenkins-\!-margin-right-@{value} {
-      margin-right: calc(@value * var(--spacing-unit)) !important;
+      margin-right: ~"var(--spacing-@{value})" !important;
     }
   });
 
@@ -31,23 +41,23 @@
 
   each(range(0, 6), {
     .jenkins-\!-padding-@{value} {
-      padding: calc(@value * var(--spacing-unit)) !important;
+      padding: ~"var(--spacing-@{value})" !important;
     }
 
     .jenkins-\!-padding-top-@{value} {
-      padding-top: calc(@value * var(--spacing-unit)) !important;
+      padding-top: ~"var(--spacing-@{value})" !important;
     }
 
     .jenkins-\!-padding-left-@{value} {
-      padding-left: calc(@value * var(--spacing-unit)) !important;
+      padding-left: ~"var(--spacing-@{value})" !important;
     }
 
     .jenkins-\!-padding-bottom-@{value} {
-      padding-bottom: calc(@value * var(--spacing-unit)) !important;
+      padding-bottom: ~"var(--spacing-@{value})" !important;
     }
 
     .jenkins-\!-padding-right-@{value} {
-      padding-right: calc(@value * var(--spacing-unit)) !important;
+      padding-right: ~"var(--spacing-@{value})" !important;
     }
   });
 }

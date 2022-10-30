@@ -445,9 +445,9 @@ pre.console {
   // &--stuck class when the element is stuck to the bottom of the screen
   // https://css-tricks.com/how-to-detect-when-a-sticky-element-gets-pinned/
   bottom: -1px;
-  margin-left: calc(var(--section-padding) * -1);
+  margin-left: calc(var(--spacing-6) * -1);
   width: calc(
-    100% + (var(--section-padding) * 2)
+    100% + (var(--spacing-6) * 2)
   ); /* it needs to occupy the entire width or else the underlying content will see through */
 
   z-index: 998; /* behind top-sticker */
@@ -473,19 +473,19 @@ pre.console {
   &::after {
     content: "";
     position: absolute;
-    top: calc(var(--section-padding) * -1);
+    top: calc(var(--spacing-6) * -1);
     left: 0;
     right: 0;
     background: linear-gradient(rgba(black, 0), rgba(#556, 0.075) 110%);
     max-width: 100%;
-    height: var(--section-padding);
+    height: var(--spacing-6);
     opacity: 0;
     transition: var(--standard-transition);
     mask-image: linear-gradient(
       to right,
       transparent,
       white 2rem,
-      white calc(100% - var(--section-padding)),
+      white calc(100% - var(--spacing-6)),
       transparent
     );
     pointer-events: none;
@@ -507,11 +507,6 @@ pre.console {
         opacity: 1 !important;
       }
     }
-  }
-
-  .yui-button {
-    margin-left: 0;
-    margin-right: 0.5rem;
   }
 }
 
