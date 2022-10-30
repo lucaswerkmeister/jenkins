@@ -1,29 +1,27 @@
 :root {
-  --unit: calc(var(--section-padding) / 6);
-
   each(range(0, 6), {
-    --spacing-@{value}: calc(@value * var(--unit));
+    --spacing-@{value}: calc(@value * var(--spacing-unit));
   });
 
   each(range(0, 6), {
     .jenkins-\!-margin-@{value} {
-      margin: calc(@value * var(--unit)) !important;
+      margin: calc(@value * var(--spacing-unit)) !important;
     }
 
     .jenkins-\!-margin-top-@{value} {
-      margin-top: calc(@value * var(--unit)) !important;
+      margin-top: calc(@value * var(--spacing-unit)) !important;
     }
 
     .jenkins-\!-margin-left-@{value} {
-      margin-left: calc(@value * var(--unit)) !important;
+      margin-left: calc(@value * var(--spacing-unit)) !important;
     }
 
     .jenkins-\!-margin-bottom-@{value} {
-      margin-bottom: calc(@value * var(--unit)) !important;
+      margin-bottom: calc(@value * var(--spacing-unit)) !important;
     }
 
     .jenkins-\!-margin-right-@{value} {
-      margin-right: calc(@value * var(--unit)) !important;
+      margin-right: calc(@value * var(--spacing-unit)) !important;
     }
   });
 
@@ -33,23 +31,23 @@
 
   each(range(0, 6), {
     .jenkins-\!-padding-@{value} {
-      padding: calc(@value * var(--unit)) !important;
+      padding: calc(@value * var(--spacing-unit)) !important;
     }
 
     .jenkins-\!-padding-top-@{value} {
-      padding-top: calc(@value * var(--unit)) !important;
+      padding-top: calc(@value * var(--spacing-unit)) !important;
     }
 
     .jenkins-\!-padding-left-@{value} {
-      padding-left: calc(@value * var(--unit)) !important;
+      padding-left: calc(@value * var(--spacing-unit)) !important;
     }
 
     .jenkins-\!-padding-bottom-@{value} {
-      padding-bottom: calc(@value * var(--unit)) !important;
+      padding-bottom: calc(@value * var(--spacing-unit)) !important;
     }
 
     .jenkins-\!-padding-right-@{value} {
-      padding-right: calc(@value * var(--unit)) !important;
+      padding-right: calc(@value * var(--spacing-unit)) !important;
     }
   });
 }

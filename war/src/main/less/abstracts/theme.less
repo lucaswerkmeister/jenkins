@@ -229,13 +229,17 @@
   --task-link-bg-color--active: var(--panel-border-color);
   --task-link-bg-color--hover: var(--very-light-grey);
 
-  // Form
-  --section-padding: 1.75rem;
+  // Spacing
+  --spacing-unit: 0.3rem;
 
   @media screen and (max-width: 576px) {
-    --section-padding: 1.25rem;
+    --spacing-unit: 0.2rem;
   }
 
+  // Deprecated - use var(--spacing-6) instead
+  --section-padding: calc(var(--spacing-unit) * 6);
+
+  // Form
   --input-color: var(--white);
   --input-border: #c3ccd1;
   --input-border-hover: #5c7889;
