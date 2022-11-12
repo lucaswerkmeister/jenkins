@@ -27,21 +27,25 @@ THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-<l:layout title="Log" permission="${app.SYSTEM_READ}">
-  <st:include page="sidepanel.jelly" />
+<l:layout title="${it.displayName}" permission="${app.SYSTEM_READ}" type="one-column">
   <l:main-panel>
-    <h1>${it.displayName}</h1>
+    <l:app-bar title="${it.displayName}">
+      <l:search-bar />
+      <l:isAdmin>
+        <a href="configure" class="jenkins-button">
+          ${%Configure}
+        </a>
+        <a href="configure" class="jenkins-button">
+          ...
+        </a>
+      </l:isAdmin>
+    </l:app-bar>
+
     <t:logRecords logRecords="${it.logRecords}"/>
     <j:forEach var="entry" items="${it.slaveLogRecords.entrySet()}">
       <h2><a href="${rootURL}/${entry.key.url}" class="model-link">${entry.key.displayName}</a></h2>
       <t:logRecords logRecords="${entry.value}"/>
     </j:forEach>
-
-    <l:isAdmin>
-      <form method="post" id='clear-logrecorder' action="clear">
-        <f:submit value="${%Clear This Log}" />
-      </form>
-    </l:isAdmin>
 
     <st:include it="${it.parent}" page="feeds.jelly" />
   </l:main-panel>
