@@ -71,9 +71,9 @@ THE SOFTWARE.
               <td>
                 <j:if test="${user.canDelete()}">
                   <div class="jenkins-table__cell__button-wrapper">
-                    <a href="${user.url}/delete" class="jenkins-table__button jenkins-!-destructive-color">
+                    <l:confirmationLink class="jenkins-table__button jenkins-!-destructive-color" message="Delete ${user.fullName}" href="${user.url}/doDelete" post="true" type="destructive">
                       <l:icon src="symbol-trash" />
-                    </a>
+                    </l:confirmationLink>
                   </div>
                 </j:if>
               </td>

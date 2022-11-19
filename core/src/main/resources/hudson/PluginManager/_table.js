@@ -492,8 +492,10 @@ Element.observe(window, "load", function () {
     });
   }
 
-  const uninstallButtons = document.querySelectorAll("[data-action='uninstall']");
-  uninstallButtons.forEach(uninstallButton => {
+  const uninstallButtons = document.querySelectorAll(
+    "[data-action='uninstall']"
+  );
+  uninstallButtons.forEach((uninstallButton) => {
     uninstallButton.addEventListener("click", () => {
       const message = uninstallButton.getAttribute("data-message");
       const href = uninstallButton.getAttribute("data-url");
@@ -501,10 +503,10 @@ Element.observe(window, "load", function () {
       const options = {
         title: message,
         post: "true",
-        action: href
-      }
+        action: href,
+      };
 
       showConfirmationModal(options);
-    })
+    });
   });
 });

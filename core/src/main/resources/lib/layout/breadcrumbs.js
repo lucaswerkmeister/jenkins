@@ -93,8 +93,8 @@ window.breadcrumbs = (function () {
     const options = {
       title: cfg.displayName + ": are you sure?",
       post: cfg.post ? "true" : "false",
-      action: cfg.url
-    }
+      action: cfg.url,
+    };
 
     showConfirmationModal(options);
   }

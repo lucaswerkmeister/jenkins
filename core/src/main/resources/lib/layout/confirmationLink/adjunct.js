@@ -4,17 +4,17 @@ Behaviour.specify(
   0,
   function (element) {
     element.onclick = function () {
-      const post = element.getAttribute("data-post");
-      const href = element.getAttribute("data-url");
-      const message = element.getAttribute("data-message");
-      const type = element.getAttribute("data-confirmation-type");
+      const post = element.dataset.post;
+      const href = element.dataset.url;
+      const message = element.dataset.message;
+      const type = element.dataset.confirmationType;
 
       const options = {
         title: message,
         post: post,
         action: href,
-        type: type | 'default'
-      }
+        type: type || "default",
+      };
 
       showConfirmationModal(options);
 

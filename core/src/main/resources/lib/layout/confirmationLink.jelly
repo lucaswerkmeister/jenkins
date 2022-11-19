@@ -45,7 +45,7 @@ THE SOFTWARE.
             @since TODO
         </st:attribute>
     </st:documentation>
-    <a href="#" class="${class} confirmation-link" data-post="${post}" data-url="${attrs.href}" data-message="${message}" data-confirmation-type="${attrs.type | 'default'}">
+    <a href="#" class="${class} confirmation-link" data-post="${post}" data-url="${attrs.href}" data-message="${message}" data-confirmation-type="${attrs.type}">
         <d:invokeBody/>
     </a>
     <st:adjunct includes="lib.layout.confirmationLink.adjunct "/>
