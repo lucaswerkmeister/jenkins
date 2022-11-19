@@ -81,6 +81,10 @@ THE SOFTWARE.
       Message to use for confirmation, if requested; defaults to title.
       (since 1.512)
     </st:attribute>
+    <st:attribute name="confirmationType">
+      Type of confirmation
+      (since TODO)
+    </st:attribute>
   </st:documentation>
 
   <!--
@@ -162,7 +166,7 @@ THE SOFTWARE.
 
             <j:choose>
               <j:when test="${requiresConfirmation and not attrs.onClick}">
-                <l:confirmationLink class="task-link ${isCurrent ? 'task-link--active' : ''}" href="${href}" post="${post}" message="${confirmationMessage ?: title}">
+                <l:confirmationLink class="task-link ${isCurrent ? 'task-link--active' : ''}" href="${href}" post="${post}" message="${confirmationMessage ?: title}" type="${attrs.confirmationType}">
                   <span class="task-icon-link">
                     <l:icon src="${icon}" />
                   </span>

@@ -491,4 +491,20 @@ Element.observe(window, "load", function () {
       window.updateTableHeaderCheckbox();
     });
   }
+
+  const uninstallButtons = document.querySelectorAll("[data-action='uninstall']");
+  uninstallButtons.forEach(uninstallButton => {
+    uninstallButton.addEventListener("click", () => {
+      const message = uninstallButton.getAttribute("data-message");
+      const href = uninstallButton.getAttribute("data-url");
+
+      const options = {
+        title: message,
+        post: "true",
+        action: href
+      }
+
+      showConfirmationModal(options);
+    })
+  });
 });

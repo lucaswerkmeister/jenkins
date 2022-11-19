@@ -2,15 +2,18 @@
 
 :root, ::backdrop {
   --modal-backdrop-background: hsla(240, 10%, 20%, 0.8);
-  --modal-backdrop-filter: contrast(0.65) brightness(2.5) saturate(1.5) blur(30px);
-  --modal-box-shadow: 0 10px 30px rgba(0, 0, 20, 0.2), 0 2px 10px rgba(0, 0, 20, 0.05), inset 0 -1px 2px rgba(255, 255, 255, 0.025);
+  --modal-backdrop-filter: saturate(2) brightness(3) blur(30px);
+  --modal-box-shadow: 0 10px 40px rgba(0, 0, 20, 0.1),
+                      0 2px 15px rgba(0, 0, 20, 0.05),
+                      inset 0 0 2px 2px rgba(255, 255, 255, 0.025);
 
   @media (prefers-color-scheme: dark) {
-    --modal-backdrop-background: hsla(240, 10%, 5%, 0.9);
+    --modal-backdrop-background: hsla(240, 10%, 5%, 0.95);
     --modal-backdrop-filter: contrast(0.9) saturate(1.5) brightness(0.9) blur(30px);
     --modal-box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.05),
-                        0 0 1px 1px rgba(0, 0, 0, 0.02),
-                        0 10px 50px rgba(0, 0, 0, 0.2);
+                        0 0 1px 1px rgba(0, 0, 0, 0.01),
+                        0 10px 50px rgba(0, 0, 0, 0.1),
+                        inset 0 0 2px 2px rgba(255, 255, 255, 0.015);
   }
 }
 
@@ -103,8 +106,9 @@
 
 @keyframes jenkins-modal-animate-in {
   from {
-    scale: 80%;
+    scale: 90%;
     opacity: 0;
+    filter: blur(10px);
   }
 }
 
@@ -123,6 +127,11 @@
 
 .longhorn-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  * {
+    text-align: center;
+  }
   gap: calc(@jenkins-modal-padding / 2);
   overflow: hidden;
   padding: @jenkins-modal-padding;
@@ -131,14 +140,35 @@
 .longhorn-container-2 {
   position: relative;
   display: flex;
-  justify-content: end;
-  gap: calc(@jenkins-modal-padding / 2);
+  justify-content: stretch;
+  gap: @jenkins-modal-padding;
   padding: 0 @jenkins-modal-padding @jenkins-modal-padding;
   z-index: 0;
 
   button {
-    min-width: 100px;
-    min-height: 2.4rem;
+    width: 100%;
+    min-height: 2.5rem;
     font-size: 0.9rem;
+  }
+}
+
+.longhorn-notice {
+  position: relative;
+  font-size: 1rem;
+  color: var(--text-color-secondary);
+  font-weight: 500;
+  margin-top: calc(@jenkins-modal-padding / 2);
+  margin-inline: -@jenkins-modal-padding;
+  padding-block: calc(@jenkins-modal-padding / 2);
+  padding-inline: @jenkins-modal-padding;
+  z-index: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--text-color-secondary);
+    opacity: 0.05;
+    z-index: -1;
   }
 }

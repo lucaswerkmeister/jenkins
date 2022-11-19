@@ -35,10 +35,18 @@ export function showModal(contents, options = {}) {
 const confirmationDefaults = {
   background: "transparent",
   padding: "0",
-  minWidth: "600px",
-  maxWidth: "600px",
-  hideCloseButton: true
+  minWidth: "425px",
+  maxWidth: "425px",
+  hideCloseButton: true,
+  submitText: 'Yes',
+  cancelText: 'Cancel',
+  type: 'default'
 };
+
+const typeClassMap = {
+  default: '',
+  destructive: 'jenkins-!-destructive-color',
+}
 
 export function showConfirmationModal(options) {
   options = { ...confirmationDefaults, ...options };
@@ -51,10 +59,10 @@ export function showConfirmationModal(options) {
         </div>
         <div class="longhorn-container-2">
             <button type="button" class="jenkins-button">
-                Cancel
+                ${options.cancelText}
             </button>
-            <button type="submit" class="jenkins-button jenkins-button--primary jenkins-!-destructive-color">
-                Yes
+            <button type="submit" class="jenkins-button jenkins-button--primary ${typeClassMap[options.type]}">
+                ${options.submitText}
             </button>
         </div>
     </form>

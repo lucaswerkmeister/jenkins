@@ -40,7 +40,13 @@ THE SOFTWARE.
         <st:attribute name="class">
             A CSS class to use to style the link.
         </st:attribute>
+        <st:attribute name="type">
+            The type of confirmation
+            @since TODO
+        </st:attribute>
     </st:documentation>
-    <a href="#" class="${class} confirmation-link" data-post="${post}" data-url="${attrs.href}" data-message="${message}"><d:invokeBody/></a>
+    <a href="#" class="${class} confirmation-link" data-post="${post}" data-url="${attrs.href}" data-message="${message}" data-confirmation-type="${attrs.type | 'default'}">
+        <d:invokeBody/>
+    </a>
     <st:adjunct includes="lib.layout.confirmationLink.adjunct "/>
 </j:jelly>
