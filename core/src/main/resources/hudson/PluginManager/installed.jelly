@@ -220,11 +220,9 @@ THE SOFTWARE.
                                 </j:forEach>
                               </div>
                             </j:if>
-                            <form class="jenkins-buttons-row" method="post" action="plugin/${p.shortName}/uninstall">
-                              <button class="jenkins-table__button jenkins-!-destructive-color uninstall" tooltip="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}">
-                                <l:icon src="symbol-close-circle"/>
-                              </button>
-                            </form>
+                            <l:confirmationLink class="jenkins-table__button jenkins-!-destructive-color uninstall" tooltip="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}" href="plugin/${p.shortName}/doUninstall" post="true" message="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}">
+                              <l:icon src="symbol-close-circle"/>
+                            </l:confirmationLink>
                           </j:otherwise>
                         </j:choose>
                       </div>
