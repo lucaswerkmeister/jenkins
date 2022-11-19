@@ -497,13 +497,14 @@ Element.observe(window, "load", function () {
   );
   uninstallButtons.forEach((uninstallButton) => {
     uninstallButton.addEventListener("click", () => {
-      const message = uninstallButton.getAttribute("data-message");
-      const href = uninstallButton.getAttribute("data-url");
+      const message = uninstallButton.dataset.message;
+      const href = uninstallButton.dataset.href;
 
       const options = {
         title: message,
         post: "true",
         action: href,
+        type: "destructive"
       };
 
       showConfirmationModal(options);

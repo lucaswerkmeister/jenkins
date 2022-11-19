@@ -222,7 +222,7 @@ THE SOFTWARE.
                             </j:if>
                             <button data-action="uninstall"
                                     type="button"
-                                    class="jenkins-table__button jenkins-!-destructive-color uninstall"
+                                    class="jenkins-table__button jenkins-!-destructive-color"
                                     tooltip="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}"
                                     data-href="plugin/${p.shortName}/doUninstall"
                                     data-message="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}">
