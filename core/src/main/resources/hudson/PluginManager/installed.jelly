@@ -61,6 +61,7 @@ THE SOFTWARE.
            data-detached-disable="${%detached-disable}"
            data-detached-uninstall="${%detached-uninstall}"
            data-detached-possible-dependents="${%detached-possible-dependents}"
+           data-uninstall-description="${%uninstall-description}"
       />
 
       <table id="plugins" class="jenkins-table sortable">
@@ -225,7 +226,7 @@ THE SOFTWARE.
                                     class="jenkins-table__button jenkins-!-destructive-color"
                                     tooltip="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}"
                                     data-href="plugin/${p.shortName}/doUninstall"
-                                    data-message="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}">
+                                    data-message="${%uninstall-title(p.updateInfo.displayName ?: p.displayName)}">
                               <l:icon src="symbol-close-circle"/>
                             </button>
                           </j:otherwise>

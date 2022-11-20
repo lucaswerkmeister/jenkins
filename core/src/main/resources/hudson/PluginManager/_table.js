@@ -96,11 +96,6 @@ Behaviour.specify("#filter-box", "_table", 0, function (e) {
       return;
     }
 
-    var pluginI18n = select(".plugins.i18n");
-    function i18n(messageId) {
-      return pluginI18n.getAttribute("data-" + messageId);
-    }
-
     // Create a map of the plugin rows, making it easy to index them.
     var plugins = {};
     for (var i = 0; i < pluginTRs.length; i++) {
@@ -502,6 +497,7 @@ Element.observe(window, "load", function () {
 
       const options = {
         title: message,
+        description: i18n("uninstall-description"),
         post: "true",
         action: href,
         type: "destructive"
@@ -511,3 +507,7 @@ Element.observe(window, "load", function () {
     });
   });
 });
+
+function i18n(messageId) {
+  return document.querySelector(".plugins.i18n").getAttribute("data-" + messageId);
+}
