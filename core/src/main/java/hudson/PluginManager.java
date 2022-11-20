@@ -72,6 +72,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -616,7 +617,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
             return;
         }
         LOGGER.fine(() -> "considering loading a detached dependency " + shortName);
-        for (String loadedFile : loadPluginsFromWar("/WEB-INF/detached-plugins", (dir, name) -> normalisePluginName(name).equals(shortName))) {
+        for (String loadedFile : loadPluginsFromWar(getDetachedLocation(), (dir, name) -> normalisePluginName(name).equals(shortName))) {
             String loaded = normalisePluginName(loadedFile);
             File arc = new File(rootDir, loaded + ".jpi");
             LOGGER.info(() -> "Loading a detached plugin as a dependency: " + arc);
@@ -627,6 +628,15 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
             }
 
         }
+    }
+
+    /**
+     * Defines the location of the detached plugins in the WAR.
+     * @return by default, {@code /WEB-INF/detached-plugins}
+     * @since TODO
+     */
+    protected @NonNull String getDetachedLocation() {
+        return "/WEB-INF/detached-plugins";
     }
 
     protected @NonNull Set<String> loadPluginsFromWar(@NonNull String fromPath) {
@@ -757,7 +767,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
 
             final List<DetachedPluginsUtil.DetachedPlugin> detachedPlugins = DetachedPluginsUtil.getDetachedPlugins(lastExecVersion);
 
-            Set<String> loadedDetached = loadPluginsFromWar("/WEB-INF/detached-plugins", new FilenameFilter() {
+            Set<String> loadedDetached = loadPluginsFromWar(getDetachedLocation(), new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
                     name = normalisePluginName(name);
@@ -792,7 +802,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
                     new Object[] {lastExecVersion, Jenkins.VERSION, loadedDetached});
         } else {
             final Set<DetachedPluginsUtil.DetachedPlugin> forceUpgrade = new HashSet<>();
-            // TODO using getDetachedPlugins here seems wrong; should be forcing an upgrade when the installed version is older than that in WEB-INF/detached-plugins/
+            // TODO using getDetachedPlugins here seems wrong; should be forcing an upgrade when the installed version is older than that in getDetachedLocation()
             for (DetachedPluginsUtil.DetachedPlugin p : DetachedPluginsUtil.getDetachedPlugins()) {
                 VersionNumber installedVersion = getPluginVersion(rootDir, p.getShortName());
                 VersionNumber requiredVersion = p.getRequiredVersion();
@@ -804,7 +814,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
                 }
             }
             if (!forceUpgrade.isEmpty()) {
-                Set<String> loadedDetached = loadPluginsFromWar("/WEB-INF/detached-plugins", new FilenameFilter() {
+                Set<String> loadedDetached = loadPluginsFromWar(getDetachedLocation(), new FilenameFilter() {
                     @Override
                     public boolean accept(File dir, String name) {
                         name = normalisePluginName(name);
@@ -1943,6 +1953,35 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
             }
         }
         return FormValidation.ok();
+    }
+
+    @Restricted(NoExternalUse.class)
+    @RequirePOST public FormValidation doCheckUpdateSiteUrl(StaplerRequest request, @QueryParameter String value) {
+        Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+        if (StringUtils.isNotBlank(value)) {
+            try {
+                value += ((value.contains("?")) ? "&" : "?") + "version=" + Jenkins.VERSION + "&uctest";
+
+                URL url = new URL(value);
+
+                // Connect to the URL
+                HttpURLConnection conn = (HttpURLConnection) ProxyConfiguration.open(url);
+                conn.setRequestMethod("HEAD");
+                conn.setConnectTimeout(5000);
+                if (100 <= conn.getResponseCode() && conn.getResponseCode() <= 399) {
+                    return FormValidation.ok();
+                } else {
+                    LOGGER.log(Level.FINE, "Obtained a non OK ({0}) response from the update center",
+                            new Object[]{conn.getResponseCode(), url});
+                    return FormValidation.error(Messages.PluginManager_connectionFailed());
+                }
+            } catch (IOException e) {
+                LOGGER.log(Level.FINE, "Failed to check update site", e);
+                return FormValidation.error(Messages.PluginManager_connectionFailed());
+            }
+        } else {
+            return FormValidation.error(Messages.PluginManager_emptyUpdateSiteUrl());
+        }
     }
 
     @Restricted(NoExternalUse.class)
