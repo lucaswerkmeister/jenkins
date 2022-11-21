@@ -61,9 +61,22 @@ THE SOFTWARE.
     </j:if>
 
     <j:if test="${!empty(jobs) or !empty(attrs.views)}">
-      <!-- the caller can inject a tab bar here -->
-      <div id="projectstatus-tabBar">
-        <d:invokeBody/>
+      <div class="jenkins-app-bar jenkins-!-margin-0">
+        <div class="jenkins-app-bar__content">
+          <!-- the caller can inject a tab bar here -->
+          <div id="projectstatus-tabBar">
+            <d:invokeBody/>
+          </div>
+        </div>
+        <div class="jenkins-app-bar__controls">
+          <a class="jenkins-button">
+            <l:icon src="symbol-add" />
+            New Project
+          </a>
+          <l:overflowButton>
+            <t:iconSize><t:rssBar/></t:iconSize>
+          </l:overflowButton>
+        </div>
       </div>
 
       <!-- project list -->
@@ -84,9 +97,6 @@ THE SOFTWARE.
           <t:projectViewRow jobBaseUrl="${relativeLinkToJob.substring(0, relativeLinkToJob.length() - job.shortUrl.length())}"/>
         </j:forEach>
       </table>
-      <div>
-        <t:iconSize><t:rssBar/></t:iconSize>
-      </div>
     </j:if>
   </div>
 </j:jelly>
