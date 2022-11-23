@@ -1,5 +1,22 @@
 import { createElementFromHtml } from "../../util/dom";
 
+function dropdown() {
+  return {
+    content: "<p class='jenkins-spinner'></p>",
+    interactive: true,
+    trigger: "click",
+    allowHTML: true,
+    placement: "bottom-start",
+    arrow: false,
+    theme: "dropdown",
+    appendTo: document.body,
+    offset: [0, 0],
+    animation: "dropdown",
+  };
+}
+
+const SELECTED_ITEM_CLASS = "jenkins-dropdown__item--selected";
+
 const itemDefaultOptions = {
   type: "link",
 };
@@ -45,4 +62,4 @@ function separator() {
   );
 }
 
-export default { item, heading, separator };
+export default { dropdown, SELECTED_ITEM_CLASS, item, heading, separator };
