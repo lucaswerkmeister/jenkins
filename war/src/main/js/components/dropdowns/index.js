@@ -1,4 +1,5 @@
 import tippy from "tippy.js";
+import New from "./new.js";
 
 let dropdownInstances = [];
 const globalPlugin = {
@@ -27,18 +28,20 @@ function init() {
     instance.destroy();
   });
 
-  tippy("[dropdown]", {
-    content: (element) =>
-      document.getElementById(element.getAttribute("menu")).innerHTML,
-    interactive: true,
-    trigger: "click",
-    allowHTML: true,
-    placement: "bottom-start",
-    arrow: false,
-    theme: "dropdown",
-    offset: [0, 0],
-    animation: "dropdown",
-  });
+  // tippy("[dropdown]", {
+  //   content: (element) =>
+  //     document.getElementById(element.getAttribute("menu")).innerHTML,
+  //   interactive: true,
+  //   trigger: "click",
+  //   allowHTML: true,
+  //   placement: "bottom-start",
+  //   arrow: false,
+  //   theme: "dropdown",
+  //   offset: [0, 0],
+  //   animation: "dropdown",
+  // });
+
+  New.registerDropdowns();
 }
 
 export default { init };
