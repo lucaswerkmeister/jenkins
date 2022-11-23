@@ -1,5 +1,5 @@
-import Jumplists from "./jumplists";
-import Overflow from "./overflow";
+import Jumplists from "@/components/dropdowns/jumplists";
+import Overflow from "@/components/dropdowns/overflow";
 
 function init() {
   Jumplists.init();

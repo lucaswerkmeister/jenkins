@@ -1,4 +1,4 @@
-import { createElementFromHtml } from "../../util/dom";
+import { createElementFromHtml } from "@/util/dom";
 
 function dropdown() {
   return {
