@@ -12,7 +12,7 @@ import Sortable, { AutoScroll } from "sortablejs/modular/sortable.core.esm.js";
 
 Sortable.mount(new AutoScroll());
 
-function registerSortableDragDrop(e) {
+export function registerSortableDragDrop(e) {
   if (!e || !e.classList.contains("with-drag-drop")) {
     return false;
   }
