@@ -238,7 +238,13 @@
   }
 
   &__badge {
+    gap: 0.4rem;
     margin-left: 1rem !important;
+
+    svg {
+      width: 0.8rem;
+      height: 0.8rem;
+    }
 
     &::before {
       top: -5px;
@@ -263,19 +269,20 @@
       &::before {
         background: currentColor;
         border-radius: 6px;
+        opacity: 0.1;
       }
     }
 
-    &:active,
-    &:focus {
+    &:active, &:focus {
       &::before {
         background: currentColor;
         border-radius: 6px;
+        opacity: 0.15;
       }
 
       &::after {
         box-shadow: 0 0 0 5px currentColor;
-        opacity: 0.025;
+        opacity: 0.05;
       }
     }
   }
