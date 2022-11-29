@@ -116,6 +116,25 @@
     vertical-align: baseline;
     border-radius: 0.25em;
   }
+
+  .app-plugin-manager__upgrade-to-label {
+    display: inline-flex;
+    align-items: center;
+    justify-items: center;
+    gap: 0.6ch;
+    color: var(--text-color-secondary);
+    margin-left: 1ch;
+    mask-image: linear-gradient(90deg, rgba(255, 255, 255, 0.75) 25%, white 75%);
+
+    svg {
+      width: 0.875rem;
+      height: 0.875rem;
+
+      * {
+        stroke-width: 45px;
+      }
+    }
+  }
 }
 
 .app-plugin-manager__sidebar {

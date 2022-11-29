@@ -78,9 +78,6 @@ THE SOFTWARE.
               </l:isAdmin>
               <th initialSortDir="${isUpdates?'down':null}">${%Name}</th>
               <th>${%Released}</th>
-              <j:if test="${isUpdates}">
-                <th>${%Installed}</th>
-              </j:if>
             </tr>
           </thead>
           <j:set var="unavailableList" value="${app.updateCenter.pluginsWithUnavailableUpdates}"/>
@@ -120,8 +117,19 @@ THE SOFTWARE.
                     <div>
                       <a href="${p.wiki}" class="jenkins-table__link" rel="noopener noreferrer" target="_blank">
                         <st:out value="${p.displayName}"/>
-                        <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">
+                        <span class="app-plugin-manager__upgrade-to-label">
                           <span class="jenkins-visually-hidden">${%Version}</span>
+                          <j:choose>
+                            <j:when test="${p.installed.active}">
+                              <st:out value="${p.installed.version}"/>
+                            </j:when>
+                            <j:otherwise>
+                              <span title="${%Inactive}">
+                                (<st:out value="${p.installed.version}"/>)
+                              </span>
+                            </j:otherwise>
+                          </j:choose>
+                          <l:icon src="symbol-arrow-right" alt="${%to}" />
                           ${p.version}
                         </span>
                       </a>
@@ -221,25 +229,12 @@ THE SOFTWARE.
                   <td data="${p.releaseTimestamp.time}" class="jenkins-table__cell--no-wrap">
                     <j:if test="${p.releaseTimestamp != null}">
                       <time datetime="${h.iso8601DateTime(p.releaseTimestamp)}"
-                            tooltip="${h.localDate(p.releaseTimestamp)}">
+                            tooltip="${h.localDate(p.releaseTimestamp)}"
+                            class="jenkins-!-margin-right-2">
                         ${%ago(h.getTimeSpanString(p.releaseTimestamp))}
                       </time>
                     </j:if>
                   </td>
-                  <j:if test="${isUpdates}">
-                    <td>
-                      <j:choose>
-                        <j:when test="${p.installed.active}">
-                          <st:out value="${p.installed.version}"/>
-                        </j:when>
-                        <j:otherwise>
-                          <span title="${%Inactive}">
-                            (<st:out value="${p.installed.version}"/>)
-                          </span>
-                        </j:otherwise>
-                      </j:choose>
-                    </td>
-                  </j:if>
                 </tr>
               </j:forEach>
               <j:if test="${isUpdates}">
@@ -255,11 +250,26 @@ THE SOFTWARE.
                           data="${h.xmlEscape(p.displayName)}"
                           data-id="${h.xmlEscape(p.name+':'+p.version)}">
                         <div>
-                          <a href="${p.wiki}" rel="noopener noreferrer" target="_blank">
+                          <a class="jenkins-table__link" href="${p.wiki}" rel="noopener noreferrer" target="_blank">
                             <st:out value="${p.displayName}"/>
                             <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">
                               <span class="jenkins-visually-hidden">${%Version}</span>
                               ${p.latest}
+                            </span>
+                            <span class="app-plugin-manager__upgrade-to-label">
+                              <span class="jenkins-visually-hidden">${%Version}</span>
+                              <j:choose>
+                                <j:when test="${p.installed.active}">
+                                  <st:out value="${p.installed.version}"/>
+                                </j:when>
+                                <j:otherwise>
+                                  <span title="${%Inactive}">
+                                    (<st:out value="${p.installed.version}"/>)
+                                  </span>
+                                </j:otherwise>
+                              </j:choose>
+                              <l:icon src="symbol-arrow-right" alt="${%to}" />
+                              ${p.version}
                             </span>
                           </a>
                           <span class="unavailable-label">${%unavailable}</span>
@@ -288,18 +298,6 @@ THE SOFTWARE.
                         </j:if>
                       </td>
                       <td><!-- timestamp --></td>
-                      <td>
-                        <j:choose>
-                          <j:when test="${p.installed.active}">
-                            <st:out value="${p.installed.version}"/>
-                          </j:when>
-                          <j:otherwise>
-                            <span title="${%Inactive}">
-                              (<st:out value="${p.installed.version}"/>)
-                            </span>
-                          </j:otherwise>
-                        </j:choose>
-                      </td>
                     </tr>
                   </j:if>
                 </j:forEach>
