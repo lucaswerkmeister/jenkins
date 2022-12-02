@@ -45,14 +45,19 @@ THE SOFTWARE.
   <f:rowSet name="${attrs.name}">
     <div class="${attrs.title!=null ? 'jenkins-section' : ''}">
       <j:if test="${attrs.title!=null}">
-        <div class="jenkins-section__title">
-          <div class="jenkins-hidden">
-            <l:icon src="${attrs.icon ?: 'symbol-settings'}" />
+        <div>
+          <div class="jenkins-section__title">
+            <div class="jenkins-hidden">
+              <l:icon src="${attrs.icon ?: 'symbol-settings'}" />
+            </div>
+            ${attrs.title}
           </div>
-          ${attrs.title}
+          <p class="secondary">Lorem ipsum</p>
         </div>
       </j:if>
-      <d:invokeBody />
+      <div>
+        <d:invokeBody />
+      </div>
     </div>
   </f:rowSet>
 </j:jelly>
