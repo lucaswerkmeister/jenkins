@@ -43,7 +43,7 @@ THE SOFTWARE.
   <st:adjunct includes="lib.form.section_" />
 
   <f:rowSet name="${attrs.name}">
-    <div class="${attrs.title!=null ? 'jenkins-section' : ''}">
+    <section class="${attrs.title!=null ? 'jenkins-section' : ''}">
       <j:if test="${attrs.title!=null}">
         <div>
           <div class="jenkins-section__title">
@@ -58,6 +58,6 @@ THE SOFTWARE.
       <div>
         <d:invokeBody />
       </div>
-    </div>
+    </section>
   </f:rowSet>
 </j:jelly>
