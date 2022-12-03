@@ -44,6 +44,4 @@ THE SOFTWARE.
       </div>
     </div>
   </dialog>
-
-  <script src="${resURL}/jsbundles/command-palette.js" type="text/javascript" />
 </j:jelly>

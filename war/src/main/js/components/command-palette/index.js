@@ -5,7 +5,7 @@ import debounce from "lodash/debounce";
 
 const datasources = [JenkinsSearchSource];
 
-window.addEventListener("load", () => {
+function init() {
   const i18n = document.getElementById("command-palette-i18n");
   const headerCommandPaletteButton = document.getElementById(
     "button-open-command-palette"
@@ -201,4 +201,6 @@ window.addEventListener("load", () => {
       }
     }
   }
-});
+};
+
+export default { init };

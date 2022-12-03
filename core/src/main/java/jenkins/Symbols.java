@@ -50,12 +50,13 @@ public class Symbols implements RootAction {
 
         String title = Objects.toString(request.getParameter("title"), "");
         String tooltip = Objects.toString(request.getParameter("tooltip"), "");
+        String htmlTooltip = Objects.toString(request.getParameter("html-tooltip"), "");
         String classes = Objects.toString(request.getParameter("classes"), "");
         String pluginName = extractPluginNameFromIconSrc(symbol);
         String id = Objects.toString(request.getParameter("id"), "");
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("symbol", IconSet.getSymbol(symbol, title, tooltip, classes, pluginName, id));
+        jsonObject.put("symbol", IconSet.getSymbol(symbol, title, tooltip, tooltip, classes, pluginName, id));
 
         return HttpResponses.okJSON(jsonObject);
     }
