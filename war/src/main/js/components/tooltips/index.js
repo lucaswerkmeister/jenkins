@@ -53,7 +53,7 @@ function registerTooltips(container) {
         container: container,
         onCreate(instance) {
           instance.reference.setAttribute("title", instance.props.content);
-          
+
           const delay =
             instance.reference.getAttribute("data-tooltip-delay") || 0;
           instance.props.delay = [delay, null];

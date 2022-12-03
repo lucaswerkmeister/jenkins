@@ -34,7 +34,7 @@ const init = () => {
   if (breadcrumbs.length !== 0) {
     const breadcrumb = breadcrumbs[breadcrumbs.length - 1];
     breadcrumb.dataset.htmlTooltip = `Press <span class="jenkins-tooltip__keyboard-shortcut">U</span> to jump up to ${breadcrumb.textContent}`;
-    breadcrumb.dataset.tooltipDelay = "500";
+    breadcrumb.dataset.tooltipDelay = "600";
 
     hotkeys("u", () => {
       breadcrumb.click();
