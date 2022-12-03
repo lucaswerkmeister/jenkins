@@ -31,7 +31,6 @@ package hudson.model;
 import static hudson.scm.PollingResult.BUILD_NOW;
 import static hudson.scm.PollingResult.NO_CHANGES;
 
-import antlr.ANTLRException;
 import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import edu.umd.cs.findbugs.annotations.NonNull;
@@ -413,7 +412,7 @@ public abstract class AbstractProject<P extends AbstractProject<P, R>, R extends
         try {
             Label.parseExpression(assignedNode);
             return assignedNode;
-        } catch (ANTLRException e) {
+        } catch (IllegalArgumentException e) {
             // must be old label or host name that includes whitespace or other unsafe chars
             return LabelAtom.escape(assignedNode);
         }
@@ -1110,8 +1109,9 @@ public abstract class AbstractProject<P extends AbstractProject<P, R>, R extends
         // Blocked downstream tasks must block this project.
         // Projects blocked by upstream or downstream builds
         // are ignored to break deadlocks.
-        for (Queue.Item item : Jenkins.get().getQueue().getBlockedItems()) {
-            if (item.getCauseOfBlockage() instanceof AbstractProject.BecauseOfUpstreamBuildInProgress ||
+        for (Queue.BlockedItem item : Jenkins.get().getQueue().getBlockedItems()) {
+            if (item.isCauseOfBlockageNull() ||
+                    item.getCauseOfBlockage() instanceof AbstractProject.BecauseOfUpstreamBuildInProgress ||
                     item.getCauseOfBlockage() instanceof AbstractProject.BecauseOfDownstreamBuildInProgress) {
                 continue;
             }
@@ -1138,8 +1138,9 @@ public abstract class AbstractProject<P extends AbstractProject<P, R>, R extends
         // Blocked upstream tasks must block this project.
         // Projects blocked by upstream or downstream builds
         // are ignored to break deadlocks.
-        for (Queue.Item item : Jenkins.get().getQueue().getBlockedItems()) {
-            if (item.getCauseOfBlockage() instanceof AbstractProject.BecauseOfUpstreamBuildInProgress ||
+        for (Queue.BlockedItem item : Jenkins.get().getQueue().getBlockedItems()) {
+            if (item.isCauseOfBlockageNull() ||
+                    item.getCauseOfBlockage() instanceof AbstractProject.BecauseOfUpstreamBuildInProgress ||
                     item.getCauseOfBlockage() instanceof AbstractProject.BecauseOfDownstreamBuildInProgress) {
                 continue;
             }
