@@ -74,5 +74,4 @@
             </j:if>
         </div>
     </header>
-    <script src="${resURL}/jsbundles/keyboard-shortcuts.js" type="text/javascript"/>
 </j:jelly>

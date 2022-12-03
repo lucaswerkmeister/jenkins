@@ -53,6 +53,10 @@ function registerTooltips(container) {
         container: container,
         onCreate(instance) {
           instance.reference.setAttribute("title", instance.props.content);
+          
+          const delay =
+            instance.reference.getAttribute("data-tooltip-delay") || 0;
+          instance.props.delay = [delay, null];
         },
         onShow(instance) {
           instance.reference.removeAttribute("title");
@@ -76,6 +80,10 @@ function registerTooltips(container) {
           instance.props.interactive =
             instance.reference.getAttribute("data-tooltip-interactive") ===
             "true";
+
+          const delay =
+            instance.reference.getAttribute("data-tooltip-delay") || 0;
+          instance.props.delay = [delay, null];
         },
       },
       TOOLTIP_BASE

@@ -31,9 +31,6 @@ module.exports = (env, argv) => ({
       path.join(__dirname, "src/main/js/config-tabbar.less"),
     ],
     app: [path.join(__dirname, "src/main/js/app.js")],
-    "keyboard-shortcuts": [
-      path.join(__dirname, "src/main/js/keyboard-shortcuts.js"),
-    ],
     "sortable-drag-drop": [
       path.join(__dirname, "src/main/js/sortable-drag-drop.js"),
     ],

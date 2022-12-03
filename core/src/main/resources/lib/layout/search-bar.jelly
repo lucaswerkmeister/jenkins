@@ -53,7 +53,8 @@ THE SOFTWARE.
            autocapitalize="off"
            spellcheck="false" />
     <j:if test="${attrs.hasKeyboardShortcut != 'false'}">
-      <div class="jenkins-search__shortcut" tooltip="${%Press / on your keyboard to focus}">
+      <j:set var="tooltip">Press <span class="jenkins-tooltip__keyboard-shortcut"><l:icon src="symbol-search-shortcut" /></span> to focus</j:set>
+      <div class="jenkins-search__shortcut" data-html-tooltip="${tooltip}">
         <l:icon src="symbol-search-shortcut" />
       </div>
     </j:if>
