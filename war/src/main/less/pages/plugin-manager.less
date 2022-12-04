@@ -11,10 +11,11 @@
   tr.already-upgraded {
     background-color: var(--plugin-manager-bg-color-already-upgraded);
   }
-  
+
   tr.unavailable {
     background-color: var(--plugin-manager-unavailable-bg-color);
   }
+
   tr.unavailable span.unavailable-label {
     display: inline-block;
     border: 1px solid #666;
@@ -114,5 +115,15 @@
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: 0.25em;
+  }
+}
+
+.app-plugin-manager__sidebar {
+  position: sticky;
+  top: calc(40px + 1.6rem);
+
+  h1 {
+    margin-top: 1rem !important;
+    margin-bottom: 0.1rem !important;
   }
 }

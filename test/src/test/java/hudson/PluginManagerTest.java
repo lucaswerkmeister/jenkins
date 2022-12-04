@@ -415,6 +415,18 @@ public class PluginManagerTest {
         assertThrows(IOException.class, () -> dynamicLoad("mandatory-depender-0.0.2.hpi"));
     }
 
+    @Issue("JENKINS-68194")
+    @WithPlugin("dependee.hpi")
+    @Test public void clearDisabledStatusAfterUninstall() throws Exception {
+        PluginWrapper pw = r.jenkins.pluginManager.getPlugin("dependee");
+        assertNotNull(pw);
+
+        pw.doMakeDisabled();
+        pw.doDoUninstall();
+
+        File disabledHpi = new File(r.jenkins.getRootDir(), "plugins/dependee.hpi.disabled");
+        assertFalse(disabledHpi.exists());  // `.disabled` file should be deleted after uninstall
+    }
 
     @Issue("JENKINS-21486")
     @Test public void installPluginWithObsoleteOptionalDependencyFails() throws Exception {
@@ -476,7 +488,7 @@ public class PluginManagerTest {
         String pluginShortName = "require-system-during-load";
         dynamicLoad(pluginShortName + ".hpi");
         try (ACLContext context = ACL.as2(User.getById("underprivileged", true).impersonate2())) {
-            r.jenkins.pluginManager.start(Collections.singletonList(r.jenkins.pluginManager.getPlugin(pluginShortName)));
+            r.jenkins.pluginManager.start(List.of(r.jenkins.pluginManager.getPlugin(pluginShortName)));
         }
     }
 
@@ -488,7 +500,7 @@ public class PluginManagerTest {
         String pluginShortName = "require-system-in-initializer";
         dynamicLoad(pluginShortName + ".jpi");
         try (ACLContext context = ACL.as2(User.getById("underprivileged", true).impersonate2())) {
-            r.jenkins.pluginManager.start(Collections.singletonList(r.jenkins.pluginManager.getPlugin(pluginShortName)));
+            r.jenkins.pluginManager.start(List.of(r.jenkins.pluginManager.getPlugin(pluginShortName)));
         }
     }
 

@@ -32,7 +32,6 @@ import static java.util.logging.Level.WARNING;
 
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.FilePath;
 import hudson.Functions;
 import hudson.Util;
@@ -90,12 +89,6 @@ import org.springframework.security.core.Authentication;
  * @author Kohsuke Kawaguchi
  */
 @ExportedBean
-@SuppressFBWarnings(
-        value = {
-            "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION",
-            "THROWS_METHOD_THROWS_CLAUSE_THROWABLE"
-        },
-        justification = "TODO needs triage")
 public class Executor extends Thread implements ModelObject {
     protected final @NonNull Computer owner;
     private final Queue queue;
@@ -356,7 +349,7 @@ public class Executor extends Thread implements ModelObject {
             SubTask task;
             // transition from idle to building.
             // perform this state change as an atomic operation wrt other queue operations
-            task = Queue.withLock(new Callable<SubTask>() {
+            task = Queue.withLock(new Callable<>() {
                 @Override
                 public SubTask call() throws Exception {
                     if (!owner.isOnline()) {

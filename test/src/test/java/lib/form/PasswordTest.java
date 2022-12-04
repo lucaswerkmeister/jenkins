@@ -67,13 +67,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 import jenkins.model.GlobalConfiguration;
 import jenkins.model.Jenkins;
 import jenkins.model.TransientActionFactory;
-import jenkins.security.apitoken.ApiTokenTestHelper;
 import jenkins.tasks.SimpleBuildStep;
 import org.junit.Rule;
 import org.junit.Test;
@@ -126,8 +125,6 @@ public class PasswordTest {
     @Issue({"SECURITY-266", "SECURITY-304"})
     @Test
     public void testExposedCiphertext() throws Exception {
-        ApiTokenTestHelper.enableLegacyBehavior();
-
         boolean saveEnabled = Item.EXTENDED_READ.getEnabled();
         Item.EXTENDED_READ.setEnabled(true);
         try {
@@ -176,8 +173,8 @@ public class PasswordTest {
             getJobCommand.setTransportAuth2(adminAuth);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             String pName = p.getFullName();
-            getJobCommand.main(Collections.singletonList(pName), Locale.ENGLISH, System.in, new PrintStream(baos), System.err);
-            assertEquals(xmlAdmin, baos.toString(configXml.getWebResponse().getContentCharset().name()));
+            getJobCommand.main(List.of(pName), Locale.ENGLISH, System.in, new PrintStream(baos), System.err);
+            assertEquals(xmlAdmin, baos.toString(configXml.getWebResponse().getContentCharset()));
             CopyJobCommand copyJobCommand = new CopyJobCommand();
             copyJobCommand.setTransportAuth2(adminAuth);
             String pAdminName = pName + "-admin";
@@ -199,8 +196,8 @@ public class PasswordTest {
             Authentication devAuth = User.get("dev").impersonate2();
             getJobCommand.setTransportAuth2(devAuth);
             baos = new ByteArrayOutputStream();
-            getJobCommand.main(Collections.singletonList(pName), Locale.ENGLISH, System.in, new PrintStream(baos), System.err);
-            assertEquals(xmlDev, baos.toString(configXml.getWebResponse().getContentCharset().name()));
+            getJobCommand.main(List.of(pName), Locale.ENGLISH, System.in, new PrintStream(baos), System.err);
+            assertEquals(xmlDev, baos.toString(configXml.getWebResponse().getContentCharset()));
             copyJobCommand = new CopyJobCommand();
             copyJobCommand.setTransportAuth2(devAuth);
             String pDevName = pName + "-dev";
@@ -662,7 +659,7 @@ public class PasswordTest {
         @NonNull
         @Override
         public Collection<? extends Action> createFor(@NonNull Job target) {
-            return Collections.singletonList(new ActionImpl());
+            return List.of(new ActionImpl());
         }
     }
 

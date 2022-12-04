@@ -2,8 +2,8 @@ package hudson.diagnosis;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.HttpMethod;
@@ -17,9 +17,8 @@ import hudson.security.GlobalMatrixAuthorizationStrategy;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Collections;
+import java.util.List;
 import jenkins.model.Jenkins;
-import jenkins.security.apitoken.ApiTokenTestHelper;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.Issue;
@@ -50,18 +49,12 @@ public class HudsonHomeDiskUsageMonitorTest {
         assertFalse(mon.isEnabled());
 
         // and make sure it's gone
-        try {
-            fail(getForm(mon) + " shouldn't be there");
-        } catch (ElementNotFoundException e) {
-            // as expected
-        }
+        assertThrows(ElementNotFoundException.class, () -> getForm(mon));
     }
 
     @Issue("SECURITY-371")
     @Test
     public void noAccessForNonAdmin() throws Exception {
-        ApiTokenTestHelper.enableLegacyBehavior();
-
         JenkinsRule.WebClient wc = j.createWebClient()
                 .withThrowExceptionOnFailingStatusCode(false);
 
@@ -80,7 +73,7 @@ public class HudsonHomeDiskUsageMonitorTest {
 
         WebRequest request = new WebRequest(new URL(wc.getContextPath() + "administrativeMonitor/hudsonHomeIsFull/act"), HttpMethod.POST);
         NameValuePair param = new NameValuePair("no", "true");
-        request.setRequestParameters(Collections.singletonList(param));
+        request.setRequestParameters(List.of(param));
 
         HudsonHomeDiskUsageMonitor mon = HudsonHomeDiskUsageMonitor.get();
 
@@ -96,7 +89,7 @@ public class HudsonHomeDiskUsageMonitorTest {
 
         wc.withBasicApiToken(administrator);
         request = new WebRequest(new URL(wc.getContextPath() + "administrativeMonitor/hudsonHomeIsFull/act"), HttpMethod.POST);
-        request.setRequestParameters(Collections.singletonList(param));
+        request.setRequestParameters(List.of(param));
         p = wc.getPage(request);
         assertEquals(HttpURLConnection.HTTP_OK, p.getWebResponse().getStatusCode());
         assertFalse(mon.isEnabled());
