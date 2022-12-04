@@ -25,12 +25,10 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <l:side-panel>
+    <l:app-bar title="${%Settings}" />
+
     <div id="tasks">
-      <div class="jenkins-app-bar">
-        <div class="jenkins-app-bar__content">
-          <h1>${%Manage Jenkins}</h1>
-        </div>
-      </div>
+      <l:search-bar />
 
       <section class="manage-messages" style="display: none;">
         <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
@@ -41,45 +39,9 @@ THE SOFTWARE.
 
       <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
         <h2 class="jenkins-side-nav__heading">${category.key.label}</h2>
-        ${taskTags!=null and attrs.contextMenu!='false' ? taskTags.addHeader(category.key.label) : null}
         <j:forEach var="m" items="${category.value}">
-            <j:choose>
-              <j:when test="${m.requiresConfirmation}">
-                <l:confirmationLink tooltip="${m.description}" class="jenkins-side-nav__item" href="${m.urlName}" post="${m.requiresPOST}" message="${%are.you.sure(m.displayName)}">
-                  <div class="jenkins-side-nav__item__icon" aria-hidden="true">
-                    <l:icon src="${m.iconFileName}" class="icon" />
-                  </div>
-                  <dt>${m.displayName}</dt>
-                  <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                </l:confirmationLink>
-              </j:when>
-              <j:when test="${m.requiresPOST}">
-                <f:link href="${m.urlName}" post="${m.requiresPOST}">
-                  <div class="jenkins-section__item__icon" aria-hidden="true">
-                    <l:icon src="${m.iconFileName}" class="icon" />
-                  </div>
-                  <dl>
-                    <dt>${m.displayName}</dt>
-                    <dd><j:out value="${m.description}"/></dd>
-                    <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                  </dl>
-                </f:link>
-              </j:when>
-              <j:otherwise>
-                  <a tooltip="${m.description}" href="${rootURL}/${m.urlName}" class="jenkins-side-nav__item ${h.hyperlinkMatchesCurrentPage(rootURL + '/' + m.urlName) ? 'jenkins-side-nav__item--selected' : ''}">
-                    <div class="jenkins-side-nav__item__icon" aria-hidden="true">
-                      <l:icon src="${m.iconFileName}" class="icon" />
-                    </div>
-                    <dt>${m.displayName}</dt>
-                    <j:if test="${m.getUpdateCount() != null and m.getUpdateCount() != 0}">
-                      <span class="jenkins-side-nav__item__badge">${m.getUpdateCount()}</span>
-                    </j:if>
-                    <dd><j:out value="${m.description}"/></dd>
-                    <dd><st:include it="${m}" page="info.jelly" optional="true"/></dd>
-                  </a>
-                </j:otherwise>
-            </j:choose>
-          </j:forEach>
+          <l:task title="${m.displayName}" href="${m.urlName}" icon="${m.iconFileName}" />
+        </j:forEach>
       </j:forEach>
     </div>
   </l:side-panel>
