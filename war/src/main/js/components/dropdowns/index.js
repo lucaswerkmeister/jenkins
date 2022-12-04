@@ -5,7 +5,6 @@ import Overflow from "@/components/dropdowns/overflow";
 function init() {
   Jumplists.init();
   InpageJumplist.init();
-  Overflow.init();
 }
 
 export default { init };
