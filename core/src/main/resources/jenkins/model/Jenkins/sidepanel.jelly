@@ -40,7 +40,7 @@ THE SOFTWARE.
       <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
         <h2 class="jenkins-side-nav__heading">${category.key.label}</h2>
         <j:forEach var="m" items="${category.value}">
-          <l:task title="${m.displayName}" href="${m.urlName}" icon="${m.iconFileName}" />
+          <l:task title="${m.displayName}" href="${rootURL}/manage/${m.urlName}" icon="${m.iconFileName}" />
         </j:forEach>
       </j:forEach>
     </div>
