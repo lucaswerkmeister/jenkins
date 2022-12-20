@@ -25,10 +25,10 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
   <l:side-panel>
-    <l:app-bar title="${%Manage Jenkins}" />
+    <l:app-bar title="${%Settings}" />
 
     <div id="tasks">
-      <l:search-bar placeholder="${%Search settings}" id="settings-search-bar" />
+      <l:search-bar placeholder="${%Search}" id="settings-search-bar" />
 
       <script src="${resURL}/jsbundles/pages/manage-jenkins.js" type="text/javascript" />
 
