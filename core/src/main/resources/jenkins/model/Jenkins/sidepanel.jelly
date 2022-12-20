@@ -23,12 +23,14 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
   <l:side-panel>
-    <l:app-bar title="${%Settings}" />
+    <l:app-bar title="${%Manage Jenkins}" />
 
     <div id="tasks">
-      <l:search-bar />
+      <l:search-bar placeholder="${%Search settings}" id="settings-search-bar" />
+
+      <script src="${resURL}/jsbundles/pages/manage-jenkins.js" type="text/javascript" />
 
       <section class="manage-messages" style="display: none;">
         <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
