@@ -33,8 +33,6 @@ THE SOFTWARE.
     <st:include page="sidepanel.jelly"/>
 
     <l:main-panel>
-      <l:app-bar title="${%Plugins}" />
-
       <div class="jenkins-app-bar jenkins-app-bar--sticky">
         <div class="jenkins-app-bar__content">
           <l:search-bar clazz="jenkins-search--app-bar"
