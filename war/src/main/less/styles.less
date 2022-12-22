@@ -60,3 +60,52 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+
+.longhorn-modern-output {
+  --output-inset: 1ch;
+  font-size: 0.875rem;
+  line-height: 1.7 !important;
+  font-weight: unset !important;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.longhorn {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--output-inset) 1fr;
+  gap: 2ch;
+  z-index: 0;
+
+  & > a {
+    position: sticky;
+    top: 50px;
+    align-self: start;
+    justify-self: end;
+    color: var(--text-color-secondary);
+    text-decoration: none;
+    transition: var(--standard-transition);
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px -0.4rem;
+    border-radius: 6px;
+    z-index: -1;
+    transition: 0.1s linear;
+  }
+
+  &:hover, &:focus-within {
+    &::before {
+      background: var(--item-background--hover);
+    }
+  }
+}

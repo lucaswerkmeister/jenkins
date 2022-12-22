@@ -23,22 +23,43 @@ Behaviour.specify(
         headers["X-ConsoleAnnotator"] = e.consoleAnnotator;
       }
 
+      function isBottom() {
+        const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+        const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+        return distanceFromBottom < 30;
+      }
+
       new Ajax.Request(href, {
         method: "post",
         parameters: { start: e.fetchedBytes },
         requestHeaders: headers,
         onComplete: function (rsp) {
           /* append text and do autoscroll if applicable */
-          var stickToBottom = scroller.isSticking();
+          var stickToBottom = isBottom();
           var text = rsp.responseText;
           if (text != "") {
-            var p = document.createElement("DIV");
-            e.appendChild(p); // Needs to be first for IE
-            p.innerHTML = text;
-            Behaviour.applySubtree(p);
-            if (stickToBottom) {
-              scroller.scrollToBottom();
-            }
+            let index = document.querySelectorAll(".longhorn").length;
+            const lines = text.split("\n");
+            lines.forEach((line) => {
+              if (line.trim() === "") {
+                return;
+              }
+
+              index ++;
+              var p = document.createElement("DIV");
+              p.classList.add("longhorn")
+              p.innerHTML = `<a id="${index}" href="#${index}">${index}</a><span>${line}</span>`
+              e.appendChild(p);
+              Behaviour.applySubtree(p);
+            })
+
+            e.style.setProperty('--output-inset', index.toString().length + "ch");
+
+
+
+            // if (stickToBottom) {
+            //   scroller.scrollToBottom();
+            // }
           }
 
           e.fetchedBytes = rsp.getResponseHeader("X-Text-Size");
