@@ -241,6 +241,44 @@ pre {
   }
 }
 
+.app-log-line {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--output-inset, 1ch) 1fr;
+  gap: 2ch;
+  z-index: 0;
+
+  & > span:first-of-type {
+    position: sticky;
+    top: 50px;
+    align-self: start;
+    justify-self: end;
+    color: var(--text-color-secondary);
+    pointer-events: none;
+    user-select: none;
+
+    &::before {
+      content: attr(data-line-number);
+      position: relative;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px -0.4rem;
+    border-radius: 6px;
+    z-index: -1;
+    transition: 0.1s linear;
+  }
+
+  &:hover {
+    &::before {
+      background: var(--item-background--hover);
+    }
+  }
+}
+
 pre.console {
   overflow: auto;
 }
