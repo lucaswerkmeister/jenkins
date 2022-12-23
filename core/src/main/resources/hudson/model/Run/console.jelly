@@ -32,7 +32,29 @@ THE SOFTWARE.
   <l:layout title="${it.fullDisplayName} Console">
     <st:include page="sidepanel.jelly" />
     <l:main-panel>
-      <t:buildCaption>${%Console Output}</t:buildCaption>
+      <j:set var="buildUrl" value="${h.decompose(request)}" />
+
+      <div class="jenkins-app-bar">
+        <div class="jenkins-app-bar__content">
+          <t:buildCaption>${%Console Output}</t:buildCaption>
+        </div>
+        <div class="jenkins-app-bar__controls">
+<!--          <button class="copy-button jenkins-button jenkins-copy-button"-->
+<!--                  type="button">-->
+<!--            <span class="jenkins-copy-button__icon" />-->
+<!--            Copy-->
+<!--          </button>-->
+          <j:invokeStatic className="java.time.LocalDateTime" method="now" var="now"/>
+          <a href="${buildUrl.baseUrl}/consoleText" download="${it.fullDisplayName} logs - ${now}.txt" class="jenkins-button">
+            <l:icon src="symbol-download" />
+            Download
+          </a>
+          <a href="${buildUrl.baseUrl}/consoleText" class="jenkins-button">
+            View as plain text
+          </a>
+        </div>
+      </div>
+
       <j:set var="threshold" value="${h.getSystemProperty('hudson.consoleTailKB')?:'150'}" />
       <!-- Show at most last 150KB (can override with system property) unless consoleFull is set -->
       <j:set var="offset" value="${empty(consoleFull) ? it.logText.length()-threshold*1024 : 0}" />
