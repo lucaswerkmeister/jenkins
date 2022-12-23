@@ -63,10 +63,13 @@ html {
 
 .longhorn-modern-output {
   --output-inset: 1ch;
-  font-size: 0.875rem;
-  line-height: 1.7 !important;
+
   font-weight: unset !important;
   -webkit-font-smoothing: subpixel-antialiased;
+
+  &:empty {
+    display: none;
+  }
 }
 
 .longhorn {
@@ -76,21 +79,18 @@ html {
   gap: 2ch;
   z-index: 0;
 
-  & > a {
+  & > span:first-of-type {
     position: sticky;
     top: 50px;
     align-self: start;
     justify-self: end;
     color: var(--text-color-secondary);
-    text-decoration: none;
-    transition: var(--standard-transition);
+    pointer-events: none;
+    user-select: none;
 
-    &:hover {
-      opacity: 0.5;
-    }
-
-    &:focus {
-      outline: none;
+    &::before {
+      content: attr(data-line-number);
+      position: relative;
     }
   }
 
@@ -103,7 +103,7 @@ html {
     transition: 0.1s linear;
   }
 
-  &:hover, &:focus-within {
+  &:hover {
     &::before {
       background: var(--item-background--hover);
     }
