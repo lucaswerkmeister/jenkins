@@ -1,4 +1,5 @@
 import Utils from "@/components/dropdowns/utils";
+import behaviorShim from "@/util/behavior-shim";
 
 /**
  * Does something
@@ -6,7 +7,7 @@ import Utils from "@/components/dropdowns/utils";
 function init() {
   behaviorShim.specify(
     "[dropdown]",
-    "-dropdown-",
+    "-dropdown-123-",
     1000,
     (element) => {
       Utils.generateDropdown(element, (instance) => {
