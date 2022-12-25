@@ -60,3 +60,60 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+
+.flip {
+  position: relative;
+  min-height: 1.5rem;
+
+  p {
+    position: absolute;
+    margin: 0;
+    color: var(--text-color-secondary);
+  }
+
+  .jenkins {
+    font-family: "Georgia", Serif;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  &:has(.notice) {
+    .jenkins {
+      animation: flip-2 0.4s 3s both ease;
+    }
+
+    .notice {
+      font-weight: 600;
+      font-size: 1rem;
+      animation: flip-1 0.4s 3s both ease;
+    }
+  }
+}
+
+@keyframes flip-1 {
+  to {
+    translate: 0 -0.75rem;
+    filter: blur(2px);
+    opacity: 0;
+  }
+}
+
+@keyframes flip-2 {
+  from {
+    translate: 0 0.75rem;
+    filter: blur(2px);
+    opacity: 0;
+  }
+}
+
+.jenkins-mobile-only {
+  @media (min-width: 767px) {
+    display: none;
+  }
+}
+
+.jenkins-mobile-hide {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
