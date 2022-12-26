@@ -28,13 +28,65 @@ THE SOFTWARE.
   <l:layout title="${it.fullDisplayName}">
     <st:include page="sidepanel.jelly" />
     <l:main-panel>
+
+      <j:set var="appBarTitle">
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <l:icon class="${it.buildStatusIconClassName} icon-lg" />
+          <l:breakable value="${it.displayName}"/>
+        </div>
+      </j:set>
+
+      <l:app-bar title="${appBarTitle}" escapeTitle="false">
+        <j:set var="url" value="${h.getNearestAncestorUrl(request,it)}"/>
+
+        <a href="${url}/configure" class="jenkins-button">
+          <j:choose>
+            <j:when test="${h.hasPermission(it,it.CONFIGURE)}">
+              ${%Configure}
+            </j:when>
+            <j:otherwise>
+              ${%View configuration}
+            </j:otherwise>
+          </j:choose>
+        </a>
+
+        <l:overflowButton>
+          <j:forEach var="action" items="${attrs.actions ?: it.allActions ?: it.actions}">
+            <j:if test="${action.displayName != null}">
+              <a href="${action.urlName}" class="jenkins-dropdown__item">
+                <div class="jenkins-dropdown__item__icon">
+                  <l:icon class="${action.iconFileName}" />
+                </div>
+                ${action.displayName}
+              </a>
+            </j:if>
+          </j:forEach>
+
+          <div class="jenkins-dropdown__separator"></div>
+          <l:hasPermission permission="${it.UPDATE}">
+            <st:include page="logKeep.jelly" />
+          </l:hasPermission>
+
+          <j:if test="${it.hasPermission(it.DELETE)}">
+            <div class="jenkins-dropdown__separator"></div>
+            <a href="confirmDelete" class="jenkins-dropdown__item jenkins-!-destructive-color">
+              <div class="jenkins-dropdown__item__icon">
+                <l:icon src="symbol-trash" />
+              </div>
+              ${%Delete build}
+            </a>
+          </j:if>
+        </l:overflowButton>
+      </l:app-bar>
+
       <div style="float:right; z-index: 1; position:relative; margin-left: 1em">
-        <l:hasPermission permission="${it.UPDATE}">
-          <st:include page="logKeep.jelly" />
-        </l:hasPermission>
         <div style="margin-top:1em">
           ${%startedAgo(it.timestampString)}
-          </div><div>
+        </div>
+        <div>
+          <i:formatDate value="${it.timestamp.time}" type="both" dateStyle="medium" timeStyle="medium" />
+        </div>
+        <div>
           <j:if test="${it.building}">
             ${%beingExecuted(it.executor.timestampString)}
           </j:if>
@@ -46,8 +98,6 @@ THE SOFTWARE.
           </j:if>
         </div>
       </div>
-
-      <t:buildCaption>${%Build} ${it.displayName} (<i:formatDate value="${it.timestamp.time}" type="both" dateStyle="medium" timeStyle="medium"/>)</t:buildCaption>
 
       <div>
         <t:editableDescription permission="${it.UPDATE}" />
