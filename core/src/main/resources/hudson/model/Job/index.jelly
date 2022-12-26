@@ -27,7 +27,73 @@ THE SOFTWARE.
   <l:layout title="${it.displayName}${not empty it.parent.fullDisplayName?' ['+it.parent.fullDisplayName+']':''}">
     <st:include page="sidepanel.jelly" />
     <l:main-panel>
-      <h1 class="job-index-headline page-headline">${it.pronoun} <l:breakable value="${it.displayName}"/></h1>
+      <j:set var="appBarTitle">
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <l:icon class="${it.lastBuild.buildStatusIconClassName} icon-lg" />
+          <l:breakable value="${it.displayName}"/>
+        </div>
+      </j:set>
+
+      <l:app-bar title="${appBarTitle}" escapeTitle="false">
+        <j:if test="${it.buildable}">
+          <j:set var="url" value="${h.getNearestAncestorUrl(request,it)}"/>
+          <j:set var="id" value="${h.generateId()}"/>
+
+          <j:choose>
+            <j:when test="${!it.parameterized}">
+              <button id="button-build" data-href="${url}/build?delay=0sec" class="jenkins-button jenkins-!-build-color">
+                <span class="longhorn-og">
+                  <l:icon src="symbol-play" />
+                  ${it.buildNowText}
+                </span>
+                <span class="jenkins-spinner longhorn"></span>
+                <l:icon src="symbol-check" class="longhorn-check" />
+              </button>
+            </j:when>
+            <j:otherwise>
+              <a href="${url}/build?delay=0sec" class="jenkins-button jenkins-!-build-color">
+                <l:icon src="symbol-play" />
+                ${it.buildNowText}
+              </a>
+            </j:otherwise>
+          </j:choose>
+        </j:if>
+
+        <a href="${url}/configure" class="jenkins-button">
+          <j:choose>
+            <j:when test="${h.hasPermission(it,it.CONFIGURE)}">
+              ${%Configure}
+            </j:when>
+            <j:otherwise>
+              ${%View configuration}
+            </j:otherwise>
+          </j:choose>
+        </a>
+
+        <l:overflowButton>
+          <j:forEach var="action" items="${attrs.actions ?: it.allActions ?: it.actions}">
+            <j:if test="${action.displayName != null}">
+              <a href="${action.urlName}" class="jenkins-dropdown__item">
+                <div class="jenkins-dropdown__item__icon">
+                  <l:icon class="${action.iconFileName}" />
+                </div>
+                ${action.displayName}
+              </a>
+            </j:if>
+          </j:forEach>
+
+          <j:if test="${it.hasPermission(it.DELETE)}">
+            <div class="jenkins-dropdown__separator"></div>
+            <a href="delete" class="jenkins-dropdown__item jenkins-!-destructive-color">
+              <div class="jenkins-dropdown__item__icon">
+                <l:icon src="symbol-trash" />
+              </div>
+              ${%Delete job}
+            </a>
+          </j:if>
+        </l:overflowButton>
+      </l:app-bar>
+
       <j:if test="${(it.fullName!=it.fullDisplayName) and (it.class.name!='hudson.matrix.MatrixConfiguration')}"> <!-- TODO rather check for TopLevelItem (how to do this from Jelly?) -->
         <j:choose>
           <j:when test="${it.parent!=app}">

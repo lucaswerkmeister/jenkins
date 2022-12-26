@@ -28,6 +28,10 @@ THE SOFTWARE.
     <st:attribute name="title" use="required">
       The title for the application bar
     </st:attribute>
+    <st:attribute name="escapeTitle">
+      Allows for HTML content when set to false, remember to escape any user inputted content first
+      Defaults to true
+    </st:attribute>
     <st:attribute name="headingLevel">
       Defaults to h1
     </st:attribute>
@@ -38,7 +42,14 @@ THE SOFTWARE.
     <div class="jenkins-app-bar">
       <div class="jenkins-app-bar__content">
         <x:element name="${headingLevel ?: 'h1'}">
-          ${title}
+          <j:choose>
+            <j:when test="${attrs.escapeTitle != 'false'}">
+              ${title}
+            </j:when>
+            <j:otherwise>
+              <j:out value="${title}" />
+            </j:otherwise>
+          </j:choose>
         </x:element>
       </div>
       <div class="jenkins-app-bar__controls">

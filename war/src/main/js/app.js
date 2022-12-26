@@ -7,3 +7,15 @@ Dropdowns.init();
 Notifications.init();
 SearchBar.init();
 Tooltips.init();
+
+const buildButton = document.querySelector("#button-build");
+
+buildButton.addEventListener("click", () => {
+  buildButton.classList.add("longhorn-on");
+
+  setTimeout(() => {
+    buildButton.classList.remove("longhorn-on");
+  }, 3500)
+
+  new Ajax.Request(buildButton.dataset.href);
+})

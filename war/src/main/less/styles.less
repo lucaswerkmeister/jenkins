@@ -118,3 +118,114 @@ html {
     display: none;
   }
 }
+
+.longhorn-og {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1ch;
+}
+
+.longhorn {
+  position: absolute;
+  scale: 0;
+  opacity: 0;
+
+  &::before,
+  &::after {
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 0.125rem solid currentColor;
+  }
+}
+
+.longhorn-check {
+  position: absolute;
+  scale: 0;
+  opacity: 0;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+
+  * {
+    stroke-width: 40px;
+  }
+}
+
+.longhorn-on {
+  pointer-events: none;
+
+  &::after {
+    box-shadow: 0 0 0 1rem currentColor !important;
+  }
+
+  .longhorn-og {
+    animation: longhornog-animation 3.5s both cubic-bezier(0, 0.68, 0.5, 1.5);
+  }
+
+  .longhorn {
+    animation: longhorn-animation 1.8s both cubic-bezier(0, 0.68, 0.5, 1.5);
+  }
+
+  .longhorn-check {
+    animation: longhorn2-animation 1.8s both 1.6s cubic-bezier(0, 0.68, 0.5, 1.5);
+  }
+}
+
+@keyframes longhornog-animation {
+  10% {
+    scale: 90%;
+    opacity: 0;
+    filter: blur(2px);
+  }
+  90% {
+    scale: 90%;
+    opacity: 0;
+    filter: blur(2px);
+  }
+  95% {
+    scale: 1;
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes longhorn-animation {
+  0% {
+    scale: 0;
+    opacity: 0;
+    filter: blur(2px);
+  }
+  20% {
+    scale: 1;
+    opacity: 1;
+    filter: blur(0);
+  }
+  90% {
+    scale: 1;
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    scale: 0;
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+@keyframes longhorn2-animation {
+  15% {
+    scale: 1;
+    opacity: 1;
+    filter: blur(0);
+  }
+  85% {
+    scale: 1;
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    scale: 0;
+    opacity: 0;
+    filter: blur(2px);
+  }
+}

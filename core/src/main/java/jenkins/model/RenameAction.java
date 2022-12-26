@@ -38,12 +38,12 @@ public class RenameAction implements Action {
 
     @Override
     public String getIconFileName() {
-        return "notepad.png";
+        return "symbol-edit";
     }
 
     @Override
     public String getDisplayName() {
-        return "Rename";
+        return "Rename job";
     }
 
     @Override
