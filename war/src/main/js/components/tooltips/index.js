@@ -1,12 +1,15 @@
 import tippy from "tippy.js";
 import behaviorShim from "@/util/behavior-shim";
 
-const TOOLTIP_BASE = {
-  arrow: false,
-  theme: "tooltip",
-  animation: "tooltip",
-  appendTo: document.body,
-};
+const TOOLTIP_BASE = (dataset) => {
+  return {
+    arrow: false,
+    theme: dataset.tooltipTheme || "tooltip",
+    animation: dataset.tooltipAnimation || "tooltip",
+    placement: dataset.tooltipPlacement || "top",
+    appendTo: document.body
+  };
+}
 
 /**
  * Registers tooltips for the given element
@@ -39,7 +42,7 @@ function registerTooltip(element) {
             instance.reference.setAttribute("title", instance.props.content);
           },
         },
-        TOOLTIP_BASE
+        TOOLTIP_BASE(element.dataset)
       )
     );
   }
@@ -57,7 +60,7 @@ function registerTooltip(element) {
               "true";
           },
         },
-        TOOLTIP_BASE
+        TOOLTIP_BASE(element.dataset)
       )
     );
   }

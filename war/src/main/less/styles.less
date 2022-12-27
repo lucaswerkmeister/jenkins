@@ -60,3 +60,113 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+
+.macron-user {
+  position: relative;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: #e2e3e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 600;
+  filter: blur(0.2px);
+  text-decoration: none !important;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 100%;
+    border: 1.5px solid currentColor;
+    color: inherit;
+  }
+}
+
+#banana {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9998;
+  background: var(--background);
+}
+
+.app-longhorn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 9999;
+
+  background: #111217;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: calc(env(safe-area-inset-top) + .9rem) .9rem calc(env(safe-area-inset-bottom) + .9rem) calc(env(safe-area-inset-left) + .9rem);
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    gap: 0.8rem;
+
+    &__item {
+      .item();
+
+      appearance: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      outline: none;
+      border: none;
+
+      width: 3rem;
+      height: 3rem;
+
+      border-radius: 1rem;
+
+      color: #e2e3e9 !important;
+
+      cursor: pointer;
+      text-decoration: none !important;
+
+      svg, .macron-user {
+        width: 1.125rem;
+        height: 1.125rem;
+        opacity: 0.8;
+
+        * {
+          stroke-width: 40px;
+        }
+      }
+
+      &--selected {
+        &::before {
+          background: var(--item-background--hover);
+          inset: -0.15rem;
+        }
+
+        svg, .macron-user {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:last-child {
+      align-self: end;
+    }
+  }
+}

@@ -39,30 +39,92 @@ THE SOFTWARE.
 
       <script src="${resURL}/jsbundles/pages/manage-jenkins.js" type="text/javascript" />
 
+      <div id="banana">
+
+      </div>
+
       <div class="app-longhorn">
         <div class="app-longhorn__items"></div>
         <ol class="app-longhorn__items">
           <li class="jenkins-!-display-contents">
-            <a href="${rootURL}/" class="app-longhorn__items__item">
-              Home
+            <a tooltip="${%Home}"
+               data-tooltip-theme="navigation"
+               data-tooltip-animation="navigation"
+               data-tooltip-placement="right"
+               href="${rootURL}/"
+               class="app-longhorn__items__item app-longhorn__items__item--selected">
+              <l:icon src="symbol-home" />
             </a>
-            <button class="app-longhorn__items__item">
-              Search
+          </li>
+          <li class="jenkins-!-display-contents">
+            <button tooltip="${%Search}"
+                    data-tooltip-theme="navigation"
+                    data-tooltip-animation="navigation"
+                    data-tooltip-placement="right"
+                    class="app-longhorn__items__item">
+              <l:icon src="symbol-search" />
             </button>
-            <a href="${rootURL}/asynchPeople" class="app-longhorn__items__item">
-              People
+          </li>
+          <li class="jenkins-!-display-contents">
+            <a tooltip="${%People}"
+               data-tooltip-theme="navigation"
+               data-tooltip-animation="navigation"
+               data-tooltip-placement="right"
+               href="${rootURL}/asynchPeople" class="app-longhorn__items__item">
+              <l:icon src="symbol-people" />
             </a>
-            <a href="${rootURL}/view/all/builds" class="app-longhorn__items__item">
-              Build monitor
+          </li>
+          <li class="jenkins-!-display-contents">
+            <a tooltip="${%Build monitor}"
+               data-tooltip-theme="navigation"
+               data-tooltip-animation="navigation"
+               data-tooltip-placement="right"
+               href="${rootURL}/view/all/builds" class="app-longhorn__items__item">
+              <l:icon src="symbol-build-history" />
             </a>
-            <a href="${rootURL}/manage" class="app-longhorn__items__item">
-              Settings
+          </li>
+          <li class="jenkins-!-display-contents">
+            <j:set var="userJumplist">
+              <a class="jenkins-search__results-item">
+                <div>
+                  <l:icon src="symbol-log-out" />
+                </div>
+                Jan Faracik
+              </a>
+              <br/>
+              <a class="jenkins-search__results-item">
+                <div>
+                  <l:icon src="symbol-log-out" />
+                </div>
+                ${%Sign out}
+              </a>
+            </j:set>
+            <a data-html-tooltip="${userJumplist}"
+               data-tooltip-interactive="true"
+               data-tooltip-theme="navigation"
+               data-tooltip-animation="navigation"
+               data-tooltip-placement="right"
+               href="${rootURL}/manage" class="app-longhorn__items__item">
+              <l:icon src="symbol-person" />
+            </a>
+          </li>
+          <li class="jenkins-!-display-contents">
+            <a tooltip="${%Settings}"
+               data-tooltip-theme="navigation"
+               data-tooltip-animation="navigation"
+               data-tooltip-placement="right"
+               href="${rootURL}/manage" class="app-longhorn__items__item">
+              <l:icon src="symbol-settings" />
             </a>
           </li>
         </ol>
         <div class="app-longhorn__items">
-          <button class="app-longhorn__items__item">
-            Back to top
+          <button tooltip="${%Scroll to top}"
+                  data-tooltip-theme="navigation"
+                  data-tooltip-animation="navigation"
+                  data-tooltip-placement="right"
+                  class="app-longhorn__items__item">
+            <l:icon src="symbol-arrow-up" />
           </button>
         </div>
       </div>
