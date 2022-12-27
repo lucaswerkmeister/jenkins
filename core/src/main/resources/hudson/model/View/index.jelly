@@ -27,20 +27,96 @@ THE SOFTWARE.
     <l:layout title="${(it.class.name=='hudson.model.AllView' and it.ownerItemGroup == app) ? '%Dashboard' : it.displayName}${not empty it.ownerItemGroup.fullDisplayName?' ['+it.ownerItemGroup.fullDisplayName+']':''}">
       <j:set var="view" value="${it}"/> <!-- expose view to the scripts we include from owner -->
         <st:include page="sidepanel.jelly" />
+
         <l:main-panel>
+          <div class="jenkins-mobile-only">
+            <div class="flip">
+              <p class="jenkins">Jenkins</p>
+              <j:if test="${app.useSecurity and !h.isAnonymous()}">
+                <j:invokeStatic var="user" className="hudson.model.User" method="current" />
+                <j:choose>
+                  <j:when test="${user.fullName == null || user.fullName.trim().isEmpty()}">
+                    <j:set var="userName" value="${user.id}"/>
+                  </j:when>
+                  <j:otherwise>
+                    <j:set var="userName" value="${user.fullName.split(' ').0}"/>
+                  </j:otherwise>
+                </j:choose>
+                <p class="notice">Afternoon ${userName}</p>
+              </j:if>
+            </div>
+            <l:app-bar title="${title}">
+              <a class="jenkins-button" href="${rootURL}/${it.viewUrl}newJob">
+                <l:icon src="symbol-add" />
+                <span class="jenkins-mobile-hide">
+                  ${%New job}
+                </span>
+              </a>
+              <l:overflowButton>
+                <j:if test="${it.isEditable()}">
+                  <!-- /configure URL on Jenkins object is overloaded with Jenkins's system config, so always use the explicit name. -->
+                  <a href="${rootURL}/${it.viewUrl}configure" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-edit" />
+                    </div>
+                    ${%Edit view}
+                  </a>
+                  <div class="jenkins-dropdown__separator"></div>
+                </j:if>
+                <j:if test="${app.fingerprintMap.ready}">
+                  <a href="${rootURL}/projectRelationship" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-project-relationship" />
+                    </div>
+                    ${%Project relationship}
+                  </a>
+                  <a href="${rootURL}/fingerprintCheck" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-fingerprint" />
+                    </div>
+                    ${%Check file fingerprint}
+                  </a>
+                  <div class="jenkins-dropdown__separator"></div>
+                </j:if>
+                <a href="${rootURL}/legend" class="jenkins-dropdown__item">
+                  <div class="jenkins-dropdown__item__icon">
+                    <l:icon src="symbol-legend" />
+                  </div>
+                  ${%Icon legend}
+                </a>
+                <j:if test="${it.owner.canDelete(it)}">
+                  <div class="jenkins-dropdown__separator"></div>
+                  <a href="delete" class="jenkins-dropdown__item jenkins-!-destructive-color">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-trash" />
+                    </div>
+                    ${%Delete view}
+                  </a>
+                </j:if>
+              </l:overflowButton>
+            </l:app-bar>
+            <script>
+              const sidepanel = document.querySelector("#side-panel");
+              sidepanel.classList.add("jenkins-mobile-hide");
+            </script>
+          </div>
+
           <st:include page="view-index-top.jelly" it="${it.owner}" optional="true">
             <!-- allow the owner to take over the top section, but we also need the default to be backward compatible -->
             <div id="view-message">
                 <div id="systemmessage">
                   <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />
                 </div>
-              <t:editableDescription permission="${it.CONFIGURE}"/>
+              <div class="jenkins-mobile-hide">
+                <t:editableDescription permission="${it.CONFIGURE}"/>
+              </div>
             </div>
           </st:include>
 
           <j:set var="items" value="${it.items}"/>
           <st:include page="main.jelly" />
         </l:main-panel>
+
         <l:header>
           <!-- for screen resolution detection -->
           <l:yui module="cookie" />
