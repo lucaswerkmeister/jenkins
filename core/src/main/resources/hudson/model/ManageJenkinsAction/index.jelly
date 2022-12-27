@@ -27,107 +27,13 @@ THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <l:layout title="${%Manage Jenkins}" permissions="${app.MANAGE_AND_SYSTEM_READ}">
-    <j:if test="${taskTags==null}">
-      <st:include page="sidepanel.jelly" it="${app}" />
-    </j:if>
-
+  <l:layout title="${%Manage Jenkins}" permissions="${app.MANAGE_AND_SYSTEM_READ}" type="one-pane">
     <l:main-panel>
       <l:app-bar title="${%Manage Jenkins}">
         <l:search-bar placeholder="${%Search settings}" id="settings-search-bar" />
       </l:app-bar>
 
       <script src="${resURL}/jsbundles/pages/manage-jenkins.js" type="text/javascript" />
-
-      <div id="banana">
-
-      </div>
-
-      <div class="app-longhorn">
-        <div class="app-longhorn__items"></div>
-        <ol class="app-longhorn__items">
-          <li class="jenkins-!-display-contents">
-            <a tooltip="${%Home}"
-               data-tooltip-theme="navigation"
-               data-tooltip-animation="navigation"
-               data-tooltip-placement="right"
-               href="${rootURL}/"
-               class="app-longhorn__items__item app-longhorn__items__item--selected">
-              <l:icon src="symbol-home" />
-            </a>
-          </li>
-          <li class="jenkins-!-display-contents">
-            <button tooltip="${%Search}"
-                    data-tooltip-theme="navigation"
-                    data-tooltip-animation="navigation"
-                    data-tooltip-placement="right"
-                    class="app-longhorn__items__item">
-              <l:icon src="symbol-search" />
-            </button>
-          </li>
-          <li class="jenkins-!-display-contents">
-            <a tooltip="${%People}"
-               data-tooltip-theme="navigation"
-               data-tooltip-animation="navigation"
-               data-tooltip-placement="right"
-               href="${rootURL}/asynchPeople" class="app-longhorn__items__item">
-              <l:icon src="symbol-people" />
-            </a>
-          </li>
-          <li class="jenkins-!-display-contents">
-            <a tooltip="${%Build monitor}"
-               data-tooltip-theme="navigation"
-               data-tooltip-animation="navigation"
-               data-tooltip-placement="right"
-               href="${rootURL}/view/all/builds" class="app-longhorn__items__item">
-              <l:icon src="symbol-build-history" />
-            </a>
-          </li>
-          <li class="jenkins-!-display-contents">
-            <j:set var="userJumplist">
-              <a class="jenkins-search__results-item">
-                <div>
-                  <l:icon src="symbol-log-out" />
-                </div>
-                Jan Faracik
-              </a>
-              <br/>
-              <a class="jenkins-search__results-item">
-                <div>
-                  <l:icon src="symbol-log-out" />
-                </div>
-                ${%Sign out}
-              </a>
-            </j:set>
-            <a data-html-tooltip="${userJumplist}"
-               data-tooltip-interactive="true"
-               data-tooltip-theme="navigation"
-               data-tooltip-animation="navigation"
-               data-tooltip-placement="right"
-               href="${rootURL}/manage" class="app-longhorn__items__item">
-              <l:icon src="symbol-person" />
-            </a>
-          </li>
-          <li class="jenkins-!-display-contents">
-            <a tooltip="${%Settings}"
-               data-tooltip-theme="navigation"
-               data-tooltip-animation="navigation"
-               data-tooltip-placement="right"
-               href="${rootURL}/manage" class="app-longhorn__items__item">
-              <l:icon src="symbol-settings" />
-            </a>
-          </li>
-        </ol>
-        <div class="app-longhorn__items">
-          <button tooltip="${%Scroll to top}"
-                  data-tooltip-theme="navigation"
-                  data-tooltip-animation="navigation"
-                  data-tooltip-placement="right"
-                  class="app-longhorn__items__item">
-            <l:icon src="symbol-arrow-up" />
-          </button>
-        </div>
-      </div>
 
       <section class="manage-messages">
         <j:forEach var="am" items="${app.activeAdministrativeMonitors}">

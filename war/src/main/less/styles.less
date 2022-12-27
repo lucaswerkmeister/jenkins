@@ -85,23 +85,31 @@ html {
   }
 }
 
-#banana {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 9998;
-  background: var(--background);
+.pirates {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+.pirates2 {
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 3rem 3rem 3rem 3rem;
+}
+
+.longhorn {
+  display: flex;
+  flex-direction: column;
+  margin-inline: -0.25rem;
+  margin-block: 0.2rem;
+  gap: 2px;
 }
 
 .app-longhorn {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 9999;
-
+  height: 100vh;
   background: #111217;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
@@ -169,5 +177,28 @@ html {
     &:last-child {
       align-self: end;
     }
+  }
+}
+
+.boxer {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 3rem;
+
+  &__sidebar {
+    position: sticky;
+    top: 0px;
+    width: 18rem;
+    flex-shrink: 0;
+    align-self: start;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__content {
+    width: 100%;
   }
 }
