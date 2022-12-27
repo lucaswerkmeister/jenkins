@@ -39,6 +39,34 @@ THE SOFTWARE.
 
       <script src="${resURL}/jsbundles/pages/manage-jenkins.js" type="text/javascript" />
 
+      <div class="app-longhorn">
+        <div class="app-longhorn__items"></div>
+        <ol class="app-longhorn__items">
+          <li class="jenkins-!-display-contents">
+            <a href="${rootURL}/" class="app-longhorn__items__item">
+              Home
+            </a>
+            <button class="app-longhorn__items__item">
+              Search
+            </button>
+            <a href="${rootURL}/asynchPeople" class="app-longhorn__items__item">
+              People
+            </a>
+            <a href="${rootURL}/view/all/builds" class="app-longhorn__items__item">
+              Build monitor
+            </a>
+            <a href="${rootURL}/manage" class="app-longhorn__items__item">
+              Settings
+            </a>
+          </li>
+        </ol>
+        <div class="app-longhorn__items">
+          <button class="app-longhorn__items__item">
+            Back to top
+          </button>
+        </div>
+      </div>
+
       <section class="manage-messages">
         <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
           <st:include page="message.jelly" it="${am}" />
