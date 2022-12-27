@@ -140,6 +140,14 @@
 
   &__button {
     display: inline-flex;
+
+    .jenkins-spinner {
+      &::before, &::after {
+        width: 1.25rem;
+        height: 1.25rem;
+        border-width: 0.125rem;
+      }
+    }
   }
 
   &__link,
@@ -267,7 +275,7 @@
     }
 
     &:active,
-    &:focus {
+    &:focus-visible {
       &::before {
         background: currentColor;
         border-radius: 6px;

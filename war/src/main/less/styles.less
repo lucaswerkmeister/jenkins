@@ -60,3 +60,22 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+
+.longhorn {
+  & > * {
+    opacity: 0;
+    scale: 0.4;
+    transition: var(--elastic-transition);
+    visibility: hidden;
+  }
+
+  & > *:not(:first-child) {
+    position: absolute;
+  }
+}
+
+.longhorn-active {
+  opacity: 1 !important;
+  scale: 1 !important;
+  visibility: visible !important;
+}
