@@ -23,13 +23,12 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<st:compress xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-    <l:layout title="${(it.class.name=='hudson.model.AllView' and it.ownerItemGroup == app) ? '%Dashboard' : it.displayName}${not empty it.ownerItemGroup.fullDisplayName?' ['+it.ownerItemGroup.fullDisplayName+']':''}">
-      <j:set var="view" value="${it}"/> <!-- expose view to the scripts we include from owner -->
-        <st:include page="sidepanel.jelly" />
-
-        <l:main-panel>
-          <div class="jenkins-mobile-only">
+<st:compress xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:t="/lib/hudson">
+  <l:layout hideBreadcrumbs="true" title="${(it.class.name=='hudson.model.AllView' and it.ownerItemGroup == app) ? '%Dashboard' : it.displayName}${not empty it.ownerItemGroup.fullDisplayName?' ['+it.ownerItemGroup.fullDisplayName+']':''}">
+    <j:set var="view" value="${it}"/> <!-- expose view to the scripts we include from owner -->
+      <l:main-panel>
+        <div class="lh-dashboard">
+          <div>
             <div class="flip">
               <p class="jenkins">Jenkins</p>
               <j:if test="${app.useSecurity and !h.isAnonymous()}">
@@ -49,8 +48,8 @@ THE SOFTWARE.
               <a class="jenkins-button" href="${rootURL}/${it.viewUrl}newJob">
                 <l:icon src="symbol-add" />
                 <span class="jenkins-mobile-hide">
-                  ${%New job}
-                </span>
+              ${%New job}
+            </span>
               </a>
               <l:overflowButton>
                 <j:if test="${it.isEditable()}">
@@ -95,33 +94,43 @@ THE SOFTWARE.
                 </j:if>
               </l:overflowButton>
             </l:app-bar>
-            <script>
-              const sidepanel = document.querySelector("#side-panel");
-              sidepanel.classList.add("jenkins-mobile-hide");
-            </script>
           </div>
 
-          <st:include page="view-index-top.jelly" it="${it.owner}" optional="true">
-            <!-- allow the owner to take over the top section, but we also need the default to be backward compatible -->
-            <div id="view-message">
-                <div id="systemmessage">
-                  <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />
+          <div class="lh-dashboard__content">
+            <div>
+              <div class="card">
+                <!-- allow the owner to take over the top section, but we also need the default to be backward compatible -->
+                <div id="view-message">
+                  <div id="systemmessage">
+                    <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />
+                  </div>
+                  <div class="jenkins-mobile-hide">
+                    <t:editableDescription permission="${it.CONFIGURE}"/>
+                  </div>
                 </div>
-              <div class="jenkins-mobile-hide">
-                <t:editableDescription permission="${it.CONFIGURE}"/>
               </div>
+
+              <j:forEach var="w" items="${it.widgets}">
+                <j:set var="view" value="${it}" />
+                <!-- expose the view that's rendering this sidepanel to the widget -->
+                <st:include it="${w}" page="index.jelly" />
+              </j:forEach>
             </div>
-          </st:include>
+            <div>
+              <st:include page="view-index-top.jelly" it="${it.owner}" optional="true" />
 
-          <j:set var="items" value="${it.items}"/>
-          <st:include page="main.jelly" />
-        </l:main-panel>
+              <j:set var="items" value="${it.items}"/>
+              <st:include page="main.jelly" />
+            </div>
+          </div>
+        </div>
+      </l:main-panel>
 
-        <l:header>
-          <!-- for screen resolution detection -->
-          <l:yui module="cookie" />
-          <script id="screenResolution-script" data-use-secure-cookie="${request.secure}"/>
-          <st:adjunct includes="hudson.model.View.screen-resolution"/>
-        </l:header>
-    </l:layout>
+      <l:header>
+        <!-- for screen resolution detection -->
+        <l:yui module="cookie" />
+        <script id="screenResolution-script" data-use-secure-cookie="${request.secure}"/>
+        <st:adjunct includes="hudson.model.View.screen-resolution"/>
+      </l:header>
+  </l:layout>
 </st:compress>

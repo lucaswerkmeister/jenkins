@@ -70,9 +70,9 @@ THE SOFTWARE.
 <!--      <st:include page="tasks-bottom.jelly" it="${it.owner}" optional="true" />-->
 <!--      <t:actions />-->
 <!--    </l:tasks>-->
-    <j:forEach var="w" items="${it.widgets}">
-      <j:set var="view" value="${it}" /><!-- expose the view that's rendering this sidepanel to the widget -->
-      <st:include it="${w}" page="index.jelly" />
-    </j:forEach>
+<!--    <j:forEach var="w" items="${it.widgets}">-->
+<!--      <j:set var="view" value="${it}" />&lt;!&ndash; expose the view that's rendering this sidepanel to the widget &ndash;&gt;-->
+<!--      <st:include it="${w}" page="index.jelly" />-->
+<!--    </j:forEach>-->
   </l:side-panel>
 </j:jelly>

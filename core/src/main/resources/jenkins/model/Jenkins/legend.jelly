@@ -25,13 +25,11 @@ THE SOFTWARE.
 
 <!-- show the icon legend -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:s="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
   <l:layout title="${%Icon legend}">
-    <l:app-bar title="${title}" />
-
-    <st:include page="sidepanel.jelly"/>
-
     <l:main-panel>
+      <l:app-bar title="${title}" />
+
       <h2>${%Status}</h2>
 
       <dl class="app-icon-legend">

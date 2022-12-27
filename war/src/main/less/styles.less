@@ -183,6 +183,7 @@ html {
 .flip {
   position: relative;
   min-height: 1.5rem;
+  margin-top: 4px;
 
   p {
     position: absolute;
@@ -257,5 +258,21 @@ html {
 .jenkins-mobile-hide {
   @media (max-width: 767px) {
     display: none;
+  }
+}
+
+.card {
+  border: 2px solid red;
+  border-radius: 10px;
+}
+
+.lh-dashboard {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  &__content {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1rem;
   }
 }
