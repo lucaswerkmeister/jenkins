@@ -34,7 +34,7 @@ THE SOFTWARE.
                 <j:when test="${job.parameterized}">
                   <j:set var="title" value="${%Schedule_a_task_with_parameters(h.getRelativeDisplayNameFrom(job, itemGroup),it.taskNoun(job))}" />
                   <a tooltip="${title}" class="jenkins-table__button jenkins-!-build-color" href="${href}">
-                    <l:icon src="symbol-play" class="longhorn-active ${isQueued ? 'pulse-animation': ''}" />
+                    <l:icon src="symbol-play" class="${isQueued ? 'pulse-animation': ''}" />
                   </a>
                 </j:when>
                 <j:otherwise>
@@ -42,10 +42,9 @@ THE SOFTWARE.
                   <button data-type="build-button"
                           data-url="${href}"
                           tooltip="${title}"
-                          class="jenkins-table__button jenkins-!-build-color longhorn">
-                    <l:icon src="symbol-play" class="longhorn-active ${isQueued ? 'pulse-animation': ''}" />
-                    <div class="jenkins-spinner"></div>
-                    <l:icon src="symbol-check" />
+                          class="jenkins-table__button jenkins-!-build-color">
+                    <l:icon src="symbol-play" class="${isQueued ? 'pulse-animation': ''}" />
+<!--                    <l:icon src="symbol-check" />-->
                   </button>
                   <st:adjunct includes="hudson.views.BuildButtonColumn.icon" />
                 </j:otherwise>

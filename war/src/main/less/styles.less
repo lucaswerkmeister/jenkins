@@ -65,8 +65,8 @@ html {
   & > * {
     opacity: 0;
     scale: 0.4;
-    transition: var(--elastic-transition);
-    visibility: hidden;
+    filter: blur(2px);
+    transition: 0.3s cubic-bezier(0, 0.68, 0.6, 1.8);
   }
 
   & > *:not(:first-child) {
@@ -77,5 +77,5 @@ html {
 .longhorn-active {
   opacity: 1 !important;
   scale: 1 !important;
-  visibility: visible !important;
+  filter: blur(0) !important;
 }
