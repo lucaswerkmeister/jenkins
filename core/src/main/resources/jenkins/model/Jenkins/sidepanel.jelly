@@ -23,7 +23,7 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
   <l:side-panel>
     <l:app-bar title="${%Settings}" />
 
@@ -31,13 +31,6 @@ THE SOFTWARE.
       <l:search-bar placeholder="${%Search}" id="settings-search-bar" />
 
       <script src="${resURL}/jsbundles/pages/manage-jenkins.js" type="text/javascript" />
-
-      <section class="manage-messages" style="display: none;">
-        <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
-          <st:include page="message.jelly" it="${am}" />
-        </j:forEach>
-        <st:include page="downgrade.jelly" />
-      </section>
 
       <j:forEach var="category" items="${it.categorizedManagementLinks.entrySet()}">
         <h2 class="jenkins-side-nav__heading">${category.key.label}</h2>

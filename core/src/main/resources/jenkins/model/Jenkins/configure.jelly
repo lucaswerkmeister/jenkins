@@ -33,7 +33,15 @@ THE SOFTWARE.
   <l:main-panel>
     <l:app-bar title="${%Configure System}" />
 
+    <section class="manage-messages">
+      <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
+        <st:include page="message.jelly" it="${am}" />
+      </j:forEach>
+      <st:include page="downgrade.jelly" />
+    </section>
+
     <div class="behavior-loading"><l:spinner text="${%LOADING}"/></div>
+
     <f:form method="post" name="config" action="configSubmit" class="jenkins-form">
       <j:set var="instance" value="${it}" />
       <j:set var="descriptor" value="${instance.descriptor}" />
