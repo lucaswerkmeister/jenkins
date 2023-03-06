@@ -23,9 +23,9 @@ const pageDown = buildHistoryPageNav.querySelectorAll(".pageDown")[0];
 const leftRightPadding = 4;
 const updateBuildsRefreshInterval = 5000;
 
-function updateBuilds() {
+function updateBuilds(params) {
   if (isPageVisible()) {
-    new Ajax.Request(ajaxUrl, {
+    new Ajax.Request(ajaxUrl + toQueryString(params), {
       requestHeaders: buildHistoryContainer.headers,
       onSuccess: function (rsp) {
         var dataTable = getDataTable(buildHistoryContainer);
@@ -82,19 +82,19 @@ function updateBuilds() {
         // next update
         buildHistoryContainer.headers = ["n", rsp.getResponseHeader("n")];
         checkAllRowCellOverflows();
-        createRefreshTimeout();
+        createRefreshTimeout(params);
       },
     });
   } else {
-    createRefreshTimeout();
+    createRefreshTimeout(params);
   }
 }
 
 var buildRefreshTimeout;
-function createRefreshTimeout() {
+function createRefreshTimeout(params) {
   cancelRefreshTimeout();
   buildRefreshTimeout = window.setTimeout(
-    updateBuilds,
+    () => updateBuilds(params),
     updateBuildsRefreshInterval
   );
 }
@@ -500,7 +500,7 @@ function loadPage(params, focusOnSearch) {
       updatePageParams(newDataTable);
       togglePageUpDown();
       if (!hasPageUp()) {
-        createRefreshTimeout();
+        createRefreshTimeout(params);
       }
 
       if (focusOnSearch) {
@@ -518,7 +518,7 @@ const debouncedFilter = debounce(handleFilter, 300);
 
 document.addEventListener("DOMContentLoaded", function () {
   // Apply correct styling upon filter bar text change, call API after wait
-  pageSearchInput.addEventListener("input", function () {
+  pageSearchInput?.addEventListener("input", function () {
     pageSearchInputContainer.classList.add("jenkins-search--loading");
     buildHistoryContainer.classList.add("jenkins-pane--loading");
     noBuildsBanner.style.display = "none";

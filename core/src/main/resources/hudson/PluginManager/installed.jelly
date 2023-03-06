@@ -30,11 +30,12 @@ THE SOFTWARE.
   <l:layout title="${%Installed plugins} - ${%Plugin Manager}" permission="${app.SYSTEM_READ}">
     <j:set var="readOnlyMode" value="${!app.hasPermission(app.ADMINISTER)}"/>
 
-    <l:app-bar title="${%Plugins}" />
-
     <st:include page="sidepanel.jelly"/>
+    <!-- no need for additional breadcrumb here as the side panel offers enough functionality to browse between different pages -->
 
     <l:main-panel>
+      <l:app-bar title="${%Plugins}" />
+
       <div class="jenkins-app-bar jenkins-app-bar--sticky">
         <div class="jenkins-app-bar__content">
           <l:search-bar clazz="jenkins-search--app-bar"
