@@ -5,7 +5,7 @@
   height: 100%;
   background: #28404e;
   padding: 2rem;
-  pointer-events: none;
+  min-width: 250px;
 
   @media (max-width: 970px) {
     height: 200px;
@@ -32,7 +32,7 @@
     h1 {
       display: flex;
       flex-direction: column;
-      font-family: "Georgia", serif;
+      font-family: Georgia, serif;
       color: white;
       text-shadow: 0 2px 0 #1b1819;
 
@@ -41,8 +41,7 @@
         font-family: var(--font-family-sans);
         font-size: 0.7rem;
         font-weight: bold;
-        letter-spacing: 2px;
-        text-transform: uppercase;
+        letter-spacing: 1px;
         opacity: 0.85;
       }
     }

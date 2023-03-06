@@ -114,7 +114,6 @@ import jenkins.util.io.OnMaster;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CountingInputStream;
-import org.apache.commons.io.output.NullOutputStream;
 import org.jenkinsci.Symbol;
 import org.jvnet.localizer.Localizable;
 import org.kohsuke.accmod.Restricted;
@@ -1066,26 +1065,10 @@ public class UpdateCenter extends AbstractModelObject implements Saveable, OnMas
         return new ArrayList<>(pluginMap.values());
     }
 
+    // for Jelly
     @Restricted(NoExternalUse.class)
-    public List<Plugin> getPluginsWithUnavailableUpdates() {
-        Map<String, Plugin> pluginMap = new LinkedHashMap<>();
-        for (PluginWrapper wrapper : Jenkins.get().getPluginManager().getPlugins()) {
-            for (UpdateSite site : sites) {
-                UpdateSite.Plugin plugin = site.getPlugin(wrapper.getShortName());
-                if (plugin == null) {
-                    // Plugin not distributed by this update site
-                    continue;
-                }
-                final Plugin existing = pluginMap.get(plugin.name);
-                if (existing == null) { // TODO better support for overlapping update sites
-                    if (plugin.latest != null && !plugin.latest.equalsIgnoreCase(plugin.version) && !plugin.latest.equalsIgnoreCase(wrapper.getVersion())) {
-                        pluginMap.put(plugin.name, plugin);
-                    }
-                }
-            }
-        }
-        final ArrayList<Plugin> unavailable = new ArrayList<>(pluginMap.values());
-        return unavailable;
+    public boolean hasIncompatibleUpdates(PluginManager.MetadataCache cache) {
+        return getUpdates().stream().anyMatch(plugin -> !plugin.isCompatible(cache));
     }
 
     /**
@@ -1422,8 +1405,8 @@ public class UpdateCenter extends AbstractModelObject implements Saveable, OnMas
                         throw new HttpRetryException("Invalid response code (" + responseCode + ") from URL: " + url, responseCode);
                     }
                 } else {
-                    try (InputStream is = connection.getInputStream()) {
-                        IOUtils.copy(is, NullOutputStream.NULL_OUTPUT_STREAM);
+                    try (InputStream is = connection.getInputStream(); OutputStream os = OutputStream.nullOutputStream()) {
+                        IOUtils.copy(is, os);
                     }
                 }
             } catch (SSLHandshakeException e) {

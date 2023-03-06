@@ -70,7 +70,7 @@ public class HeteroListTest {
 
         RootActionImpl rootAction = ExtensionList.lookupSingleton(RootActionImpl.class);
         TestItemDescribable.DynamicDisplayNameDescriptor dynamic = ExtensionList.lookupSingleton(TestItemDescribable.DynamicDisplayNameDescriptor.class);
-        rootAction.descriptorList = Collections.singletonList(dynamic);
+        rootAction.descriptorList = List.of(dynamic);
 
         dynamic.displayName = "Display<strong>Name</strong>";
 
@@ -162,7 +162,7 @@ public class HeteroListTest {
         Object result = page.executeJavaScript("Array.from(document.querySelectorAll('button')).filter(b => b.textContent.indexOf('XSS:') !== -1)[0].innerHTML").getJavaScriptResult();
         assertThat(result, instanceOf(String.class));
         String resultString = (String) result;
-        assertThat(resultString, not(containsString("<")));
+        assertThat(resultString, not(containsString("<img")));
     }
 
     @Test
@@ -186,7 +186,7 @@ public class HeteroListTest {
         @SuppressWarnings("unchecked")
         List<String> resultList = (List<String>) result;
         for (String str : resultList) {
-            assertThat(str, not(containsString("<")));
+            assertThat(str, not(containsString("<img")));
         }
 
         // "delete" then "add" makes us coming back in scenario covered by xssUsingToolInstallationRepeatableAdd

@@ -1,94 +1,61 @@
-#breadcrumbBar {
+.jenkins-breadcrumbs {
   position: sticky;
   top: 0;
   z-index: 999;
-}
-
-.jenkins-breadcrumbs {
   display: flex;
   align-items: center;
-  padding: 0.5rem 0.7rem 0.5rem 0.75rem;
+  padding: 0.55rem 0.7rem 0.55rem 0.75rem;
   backdrop-filter: blur(15px);
+  overflow-x: auto;
+  background: var(--breadcrumbs-bar-background);
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--table-background);
-    opacity: 0.95;
-  }
-
-  & > ul {
-    display: flex;
-    align-items: center;
+  &__list {
+    display: contents;
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    flex: 1;
-    flex-wrap: wrap;
 
-    & > li {
+    & > * {
+      flex-shrink: 0;
+    }
+
+    &-item {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 0.2rem 0.4rem;
+
       & > a {
-        position: relative;
+        .item();
+
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 0.2rem 0.4rem;
-        font-weight: 500;
-        font-size: 0.85rem;
-        border-radius: 6px;
+        font-weight: inherit;
+        font-size: inherit;
+        margin: 0;
+        padding: 0;
         color: var(--text-color);
-        z-index: 0;
         text-decoration: none;
         margin-right: 0 !important;
+        transition: var(--standard-transition);
 
         &::before,
         &::after {
-          content: "";
-          position: absolute;
-          top: -1px;
-          left: -2px;
-          bottom: -1px;
-          right: -2px;
-          border-radius: 6px;
-          z-index: -1;
-          opacity: 0;
-          transition: var(--standard-transition)
+          inset: -0.25rem -0.6rem;
         }
 
-        &::before {
-          background: var(--text-color);
-        }
-
-        &::after {
-          box-shadow: 0 0 0 10px transparent;
-        }
-
-        &:hover {
-          &::before {
-            opacity: 0.05 !important;
-            background: var(--text-color);
-          }
-        }
-
-        &:focus, &:active {
-          &::before {
-            opacity: 0.1 !important;
-            background: var(--text-color);
-          }
-
-          &::after {
-            opacity: 0.05 !important;
-            box-shadow: 0 0 0 5px var(--text-color);
-          }
+        &:hover,
+        &:active,
+        &:focus,
+        &:focus-visible {
+          color: var(--text-color);
         }
       }
 
       & > .model-link {
-        .jenkins-menu-dropdown-chevron {
-          top: 6px;
-        }
-
         @media (hover: none) {
           margin-right: 30px !important;
         }
@@ -103,9 +70,9 @@
     .children,
     .separator {
       position: relative;
-      width: 14px;
-      height: 14px;
-      margin: 6px;
+      width: 1rem;
+      height: 1rem;
+      margin: 0.375rem 0.2rem;
 
       &::after {
         content: "";
@@ -114,10 +81,16 @@
         left: 0;
         bottom: 0;
         right: 0;
-        opacity: 0.5;
         transition: var(--standard-transition);
-        background: var(--text-color);
+        background: var(--text-color-secondary);
         mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'%3E%3Ctitle%3EChevron Forward%3C/title%3E%3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M184 112l144 144-144 144'/%3E%3C/svg%3E");
+        opacity: 0.6;
+      }
+    }
+
+    .separator {
+      &:last-of-type {
+        display: none;
       }
     }
 
@@ -138,6 +111,15 @@
         }
       }
 
+      &:hover,
+      &:active,
+      &:focus,
+      &:focus-visible {
+        &::after {
+          background: var(--text-color);
+        }
+      }
+
       // Increase the hit target
       &::before {
         content: "";
@@ -149,12 +131,6 @@
         background: transparent;
       }
     }
-
-    .separator {
-      &:last-of-type {
-        display: none;
-      }
-    }
   }
 }
 
@@ -163,7 +139,6 @@
   display: inline-block;
   width: 14px;
   height: 14px;
-  top: 2px;
   right: 0;
   border: none;
   outline: none;
@@ -172,6 +147,7 @@
   pointer-events: none;
   transition: var(--standard-transition);
   background: transparent;
+  top: 4px;
 
   &:hover {
     &::after {
@@ -190,8 +166,7 @@
   &::before {
     content: "";
     position: absolute;
-    inset: -7px;
-    pointer-events: all;
+    inset: -10px;
   }
 
   &::after {
@@ -301,7 +276,6 @@
     &::before {
       z-index: -2;
       background: var(--background);
-
     }
 
     &::after {
