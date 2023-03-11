@@ -250,20 +250,18 @@ THE SOFTWARE.
           </j:choose>
         </table>
 
-        <div id="bottom-sticker">
-          <div class="bottom-sticker-inner">
-            <l:isAdmin>
-              <j:if test="${!empty(list)}">
-                <j:if test="${!isUpdates}">
-                  <f:submit value="${%Install without restart}" name="dynamicLoad"/>
-                  <span style="margin-left:2em;"></span>
-                </j:if>
-                <f:submit value="${%Download now and install after restart}"/>
+        <f:bottomButtonBar>
+          <l:isAdmin>
+            <j:if test="${!empty(list)}">
+              <j:if test="${!isUpdates}">
+                <f:submit value="${%Install without restart}" name="dynamicLoad"/>
               </j:if>
-            </l:isAdmin>
-            <st:include page="check.jelly"/>
-          </div>
-        </div>
+              <f:submit value="${%Download now and install after restart}"/>
+            </j:if>
+          </l:isAdmin>
+          <st:include page="check.jelly"/>
+        </f:bottomButtonBar>
+
         <d:invokeBody/>
       </form>
     </l:main-panel>

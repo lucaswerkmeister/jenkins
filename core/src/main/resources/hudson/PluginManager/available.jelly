@@ -66,16 +66,14 @@ THE SOFTWARE.
           <tbody/>
         </table>
 
-        <div id="bottom-sticker">
-          <div class="bottom-sticker-inner">
-            <l:isAdmin>
-              <f:submit value="${%Install without restart}" name="dynamicLoad"/>
-              <span style="margin-left:2em;"></span>
-              <f:submit value="${%Download now and install after restart}"/>
-            </l:isAdmin>
-            <st:include page="check.jelly"/>
-          </div>
-        </div>
+        <f:bottomButtonBar>
+          <l:isAdmin>
+            <f:submit value="${%Install without restart}" name="dynamicLoad"/>
+            <span style="margin-left:2em;"></span>
+            <f:submit value="${%Download now and install after restart}"/>
+          </l:isAdmin>
+          <st:include page="check.jelly"/>
+        </f:bottomButtonBar>
       </form>
 
     </l:main-panel>
