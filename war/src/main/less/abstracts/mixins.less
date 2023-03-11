@@ -1,6 +1,7 @@
 .link() {
   text-decoration: var(--link-text-decoration);
   font-weight: var(--link-font-weight);
+  text-underline-offset: 0.125rem;
 
   &:link {
     color: var(--link-color);
@@ -14,6 +15,7 @@
   &:focus {
     color: var(--link-color--hover);
     text-decoration: var(--link-text-decoration--hover);
+    text-decoration-thickness: 0.125rem
   }
 
   &:active {

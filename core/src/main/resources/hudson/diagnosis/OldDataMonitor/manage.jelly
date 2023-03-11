@@ -29,8 +29,8 @@ THE SOFTWARE.
   <!-- no need for additional breadcrumb here as we're on an "index" page already including breadcrumb -->
   <l:main-panel>
     <h1>${%Manage Old Data}</h1>
-    <p>${%blurb.1}</p>
-    <p>${%blurb.2}</p>
+    <p class="jenkins-description">${%blurb.1}</p>
+    <p class="jenkins-description">${%blurb.2}</p>
     <table class="jenkins-table sortable">
       <thead>
         <tr>

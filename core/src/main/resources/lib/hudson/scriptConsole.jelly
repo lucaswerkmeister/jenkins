@@ -36,12 +36,12 @@ THE SOFTWARE.
 
       <j:choose>
         <j:when test="${it.channel != null}">
-          <p>
+          <p class="jenkins-description">
             ${%description}
           </p>
           <!-- this is where the example goes -->
           <d:invokeBody />
-          <p>
+          <p class="jenkins-description">
             ${%description2}
           </p>
 

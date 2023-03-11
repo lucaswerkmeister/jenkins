@@ -6,13 +6,13 @@ def f = namespace(lib.FormTagLib)
 def l = namespace(lib.LayoutTagLib)
 def st = namespace("jelly:stapler")
 
-l.layout(norefresh: true, permission: app.MANAGE, title: my.displayName) {
+l.layout(type: "one-column", permission: app.MANAGE, title: my.displayName) {
     l.main_panel {
         h1 {
             text(Messages.ShutdownLink_DisplayName_prepare())
         }
 
-        p {
+        p(class: "jenkins-description") {
             text(my.description)
         }
 
