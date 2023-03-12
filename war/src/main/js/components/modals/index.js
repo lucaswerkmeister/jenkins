@@ -18,7 +18,7 @@ export function showModal(contents, options = {}) {
   modal.style.maxWidth = options.maxWidth;
   modal.appendChild(contents);
 
-  crumb.appendToForm(modal.children[0]);
+  // crumb.appendToForm(modal.children[0]);
 
   if (options.hideCloseButton !== true) {
     modal.appendChild(
