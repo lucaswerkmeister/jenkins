@@ -31,6 +31,10 @@ function registerTooltip(element) {
             element.getAttribute("tooltip").replace(/<br[ /]?\/?>|\\n/g, "\n"),
           onCreate(instance) {
             instance.reference.setAttribute("title", instance.props.content);
+            instance.props = {
+              ...instance.props,
+              ...getAllCustomProps(instance.reference)
+            }
           },
           onShow(instance) {
             instance.reference.removeAttribute("title");
@@ -52,15 +56,31 @@ function registerTooltip(element) {
           content: (element) => element.getAttribute("data-html-tooltip"),
           allowHTML: true,
           onCreate(instance) {
-            instance.props.interactive =
-              instance.reference.getAttribute("data-tooltip-interactive") ===
-              "true";
+            instance.props = {
+              ...instance.props,
+              ...getAllCustomProps(instance.reference)
+            }
           },
         },
         TOOLTIP_BASE
       )
     );
   }
+}
+
+function getAllCustomProps(reference) {
+  const response = {};
+
+  Object.keys(reference.dataset)
+    .filter((key) => key.startsWith("tooltip"))
+    .forEach((key) => {
+      let keyName = key.replace("tooltip", "");
+      keyName = keyName.charAt(0).toLowerCase() + keyName.slice(1);
+
+      response[keyName] = reference.dataset[key];
+    })
+
+  return response;
 }
 
 /**

@@ -1,7 +1,10 @@
 import {showModal} from "@/components/modals";
+import {createElementFromHtml} from "@/util/dom";
 
 document.querySelector("#button-icon-legend").addEventListener("click", () => {
-  const content = document.querySelector("#template-icon-legend").content;
+  const content = createElementFromHtml("<div>" + document.querySelector("#template-icon-legend").innerHTML + "</div>");
 
-  showModal(content);
+  showModal(content, {
+    maxWidth: "600px"
+  });
 });
