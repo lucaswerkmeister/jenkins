@@ -28,8 +28,10 @@ THE SOFTWARE.
       <j:set var="view" value="${it}"/> <!-- expose view to the scripts we include from owner -->
         <st:include page="sidepanel.jelly" />
 
+        ${it}
+
         <l:main-panel>
-          <div class="jenkins-mobile-only">
+          <div class="jenkins-mobile-onlya">
             <div class="flip">
               <p class="jenkins">Jenkins</p>
               <j:if test="${app.useSecurity and !h.isAnonymous()}">
@@ -78,12 +80,64 @@ THE SOFTWARE.
                   </a>
                   <div class="jenkins-dropdown__separator"></div>
                 </j:if>
-                <a href="${rootURL}/legend" class="jenkins-dropdown__item">
+                <button data-menu-item-type="dropdown" class="jenkins-dropdown__item">
+                  <div class="jenkins-dropdown__item__icon">
+                    <l:icon src="symbol-legend" />
+                  </div>
+                  ${%Density}
+                </button>
+                <template class="dropdown-child">
+                  <a href="${rootURL}/legend" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-legend" />
+                    </div>
+                    ${%Normal}
+                  </a>
+                  <a href="${rootURL}/legend" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-legend" />
+                    </div>
+                    ${%Medium}
+                  </a>
+                  <a href="${rootURL}/legend" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-legend" />
+                    </div>
+                    ${%Tight}
+                  </a>
+                </template>
+                <button class="jenkins-dropdown__item" id="button-icon-legend">
                   <div class="jenkins-dropdown__item__icon">
                     <l:icon src="symbol-legend" />
                   </div>
                   ${%Icon legend}
-                </a>
+                </button>
+                <button data-menu-item-type="dropdown" class="jenkins-dropdown__item">
+                  <div class="jenkins-dropdown__item__icon">
+                    <l:icon src="symbol-legend" />
+                  </div>
+                  ${%RSS feeds}
+                </button>
+                <template class="dropdown-child">
+                  <a href="${rootURL}/legend" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-legend" />
+                    </div>
+                    ${%All}
+                  </a>
+                  <a href="${rootURL}/legend" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-legend" />
+                    </div>
+                    ${%Latest builds}
+                  </a>
+                  <a href="${rootURL}/legend" class="jenkins-dropdown__item">
+                    <div class="jenkins-dropdown__item__icon">
+                      <l:icon src="symbol-legend" />
+                    </div>
+                    ${%Failed builds}
+                  </a>
+                </template>
                 <j:if test="${it.owner.canDelete(it)}">
                   <div class="jenkins-dropdown__separator"></div>
                   <a href="delete" class="jenkins-dropdown__item jenkins-!-destructive-color">

@@ -93,6 +93,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
+import jenkins.DropdownMenuItemAction;
+import jenkins.MenuItemActionBoi;
+import jenkins.MenuItemActionBoiBuilder;
 import jenkins.model.Jenkins;
 import jenkins.model.ModelObjectWithChildren;
 import jenkins.model.ModelObjectWithContextMenu;
@@ -1450,4 +1454,32 @@ public abstract class View extends AbstractModelObject implements AccessControll
     public static final Message<View> NEW_PRONOUN = new Message<>();
 
     private static final Logger LOGGER = Logger.getLogger(View.class.getName());
+
+    public List<MenuItemActionBoi> getActionItems() {
+
+        List<MenuItemActionBoi> rssItems = new ArrayList<>();
+        rssItems.add(
+                new MenuItemActionBoiBuilder()
+                        .setLabel("All")
+                        .build()
+        );
+        rssItems.add(
+                new MenuItemActionBoiBuilder()
+                        .setLabel("Latest")
+                        .build()
+        );
+        rssItems.add(
+                new MenuItemActionBoiBuilder()
+                        .setLabel("Failures")
+                        .build()
+        );
+
+        MenuItemActionBoi menuItemActionBoi = new MenuItemActionBoiBuilder()
+                .setLabel("RSS feeds")
+                .setIcon("symbol-rss")
+                .setAction(new DropdownMenuItemAction(rssItems))
+                .build();
+
+        return Arrays.asList(menuItemActionBoi);
+    }
 }
