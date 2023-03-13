@@ -1,8 +1,7 @@
-import tippy from "tippy.js";
-import Templates from "@/components/dropdowns/templates";
 import { createElementFromHtml } from "@/util/dom";
 import { registerSortableDragDrop } from "@/sortable-drag-drop";
-import { SEARCH } from "../../util/symbols";
+import { SEARCH } from "@/util/symbols";
+import Utils from "@/components/dropdowns/utils";
 
 const MINIMUM_FILTER_OPTIONS_FOR_FILTER = 5;
 
@@ -17,17 +16,15 @@ function init() {
       return;
     }
 
-    // Templates for hetero-lists are stored in a div on load (.prototypes), so we
-    // need to take them and translate them into template objects we can use for our dropdown menu
+    // Templates for hetero-lists are stored in a div on load (.prototypes), we need to
+    // take them and translate them into template objects we can use them for our dropdown menu
     const prototypes = button
       .closest(".hetero-list-container")
       .querySelector(".prototypes");
     const insertionPoint = prototypes.previousSibling;
 
     // Initialize drag and drop
-    const supportsDragDrop = registerSortableDragDrop(
-      insertionPoint.parentElement
-    );
+    registerSortableDragDrop(insertionPoint.parentElement);
 
     // Translate the .prototypes div children into templates for the dropdown menu
     const templates = [];
@@ -39,70 +36,105 @@ function init() {
     });
 
     // Remove the .prototypes div to prevent tampering
-    Element.remove(prototypes);
+    prototypes.remove();
 
+    // If there's only one item, skip the dropdown and add the item click event directly to the button
     if (templates.length === 1) {
       button.addEventListener("click", () => {
-        itemClickEvent(templates[0], insertionPoint, supportsDragDrop);
+        itemClickEvent(templates[0], insertionPoint);
       });
       return;
     }
 
     button.innerHTML += `...`;
 
-    // Generate a list of menu items for the dropdown to use
-    let menuItems = document.createElement("div");
-    menuItems.classList.add("jenkins-dropdown");
+    Utils.generateDropdown(button, (instance) => {
+      const container = document.createElement("div");
+      container.classList.add("jenkins-!-display-contents");
 
-    // Add a filter bar if there are more than N items
-    if (templates.length >= MINIMUM_FILTER_OPTIONS_FOR_FILTER) {
-      generateFilterBar(menuItems);
-    }
+      // Add a filter bar if there are more than N items
+      if (templates.length >= MINIMUM_FILTER_OPTIONS_FOR_FILTER) {
+        generateFilterBar(container);
+      }
 
-    // Map the templates and add the items to the dropdown
-    menuItems.append(
-      ...templates.map((templateItem) => {
-        const menuItem =
-          createElementFromHtml(`<button type="button" class="jenkins-dropdown__item">
-                        ${templateItem.title}
-                      </button>`);
+      // Map the templates into a format suitable for the dropdown list
+      const items = [...templates].map((templateItem) => ({
+        label: templateItem.title,
+        type: "button",
+        onClick: () => itemClickEvent(templateItem, insertionPoint),
+      }));
 
-        menuItem.addEventListener("click", () =>
-          itemClickEvent(templateItem, insertionPoint, supportsDragDrop)
-        );
+      container.appendChild(Utils.generateDropdownItems(items));
 
-        return menuItem;
-      })
-    );
+      instance.setContent(container);
+      instance.setProps({
+        onShow(instance) {
+          const filterBar = instance.popper.querySelector("input");
 
-    // Add the tippy dropdown to the .hetero-list-add button
-    tippy(button, {
-      ...Templates.dropdown(),
-      content: menuItems,
-      onShow(instance) {
-        const filterBar = instance.popper.querySelector("input");
-        if (filterBar) {
-          filterBar.value = "";
-          filterBar.dispatchEvent(new Event("input", { bubbles: true }));
-        }
-        instance.popper.addEventListener("click", () => {
-          instance.hide();
-        });
-      },
-      onShown(instance) {
-        const filterBar = instance.popper.querySelector("input");
-        if (filterBar) {
-          filterBar.focus();
+          if (filterBar) {
+            filterBar.value = "";
+            filterBar.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+        },
+        onShown(instance) {
+          const filterBar = instance.popper.querySelector("input");
 
-          // Set a minimum width on the dropdown so that it doesn't resize when filtering
-          instance.popper.style.minWidth = instance.popper.offsetWidth + "px";
-        }
-      },
+          if (filterBar) {
+            filterBar.focus();
+
+            // Set a minimum width on the dropdown so that it doesn't resize when filtering
+            instance.popper.style.minWidth = instance.popper.offsetWidth + "px";
+          }
+        },
+      });
     });
   });
 }
 
-function itemClickEvent(templateItem, insertionPoint, supportsDragDrop) {
+function generateFilterBar(container) {
+  const filterBar = createElementFromHtml(
+    `<div class="jenkins-dropdown__filter">
+            <input class="jenkins-search__input" type="search" placeholder="Filter">
+            ${SEARCH}
+          </div>
+      `
+  );
+  const itemsPlaceholder = createElementFromHtml(
+    `<p class="jenkins-dropdown__placeholder jenkins-!-display-none">No items</p>`
+  );
+  const filterBarInput = filterBar.querySelector("input");
+  container.append(filterBar);
+  container.append(itemsPlaceholder);
+
+  filterBarInput.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault();
+    }
+  });
+
+  filterBarInput.addEventListener("input", () => {
+    const itemList = filterBarInput.parentElement.parentElement;
+    itemsPlaceholder.classList.remove("jenkins-!-display-none");
+
+    itemList.querySelectorAll(".jenkins-dropdown__item").forEach((item) => {
+      const match = item.innerText
+        .toLowerCase()
+        .includes(filterBarInput.value.toLowerCase());
+
+      item.classList.remove("jenkins-dropdown__item--selected");
+      item.classList.toggle("jenkins-!-display-none", !match);
+      if (match) {
+        itemsPlaceholder.classList.add("jenkins-!-display-none");
+      }
+    });
+
+    itemList
+      .querySelector(".jenkins-dropdown__item:not(.jenkins-\\!-display-none)")
+      .classList.add("jenkins-dropdown__item--selected");
+  });
+}
+
+function itemClickEvent(templateItem, insertionPoint) {
   const card = document.createElement("div");
   card.className = "repeated-chunk";
   card.setAttribute("name", templateItem.name);
@@ -116,40 +148,6 @@ function itemClickEvent(templateItem, insertionPoint, supportsDragDrop) {
   Behaviour.applySubtree(card, true);
   ensureVisible(card);
   layoutUpdateCallback.call();
-
-  if (supportsDragDrop) {
-    registerSortableDragDrop(insertionPoint.parentElement);
-  }
-}
-
-function generateFilterBar(container) {
-  const filterBar = createElementFromHtml(
-    `<div class="jenkins-dropdown__filter">
-            <input class="jenkins-search__input" type="search" placeholder="Filter">
-            ${SEARCH}
-          </div>
-      `
-  );
-  const itemsPlaceholder = createElementFromHtml(
-    `<p class="jenkins-dropdown__placeholder" style="display: none">No items</p>`
-  );
-  const filterBarInput = filterBar.querySelector("input");
-  container.append(filterBar);
-  container.append(itemsPlaceholder);
-
-  filterBarInput.addEventListener("input", () => {
-    const itemList = filterBarInput.parentElement.parentElement;
-    itemsPlaceholder.style.display = "";
-    for (const item of itemList.querySelectorAll(".jenkins-dropdown__item")) {
-      const match = item.innerText
-        .toLowerCase()
-        .includes(filterBarInput.value.toLowerCase());
-      item.style.display = match ? "" : "none";
-      if (match) {
-        itemsPlaceholder.style.display = "none";
-      }
-    }
-  });
 }
 
 export default { init };

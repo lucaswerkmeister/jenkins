@@ -72,7 +72,10 @@ function generateDropdownItems(items) {
 
   makeKeyboardNavigable(
     menuItems,
-    () => menuItems.querySelectorAll(".jenkins-dropdown__item"),
+    () =>
+      menuItems.querySelectorAll(
+        ".jenkins-dropdown__item:not(.jenkins-\\!-display-none)"
+      ),
     SELECTED_ITEM_CLASS,
     (selectedItem, key) => {
       switch (key) {
