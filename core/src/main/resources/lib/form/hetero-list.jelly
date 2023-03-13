@@ -155,7 +155,7 @@ THE SOFTWARE.
     </div>
 
     <j:if test="${!readOnlyMode}">
-      <div>
+      <div class="jenkins-form-item">
         <button type="button" class="jenkins-button hetero-list-add" menualign="${attrs.menuAlign}" suffix="${attrs.name}">
           <l:icon src="symbol-add" />
           ${attrs.addCaption?:'%Add'}
