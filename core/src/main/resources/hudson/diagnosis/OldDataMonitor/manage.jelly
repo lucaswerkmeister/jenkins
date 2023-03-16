@@ -88,7 +88,7 @@ THE SOFTWARE.
         </form>
       </j:when>
       <j:otherwise>
-        ${%No old data was found.}
+        <p class="jenkins-description">${%No old data was found.}</p>
       </j:otherwise>
     </j:choose>
     <j:if test="${hasExtra}">

@@ -102,7 +102,7 @@ THE SOFTWARE.
 
       <l:isAdmin>
         <l:tabPane title="${%Thread Dumps}">
-          <p>${%threadDump_blurb('threadDump')}</p>
+          <p class="jenkins-description">${%threadDump_blurb('threadDump')}</p>
         </l:tabPane>
       </l:isAdmin>
 
