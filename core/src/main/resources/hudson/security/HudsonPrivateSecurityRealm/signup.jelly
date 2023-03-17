@@ -206,20 +206,22 @@ THE SOFTWARE.
                                         return "#c4000a"
                                     };
 
-                                    const validatePassword = function() {
-                                        const password = document.getElementById('password1');
-                                        if (password) {
-                                            const passwordStrengthWrapper =
-                                                    document.getElementById('passwordStrengthWrapper');
-                                            passwordStrengthWrapper.hidden = false;
-                                            const score = passwordScore(password.value);
-                                            const passwordStrengthIndicator = document.getElementById('passwordStrength');
-                                            passwordStrengthIndicator.innerText = passwordStrength(score);
-                                            passwordStrengthIndicator.setAttribute('style', 'color: ' +
-                                                passwordStrengthColor(score));
-                                            document.getElementById('password2').value = password.value;
-                                        }
-                                    }
+                                    window.addEventListener("load", () => {
+                                        const passwordField = document.querySelector("#password1");
+                                        ['input', 'change'].forEach(event => {
+                                            passwordField.addEventListener(event, () => {
+                                                const passwordStrengthWrapper =
+                                                        document.getElementById('passwordStrengthWrapper');
+                                                passwordStrengthWrapper.hidden = false;
+                                                const score = passwordScore(passwordField.value);
+                                                const passwordStrengthIndicator = document.getElementById('passwordStrength');
+                                                passwordStrengthIndicator.innerText = passwordStrength(score);
+                                                passwordStrengthIndicator.setAttribute('style', 'color: ' +
+                                                        passwordStrengthColor(score));
+                                                document.getElementById('password2').value = passwordField.value;
+                                            });
+                                        })
+                                    });
                                 </script>
                                 <div class="jenkins-checkbox">
                                     <input
@@ -232,7 +234,6 @@ THE SOFTWARE.
                                 </div>
                             </div>
                             <input
-                                onKeyUp="validatePassword()"
                                 class="jenkins-input ${data.errors.containsKey('password1') ? 'danger' : 'normal'}"
                                 value="${data.password1}"
                                 type="password"
