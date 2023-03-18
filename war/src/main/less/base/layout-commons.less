@@ -51,12 +51,51 @@ body {
   flex: 1 0 auto;
 }
 
+#show-hide {
+  display: inline-flex;
+  //width: 36px;
+  //aspect-ratio: 1;
+  //padding: 0;
+  margin-bottom: var(--section-padding);
+}
+
 .app-page-body__sidebar {
   @media (min-width: 970px) {
     &--sticky {
       position: sticky;
       top: 44px;
       align-self: flex-start;
+    }
+  }
+
+  @media (max-width: 800px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 4rem;
+    width: unset !important;
+    box-shadow: 0 0 0 100vw rgba(black, 0.4), 10px 0 30px rgba(black, 0.2);
+    background: var(--background);
+    transition: 0.3s ease;
+    visibility: collapse;
+    z-index: 999;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    padding-bottom: 0 !important;
+
+    .pane-frame {
+      display: none;
+    }
+
+    #tasks {
+      padding-right: 1.2rem;
+    }
+
+    &--visible {
+      visibility: visible;
+      transform: translateX(0%);
+      box-shadow: 0 0 0 100vw rgba(black, 0.4), 10px 0 30px rgba(black, 0.2);
     }
   }
 }
