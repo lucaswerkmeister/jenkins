@@ -38,25 +38,27 @@ THE SOFTWARE.
     @since 2.369
   </st:documentation>
 
-  <div class="jenkins-search ${attrs.clazz}">
-    <div class="jenkins-search__icon">
-      <l:icon src="symbol-search" />
-    </div>
-    <input value="${attrs.value}"
-           id="${attrs.id}"
-           class="jenkins-search__input"
-           placeholder="${attrs.placeholder ?: '%Search'}"
-           type="search"
-           autofocus="${attrs.autofocus == 'true' ? 'true' : null}"
-           autocomplete="off"
-           autocorrect="off"
-           autocapitalize="off"
-           spellcheck="false" />
-    <j:if test="${attrs.hasKeyboardShortcut != 'false'}">
-      <j:set var="tooltip">Press <span class="jenkins-tooltip__keyboard-shortcut"><l:icon src="symbol-search-shortcut" /></span> to focus</j:set>
-      <div class="jenkins-search__shortcut" data-html-tooltip="${tooltip}">
-        <l:icon src="symbol-search-shortcut" />
+  <div class="jenkins-search-container">
+    <div class="jenkins-search ${attrs.clazz}">
+      <div class="jenkins-search__icon">
+        <l:icon src="symbol-search" />
       </div>
-    </j:if>
+      <input value="${attrs.value}"
+             id="${attrs.id}"
+             class="jenkins-search__input"
+             placeholder="${attrs.placeholder ?: '%Search'}"
+             type="search"
+             autofocus="${attrs.autofocus == 'true' ? 'true' : null}"
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false" />
+      <j:if test="${attrs.hasKeyboardShortcut != 'false'}">
+        <j:set var="tooltip">Press <span class="jenkins-tooltip__keyboard-shortcut"><l:icon src="symbol-search-shortcut" /></span> to focus</j:set>
+        <div class="jenkins-search__shortcut" data-html-tooltip="${tooltip}">
+          <l:icon src="symbol-search-shortcut" />
+        </div>
+      </j:if>
+    </div>
   </div>
 </j:jelly>
