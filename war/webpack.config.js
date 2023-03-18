@@ -33,9 +33,6 @@ module.exports = (env, argv) => ({
     "pages/manage-jenkins": [
       path.join(__dirname, "src/main/js/pages/manage-jenkins"),
     ],
-    "keyboard-shortcuts": [
-      path.join(__dirname, "src/main/js/keyboard-shortcuts.js"),
-    ],
     "sortable-drag-drop": [
       path.join(__dirname, "src/main/js/sortable-drag-drop.js"),
     ],
