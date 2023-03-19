@@ -36,8 +36,9 @@ THE SOFTWARE.
       If true, will hide all rows by default, and only the filter field will show them.
     </st:attribute>
   </st:documentation>
-  <l:layout title="${%Updates} - ${%Plugin Manager}" permission="${app.SYSTEM_READ}">
+  <l:layout title="${%Updates} - ${%Plugins}" permission="${app.SYSTEM_READ}">
     <st:include page="sidepanel.jelly"/>
+    <!-- no need for additional breadcrumb here as we're on an "index" page already including breadcrumb -->
 
     <l:main-panel>
       <l:app-bar title="${%Plugins}" />
@@ -78,11 +79,13 @@ THE SOFTWARE.
               </l:isAdmin>
               <th initialSortDir="${isUpdates?'down':null}">${%Name}</th>
               <th>${%Released}</th>
+              <j:if test="${isUpdates}">
+                <th>${%Installed}</th>
+              </j:if>
             </tr>
           </thead>
-          <j:set var="unavailableList" value="${app.updateCenter.pluginsWithUnavailableUpdates}"/>
           <j:choose>
-            <j:when test="${!empty(list) or (isUpdates and !empty(unavailableList))}">
+            <j:when test="${!empty(list)}">
               <j:if test="${filtered == 'true'}">
                 <tr id="hidden-by-default-instructions">
                   <td colspan="5" align="center" id="hidden-by-default-instructions-td"
@@ -117,19 +120,8 @@ THE SOFTWARE.
                     <div>
                       <a href="${p.wiki}" class="jenkins-table__link" rel="noopener noreferrer" target="_blank">
                         <st:out value="${p.displayName}"/>
-                        <span class="app-plugin-manager__upgrade-to-label">
+                        <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">
                           <span class="jenkins-visually-hidden">${%Version}</span>
-                          <j:choose>
-                            <j:when test="${p.installed.active}">
-                              <st:out value="${p.installed.version}"/>
-                            </j:when>
-                            <j:otherwise>
-                              <span title="${%Inactive}">
-                                (<st:out value="${p.installed.version}"/>)
-                              </span>
-                            </j:otherwise>
-                          </j:choose>
-                          <l:icon src="symbol-arrow-right" alt="${%to}" />
                           ${p.version}
                         </span>
                       </a>
@@ -220,88 +212,31 @@ THE SOFTWARE.
                         ${%adoptThisPlugin}
                       </div>
                     </j:if>
-                    <j:if test="${it.hasLatestVersionNewerThanOffered(p)}">
-                      <div class="alert alert-info">
-                        ${%newerVersionExists(p.latest, p.wiki)}
-                      </div>
-                    </j:if>
                   </td>
                   <td data="${p.releaseTimestamp.time}" class="jenkins-table__cell--no-wrap">
                     <j:if test="${p.releaseTimestamp != null}">
                       <time datetime="${h.iso8601DateTime(p.releaseTimestamp)}"
-                            tooltip="${h.localDate(p.releaseTimestamp)}"
-                            class="jenkins-!-margin-right-2">
+                            tooltip="${h.localDate(p.releaseTimestamp)}">
                         ${%ago(h.getTimeSpanString(p.releaseTimestamp))}
                       </time>
                     </j:if>
                   </td>
+                  <j:if test="${isUpdates}">
+                    <td>
+                      <j:choose>
+                        <j:when test="${p.installed.active}">
+                          <st:out value="${p.installed.version}"/>
+                        </j:when>
+                        <j:otherwise>
+                          <span title="${%Inactive}">
+                            (<st:out value="${p.installed.version}"/>)
+                          </span>
+                        </j:otherwise>
+                      </j:choose>
+                    </td>
+                  </j:if>
                 </tr>
               </j:forEach>
-              <j:if test="${isUpdates}">
-                <!-- TODO this might be nicer by going through the root list element and populating it in index.jelly -->
-                <j:forEach var="p" items="${unavailableList}">
-                  <j:if
-                    test="${!list.contains(p)}"><!-- only show entries for plugins not already in the real updates list -->
-                    <tr class="unavailable">
-                      <l:isAdmin>
-                        <td><!-- install --></td>
-                      </l:isAdmin>
-                      <td class="details"
-                          data="${h.xmlEscape(p.displayName)}"
-                          data-id="${h.xmlEscape(p.name+':'+p.version)}">
-                        <div>
-                          <a class="jenkins-table__link" href="${p.wiki}" rel="noopener noreferrer" target="_blank">
-                            <st:out value="${p.displayName}"/>
-                            <span class="jenkins-label jenkins-label--tertiary" style="margin-left: 1ch;">
-                              <span class="jenkins-visually-hidden">${%Version}</span>
-                              ${p.latest}
-                            </span>
-                            <span class="app-plugin-manager__upgrade-to-label">
-                              <span class="jenkins-visually-hidden">${%Version}</span>
-                              <j:choose>
-                                <j:when test="${p.installed.active}">
-                                  <st:out value="${p.installed.version}"/>
-                                </j:when>
-                                <j:otherwise>
-                                  <span title="${%Inactive}">
-                                    (<st:out value="${p.installed.version}"/>)
-                                  </span>
-                                </j:otherwise>
-                              </j:choose>
-                              <l:icon src="symbol-arrow-right" alt="${%to}" />
-                              ${p.version}
-                            </span>
-                          </a>
-                          <span class="unavailable-label">${%unavailable}</span>
-                        </div>
-                        <j:if test="${!p.categories.isEmpty()}">
-                          <div class="app-plugin-manager__categories">
-                            <j:forEach var="label" items="${p.categories}">
-                              <j:if test="${!it.isMetaLabel(label)}">
-                                <a href="?filter=${app.updateCenter.getCategoryDisplayName(label)}"
-                                   class="jenkins-table__link jenkins-table__badge">
-                                  ${app.updateCenter.getCategoryDisplayName(label)}
-                                </a>
-                              </j:if>
-                            </j:forEach>
-                          </div>
-                        </j:if>
-                        <j:if test="${p.excerpt!=null}">
-                          <div>
-                            <j:out value="${p.excerpt}"/>
-                          </div>
-                        </j:if>
-                        <j:if test="${it.hasLatestVersionNewerThanOffered(p)}">
-                          <div class="alert alert-info">
-                            ${%newerVersionEntry(p.wiki)}
-                          </div>
-                        </j:if>
-                      </td>
-                      <td><!-- timestamp --></td>
-                    </tr>
-                  </j:if>
-                </j:forEach>
-              </j:if>
             </j:when>
             <j:otherwise>
               <tr>
