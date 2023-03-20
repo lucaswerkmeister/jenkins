@@ -15,7 +15,7 @@ function showModal(contents, options = {}) {
   );
   modal.style.maxWidth = options.maxWidth;
 
-  if (options.hideCloseButton !== false) {
+  if (options.hideCloseButton !== true) {
     modal.appendChild(createElementFromHtml(`
         <button class="jenkins-modal__close-button jenkins-button close-modal">
           <span class="jenkins-visually-hidden">Close</span>
@@ -56,14 +56,10 @@ function showModal(contents, options = {}) {
   }
 
   modal.showModal();
-
 }
 
 const confirmationDefaults = {
-  background: "transparent",
-  padding: "0",
-  minWidth: "425px",
-  maxWidth: "425px",
+  maxWidth: "475px",
   hideCloseButton: true,
   submitText: "Yes",
   cancelText: "Cancel",
@@ -88,7 +84,7 @@ export function showConfirmationModal(options) {
                 ? `<p class="jenkins-modal__description">${options.description}</p>`
                 : ``
             }
-        <div class="longhorn-container-2">
+        <div class="jenkins-modal__controls">
             <button type="button" class="jenkins-button close-modal">
                 ${options.cancelText}
             </button>
@@ -101,7 +97,7 @@ export function showConfirmationModal(options) {
     </form>
   `);
 
-  showModal(html);
+  showModal(html, options);
 }
 
 function init() {

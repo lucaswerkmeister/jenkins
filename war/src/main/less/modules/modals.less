@@ -9,7 +9,6 @@
   animation: jenkins-modal-animate-in 0.25s cubic-bezier(0, 0.68, 0.5, 1.5);
   overflow: hidden;
   padding: 0;
-  resize: both;
 
   &::backdrop {
     background: var(--modal-backdrop-background);
@@ -38,12 +37,12 @@
   }
 
   &__description {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.95rem;
+    font-weight: 500;
     color: var(--text-color-secondary);
     padding: 0;
-    line-height: 1.66;
-    margin: 0 0 1.5rem;
+    line-height: 1.7;
+    margin: -0.4rem 0 1.1rem 0;
   }
 
   &__close-button {
@@ -99,16 +98,16 @@
   }
 }
 
-.longhorn-container-2 {
+.jenkins-modal__controls {
   display: flex;
   justify-content: stretch;
   flex-wrap: wrap-reverse;
-  gap: @jenkins-modal-padding;
+  gap: 1.1rem;
 
   button {
     flex-grow: 1;
     min-width: 200px;
     line-height: 1.75;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
   }
 }
