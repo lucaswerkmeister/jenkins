@@ -225,7 +225,7 @@ THE SOFTWARE.
                             <button data-action="uninstall"
                                     type="button"
                                     class="jenkins-table__button jenkins-!-destructive-color"
-                                    tooltip="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}"
+                                    tooltip="${%Uninstall} ${p.updateInfo.displayName ?: p.displayName}"
                                     data-href="plugin/${p.shortName}/doUninstall"
                                     data-message="${%uninstall-title(p.updateInfo.displayName ?: p.displayName)}">
                               <l:icon src="symbol-close-circle"/>
