@@ -16,22 +16,25 @@ function showModal(contents, options = {}) {
   modal.style.maxWidth = options.maxWidth;
 
   if (options.hideCloseButton !== true) {
-    modal.appendChild(createElementFromHtml(`
-        <button class="jenkins-modal__close-button jenkins-button close-modal">
+    modal.appendChild(
+      createElementFromHtml(`
+        <button class="jenkins-modal__close-button jenkins-button" data-button-type="close">
           <span class="jenkins-visually-hidden">Close</span>
           ${CLOSE}
         </button>
-      `));
+      `)
+    );
   }
 
   modal.querySelector("div").appendChild(contents);
 
   document.querySelector("body").appendChild(modal);
 
-  modal.querySelectorAll(".close-modal").forEach((closeButton) => {
-    closeButton.addEventListener("click", () => closeModal());
-    closeButton?.blur();
-  })
+  modal
+    .querySelectorAll(`[data-button-type="close"]`)
+    .forEach((closeButton) => {
+      closeButton.addEventListener("click", () => closeModal());
+    });
 
   modal.addEventListener("cancel", (e) => {
     e.preventDefault();
@@ -56,6 +59,8 @@ function showModal(contents, options = {}) {
   }
 
   modal.showModal();
+
+  modal.querySelector(`[data-button-type="close"]`)?.blur();
 }
 
 const confirmationDefaults = {
@@ -71,7 +76,7 @@ const typeClassMap = {
   destructive: "jenkins-!-destructive-color",
 };
 
-export function showConfirmationModal(options) {
+function showConfirmationModal(options) {
   options = { ...confirmationDefaults, ...options };
 
   const html = createElementFromHtml(`
@@ -85,7 +90,7 @@ export function showConfirmationModal(options) {
                 : ``
             }
         <div class="jenkins-modal__controls">
-            <button type="button" class="jenkins-button close-modal">
+            <button type="button" class="jenkins-button" data-button-type="close">
                 ${options.cancelText}
             </button>
             <button type="submit" class="jenkins-button jenkins-button--primary ${

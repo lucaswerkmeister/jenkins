@@ -59,6 +59,7 @@ module.exports = {
     setupWizardExtensions: "readonly",
     SharedArrayBuffer: "readonly",
     shortenName: "readonly",
+    showConfirmationModal: "readonly",
     toQueryString: "readonly",
     ts_refresh: "readonly",
     updateOptionalBlock: "readonly",
