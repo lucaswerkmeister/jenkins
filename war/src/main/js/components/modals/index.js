@@ -97,6 +97,8 @@ export function showConfirmationModal(options) {
     </form>
   `);
 
+  crumb.appendToForm(html);
+
   showModal(html, options);
 }
 

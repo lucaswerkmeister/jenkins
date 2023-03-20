@@ -4,20 +4,19 @@ Behaviour.specify(
   0,
   function (element) {
     element.onclick = function () {
-      const post = element.dataset.post;
-      const href = element.dataset.url;
-      const message = element.dataset.message;
-      const type = element.dataset.confirmationType;
-
-      const options = {
-        title: message,
-        post: post,
-        action: href,
-        type: type || "default",
-      };
-
-      showConfirmationModal(options);
-
+      var post = element.getAttribute("data-post");
+      var href = element.getAttribute("data-url");
+      var message = element.getAttribute("data-message");
+      if (confirm(message)) {
+        var form = document.createElement("form");
+        form.setAttribute("method", post === "true" ? "POST" : "GET");
+        form.setAttribute("action", href);
+        if (post) {
+          crumb.appendToForm(form);
+        }
+        document.body.appendChild(form);
+        form.submit();
+      }
       return false;
     };
   }
