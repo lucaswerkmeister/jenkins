@@ -9,6 +9,7 @@
   animation: jenkins-modal-animate-in 0.25s cubic-bezier(0, 0.68, 0.5, 1.5);
   overflow: hidden;
   padding: 0;
+  resize: both;
 
   &::backdrop {
     background: var(--modal-backdrop-background);
@@ -33,6 +34,15 @@
     font-weight: 600;
     color: var(--text-color-secondary);
     padding: 0;
+    margin: 0 0 1.5rem;
+  }
+
+  &__description {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+    padding: 0;
+    line-height: 1.66;
     margin: 0 0 1.5rem;
   }
 
@@ -86,5 +96,19 @@
   to {
     scale: 85%;
     opacity: 0;
+  }
+}
+
+.longhorn-container-2 {
+  display: flex;
+  justify-content: stretch;
+  flex-wrap: wrap-reverse;
+  gap: @jenkins-modal-padding;
+
+  button {
+    flex-grow: 1;
+    min-width: 200px;
+    line-height: 1.75;
+    font-size: 0.85rem;
   }
 }

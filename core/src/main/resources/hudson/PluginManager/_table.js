@@ -500,7 +500,7 @@ Element.observe(window, "load", function () {
         description: i18n("uninstall-description"),
         post: "true",
         action: href,
-        type: "destructive"
+        type: "destructive",
       };
 
       showConfirmationModal(options);
@@ -509,5 +509,7 @@ Element.observe(window, "load", function () {
 });
 
 function i18n(messageId) {
-  return document.querySelector(".plugins.i18n").getAttribute("data-" + messageId);
+  return document
+    .querySelector(".plugins.i18n")
+    .getAttribute("data-" + messageId);
 }

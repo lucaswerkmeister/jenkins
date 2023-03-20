@@ -15,21 +15,23 @@ function showModal(contents, options = {}) {
   );
   modal.style.maxWidth = options.maxWidth;
 
-  let closeButton;
-  if (options.hideCloseButton !== true) {
-    closeButton = createElementFromHtml(`
-        <button class="jenkins-modal__close-button jenkins-button">
+  if (options.hideCloseButton !== false) {
+    modal.appendChild(createElementFromHtml(`
+        <button class="jenkins-modal__close-button jenkins-button close-modal">
           <span class="jenkins-visually-hidden">Close</span>
           ${CLOSE}
         </button>
-      `);
-    modal.appendChild(closeButton);
-    closeButton.addEventListener("click", () => closeModal());
+      `));
   }
 
   modal.querySelector("div").appendChild(contents);
 
   document.querySelector("body").appendChild(modal);
+
+  modal.querySelectorAll(".close-modal").forEach((closeButton) => {
+    closeButton.addEventListener("click", () => closeModal());
+    closeButton?.blur();
+  })
 
   modal.addEventListener("cancel", (e) => {
     e.preventDefault();
@@ -55,7 +57,6 @@ function showModal(contents, options = {}) {
 
   modal.showModal();
 
-  closeButton?.blur();
 }
 
 const confirmationDefaults = {
@@ -75,27 +76,25 @@ const typeClassMap = {
 };
 
 export function showConfirmationModal(options) {
-  options = {...confirmationDefaults, ...options};
+  options = { ...confirmationDefaults, ...options };
 
   const html = createElementFromHtml(`
     <form method="${options.post === "true" ? "POST" : "GET"}" action="${
     options.action
   }">
-        <div class="longhorn-container">
             <p class="jenkins-modal__title">${options.title}</p>
             ${
-    options.description
-      ? `<p class="jenkins-modal__label">${options.description}</p>`
-      : ``
-  }
-        </div>
+              options.description
+                ? `<p class="jenkins-modal__description">${options.description}</p>`
+                : ``
+            }
         <div class="longhorn-container-2">
-            <button type="button" class="jenkins-button">
+            <button type="button" class="jenkins-button close-modal">
                 ${options.cancelText}
             </button>
             <button type="submit" class="jenkins-button jenkins-button--primary ${
-    typeClassMap[options.type]
-  }">
+              typeClassMap[options.type]
+            }">
                 ${options.submitText}
             </button>
         </div>
