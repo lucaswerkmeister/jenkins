@@ -55,7 +55,7 @@ THE SOFTWARE.
             </button>
           </l:isAdmin>
 
-<!--          <st:include page="check.jelly"/>-->
+          <st:include page="check.jelly"/>
         </div>
       </div>
 
