@@ -46,6 +46,21 @@ function applyFilter(searchQuery) {
       });
 
       tbody.insertAdjacentHTML("beforeend", rows);
+
+
+      // Button
+      const anyCheckboxesSelected = () => {
+        return document.querySelectorAll("input[type='checkbox']:checked").length > 0;
+      };
+      const updateButton = document.querySelector("#button-install");
+      const checkboxes = document.querySelectorAll("input[type='checkbox']");
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("click", () => {
+          setTimeout(() => {
+            updateButton.disabled = !anyCheckboxesSelected();
+          })
+        })
+      })
     }
   );
 }
@@ -69,3 +84,4 @@ document.addEventListener("DOMContentLoaded", function () {
     layoutUpdateCallback.call();
   }, 350);
 });
+

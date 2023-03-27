@@ -42,11 +42,26 @@ THE SOFTWARE.
                         autofocus="true"
                         value="${request.getParameter('filter')}" />
         </div>
+        <div class="jenkins-app-bar__controls">
+          <l:isAdmin>
+            <button id="button-install"
+                    form="form"
+                    type="submit"
+                    name="dynamicLoad"
+                    class="jenkins-button jenkins-button--primary"
+                    disabled="true">
+              <l:icon src="symbol-download" />
+              ${%Install}
+            </button>
+          </l:isAdmin>
+
+<!--          <st:include page="check.jelly"/>-->
+        </div>
       </div>
 
       <script src="${resURL}/jsbundles/plugin-manager-ui.js" type="text/javascript"/>
 
-      <form method="post" action="install">
+      <form id="form" method="post" action="install">
         <table id="plugins" class="jenkins-table sortable"
                data-hasAdmin="${h.hasPermission(app.ADMINISTER)}">
           <thead>
@@ -58,27 +73,11 @@ THE SOFTWARE.
               </l:isAdmin>
               <th initialSortDir="down">${%Name}</th>
               <th>${%Released}</th>
-              <j:if test="${isUpdates}">
-                <th>${%Installed}</th>
-              </j:if>
             </tr>
           </thead>
           <tbody/>
         </table>
-
-        <div id="bottom-sticker">
-          <div class="bottom-sticker-inner">
-            <l:isAdmin>
-              <f:submit value="${%Install without restart}" name="dynamicLoad"/>
-              <span style="margin-left:2em;"></span>
-              <f:submit value="${%Download now and install after restart}"/>
-            </l:isAdmin>
-            <st:include page="check.jelly"/>
-          </div>
-        </div>
       </form>
-
     </l:main-panel>
   </l:layout>
-
 </j:jelly>
