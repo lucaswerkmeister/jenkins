@@ -54,7 +54,6 @@ import hudson.Launcher;
 import hudson.Util;
 import hudson.matrix.MatrixProject;
 import hudson.scm.NullSCM;
-import hudson.scm.SCM;
 import hudson.scm.SCMDescriptor;
 import hudson.security.GlobalMatrixAuthorizationStrategy;
 import hudson.tasks.BatchFile;
@@ -241,7 +240,7 @@ public class AbstractProjectTest {
 
             @Override
             public SCMDescriptor<?> getDescriptor() {
-                return new SCMDescriptor<SCM>(null) {
+                return new SCMDescriptor<>(null) {
                 };
             }
         });
@@ -485,11 +484,11 @@ public class AbstractProjectTest {
     @Issue("JENKINS-30742")
     public void resolveForCLI() throws Exception {
         CmdLineException e = assertThrows(CmdLineException.class, () -> AbstractProject.resolveForCLI("never_created"));
-        assertEquals("No such job \u2018never_created\u2019 exists.", e.getMessage());
+        assertEquals("No such job ‘never_created’ exists.", e.getMessage());
 
         AbstractProject<?, ?> project = j.jenkins.createProject(FreeStyleProject.class, "never_created");
         e = assertThrows(CmdLineException.class, () -> AbstractProject.resolveForCLI("never_created1"));
-        assertEquals("No such job \u2018never_created1\u2019 exists. Perhaps you meant \u2018never_created\u2019?", e.getMessage());
+        assertEquals("No such job ‘never_created1’ exists. Perhaps you meant ‘never_created’?", e.getMessage());
     }
 
     public static class MockBuildTriggerThrowsNPEOnStart extends Trigger<Item> {

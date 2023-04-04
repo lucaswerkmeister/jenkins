@@ -46,7 +46,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.ReaderWrapper;
-import com.thoughtworks.xstream.io.xml.KXml2Driver;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
+import com.thoughtworks.xstream.io.xml.StandardStaxDriver;
 import com.thoughtworks.xstream.mapper.CannotResolveClassException;
 import com.thoughtworks.xstream.mapper.Mapper;
 import com.thoughtworks.xstream.mapper.MapperWrapper;
@@ -74,6 +75,7 @@ import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Map;
@@ -81,6 +83,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLOutputFactory;
 import jenkins.model.Jenkins;
 import jenkins.util.SystemProperties;
 import jenkins.util.xstream.SafeURLConverter;
@@ -96,7 +100,7 @@ public class XStream2 extends XStream {
     private static final Logger LOGGER = Logger.getLogger(XStream2.class.getName());
     /**
      * Determine what is the value (in seconds) of the "collectionUpdateLimit" added by XStream
-     * to protect against http://x-stream.github.io/CVE-2021-43859.html.
+     * to protect against <a href="http://x-stream.github.io/CVE-2021-43859.html">CVE-2021-43859</a>.
      * It corresponds to the accumulated timeout when adding an item to a collection.
      *
      * Default: 5 seconds (in contrary to XStream default to 20 which is a bit too tolerant)
@@ -123,7 +127,45 @@ public class XStream2 extends XStream {
      * @return a new instance of the HierarchicalStreamDriver we want to use
      */
     public static HierarchicalStreamDriver getDefaultDriver() {
-        return new KXml2Driver();
+        return new StaxDriver();
+    }
+
+    private static class StaxDriver extends StandardStaxDriver {
+        /*
+         * The below two methods are copied from com.thoughtworks.xstream.io.xml.AbstractXppDriver to preserve
+         * compatibility.
+         */
+
+        @Override
+        public HierarchicalStreamWriter createWriter(Writer out) {
+            return new PrettyPrintWriter(out, getNameCoder());
+        }
+
+        @Override
+        public HierarchicalStreamWriter createWriter(OutputStream out) {
+            /*
+             * While it is tempting to use StandardCharsets.UTF_8 here, this would break
+             * hudson.util.XStream2EncodingTest#toXMLUnspecifiedEncoding.
+             */
+            return createWriter(new OutputStreamWriter(out, Charset.defaultCharset()));
+        }
+
+        /*
+         * The below two methods are copied from com.thoughtworks.xstream.io.xml.StaxDriver for Java 17 compatibility.
+         */
+
+        @Override
+        protected XMLInputFactory createInputFactory() {
+            final XMLInputFactory instance = XMLInputFactory.newInstance();
+            instance.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
+            instance.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+            return instance;
+        }
+
+        @Override
+        protected XMLOutputFactory createOutputFactory() {
+            return XMLOutputFactory.newInstance();
+        }
     }
 
     public XStream2() {
