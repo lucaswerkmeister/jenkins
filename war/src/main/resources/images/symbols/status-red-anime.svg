@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <defs>
+        <clipPath id="status-mask">
+            <rect x="0" y="0" width="256" height="256" />
+        </clipPath>
+    </defs>
+    <ellipse opacity="0.4" cx="256" cy="256" rx="210" ry="210" fill="none" stroke="var(--red)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="36" class="jenkins-build-animated-status" />
+    <ellipse clip-path="url(#status-mask)" cx="256" cy="256" rx="210" ry="210" fill="none" stroke="var(--red)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="36" />
+    <path fill="none" stroke="var(--red)" stroke-linecap="round" stroke-linejoin="round" stroke-width="36" d="M320 320L192 192M192 320l128-128"/>
+</svg>
