@@ -510,6 +510,6 @@ Element.observe(window, "load", function () {
 
 function i18n(messageId) {
   return document
-    .querySelector(".plugins.i18n")
+    .querySelector("#i18n")
     .getAttribute("data-" + messageId);
 }

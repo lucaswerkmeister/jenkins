@@ -52,7 +52,7 @@ THE SOFTWARE.
         <div class="alert alert-warning"><strong>${%Warning}</strong>: ${%requires.restart}</div>
       </j:if>
 
-      <div class="plugins i18n"
+      <template id="i18n"
            data-cannot-enable="${%This plugin cannot be enabled}"
            data-cannot-disable="${%This plugin cannot be disabled}"
            data-cannot-uninstall="${%This plugin cannot be uninstalled}"
@@ -62,8 +62,7 @@ THE SOFTWARE.
            data-detached-disable="${%detached-disable}"
            data-detached-uninstall="${%detached-uninstall}"
            data-detached-possible-dependents="${%detached-possible-dependents}"
-           data-uninstall-description="${%uninstall-description}"
-      />
+           data-uninstall-description="${%uninstall-description}" />
 
       <table id="plugins" class="jenkins-table sortable">
         <j:choose>
