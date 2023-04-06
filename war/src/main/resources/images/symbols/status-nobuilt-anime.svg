@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <defs>
-        <clipPath id="status-mask">
-            <rect x="0" y="0" width="256" height="256" />
-        </clipPath>
-    </defs>
-    <ellipse opacity="0.4" cx="256" cy="256" rx="210" ry="210" fill="none" stroke="var(--blue)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="36" />
-    <ellipse clip-path="url(#status-mask)" cx="256" cy="256" rx="210" ry="210" fill="none" stroke="var(--blue)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="36" data-symbol-animation="spin" />
-    <circle cx="256" cy="256" r="30" fill="var(--blue)"/>
-    <circle cx="356" cy="256" r="30" fill="var(--blue)"/>
-    <circle cx="156" cy="256" r="30" fill="var(--blue)"/>
+  <defs>
+    <clipPath id="status-mask">
+      <rect x="0" y="0" width="256" height="256" />
+    </clipPath>
+  </defs>
+  <ellipse opacity="0.4" cx="256" cy="256" rx="210" ry="210" fill="none" stroke="var(--blue)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="36" />
+  <ellipse clip-path="url(#status-mask)" cx="256" cy="256" rx="210" ry="210" fill="none" stroke="var(--blue)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="36" data-symbol-animation="spin" />
+  <circle cx="256" cy="256" r="30" fill="var(--blue)" />
+  <circle cx="352" cy="256" r="30" fill="var(--blue)" />
+  <circle cx="160" cy="256" r="30" fill="var(--blue)" />
 </svg>
