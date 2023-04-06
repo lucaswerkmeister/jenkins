@@ -149,7 +149,6 @@ THE SOFTWARE.
     <l:yui module="storage" />
 
     <script src="${resURL}/scripts/hudson-behavior.js" type="text/javascript"></script>
-    <script src="${resURL}/scripts/sortable.js" type="text/javascript"/>
 
     <link rel="stylesheet" href="${resURL}/scripts/yui/container/assets/container.css" type="text/css"/>
     <link rel="stylesheet" href="${resURL}/scripts/yui/container/assets/skins/sam/container.css" type="text/css"/>
