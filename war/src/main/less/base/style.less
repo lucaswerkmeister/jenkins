@@ -1152,17 +1152,22 @@ table.progress-bar.red td.progress-bar-done {
 
 /* Unknown */
 
-.jenkins-build-animated-status {
-  animation: spin 3s linear infinite;
+[data-symbol-animation] {
+  animation: spin 1s linear infinite;
+  transform-origin: center;
+
+  @media (prefers-reduced-motion) {
+    animation-duration: 3s;
+  }
 }
 
 @keyframes spin {
   from {
-    transform: rotate(0deg) translateZ(0);
+    transform: rotate(0deg);
   }
 
   to {
-    transform: rotate(360deg) translateZ(0);
+    transform: rotate(360deg);
   }
 }
 
