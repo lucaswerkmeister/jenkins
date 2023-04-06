@@ -31,6 +31,18 @@ THE SOFTWARE.
     </st:attribute>
   </st:documentation>
 
+    <template id="i18n" data-console="${%Console output}" />
+
+    <template id="icons">
+        <l:icon src="symbol-status-blue" id="blue" />
+        <l:icon src="symbol-status-yellow" id="yellow" />
+        <l:icon src="symbol-status-red" id="red" />
+        <l:icon src="symbol-status-nobuilt" id="nobuilt" />
+        <l:icon src="symbol-status-aborted" id="aborted" />
+        <l:icon src="symbol-status-disabled" id="disabled" />
+        <l:icon src="symbol-terminal" id="console" />
+    </template>
+
   <t:setIconSize/>
   <st:adjunct includes="hudson.model.Job.buildTimeTrend_resources" />
   <script>
@@ -40,9 +52,10 @@ THE SOFTWARE.
           for (var x = 0; data.length > x; x++) {
               var e = data[x];
               var tr = new Element('tr');
+
               tr.insert(new Element('td', {data: e.iconColorOrdinal, class: 'jenkins-table__cell--tight jenkins-table__icon'}).
-                  insert(new Element('div', {class: 'jenkins-table__cell__button-wrapper'}).
-                      insert(generateSVGIcon(e.iconName, "${iconSizeClass}"))));
+                  insert(new Element('div', {class: 'jenkins-table__cell__button-wrapper', tooltip: e.iconColorDescription}).
+                      insert(generateSVGIcon(e.iconName))));
               tr.insert(new Element('td').
                   insert(new Element('a', {class: 'jenkins-table__link model-link', href: '${rootURL}/' + e.parentUrl}).
                    insert(new Element('span').
@@ -56,8 +69,8 @@ THE SOFTWARE.
                   update(e.buildStatusSummaryMessage.escapeHTML()));
               tr.insert(new Element('td', {class: 'jenkins-table__cell--tight'}).
                     insert(new Element('div', {class: 'jenkins-table__cell__button-wrapper'}).
-                        insert(new Element('a', {class: 'jenkins-table__button', href: '${rootURL}/' + e.url + 'console'}).
-                            insert(`<l:icon src="symbol-terminal" alt="${%Console output}" />`))));
+                        insert(new Element('a', {class: 'jenkins-table__button', href: '${rootURL}/' + e.url + 'console', tooltip: i18n('console')}).
+                            insert(generateSVGIcon('console')))));
               p.insert(tr);
               Behaviour.applySubtree(tr);
           }

@@ -15,6 +15,7 @@ window.buildTimeTrend_displayBuilds = function (data) {
         new Element("a", {
           class: "build-status-link",
           href: e.number + "/console",
+          tooltip: e.iconColorDescription,
         }).insert(generateSVGIcon(e.iconName))
       )
     );
@@ -50,75 +51,13 @@ window.buildTimeTrend_displayBuilds = function (data) {
   ts_refresh(p);
 };
 
-/**
- * Generate SVG Icon
- */
-function generateSVGIcon(iconName, iconSizeClass) {
-  const imagesURL = document.head.getAttribute("data-imagesurl");
+function i18n(content) {
+  return document.querySelector("#i18n").getAttribute(`data-${content}`);
+}
 
-  const isInProgress = iconName.endsWith("anime");
-  let buildStatus = "never-built";
-  switch (iconName) {
-    case "red":
-    case "red-anime":
-      buildStatus = "last-failed";
-      break;
-    case "yellow":
-    case "yellow-anime":
-      buildStatus = "last-unstable";
-      break;
-    case "blue":
-    case "blue-anime":
-      buildStatus = "last-successful";
-      break;
-    case "grey":
-    case "grey-anime":
-    case "disabled":
-    case "disabled-anime":
-      buildStatus = "last-disabled";
-      break;
-    case "aborted":
-    case "aborted-anime":
-      buildStatus = "last-aborted";
-      break;
-    case "nobuilt":
-    case "nobuilt-anime":
-      buildStatus = "never-built";
-      break;
-  }
+function generateSVGIcon(iconName) {
+  const icons = document.querySelector("#icons");
+  iconName = iconName.replace("-anime", "");
 
-  const svg1 = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg1.setAttribute("class", "svg-icon");
-  svg1.setAttribute("viewBox", "0 0 24 24");
-  const use1 = document.createElementNS("http://www.w3.org/2000/svg", "use");
-  use1.setAttribute(
-    "href",
-    imagesURL +
-      "/build-status/build-status-sprite.svg#build-status-" +
-      (isInProgress ? "in-progress" : "static")
-  );
-  svg1.appendChild(use1);
-
-  const svg2 = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg2.setAttribute(
-    "class",
-    "svg-icon icon-" + iconName + " " + (iconSizeClass || "icon-sm")
-  );
-  svg2.setAttribute("viewBox", "0 0 24 24");
-  const use2 = document.createElementNS("http://www.w3.org/2000/svg", "use");
-  use2.setAttribute(
-    "href",
-    imagesURL + "/build-status/build-status-sprite.svg#" + buildStatus
-  );
-  svg2.appendChild(use2);
-
-  const span = new Element("span", {
-    class: "build-status-icon__wrapper icon-" + iconName,
-  })
-    .insert(
-      new Element("span", { class: "build-status-icon__outer" }).insert(svg1)
-    )
-    .insert(svg2);
-
-  return span;
+  return icons.content.querySelector(`#${iconName}`).outerHTML;
 }
