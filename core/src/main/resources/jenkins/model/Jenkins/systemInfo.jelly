@@ -26,10 +26,17 @@ THE SOFTWARE.
   Various system information for diagnostics
 -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <l:layout permissions="${app.MANAGE_AND_SYSTEM_READ}" title="${%System Information}">
-    <st:include page="sidepanel.jelly" />
+    <l:header>
+      <script src="${resURL}/jsbundles/section-to-tabs.js" type="text/javascript" defer="true" />
+      <script src="${resURL}/jsbundles/pages/manage-jenkins/system-information.js" type="text/javascript" defer="true" />
+    </l:header>
+
     <l:breadcrumb title="${%System Information}"/>
+
+    <st:include page="sidepanel.jelly" />
+
     <l:main-panel>
       <l:app-bar title="${%System Information}" />
 
@@ -102,12 +109,35 @@ THE SOFTWARE.
 
       <l:isAdmin>
         <l:tabPane title="${%Thread Dumps}">
-          <p>${%threadDump_blurb('threadDump')}</p>
+          <j:set var="tdumps" value="${it.getAllThreadDumps()}"/>
+
+          <j:forEach var="e" items="${tdumps.entrySet()}">
+            <j:if test="${e.key != null and e.key.length() > 0}">
+              <a href="#id${e.key.hashCode()}" class="jenkins-link--with-icon" style="margin-left:10px;"><l:icon class="icon-sm" src="symbol-computer" />
+                <span style="margin-left: 4px;">${e.key}</span>
+              </a>
+            </j:if>
+          </j:forEach>
+
+          <j:forEach var="e" items="${tdumps.entrySet()}" varStatus="loop">
+            <j:if test="${!loop.first}">
+              <hr style="margin-bottom:6em"/>
+            </j:if>
+            <j:if test="${e.key != null and e.key.length() > 0}">
+              <h1 id="id${e.key.hashCode()}">
+                <l:icon class="symbol-computer icon-lg"/> <a class="model-link inside" href="/computer/${e.key}">${e.key}</a>
+              </h1>
+            </j:if>
+            <j:forEach var="t" items="${e.value.entrySet()}">
+              <h2>
+                ${t.key}
+                <l:copyButton text="${t.value}" />
+              </h2>
+              <pre>${t.value}</pre>
+            </j:forEach>
+          </j:forEach>
         </l:tabPane>
       </l:isAdmin>
-
-      <l:js src="jsbundles/section-to-tabs.js" />
-      <l:js src="jsbundles/pages/manage-jenkins/system-information.js" />
     </l:main-panel>
   </l:layout>
 </j:jelly>
