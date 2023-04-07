@@ -71,8 +71,6 @@ THE SOFTWARE.
            data-detached-disable="${%detached-disable}"
            data-detached-uninstall="${%detached-uninstall}"
            data-detached-possible-dependents="${%detached-possible-dependents}"
-           data-restart-jenkins="${%Changes will take effect when you restart Jenkins}"
-           data-restart="${%Restart Once No Jobs Are Running}"
       />
 
       <table id="plugins" class="jenkins-table sortable">
@@ -281,6 +279,15 @@ THE SOFTWARE.
           </j:otherwise>
         </j:choose>
       </table>
+
+      <div class="warning" id="needRestart" style="display:none; margin: 1em; height: 1em">
+        <form method="post" action="${rootURL}/safeRestart">
+          ${%Changes will take effect when you restart Jenkins}
+          <j:if test="${app.lifecycle.canRestart()}">
+            <s:submit value="${%Restart Once No Jobs Are Running}"/>
+          </j:if>
+        </form>
+      </div>
     </l:main-panel>
   </l:layout>
 </j:jelly>
