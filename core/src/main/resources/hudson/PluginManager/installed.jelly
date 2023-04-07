@@ -56,8 +56,7 @@ THE SOFTWARE.
         <div class="alert alert-warning"><strong>${%Warning}</strong>: ${%requires.restart}</div>
       </j:if>
 
-      <template id="jello"
-                data-can-restart="${app.lifecycle.canRestart()}"
+      <template id="jelly-variables"
                 data-restart-required="${app.updateCenter.isRestartRequiredForCompletion()}"
       />
 

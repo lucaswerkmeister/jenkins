@@ -24,14 +24,14 @@ function togglePluginState(toggleSwitch) {
 function updateRestartNotificationVisibility() {
   // Has anything changed since its original state?
   const stateChanged = toggleSwitches.find((e) => e.checked.toString() !== e.getAttribute('original'));
-  const requiresRestart = getJelloAttribute('restart-required') === 'true';
+  const requiresRestart = getJellyVariable('restart-required') === 'true';
 
   document.querySelector("#needRestart").style.display = (stateChanged || requiresRestart) ? 'block' : 'none';
 }
 
 updateRestartNotificationVisibility();
 
-function getJelloAttribute(attribute) {
-  const jello = document.querySelector("#jello");
+function getJellyVariable(attribute) {
+  const jello = document.querySelector("#jelly-variables");
   return jello.getAttribute("data-" + attribute);
 }
