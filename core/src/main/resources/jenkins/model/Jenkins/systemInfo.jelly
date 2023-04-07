@@ -133,7 +133,7 @@ THE SOFTWARE.
                 ${t.key}
                 <l:copyButton text="${t.value}" />
               </h2>
-              <pre>${t.value}</pre>
+              <pre>${t.value.trim()}</pre>
             </j:forEach>
           </j:forEach>
         </l:tabPane>
