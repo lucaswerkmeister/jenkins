@@ -1,13 +1,20 @@
-import { notificationBar } from '@/components/notifications';
+import { notificationBar } from "@/components/notifications";
 
 // Enable/disables plugins
-const toggleSwitches = [...document.querySelectorAll(".jenkins-table .jenkins-toggle-switch input")];
-toggleSwitches.forEach(toggleSwitch => {
-  toggleSwitch.addEventListener("change", () => togglePluginState(toggleSwitch));
+const toggleSwitches = [
+  ...document.querySelectorAll(".jenkins-table .jenkins-toggle-switch input"),
+];
+toggleSwitches.forEach((toggleSwitch) => {
+  toggleSwitch.addEventListener("change", () =>
+    togglePluginState(toggleSwitch)
+  );
 });
 
 function togglePluginState(toggleSwitch) {
-  const url = toggleSwitch.getAttribute('url') + "/make" + (toggleSwitch.checked ? "Enabled" : "Disabled");
+  const url =
+    toggleSwitch.getAttribute("url") +
+    "/make" +
+    (toggleSwitch.checked ? "Enabled" : "Disabled");
 
   fetch(url, {
     method: "post",
@@ -23,10 +30,13 @@ function togglePluginState(toggleSwitch) {
 
 function updateRestartNotificationVisibility() {
   // Has anything changed since its original state?
-  const stateChanged = toggleSwitches.find((e) => e.checked.toString() !== e.getAttribute('original'));
-  const requiresRestart = getJellyVariable('restart-required') === 'true';
+  const stateChanged = toggleSwitches.find(
+    (e) => e.checked.toString() !== e.getAttribute("original")
+  );
+  const requiresRestart = getJellyVariable("restart-required") === "true";
 
-  document.querySelector("#needRestart").style.display = (stateChanged || requiresRestart) ? 'block' : 'none';
+  document.querySelector("#needRestart").style.display =
+    stateChanged || requiresRestart ? "block" : "none";
 }
 
 updateRestartNotificationVisibility();
