@@ -126,13 +126,6 @@ THE SOFTWARE.
                       </j:choose>
                     </div>
                     <j:set var="issueTrackerReportUrl" value="${p.getIssueTrackerReportUrl()}"/>
-                    <j:if test="${issueTrackerReportUrl != null}">
-                      <div class="excerpt">
-                        <a href="${issueTrackerReportUrl}" rel="noopener nofollow noreferrer" target="_blank" class="jenkins-label jenkins-label--tertiary">
-                          ${%reportIssue}
-                        </a>
-                      </div>
-                    </j:if>
                     <j:if test="${!p.getActiveWarnings().isEmpty()}">
                       <div class="alert alert-danger">${%securityWarning}
                         <ul>
@@ -173,18 +166,29 @@ THE SOFTWARE.
                   <l:isAdmin>
                     <td class="jenkins-table__cell--tight">
                       <div class="jenkins-table__cell__button-wrapper">
-                        <j:if test="${p.downgradable}">
-                          <form class="jenkins-buttons-row" method="post"
-                                action="${rootURL}/updateCenter/plugin/${p.shortName}/downgrade">
-                            <button class="jenkins-table__button jenkins-!-color-orange" tooltip="${%downgradeTo(p.backupVersion)}">
-                              <l:icon src="symbol-downgrade-circle"/>
-                              <span class="jenkins-!-margin-left-1"
-                                    style="font-size: 0.75rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50px;">
-                                ${p.backupVersion}
-                              </span>
-                            </button>
-                          </form>
-                        </j:if>
+                        <l:overflowButton clazz="jenkins-button--tertiary">
+                          <j:if test="${issueTrackerReportUrl != null}">
+                            <a href="${issueTrackerReportUrl}" rel="noopener nofollow noreferrer" target="_blank" class="jenkins-dropdown__item">
+                              <div class="jenkins-dropdown__item__icon">
+                                <l:icon src="symbol-shield-warning" />
+                              </div>
+                              ${%reportIssue}
+                            </a>
+                          </j:if>
+                          <j:if test="${issueTrackerReportUrl != null and p.downgradable}">
+                            <div class="jenkins-dropdown__separator" />
+                          </j:if>
+                          <j:if test="${p.downgradable}">
+                            <form class="jenkins-buttons-row" method="post" action="${rootURL}/updateCenter/plugin/${p.shortName}/downgrade">
+                              <button class="jenkins-dropdown__item jenkins-!-color-orange" tooltip="${%downgradeTo(p.backupVersion)}">
+                                <div class="jenkins-dropdown__item__icon">
+                                  <l:icon src="symbol-downgrade-circle" />
+                                </div>
+                                ${%downgradeTo(p.backupVersion)}
+                              </button>
+                            </form>
+                          </j:if>
+                        </l:overflowButton>
                       </div>
                     </td>
                     <td class="jenkins-table__cell--tight uninstall">
@@ -222,7 +226,7 @@ THE SOFTWARE.
                               </div>
                             </j:if>
                             <form class="jenkins-buttons-row" method="post" action="plugin/${p.shortName}/uninstall">
-                              <button class="jenkins-table__button jenkins-!-destructive-color uninstall" tooltip="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}">
+                              <button class="jenkins-button jenkins-button--tertiary jenkins-!-destructive-color uninstall" tooltip="${%Uninstall} ${p.updateInfo.displayName?:p.displayName}">
                                 <l:icon src="symbol-close-circle"/>
                               </button>
                             </form>
