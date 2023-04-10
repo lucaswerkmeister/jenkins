@@ -7,7 +7,7 @@ import behaviorShim from "@/util/behavior-shim";
 function init() {
   behaviorShim.specify(
     "[data-dropdown='true']",
-    "-dropdown-123-",
+    "-dropdown-",
     1000,
     (element) => {
       Utils.generateDropdown(element, (instance) => {
