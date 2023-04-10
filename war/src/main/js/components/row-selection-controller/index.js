@@ -8,8 +8,11 @@ rowSelectionControllers.forEach((headerCheckbox) => {
   const moreOptionsButton = table.querySelector(
     ".jenkins-table__checkbox-options"
   );
-  const moreOptionsAllButton = table.querySelector("[data-select='all']");
-  const moreOptionsNoneButton = table.querySelector("[data-select='none']");
+  const template = table.querySelector("thead template");
+  const moreOptionsAllButton = template.content.querySelector("[data-select='all']");
+  const moreOptionsNoneButton = template.content.querySelector("[data-select='none']");
+
+  console.log(moreOptionsAllButton)
 
   if (tableCheckboxes.length === 0) {
     headerCheckbox.disabled = true;

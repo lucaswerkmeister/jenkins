@@ -2,16 +2,16 @@ import Utils from "@/components/dropdowns/utils";
 import behaviorShim from "@/util/behavior-shim";
 
 /**
- * Does something
+ * Creates a new dropdown based on the element's next sibling
  */
 function init() {
   behaviorShim.specify(
-    "[dropdown]",
+    "[data-dropdown='true']",
     "-dropdown-123-",
     1000,
     (element) => {
       Utils.generateDropdown(element, (instance) => {
-        instance.setContent(document.getElementById(element.getAttribute("menu")).innerHTML)
+        instance.setContent(element.nextElementSibling.content)
       })
     });
 }
