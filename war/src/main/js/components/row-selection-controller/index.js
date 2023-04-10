@@ -41,15 +41,19 @@ rowSelectionControllers.forEach((headerCheckbox) => {
     updateIcon();
   });
 
-  moreOptionsAllButton?.addEventListener("click", () => {
-    tableCheckboxes.forEach((e) => (e.checked = true));
-    updateIcon();
-  });
+  if (moreOptionsAllButton !== null) {
+    moreOptionsAllButton.addEventListener("click", () => {
+      tableCheckboxes.forEach((e) => (e.checked = true));
+      updateIcon();
+    });
+  }
 
-  moreOptionsNoneButton?.addEventListener("click", () => {
-    tableCheckboxes.forEach((e) => (e.checked = false));
-    updateIcon();
-  });
+  if (moreOptionsNoneButton !== null) {
+    moreOptionsNoneButton.addEventListener("click", () => {
+      tableCheckboxes.forEach((e) => (e.checked = false));
+      updateIcon();
+    });
+  }
 
   function updateIcon() {
     headerCheckbox.classList.remove("jenkins-table__checkbox--all");
