@@ -66,13 +66,13 @@ THE SOFTWARE.
     <div id="buildHistoryPageNav">
       <div class="buildHistoryPageNav__item buildHistoryPageNav__item--page-one pageOne" title="Page 1 (Newest/Latest Builds)">
         <div class="buildHistoryPageNav__item-page-one-top"></div>
-        <l:svgIcon href="${resURL}/images/svgs/go-up.svg#arrow" viewBox="0 0 16 16" />
+        <l:icon src="symbol-arrow-up" />
       </div>
       <div class="buildHistoryPageNav__item pageUp" title="Newer Builds">
-        <l:svgIcon href="${resURL}/images/svgs/go-up.svg#arrow" viewBox="0 0 16 16" />
+        <l:icon src="symbol-arrow-up" />
       </div>
       <div class="buildHistoryPageNav__item pageDown" title="Older Builds">
-        <l:svgIcon href="${resURL}/images/svgs/go-down.svg#arrow" viewBox="0 0 16 16" />
+        <l:icon src="symbol-arrow-down" />
       </div>
     </div>
 
