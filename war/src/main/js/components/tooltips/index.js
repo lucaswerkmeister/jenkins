@@ -16,7 +16,6 @@ const TOOLTIP_BASE = {
  */
 function registerTooltip(element) {
   if (element._tippy && element._tippy.props.theme === "tooltip") {
-    // console.log(element._tippy)
     element._tippy.destroy();
   }
 
