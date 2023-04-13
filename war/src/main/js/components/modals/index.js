@@ -60,7 +60,10 @@ function showModal(contents, options = {}) {
 
   modal.showModal();
 
-  modal.querySelector(`[data-button-type="close"]`)?.blur();
+  const closeButton = document.querySelector(`[data-button-type="close"]`);
+  if (closeButton !== null) {
+    closeButton.blur();
+  }
 }
 
 const confirmationDefaults = {
