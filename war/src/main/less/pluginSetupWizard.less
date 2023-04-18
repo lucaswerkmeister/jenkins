@@ -1,20 +1,10 @@
-@import (css) "../fonts/font-awesome/css/font-awesome.min.css";
-@import (css) "../fonts/icomoon/css/icomoon.css";
-@import (css) "../fonts/google-fonts/roboto/css/roboto.css";
-
-.bootstrap-3 *,
-.bootstrap-3 [class*="col-"] {
-  // simple reset
-  margin: initial;
-}
-
 .plugin-setup-wizard() {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.2);
   text-align: initial;
   font-size: 13px;
+  overflow-y: auto;
 
   input,
   password {
@@ -94,12 +84,6 @@
   }
 
   .modal-body {
-    background: linear-gradient(
-      175deg,
-      #f8f8f8 0%,
-      rgba(255, 255, 255, 1) 22%,
-      rgba(255, 255, 255, 0) 100%
-    );
     overflow-y: auto;
     height: 100%;
     padding: 0;
@@ -153,18 +137,17 @@
   }
 
   .modal-header {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 4.2em;
-    z-index: 2;
-    background: #fff;
-    border-radius: 5px 5px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .modal-title {
+      margin-bottom: 0;
+    }
 
     .close {
-      line-height: 1.42857;
-      margin-right: 5px;
+      border-radius: 100%;
     }
   }
 
@@ -173,14 +156,14 @@
     right: 0;
     bottom: 0;
     left: 0;
-    height: 4.8em;
-    padding: 1em;
     z-index: 2;
     background: #fff;
-    border-radius: 0 0 5px 5px;
   }
 
   .plugin-selector {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+
     overflow-y: hidden;
 
     @media screen and (min-width: 768px) {
@@ -785,18 +768,23 @@
   .welcome-panel {
     position: relative;
     background: transparent;
-    padding: 0 10%;
 
     h1 {
-      font-size: 48px;
-      margin-top: 5px;
+      font-size: 2rem;
+      margin-top: 0;
     }
 
-    @media screen and (min-width: 768px) {
-      padding-top: 5%;
+    p {
+      font-size: 1rem;
+      color: var(--text-color-secondary);
+
+      a {
+        font-size: inherit;
+      }
     }
 
     .button-set {
+      display: flex;
       margin-top: 40px;
 
       .btn {
@@ -821,6 +809,7 @@
       text-shadow: #fff 0 1px 3px;
       position: relative;
       background: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
 
       @media screen and (min-width: 768px) {
         max-width: 41%;
@@ -921,7 +910,7 @@ body .plugin-setup-wizard {
   .plugin-setup-wizard();
 }
 
-@fb-loader-color: #e6e6e6;
+@fb-loader-color: #aaa;
 
 .loader,
 .loader::before,
@@ -989,24 +978,4 @@ body .plugin-setup-wizard {
     box-shadow: 0 -2em @fb-loader-color;
     height: 5em;
   }
-}
-
-.bootstrap-3 {
-  @import (less) "~bootstrap/less/bootstrap.less";
-}
-
-.bootstrap-3 [class*="col-"] {
-  // simple reset
-  margin: initial;
-  padding: initial;
-}
-
-.bootstrap-3 .categories,
-.bootstrap-3 .plugins {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.setup-wizard-heading {
-  margin-top: -24px;
 }

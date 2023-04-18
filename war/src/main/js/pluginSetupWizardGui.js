@@ -299,8 +299,8 @@ var createPluginSetupWizard = function (appendTarget) {
 
         var $modalHeader = $container.find(".modal-header");
         if ($modalHeader.length > 0 && $modalHeader.is(".closeable")) {
-          $modalHeader.prepend(
-            '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+          $modalHeader.append(
+            '<button type="button" class="jenkins-button close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
           );
         }
 
