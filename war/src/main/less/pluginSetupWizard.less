@@ -1,10 +1,8 @@
 .plugin-setup-wizard() {
-  position: fixed;
   inset: 0;
   z-index: 1000;
   text-align: initial;
   font-size: 13px;
-  overflow-y: auto;
 
   input,
   password {
@@ -56,13 +54,10 @@
     height: 100%;
     position: relative;
     box-sizing: border-box;
-    padding: 4.2em 0 4.8em;
   }
 
   .jenkins-version {
-    float: left;
-    margin: 0.7em 0.5em;
-    opacity: 0.7; // matches the info text
+    color: var(--text-color-secondary);
   }
 
   .container.error-container {
@@ -84,10 +79,8 @@
   }
 
   .modal-body {
-    overflow-y: auto;
     height: 100%;
     padding: 0;
-    border-bottom: 1px solid #ccc;
 
     .water-mark {
       font-size: 392px;
@@ -151,20 +144,9 @@
     }
   }
 
-  .modal-footer {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    background: #fff;
-  }
-
   .plugin-selector {
     display: grid;
     grid-template-columns: 300px 1fr;
-
-    overflow-y: hidden;
 
     @media screen and (min-width: 768px) {
       height: 100%;
@@ -279,8 +261,6 @@
         @media screen and (min-width: 768px) {
           max-height: 100%;
         }
-
-        overflow-y: auto;
 
         h2 {
           font-size: 28px;
@@ -559,7 +539,6 @@
     .categories {
       position: relative;
       display: none;
-      overflow-y: auto;
 
       @media screen and (min-width: 768px) {
         display: block;
@@ -620,9 +599,6 @@
   .install-console {
     border-left: 1px solid #ccc;
     background: #f8f8f8;
-    position: absolute;
-    right: 0;
-    bottom: 0;
     display: block;
     z-index: 5;
     top: 33.3%;
@@ -678,14 +654,9 @@
   }
 
   .selected-plugin-progress {
-    position: absolute;
     bottom: 0;
-    overflow: hidden;
-    overflow-y: auto;
-    top: 33.3%;
     margin: 0;
     padding: 0;
-    width: 75%;
     font-size: 0;
     background: rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid #ccc;
@@ -779,7 +750,8 @@
       color: var(--text-color-secondary);
 
       a {
-        font-size: inherit;
+        font-size: 1rem;
+        font-weight: normal;
       }
     }
 
@@ -793,44 +765,16 @@
     }
 
     .btn-huge {
-      font-weight: 200;
       display: inline-block;
       text-align: initial;
       width: 22em;
       white-space: normal;
       vertical-align: top;
-      min-height: 12.5em;
       margin-right: 1.3%;
       margin-top: 1em;
       padding: 20px 25px;
-      box-shadow: inset 0 -200px 200px -100px rgba(0, 0, 0, 0.1),
-        0 1px 3px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(0, 60, 100, 0.5);
-      text-shadow: #fff 0 1px 3px;
       position: relative;
-      background: rgba(255, 255, 255, 0.75);
       text-decoration: none;
-
-      @media screen and (min-width: 768px) {
-        max-width: 41%;
-        min-width: 14em;
-        margin-top: 0;
-      }
-
-      &:hover {
-        box-shadow: inset 0 1px 3px -1px rgba(0, 0, 0, 0.2);
-        background: rgba(100, 200, 255, 0.1);
-      }
-
-      &:focus {
-        background: #fff;
-        box-shadow: inset 0 -200px 200px -100px rgba(0, 0, 0, 0.1),
-          0 0 5px 3px rgba(00, 180, 250, 0.2);
-      }
-
-      &:hover:focus {
-        background: rgba(100, 200, 255, 0.1);
-      }
 
       &.btn-primary {
         background: rgba(200, 240, 255, 0.2);
@@ -977,5 +921,17 @@ body .plugin-setup-wizard {
   40% {
     box-shadow: 0 -2em @fb-loader-color;
     height: 5em;
+  }
+}
+
+.longhorn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .big-icon {
+    width: 3rem;
+    height: 3rem;
   }
 }
