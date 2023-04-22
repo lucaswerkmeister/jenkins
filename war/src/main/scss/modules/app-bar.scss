@@ -35,7 +35,7 @@
     position: sticky;
     top: 40px;
     padding-top: var(--section-padding);
-    margin-top: -var(--section-padding);
+    margin-top: - var(--section-padding);
     z-index: 2;
 
     &::before,
