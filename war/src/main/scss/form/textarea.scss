@@ -1,0 +1,11 @@
+.textarea-preview-container {
+  text-align: left;
+  margin-top: 0.5rem;
+}
+
+.textarea-preview {
+  background-color: var(--very-light-grey);
+  padding: calc(var(--section-padding) / 2);
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}

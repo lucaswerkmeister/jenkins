@@ -283,7 +283,7 @@ $semantics: (
   --task-link-bg-color--hover: var(--very-light-grey);
 
   // Form
-  --section-padding: 1.85rem;
+  --section-padding: 1.625rem;
   --input-color: var(--white);
   --input-border: #c3ccd1;
   --input-border-hover: #5c7889;
@@ -293,6 +293,7 @@ $semantics: (
   --form-item-max-width--small: min(35vw, 1200px);
 
   @media screen and (max-width: 970px) {
+    --section-padding: 1.25rem;
     --form-item-max-width: 100%;
     --form-item-max-width--medium: 100%;
     --form-item-max-width--small: 100%;
