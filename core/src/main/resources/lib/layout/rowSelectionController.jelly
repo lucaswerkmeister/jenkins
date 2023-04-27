@@ -57,6 +57,4 @@ THE SOFTWARE.
       </l:overflowButton>
     </j:if>
   </div>
-
-  <l:js src="jsbundles/components/row-selection-controller.js" />
 </j:jelly>
