@@ -1,3 +1,5 @@
+@use "./spacing";
+
 body,
 p {
   font-family: var(--font-family-sans);
@@ -55,32 +57,32 @@ h6,
 
 h1,
 .h1 {
-  font-size: 1.5rem;
+  font-size: #{spacing.watermelon(24)};
 }
 
 h2,
 .h2 {
-  font-size: 1.35rem;
+  font-size: #{spacing.watermelon(19.6)};
 }
 
 h3,
 .h3 {
-  font-size: 1.2rem;
+  font-size: #{spacing.watermelon(17.4)};
 }
 
 h4,
 .h4 {
-  font-size: 1rem;
+  font-size: #{spacing.watermelon(15.2)};
 }
 
 h5,
 .h5 {
-  font-size: 0.8rem;
+  font-size: #{spacing.watermelon(12.6)};
 }
 
 h6,
 .h6 {
-  font-size: 0.6rem;
+  font-size: #{spacing.watermelon(10)};
 }
 
 .jenkins-description {

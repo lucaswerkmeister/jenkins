@@ -47,3 +47,7 @@ $unit: 0.4rem;
     padding-right: $i * $unit !important;
   }
 }
+
+@function watermelon($size) {
+  @return $size / 16 + "rem";
+}
