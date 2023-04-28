@@ -294,7 +294,7 @@ $semantics: (
   --form-item-max-width--small: min(35vw, 1200px);
 
   @media screen and (max-width: 970px) {
-    --section-padding: 1.25rem;
+    --section-padding: 0.9375rem;
     --form-item-max-width: 100%;
     --form-item-max-width--medium: 100%;
     --form-item-max-width--small: 100%;
