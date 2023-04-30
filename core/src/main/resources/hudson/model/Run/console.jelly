@@ -40,18 +40,13 @@ THE SOFTWARE.
           <t:buildCaption>${%Console Output}</t:buildCaption>
         </div>
         <div class="jenkins-app-bar__controls">
-<!--          <button class="copy-button jenkins-button jenkins-copy-button"-->
-<!--                  type="button">-->
-<!--            <span class="jenkins-copy-button__icon" />-->
-<!--            Copy-->
-<!--          </button>-->
           <j:invokeStatic className="java.time.LocalDateTime" method="now" var="now"/>
           <a href="${buildUrl.baseUrl}/consoleText" download="${it.fullDisplayName} logs - ${now}.txt" class="jenkins-button">
             <l:icon src="symbol-download" />
-            Download
+            ${%Download}
           </a>
           <a href="${buildUrl.baseUrl}/consoleText" class="jenkins-button">
-            View as plain text
+            ${%View as plain text}
           </a>
         </div>
       </div>
