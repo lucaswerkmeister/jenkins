@@ -410,13 +410,13 @@ function findFollowingTR(node, className, nodeClass) {
       if (
         queryChildren.length > 0 &&
         (isTR(queryChildren[0]) ||
-          Element.hasClassName(queryChildren[0], className))
+          queryChildren[0].classList.contains(className))
       )
         return queryChildren[0];
     }
 
     tr = $(tr).next();
-  } while (tr != null && (!isTR(tr) || !Element.hasClassName(tr, className)));
+  } while (tr != null && (!isTR(tr) || !tr.classList.contains(className)));
 
   return tr;
 }
@@ -890,7 +890,7 @@ function isInsideRemovable(e) {
  *      if specified, skip the application of behaviour rule.
  */
 function renderOnDemand(e, callback, noBehaviour) {
-  if (!e || !Element.hasClassName(e, "render-on-demand")) return;
+  if (!e || !e.classList.contains("render-on-demand")) return;
   var proxy = eval(e.getAttribute("proxy"));
   proxy.render(function (t) {
     var contextTagName = e.parentNode.tagName;
@@ -984,7 +984,7 @@ function helpButtonOnClick() {
     findFollowingTR(this, "help-area", "setting-help") ||
     findFollowingTR(this, "help-area");
   var div = $(tr).down();
-  if (!div.hasClassName("help")) div = div.next().down();
+  if (!div.classList.contains("help")) div = div.next().down();
 
   if (div.style.display != "block") {
     div.style.display = "block";
@@ -1055,8 +1055,8 @@ function getParentForm(element) {
 // figure out the corresponding end marker
 function findEnd(e) {
   for (var depth = 0; ; e = $(e).next()) {
-    if (Element.hasClassName(e, "rowvg-start")) depth++;
-    if (Element.hasClassName(e, "rowvg-end")) depth--;
+    if (e.classList.contains("rowvg-start")) depth++;
+    if (e.classList.contains("rowvg-end")) depth--;
     if (depth == 0) return e;
   }
 }
@@ -1253,7 +1253,7 @@ function rowvgStartEachRow(recursive, f) {
     function (e) {
       e.onclick = helpButtonOnClick;
       e.tabIndex = 9999; // make help link unnavigable from keyboard
-      e.parentNode.parentNode.addClassName("has-help");
+      e.parentNode.parentNode.classList.add("has-help");
     }
   );
 
@@ -1261,7 +1261,7 @@ function rowvgStartEachRow(recursive, f) {
   Behaviour.specify("A.help-button", "a-help-button", ++p, function (e) {
     e.onclick = helpButtonOnClick;
     e.tabIndex = 9999; // make help link unnavigable from keyboard
-    e.parentNode.parentNode.addClassName("has-help");
+    e.parentNode.parentNode.classList.add("has-help");
   });
 
   // Script Console : settings and shortcut key
@@ -1366,7 +1366,7 @@ function rowvgStartEachRow(recursive, f) {
   // structured form submission
   Behaviour.specify("FORM", "form", ++p, function (form) {
     crumb.appendToForm(form);
-    if (Element.hasClassName(form, "no-json")) return;
+    if (form.classList.contains("no-json")) return;
     // add the hidden 'json' input field, which receives the form structure in JSON
     var div = document.createElement("div");
     div.classList.add("jenkins-!-display-contents");
@@ -1484,8 +1484,8 @@ function rowvgStartEachRow(recursive, f) {
       var end = e;
 
       for (var depth = 0; ; e = e.previous()) {
-        if (e.hasClassName("row-set-end")) depth++;
-        if (e.hasClassName("row-set-start")) depth--;
+        if (e.classList.contains("row-set-end")) depth++;
+        if (e.classList.contains("row-set-start")) depth--;
         if (depth == 0) break;
       }
       var start = e;
@@ -1553,7 +1553,7 @@ function rowvgStartEachRow(recursive, f) {
   Behaviour.specify("INPUT.combobox", "input-combobox", ++p, function (c) {
     // Next element after <input class="combobox"/> should be <div class="combobox-values">
     var vdiv = $(c).next();
-    if (vdiv.hasClassName("combobox-values")) {
+    if (vdiv.classList.contains("combobox-values")) {
       createComboBox(c, function () {
         return vdiv.childElements().collect(function (value) {
           return value.getAttribute("value");
@@ -1578,7 +1578,7 @@ function rowvgStartEachRow(recursive, f) {
         start = start.firstElementChild;
       } while (start && !isTR(start));
 
-      if (start && !Element.hasClassName(start, "dropdownList-start"))
+      if (start && !start.classList.contains("dropdownList-start"))
         start = findFollowingTR(start, "dropdownList-start");
       while (start != null) {
         subForms.push(start);
@@ -1647,7 +1647,7 @@ function rowvgStartEachRow(recursive, f) {
     var DOM = YAHOO.util.Dom;
 
     $(element).observe("mouseenter", function () {
-      element.addClassName("mouseover");
+      element.classList.add("mouseover");
 
       var mousemoveTracker = function (event) {
         var elementRegion = DOM.getRegion(element);
@@ -1856,7 +1856,7 @@ function applyNameRefHelper(s, e, id) {
     // to handle nested <f:rowSet> correctly, don't overwrite the existing value
     if (x.getAttribute("nameRef") == null) {
       x.setAttribute("nameRef", id);
-      if (x.hasClassName("tr"))
+      if (x.classList.contains("tr"))
         applyNameRefHelper(x.firstElementChild, null, id);
     }
   }
@@ -2281,7 +2281,7 @@ function findFormParent(e, form, isStatic) {
       if (
         e.tagName == "INPUT" &&
         !isStatic &&
-        !xor(e.checked, Element.hasClassName(e, "negative"))
+        !xor(e.checked, e.classList.contains("negative"))
       )
         return null; // field is not active
 
@@ -2373,7 +2373,7 @@ function buildFormTree(form) {
           break;
         case "checkbox":
           p = findParent(e);
-          var checked = xor(e.checked, Element.hasClassName(e, "negative"));
+          var checked = xor(e.checked, e.classList.contains("negative"));
           if (!e.groupingNode) {
             v = e.getAttribute("json");
             if (v) {
@@ -2435,7 +2435,7 @@ function buildFormTree(form) {
         default:
           p = findParent(e);
           addProperty(p, e.name, e.value);
-          if (e.hasClassName("complex-password-field")) {
+          if (e.classList.contains("complex-password-field")) {
             addProperty(p, "$redact", shortenName(e.name));
           }
           break;
