@@ -48,6 +48,11 @@ THE SOFTWARE.
           <a href="${buildUrl.baseUrl}/consoleText" class="jenkins-button">
             ${%View as plain text}
           </a>
+          <l:overflowButton>
+            <button class="jenkins-dropdown__item">
+              Go to line
+            </button>
+          </l:overflowButton>
         </div>
       </div>
 
