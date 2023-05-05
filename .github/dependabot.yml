@@ -17,30 +17,18 @@ updates:
       # version of Jetty we deliver. See:
       # https://github.com/jenkinsci/jenkins/pull/5211
       - dependency-name: "jakarta.servlet:jakarta.servlet-api"
-      - dependency-name: "javax.servlet:javax.servlet-api"
 
       # Jetty Maven Plugin and Winstone should be upgraded in lockstep in order
       # to keep their corresponding Jetty versions aligned.
       - dependency-name: "org.eclipse.jetty:jetty-maven-plugin"
       - dependency-name: "org.jenkins-ci:winstone"
 
-      # Log4j 1.2.17 is the final 1.x release.
-      - dependency-name: "log4j:log4j"
-
       # Here lies technical debt. Exclusions in this section have been triaged
       # and determined to be temporary. Exclusions should be removed from this
       # section once the remaining action items have been completed.
 
-      # Fails test automation; needs further investigation.
-      - dependency-name: "com.google.inject:guice-bom"
-
       # Contains incompatible API changes and needs compatibility work.
       - dependency-name: "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api"
-
-      # This is a banned dependency, and we have a redundant trick in our POM to
-      # prevent it from being pulled in. If and when the reference is removed in
-      # our POM, this exclusion can also be removed.
-      - dependency-name: "javax.servlet:servlet-api"
 
       # Needs significant testing. See:
       # https://github.com/jenkinsci/jenkins/pull/5112#issuecomment-744429487
@@ -65,7 +53,7 @@ updates:
         versions: [">=6.0.0"]
   - package-ecosystem: "maven"
     directory: "/"
-    target-branch: "stable-2.361"
+    target-branch: "stable-2.375"
     labels:
       - "into-lts"
       - "needs-justification"
@@ -73,7 +61,3 @@ updates:
       interval: "daily"
     # Include only security updates and exclude version updates.
     open-pull-requests-limit: 0
-  - package-ecosystem: "docker"
-    directory: "./gitpod"
-    schedule:
-      interval: "daily"

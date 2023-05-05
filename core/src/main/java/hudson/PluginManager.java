@@ -28,6 +28,8 @@ import static hudson.init.InitMilestone.COMPLETED;
 import static hudson.init.InitMilestone.PLUGINS_LISTED;
 import static hudson.init.InitMilestone.PLUGINS_PREPARED;
 import static hudson.init.InitMilestone.PLUGINS_STARTED;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_READ;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_WRITE;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.WARNING;
@@ -81,6 +83,7 @@ import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
@@ -88,8 +91,10 @@ import java.nio.file.attribute.FileTime;
 import java.security.CodeSource;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -635,7 +640,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
     /**
      * Defines the location of the detached plugins in the WAR.
      * @return by default, {@code /WEB-INF/detached-plugins}
-     * @since TODO
+     * @since 2.377
      */
     protected @NonNull String getDetachedLocation() {
         return "/WEB-INF/detached-plugins";
@@ -657,7 +662,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
 
         for (String pluginPath : plugins) {
             String fileName = pluginPath.substring(pluginPath.lastIndexOf('/') + 1);
-            if (fileName.length() == 0) {
+            if (fileName.isEmpty()) {
                 // see http://www.nabble.com/404-Not-Found-error-when-clicking-on-help-td24508544.html
                 // I suspect some containers are returning directory names.
                 continue;
@@ -1464,7 +1469,11 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
                     jsonObject.put("sourceId", plugin.sourceId);
                     jsonObject.put("title", plugin.title);
                     jsonObject.put("displayName", plugin.getDisplayName());
-                    jsonObject.put("wiki", plugin.wiki);
+                    if (plugin.wiki == null || !(plugin.wiki.startsWith("https://") || plugin.wiki.startsWith("http://"))) {
+                        jsonObject.put("wiki", StringUtils.EMPTY);
+                    } else {
+                        jsonObject.put("wiki", plugin.wiki);
+                    }
                     jsonObject.put("categories", plugin.getCategoriesStream()
                         .filter(PluginManager::isNonMetaLabel)
                         .map(UpdateCenter::getCategoryDisplayName)
@@ -1481,7 +1490,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
                     jsonObject.put("version", plugin.version);
                     jsonObject.put("popularity", plugin.popularity);
                     if (plugin.isForNewerHudson()) {
-                        jsonObject.put("newerCoreRequired", Messages.PluginManager_coreWarning(plugin.requiredCore));
+                        jsonObject.put("newerCoreRequired", Messages.PluginManager_coreWarning(Util.xmlEscape(plugin.requiredCore)));
                     }
                     if (plugin.hasWarnings()) {
                         JSONObject unresolvedSecurityWarnings = new JSONObject();
@@ -1505,9 +1514,6 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
                         releaseTimestamp.put("iso8601", Functions.iso8601DateTime(plugin.releaseTimestamp));
                         releaseTimestamp.put("displayValue", Messages.PluginManager_ago(Functions.getTimeSpanString(plugin.releaseTimestamp)));
                         jsonObject.put("releaseTimestamp", releaseTimestamp);
-                    }
-                    if (hasLatestVersionNewerThanOffered(plugin)) {
-                        jsonObject.put("newerVersionAvailableNotOffered", Messages.PluginManager_newerVersionExists(plugin.latest, plugin.wiki));
                     }
                     return jsonObject;
                 })
@@ -1717,7 +1723,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
             if (p == null) {
                 throw new Failure("No such plugin: " + n);
             }
-            Future<UpdateCenter.UpdateCenterJob> jobFuture = p.deploy(dynamicLoad, correlationId, batch);
+            Future<UpdateCenter.UpdateCenterJob> jobFuture = p.deploy(dynamicLoad, correlationId, batch, false);
             installJobs.add(jobFuture);
         }
 
@@ -1863,7 +1869,8 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
 
             String fileName = "";
             PluginCopier copier;
-            ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
+            File tmpDir = Files.createTempDirectory("uploadDir").toFile();
+            ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory(DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD, tmpDir));
             List<FileItem> items = upload.parseRequest(req);
             if (StringUtils.isNotBlank(items.get(1).getString())) {
                 // this is a URL deployment
@@ -1874,6 +1881,16 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
                 FileItem fileItem = items.get(0);
                 fileName = Util.getFileName(fileItem.getName());
                 copier = new FileUploadPluginCopier(fileItem);
+            }
+
+            if (FileSystems.getDefault().supportedFileAttributeViews().contains("posix")) {
+                Arrays.stream(Objects.requireNonNull(tmpDir.listFiles())).forEach((file -> {
+                    try {
+                        Files.setPosixFilePermissions(file.toPath(), EnumSet.of(OWNER_READ, OWNER_WRITE));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
             }
 
             if ("".equals(fileName)) {
@@ -1896,6 +1913,9 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
                 throw new ServletException(e);
             }
             copier.cleanup();
+            if (!tmpDir.delete()) {
+                System.err.println("Failed to delete temporary directory: " + tmpDir);
+            }
 
             final String baseName = identifyPluginShortName(t);
 
@@ -1960,44 +1980,71 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
     @Restricted(NoExternalUse.class)
     @RequirePOST public FormValidation doCheckUpdateSiteUrl(StaplerRequest request, @QueryParameter String value) throws InterruptedException {
         Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+        return checkUpdateSiteURL(value);
+    }
 
+    @Restricted(DoNotUse.class) // visible for testing only
+    FormValidation checkUpdateSiteURL(@CheckForNull String value) throws InterruptedException {
         value = Util.fixEmptyAndTrim(value);
+
         if (value == null) {
             return FormValidation.error(Messages.PluginManager_emptyUpdateSiteUrl());
         }
 
-        value += ((value.contains("?")) ? "&" : "?") + "version=" + Jenkins.VERSION + "&uctest";
+        final URI baseUri;
+        try {
+            baseUri = new URI(value);
+        } catch (URISyntaxException ex) {
+            return FormValidation.error(ex, Messages.PluginManager_invalidUrl());
+        }
 
-        URI uri;
-        try {
-            uri = new URI(value);
-        } catch (URISyntaxException e) {
-            return FormValidation.error(e, Messages.PluginManager_invalidUrl());
-        }
-        HttpClient httpClient = ProxyConfiguration.newHttpClientBuilder()
-                .connectTimeout(Duration.ofSeconds(5))
-                .build();
-        HttpRequest httpRequest;
-        try {
-            httpRequest = ProxyConfiguration.newHttpRequestBuilder(uri)
-                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
-                    .build();
-        } catch (IllegalArgumentException e) {
-            return FormValidation.error(e, Messages.PluginManager_invalidUrl());
-        }
-        try {
-            java.net.http.HttpResponse<Void> httpResponse = httpClient.send(
-                    httpRequest, java.net.http.HttpResponse.BodyHandlers.discarding());
-            if (100 <= httpResponse.statusCode() && httpResponse.statusCode() <= 399) {
+        if ("file".equalsIgnoreCase(baseUri.getScheme())) {
+            File f = new File(baseUri);
+            if (f.isFile()) {
                 return FormValidation.ok();
             }
-            LOGGER.log(Level.FINE, "Obtained a non OK ({0}) response from the update center",
-                    new Object[] {httpResponse.statusCode(), uri});
             return FormValidation.error(Messages.PluginManager_connectionFailed());
-        } catch (IOException e) {
-            LOGGER.log(Level.FINE, "Failed to check update site", e);
-            return FormValidation.error(e, Messages.PluginManager_connectionFailed());
         }
+
+        if ("https".equalsIgnoreCase(baseUri.getScheme()) || "http".equalsIgnoreCase(baseUri.getScheme())) {
+            final URI uriWithQuery;
+            try {
+                if (baseUri.getRawQuery() == null) {
+                    uriWithQuery = new URI(value + "?version=" + Jenkins.VERSION + "&uctest");
+                } else {
+                    uriWithQuery = new URI(value + "&version=" + Jenkins.VERSION + "&uctest");
+                }
+            } catch (URISyntaxException e) {
+                return FormValidation.error(e, Messages.PluginManager_invalidUrl());
+            }
+            HttpClient httpClient = ProxyConfiguration.newHttpClientBuilder()
+                    .connectTimeout(Duration.ofSeconds(5))
+                    .build();
+            HttpRequest httpRequest;
+            try {
+                httpRequest = ProxyConfiguration.newHttpRequestBuilder(uriWithQuery)
+                        .method("HEAD", HttpRequest.BodyPublishers.noBody())
+                        .build();
+            } catch (IllegalArgumentException e) {
+                return FormValidation.error(e, Messages.PluginManager_invalidUrl());
+            }
+            try {
+                java.net.http.HttpResponse<Void> httpResponse = httpClient.send(
+                        httpRequest, java.net.http.HttpResponse.BodyHandlers.discarding());
+                if (100 <= httpResponse.statusCode() && httpResponse.statusCode() <= 399) {
+                    return FormValidation.ok();
+                }
+                LOGGER.log(Level.FINE, "Obtained a non OK ({0}) response from the update center",
+                        new Object[] {httpResponse.statusCode(), baseUri});
+                return FormValidation.error(Messages.PluginManager_connectionFailed());
+            } catch (IOException e) {
+                LOGGER.log(Level.FINE, "Failed to check update site", e);
+                return FormValidation.error(e, Messages.PluginManager_connectionFailed());
+            }
+
+        }
+        // not a file or http(s) scheme
+        return FormValidation.error(Messages.PluginManager_invalidUrl());
     }
 
     @Restricted(NoExternalUse.class)
@@ -2201,7 +2248,7 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
     @RequirePOST
     public HttpResponse doInstallNecessaryPlugins(StaplerRequest req) throws IOException {
         prevalidateConfig(req.getInputStream());
-        return HttpResponses.redirectViaContextPath("updates/");
+        return HttpResponses.redirectViaContextPath("pluginManager/updates/");
     }
 
     /**
@@ -2563,14 +2610,6 @@ public abstract class PluginManager extends AbstractModelObject implements OnMas
     @Restricted(DoNotUse.class) // Used from table.jelly
     public boolean hasAdoptThisPluginLabel(UpdateSite.Plugin plugin) {
         return plugin.hasCategory("adopt-this-plugin");
-    }
-
-    @Restricted(DoNotUse.class) // Used from table.jelly
-    public boolean hasLatestVersionNewerThanOffered(UpdateSite.Plugin plugin) {
-        if (plugin.latest == null) {
-            return false;
-        }
-        return !plugin.latest.equalsIgnoreCase(plugin.version); // we can assume that any defined 'latest' will be newer than the actual offered version
     }
 
     @Restricted(DoNotUse.class) // Used from table.jelly
