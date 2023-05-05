@@ -24,10 +24,11 @@ THE SOFTWARE.
 
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:local="/hudson/PluginManager">
-  <local:updates />
-  <div style="margin-top:1em">
+  <local:updates>
     <j:if test="${!empty(app.updateCenter.jobs)}">
-      <br/> ${%UpdatePageLegend(rootURL+'/updateCenter/')}
+      <div>
+        ${%UpdatePageLegend(rootURL+'/updateCenter/')}
+      </div>
     </j:if>
-  </div>
+  </local:updates>
 </j:jelly>

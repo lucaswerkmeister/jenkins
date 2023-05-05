@@ -53,8 +53,6 @@ THE SOFTWARE.
       <st:adjunct includes="hudson.PluginManager._table"/>
 
       <form method="post" action="install">
-        <j:set var="isUpdates" value="true"/>
-
         <j:set var="cache" value="${it.createCache()}"/>
 
         <table id="plugins" class="jenkins-table sortable">
@@ -74,17 +72,15 @@ THE SOFTWARE.
                   </l:rowSelectionController>
                 </th>
               </l:isAdmin>
-              <th initialSortDir="${isUpdates?'down':null}">${%Name}</th>
+              <th initialSortDir="down">${%Name}</th>
               <th>${%Released}</th>
-              <j:if test="${isUpdates}">
-                <th>${%Installed}</th>
-              </j:if>
+              <th>${%Installed}</th>
             </tr>
           </thead>
           <j:choose>
-            <j:when test="${!empty(list) or (isUpdates and !empty(unavailableList))}">
+            <j:when test="${!empty(list)}">
               <j:forEach var="p" items="${list}">
-                <j:set var="installJob" value="${isUpdates ? app.updateCenter.getJob(p) : null}"/>
+                <j:set var="installJob" value="${app.updateCenter.getJob(p)}"/>
                 <j:set var="installedOk"
                        value="${installJob.status.success and installJob.plugin.version==p.version}"/>
                 <tr
@@ -210,20 +206,18 @@ THE SOFTWARE.
                       </time>
                     </j:if>
                   </td>
-                  <j:if test="${isUpdates}">
-                    <td>
-                      <j:choose>
-                        <j:when test="${p.installed.active}">
-                          <st:out value="${p.installed.version}"/>
-                        </j:when>
-                        <j:otherwise>
-                          <span title="${%Inactive}">
-                            (<st:out value="${p.installed.version}"/>)
-                          </span>
-                        </j:otherwise>
-                      </j:choose>
-                    </td>
-                  </j:if>
+                  <td>
+                    <j:choose>
+                      <j:when test="${p.installed.active}">
+                        <st:out value="${p.installed.version}"/>
+                      </j:when>
+                      <j:otherwise>
+                        <span title="${%Inactive}">
+                          (<st:out value="${p.installed.version}"/>)
+                        </span>
+                      </j:otherwise>
+                    </j:choose>
+                  </td>
                 </tr>
               </j:forEach>
             </j:when>
@@ -243,10 +237,6 @@ THE SOFTWARE.
           <div class="bottom-sticker-inner">
             <l:isAdmin>
               <j:if test="${!empty(list)}">
-                <j:if test="${!isUpdates}">
-                  <f:submit value="${%Install without restart}" name="dynamicLoad"/>
-                  <span style="margin-left:2em;"></span>
-                </j:if>
                 <f:submit value="${%Download now and install after restart}"/>
               </j:if>
             </l:isAdmin>
