@@ -25,4 +25,9 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:local="/hudson/PluginManager">
   <local:updates />
+  <div style="margin-top:1em">
+    <j:if test="${!empty(app.updateCenter.jobs)}">
+      <br/> ${%UpdatePageLegend(rootURL+'/updateCenter/')}
+    </j:if>
+  </div>
 </j:jelly>
