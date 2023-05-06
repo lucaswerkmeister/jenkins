@@ -241,6 +241,19 @@ pre {
   }
 }
 
+.longhorn-container {
+  --font-size-monospace: 15px;
+  //background: black;
+  //padding: 3rem;
+}
+
+.longhorn-modern-output {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  font-weight: normal !important;
+}
+
 .app-log-line {
   position: relative;
   display: grid;

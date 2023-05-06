@@ -33,29 +33,33 @@ THE SOFTWARE.
     <st:include page="sidepanel.jelly" />
      <l:breadcrumb title="${%Console Output}" />
     <l:main-panel>
-      <t:buildCaption>${%Console Output}</t:buildCaption>
+      <div class="longhorn-container">
+        <t:buildCaption>${%Console Output}</t:buildCaption>
 
-      <j:set var="threshold" value="${h.getSystemProperty('hudson.consoleTailKB')?:'150'}" />
-      <!-- Show at most last 150KB (can override with system property) unless consoleFull is set -->
-      <j:set var="offset" value="${empty(consoleFull) ? it.logText.length()-threshold*1024 : 0}" />
-      <j:choose>
-        <j:when test="${offset > 0}">
-          ${%skipSome(offset/1024,"consoleFull")}
-        </j:when>
-        <j:otherwise>
-          <j:set var="offset" value="${0}" />
-        </j:otherwise>
-      </j:choose>
+        <j:set var="threshold" value="${h.getSystemProperty('hudson.consoleTailKB')?:'150'}" />
+        <!-- Show at most last 150KB (can override with system property) unless consoleFull is set -->
+        <j:set var="offset" value="${empty(consoleFull) ? it.logText.length()-threshold*1024 : 0}" />
+        <j:choose>
+          <j:when test="${offset > 0}">
+            <a href="consoleFull" class="jenkins-button" style="width: 100%; margin-bottom: var(--section-padding)">
+              Skipped ${offset/1024}kb - view full log
+            </a>
+          </j:when>
+          <j:otherwise>
+            <j:set var="offset" value="${0}" />
+          </j:otherwise>
+        </j:choose>
 
-      <j:out value="${h.generateConsoleAnnotationScriptAndStylesheet()}"/>
+        <j:out value="${h.generateConsoleAnnotationScriptAndStylesheet()}"/>
 
-      <pre id="out" class="console-output longhorn-modern-output" />
+        <pre id="out" class="console-output longhorn-modern-output" />
 
-      <div id="spinner">
-        <l:progressAnimation/>
+        <div id="spinner">
+          <l:spinner />
+        </div>
+
+        <t:progressiveText href="logText/progressiveHtml" idref="out" spinner="spinner" startOffset="${offset}" onFinishEvent="jenkins:consoleFinished"/>
       </div>
-
-      <t:progressiveText href="logText/progressiveHtml" idref="out" spinner="spinner" startOffset="${offset}" onFinishEvent="jenkins:consoleFinished"/>
     </l:main-panel>
   </l:layout>
 </st:compress>
