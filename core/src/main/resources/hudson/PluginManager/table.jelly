@@ -40,6 +40,10 @@ THE SOFTWARE.
     <st:include page="sidepanel.jelly"/>
     <!-- no need for additional breadcrumb here as we're on an "index" page already including breadcrumb -->
 
+    <l:header>
+      <script src="${resURL}/jsbundles/components/row-selection-controller.js" type="text/javascript" defer="true" />
+    </l:header>
+
     <l:main-panel>
       <l:app-bar title="${%Plugins}" />
 
@@ -50,6 +54,9 @@ THE SOFTWARE.
                         id="filter-box"
                         autofocus="true"
                         value="${request.getParameter('filter')}" />
+        </div>
+        <div class="jenkins-app-bar__controls">
+          <st:include page="check.jelly"/>
         </div>
       </div>
 
@@ -261,7 +268,6 @@ THE SOFTWARE.
                 <f:submit value="${%Download now and install after restart}"/>
               </j:if>
             </l:isAdmin>
-            <st:include page="check.jelly"/>
           </div>
         </div>
         <d:invokeBody/>

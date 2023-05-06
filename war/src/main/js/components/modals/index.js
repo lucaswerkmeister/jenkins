@@ -15,6 +15,14 @@ function showModal(contents, options = {}) {
   );
   modal.style.maxWidth = options.maxWidth;
 
+  if ("title" in options) {
+    const titleElement = createElementFromHtml(
+      `<h1 class="jenkins-modal__title"></h1>`
+    );
+    titleElement.append(options.title);
+    modal.prepend(titleElement);
+  }
+
   if (options.hideCloseButton !== true) {
     modal.appendChild(
       createElementFromHtml(`
@@ -61,7 +69,7 @@ function showModal(contents, options = {}) {
   modal.showModal();
 
   const closeButton = document.querySelector(`[data-button-type="close"]`);
-  if (closeButton !== null) {
+  if (closeButton !== null && closeButton !== undefined) {
     closeButton.blur();
   }
 }

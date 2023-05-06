@@ -328,9 +328,10 @@ THE SOFTWARE.
       <artifactId>websocket-spi</artifactId>
       <version>${project.version}</version>
       <exclusions>
+        <!-- Provided by Jetty/Winstone -->
         <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>javax.servlet-api</artifactId>
+          <groupId>jakarta.servlet</groupId>
+          <artifactId>jakarta.servlet-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -509,7 +510,7 @@ THE SOFTWARE.
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-inline</artifactId>
+      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
