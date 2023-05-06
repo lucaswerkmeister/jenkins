@@ -410,13 +410,13 @@ function findFollowingTR(node, className, nodeClass) {
       if (
         queryChildren.length > 0 &&
         (isTR(queryChildren[0]) ||
-          queryChildren[0].classList.contains(className))
+          Element.hasClassName(queryChildren[0], className))
       )
         return queryChildren[0];
     }
 
-    tr = tr.nextElementSibling;
-  } while (tr != null && (!isTR(tr) || !tr.classList.contains(className)));
+    tr = $(tr).next();
+  } while (tr != null && (!isTR(tr) || !Element.hasClassName(tr, className)));
 
   return tr;
 }
@@ -612,7 +612,7 @@ function registerValidator(e) {
     } else {
       var q = qs(this).addThis();
       if (depends.length > 0)
-        depends.split(" ").forEach(
+        depends.split(" ").each(
           TryEach(function (n) {
             q.nearBy(n);
           })
@@ -661,7 +661,7 @@ function registerValidator(e) {
 
   var v = e.getAttribute("checkDependsOn");
   if (v) {
-    v.split(" ").forEach(
+    v.split(" ").each(
       TryEach(function (name) {
         var c = findNearBy(e, name);
         if (c == null) {
@@ -674,7 +674,7 @@ function registerValidator(e) {
             );
           return;
         }
-        c.addEventListener("change", checker.bind(e));
+        $(c).observe("change", checker.bind(e));
       })
     );
   }
@@ -844,10 +844,7 @@ function makeButton(e, onclick) {
   // similar to how the child nodes of a <button> are treated as HTML.
   // in standard HTML, we wouldn't expect the former case, yet here we are!
   if (e.tagName === "INPUT") {
-    attributes.label = e.value
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    attributes.label = e.value.escapeHTML();
   }
   var btn = new YAHOO.widget.Button(e, attributes);
   if (onclick != null) btn.addListener("click", onclick);
@@ -893,7 +890,7 @@ function isInsideRemovable(e) {
  *      if specified, skip the application of behaviour rule.
  */
 function renderOnDemand(e, callback, noBehaviour) {
-  if (!e || !e.classList.contains("render-on-demand")) return;
+  if (!e || !Element.hasClassName(e, "render-on-demand")) return;
   var proxy = eval(e.getAttribute("proxy"));
   proxy.render(function (t) {
     var contextTagName = e.parentNode.tagName;
@@ -968,7 +965,7 @@ function progressBarOnClick() {
 }
 
 function labelAttachPreviousOnClick() {
-  var e = this.previousElementSibling;
+  var e = $(this).previous();
   while (e != null) {
     if (e.classList.contains("jenkins-radio")) {
       e = e.querySelector("input");
@@ -977,7 +974,7 @@ function labelAttachPreviousOnClick() {
       e.click();
       break;
     }
-    e = e.previousElementSibling;
+    e = e.previous();
   }
 }
 
@@ -986,10 +983,8 @@ function helpButtonOnClick() {
     findFollowingTR(this, "help-area", "help-sibling") ||
     findFollowingTR(this, "help-area", "setting-help") ||
     findFollowingTR(this, "help-area");
-  var div = tr.firstElementChild;
-  if (!div.classList.contains("help")) {
-    div = div.nextElementSibling.firstElementChild;
-  }
+  var div = $(tr).down();
+  if (!div.hasClassName("help")) div = div.next().down();
 
   if (div.style.display != "block") {
     div.style.display = "block";
@@ -1059,9 +1054,9 @@ function getParentForm(element) {
 
 // figure out the corresponding end marker
 function findEnd(e) {
-  for (var depth = 0; ; e = e.nextElementSibling) {
-    if (e.classList.contains("rowvg-start")) depth++;
-    if (e.classList.contains("rowvg-end")) depth--;
+  for (var depth = 0; ; e = $(e).next()) {
+    if (Element.hasClassName(e, "rowvg-start")) depth++;
+    if (Element.hasClassName(e, "rowvg-end")) depth--;
     if (depth == 0) return e;
   }
 }
@@ -1078,7 +1073,7 @@ function makeInnerVisible(b) {
 
 function updateVisibility() {
   var display = this.outerVisible && this.innerVisible;
-  for (var e = this.start; e != this.end; e = e.nextElementSibling) {
+  for (var e = this.start; e != this.end; e = $(e).next()) {
     if (e.rowVisibilityGroup && e != this.start) {
       e.rowVisibilityGroup.makeOuterVisible(this.innerVisible);
       e = e.rowVisibilityGroup.end; // the above call updates visibility up to e.rowVisibilityGroup.end inclusive
@@ -1098,7 +1093,7 @@ function updateVisibility() {
 
 function rowvgStartEachRow(recursive, f) {
   if (recursive) {
-    for (var e = this.start; e != this.end; e = e.nextElementSibling) f(e);
+    for (var e = this.start; e != this.end; e = $(e).next()) f(e);
   } else {
     throw "not implemented yet";
   }
@@ -1216,7 +1211,7 @@ function rowvgStartEachRow(recursive, f) {
       // form field with auto-completion support
       // insert the auto-completion container
       var div = document.createElement("DIV");
-      e.parentNode.insertBefore(div, e.nextElementSibling);
+      e.parentNode.insertBefore(div, $(e).next() || null);
       e.style.position = "relative"; // or else by default it's absolutely positioned, making "width:100%" break
 
       var ds = new YAHOO.util.XHRDataSource(e.getAttribute("autoCompleteUrl"));
@@ -1258,7 +1253,7 @@ function rowvgStartEachRow(recursive, f) {
     function (e) {
       e.onclick = helpButtonOnClick;
       e.tabIndex = 9999; // make help link unnavigable from keyboard
-      e.parentNode.parentNode.classList.add("has-help");
+      e.parentNode.parentNode.addClassName("has-help");
     }
   );
 
@@ -1266,7 +1261,7 @@ function rowvgStartEachRow(recursive, f) {
   Behaviour.specify("A.help-button", "a-help-button", ++p, function (e) {
     e.onclick = helpButtonOnClick;
     e.tabIndex = 9999; // make help link unnavigable from keyboard
-    e.parentNode.parentNode.classList.add("has-help");
+    e.parentNode.parentNode.addClassName("has-help");
   });
 
   // Script Console : settings and shortcut key
@@ -1371,7 +1366,7 @@ function rowvgStartEachRow(recursive, f) {
   // structured form submission
   Behaviour.specify("FORM", "form", ++p, function (form) {
     crumb.appendToForm(form);
-    if (form.classList.contains("no-json")) return;
+    if (Element.hasClassName(form, "no-json")) return;
     // add the hidden 'json' input field, which receives the form structure in JSON
     var div = document.createElement("div");
     div.classList.add("jenkins-!-display-contents");
@@ -1485,11 +1480,12 @@ function rowvgStartEachRow(recursive, f) {
     function (e) {
       // see rowSet.jelly and optionalBlock.jelly
       // figure out the corresponding start block
+      e = $(e);
       var end = e;
 
-      for (var depth = 0; ; e = e.previousElementSibling) {
-        if (e.classList.contains("row-set-end")) depth++;
-        if (e.classList.contains("row-set-start")) depth--;
+      for (var depth = 0; ; e = e.previous()) {
+        if (e.hasClassName("row-set-end")) depth++;
+        if (e.hasClassName("row-set-start")) depth--;
         if (depth == 0) break;
       }
       var start = e;
@@ -1556,10 +1552,10 @@ function rowvgStartEachRow(recursive, f) {
   // editableComboBox.jelly
   Behaviour.specify("INPUT.combobox", "input-combobox", ++p, function (c) {
     // Next element after <input class="combobox"/> should be <div class="combobox-values">
-    var vdiv = c.nextElementSibling;
-    if (vdiv.classList.contains("combobox-values")) {
+    var vdiv = $(c).next();
+    if (vdiv.hasClassName("combobox-values")) {
       createComboBox(c, function () {
-        return Array.from(vdiv.children).map(function (value) {
+        return vdiv.childElements().collect(function (value) {
           return value.getAttribute("value");
         });
       });
@@ -1582,7 +1578,7 @@ function rowvgStartEachRow(recursive, f) {
         start = start.firstElementChild;
       } while (start && !isTR(start));
 
-      if (start && !start.classList.contains("dropdownList-start"))
+      if (start && !Element.hasClassName(start, "dropdownList-start"))
         start = findFollowingTR(start, "dropdownList-start");
       while (start != null) {
         subForms.push(start);
@@ -1593,11 +1589,9 @@ function rowvgStartEachRow(recursive, f) {
       function updateDropDownList() {
         for (var i = 0; i < subForms.length; i++) {
           var show = e.selectedIndex == i;
-          var f = subForms[i];
+          var f = $(subForms[i]);
 
-          if (show) {
-            renderOnDemand(f.nextElementSibling);
-          }
+          if (show) renderOnDemand(f.next());
           f.rowVisibilityGroup.makeInnerVisible(show);
 
           // TODO: this is actually incorrect in the general case if nested vg uses field-disabled
@@ -1624,7 +1618,7 @@ function rowvgStartEachRow(recursive, f) {
   Behaviour.specify("A.showDetails", "a-showdetails", ++p, function (e) {
     e.onclick = function () {
       this.style.display = "none";
-      this.nextElementSibling.style.display = "block";
+      $(this).next().style.display = "block";
       layoutUpdateCallback.call();
       return false;
     };
@@ -1645,15 +1639,15 @@ function rowvgStartEachRow(recursive, f) {
     "-button-with-dropdown",
     ++p,
     function (e) {
-      new YAHOO.widget.Button(e, { type: "menu", menu: e.nextElementSibling });
+      new YAHOO.widget.Button(e, { type: "menu", menu: $(e).next() });
     }
   );
 
   Behaviour.specify(".track-mouse", "-track-mouse", ++p, function (element) {
     var DOM = YAHOO.util.Dom;
 
-    element.addEventListener("mouseenter", function () {
-      element.classList.add("mouseover");
+    $(element).observe("mouseenter", function () {
+      element.addClassName("mouseover");
 
       var mousemoveTracker = function (event) {
         var elementRegion = DOM.getRegion(element);
@@ -1663,11 +1657,11 @@ function rowvgStartEachRow(recursive, f) {
           event.y < elementRegion.top ||
           event.y > elementRegion.bottom
         ) {
-          element.classList.remove("mouseover");
-          document.removeEventListener("mousemove", mousemoveTracker);
+          element.removeClassName("mouseover");
+          Element.stopObserving(document, "mousemove", mousemoveTracker);
         }
       };
-      document.addEventListener("mousemove", mousemoveTracker);
+      Element.observe(document, "mousemove", mousemoveTracker);
     });
   });
 
@@ -1786,7 +1780,7 @@ function refillOnChange(e, onChange) {
 
   function h() {
     var params = {};
-    deps.forEach(
+    deps.each(
       TryEach(function (d) {
         params[d.name] = controlValue(d.control);
       })
@@ -1795,7 +1789,7 @@ function refillOnChange(e, onChange) {
   }
   var v = e.getAttribute("fillDependsOn");
   if (v != null) {
-    v.split(" ").forEach(
+    v.split(" ").each(
       TryEach(function (name) {
         var c = findNearBy(e, name);
         if (c == null) {
@@ -1808,7 +1802,7 @@ function refillOnChange(e, onChange) {
             );
           return;
         }
-        c.addEventListener("change", h);
+        $(c).observe("change", h);
         deps.push({ name: Path.tail(name), control: c });
       })
     );
@@ -1824,8 +1818,7 @@ function xor(a, b) {
 // used by editableDescription.jelly to replace the description field with a form
 function replaceDescription(initialDescription, submissionUrl) {
   var d = document.getElementById("description");
-  d.firstElementChild.nextElementSibling.innerHTML =
-    "<div class='jenkins-spinner'></div>";
+  $(d).down().next().innerHTML = "<div class='jenkins-spinner'></div>";
   let parameters = {};
   if (initialDescription !== undefined && submissionUrl !== undefined) {
     parameters = {
@@ -1852,18 +1845,18 @@ function replaceDescription(initialDescription, submissionUrl) {
  * and attached under the element identified by the specified id.
  */
 function applyNameRef(s, e, id) {
-  document.getElementById(id).groupingNode = true;
+  $(id).groupingNode = true;
   // s contains the node itself
   applyNameRefHelper(s, e, id);
 }
 
 function applyNameRefHelper(s, e, id) {
   if (s === null) return;
-  for (var x = s.nextElementSibling; x != e; x = x.nextElementSibling) {
+  for (var x = $(s).next(); x != e; x = x.next()) {
     // to handle nested <f:rowSet> correctly, don't overwrite the existing value
     if (x.getAttribute("nameRef") == null) {
       x.setAttribute("nameRef", id);
-      if (x.classList.contains("tr"))
+      if (x.hasClassName("tr"))
         applyNameRefHelper(x.firstElementChild, null, id);
     }
   }
@@ -1931,7 +1924,7 @@ function AutoScroller(scrollContainer) {
     scrollContainer: scrollContainer,
 
     getCurrentHeight: function () {
-      var scrollDiv = this.scrollContainer;
+      var scrollDiv = $(this.scrollContainer);
 
       if (scrollDiv.scrollHeight > 0) return scrollDiv.scrollHeight;
       else if (scrollDiv.offsetHeight > 0) return scrollDiv.offsetHeight;
@@ -1941,7 +1934,7 @@ function AutoScroller(scrollContainer) {
 
     // return true if we are in the "stick to bottom" mode
     isSticking: function () {
-      var scrollDiv = this.scrollContainer;
+      var scrollDiv = $(this.scrollContainer);
       var currentHeight = this.getCurrentHeight();
 
       // when used with the BODY tag, the height needs to be the viewport height, instead of
@@ -1959,7 +1952,7 @@ function AutoScroller(scrollContainer) {
     },
 
     scrollToBottom: function () {
-      var scrollDiv = this.scrollContainer;
+      var scrollDiv = $(this.scrollContainer);
       var currentHeight = this.getCurrentHeight();
       if (document.documentElement)
         document.documentElement.scrollTop = currentHeight;
@@ -1996,7 +1989,7 @@ function refreshPart(id, url) {
     if (isPageVisible()) {
       new Ajax.Request(url, {
         onSuccess: function (rsp) {
-          var hist = document.getElementById(id);
+          var hist = $(id);
           if (hist == null) {
             console.log("There's no element that has ID of " + id);
             if (intervalID !== null) window.clearInterval(intervalID);
@@ -2010,12 +2003,12 @@ function refreshPart(id, url) {
             );
             return;
           }
-          var p = hist.parentNode;
+          var p = hist.up();
 
           var div = document.createElement("div");
           div.innerHTML = rsp.responseText;
 
-          var node = div.firstElementChild;
+          var node = $(div).firstDescendant();
           p.replaceChild(node, hist);
 
           Behaviour.applySubtree(node);
@@ -2174,9 +2167,9 @@ function ensureVisible(e) {
   var H = viewport.height;
 
   function handleStickers(name, f) {
-    var e = document.getElementById(name);
+    var e = $(name);
     if (e) f(e);
-    document.getElementsBySelector("." + name).forEach(TryEach(f));
+    document.getElementsBySelector("." + name).each(TryEach(f));
   }
 
   // if there are any stickers around, subtract them from the viewport
@@ -2221,9 +2214,9 @@ function createSearchBox(searchURL) {
   ac.formatResult = ac.formatEscapedResult;
   ac.maxResultsDisplayed = 25;
 
-  var box = document.getElementById("search-box");
-  var sizer = document.getElementById("search-box-sizer");
-  var comp = document.getElementById("search-box-completion");
+  var box = $("search-box");
+  var sizer = $("search-box-sizer");
+  var comp = $("search-box-completion");
 
   Behaviour.addLoadEvent(function () {
     // copy font style of box to sizer
@@ -2236,10 +2229,7 @@ function createSearchBox(searchURL) {
 
   // update positions and sizes of the components relevant to search
   function updatePos() {
-    sizer.innerHTML = box.value
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    sizer.innerHTML = box.value.escapeHTML();
     var cssWidth,
       offsetWidth = sizer.offsetWidth;
     if (offsetWidth > 0) {
@@ -2281,7 +2271,7 @@ function findFormParent(e, form, isStatic) {
     // this is used to create a group where no single containing parent node exists,
     // like <optionalBlock>
     var nameRef = e.getAttribute("nameRef");
-    if (nameRef != null) e = document.getElementById(nameRef);
+    if (nameRef != null) e = $(nameRef);
     else e = e.parentNode;
 
     if (!isStatic && e.getAttribute("field-disabled") != null) return null; // this field shouldn't contribute to the final result
@@ -2291,7 +2281,7 @@ function findFormParent(e, form, isStatic) {
       if (
         e.tagName == "INPUT" &&
         !isStatic &&
-        !xor(e.checked, e.classList.contains("negative"))
+        !xor(e.checked, Element.hasClassName(e, "negative"))
       )
         return null; // field is not active
 
@@ -2383,7 +2373,7 @@ function buildFormTree(form) {
           break;
         case "checkbox":
           p = findParent(e);
-          var checked = xor(e.checked, e.classList.contains("negative"));
+          var checked = xor(e.checked, Element.hasClassName(e, "negative"));
           if (!e.groupingNode) {
             v = e.getAttribute("json");
             if (v) {
@@ -2445,7 +2435,7 @@ function buildFormTree(form) {
         default:
           p = findParent(e);
           addProperty(p, e.name, e.value);
-          if (e.classList.contains("complex-password-field")) {
+          if (e.hasClassName("complex-password-field")) {
             addProperty(p, "$redact", shortenName(e.name));
           }
           break;
@@ -2540,7 +2530,7 @@ function safeValidateButton(button) {
 function validateButton(checkUrl, paramList, button) {
   var parameters = {};
 
-  paramList.split(",").forEach(function (name) {
+  paramList.split(",").each(function (name) {
     var p = findPreviousFormItem(button, name);
     if (p != null) {
       if (p.type == "checkbox") parameters[name] = p.checked;
@@ -2548,8 +2538,8 @@ function validateButton(checkUrl, paramList, button) {
     }
   });
 
-  var spinner = button.closest("DIV").children[0];
-  var target = spinner.nextElementSibling.nextElementSibling;
+  var spinner = button.up("DIV").children[0];
+  var target = spinner.next().next();
   spinner.style.display = "block";
 
   new Ajax.Request(checkUrl, {

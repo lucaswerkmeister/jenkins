@@ -26,47 +26,36 @@ package jenkins.websocket;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.time.Duration;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
-import org.eclipse.jetty.websocket.api.WriteCallback;
-import org.eclipse.jetty.websocket.server.JettyServerUpgradeRequest;
-import org.eclipse.jetty.websocket.server.JettyServerUpgradeResponse;
-import org.eclipse.jetty.websocket.server.JettyWebSocketServerContainer;
+import org.eclipse.jetty.websocket.api.WebSocketPolicy;
+import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
+import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
+import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.kohsuke.MetaInfServices;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 
 @Restricted(NoExternalUse.class)
 @MetaInfServices(Provider.class)
-public class Jetty10Provider implements Provider {
+public class Jetty9Provider implements Provider {
 
-    /**
-     * Number of seconds a WebsocketConnection may stay idle until it expires.
-     * Zero to disable.
-     * This value must be higher than the <code>jenkins.websocket.pingInterval</code>.
-     * Per <a href=https://www.eclipse.org/jetty/documentation/jetty-10/programming-guide/index.html#pg-websocket-session-ping>Jetty 10 documentation</a>
-     * a ping mechanism should keep the websocket active. Therefore, the idle timeout must be higher than the ping
-     * interval to avoid timeout issues.
-     */
-    private static long IDLE_TIMEOUT_SECONDS = Long.getLong("jenkins.websocket.idleTimeout", 60L);
+    private static final String ATTR_LISTENER = Jetty9Provider.class.getName() + ".listener";
 
-    private static final String ATTR_LISTENER = Jetty10Provider.class.getName() + ".listener";
+    private WebSocketServletFactory factory;
 
-    private boolean initialized = false;
-
-    public Jetty10Provider() {
-        JettyWebSocketServerContainer.class.hashCode();
+    public Jetty9Provider() {
+        WebSocketServletFactory.class.hashCode();
     }
 
-    private void init(HttpServletRequest req) {
-        if (!initialized) {
-            JettyWebSocketServerContainer.getContainer(req.getServletContext()).setIdleTimeout(Duration.ofSeconds(IDLE_TIMEOUT_SECONDS));
-            initialized = true;
+    private synchronized void init(HttpServletRequest req) throws Exception {
+        if (factory == null) {
+            factory = WebSocketServletFactory.Loader.load(req.getServletContext(), WebSocketPolicy.newServerPolicy());
+            factory.start();
+            factory.setCreator(Jetty9Provider::createWebSocket);
         }
     }
 
@@ -74,21 +63,18 @@ public class Jetty10Provider implements Provider {
     public Handler handle(HttpServletRequest req, HttpServletResponse rsp, Listener listener) throws Exception {
         init(req);
         req.setAttribute(ATTR_LISTENER, listener);
-        // TODO Jetty 10 has no obvious equivalent to WebSocketServerFactory.isUpgradeRequest; RFC6455Negotiation?
-        if (!"websocket".equalsIgnoreCase(req.getHeader("Upgrade"))) {
+        if (!factory.isUpgradeRequest(req, rsp)) {
             rsp.sendError(HttpServletResponse.SC_BAD_REQUEST, "only WS connections accepted here");
             return null;
         }
-        if (!JettyWebSocketServerContainer.getContainer(req.getServletContext()).upgrade(Jetty10Provider::createWebSocket, req, rsp)) {
+        if (!factory.acceptWebSocket(req, rsp)) {
             rsp.sendError(HttpServletResponse.SC_BAD_REQUEST, "did not manage to upgrade");
             return null;
         }
         return new Handler() {
             @Override
             public Future<Void> sendBinary(ByteBuffer data) throws IOException {
-                CompletableFuture<Void> f = new CompletableFuture<>();
-                session().getRemote().sendBytes(data, new WriteCallbackImpl(f));
-                return f;
+                return session().getRemote().sendBytesByFuture(data);
             }
 
             @Override
@@ -98,16 +84,12 @@ public class Jetty10Provider implements Provider {
 
             @Override
             public Future<Void> sendText(String text) throws IOException {
-                CompletableFuture<Void> f = new CompletableFuture<>();
-                session().getRemote().sendString(text, new WriteCallbackImpl(f));
-                return f;
+                return session().getRemote().sendStringByFuture(text);
             }
 
             @Override
             public void sendPing(ByteBuffer applicationData) throws IOException {
-                CompletableFuture<Void> f = new CompletableFuture<>();
-                session().getRemote().sendPing(applicationData, new WriteCallbackImpl(f));
-                // TODO return f;
+                session().getRemote().sendPing(applicationData);
             }
 
             @Override
@@ -125,25 +107,7 @@ public class Jetty10Provider implements Provider {
         };
     }
 
-    private static final class WriteCallbackImpl implements WriteCallback {
-        private final CompletableFuture<Void> f;
-
-        WriteCallbackImpl(CompletableFuture<Void> f) {
-            this.f = f;
-        }
-
-        @Override
-        public void writeSuccess() {
-            f.complete(null);
-        }
-
-        @Override
-        public void writeFailed(Throwable x) {
-            f.completeExceptionally(x);
-        }
-    }
-
-    private static Object createWebSocket(JettyServerUpgradeRequest req, JettyServerUpgradeResponse resp) {
+    private static Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp) {
         Listener listener = (Listener) req.getHttpServletRequest().getAttribute(ATTR_LISTENER);
         if (listener == null) {
             throw new IllegalStateException("missing listener attribute");

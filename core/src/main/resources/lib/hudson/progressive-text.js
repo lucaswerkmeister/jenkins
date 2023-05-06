@@ -3,61 +3,71 @@ Behaviour.specify(
   "progressive-text",
   0,
   function (holder) {
-    let href = holder.getAttribute("data-href");
-    let idref = holder.getAttribute("data-idref");
-    let spinner = holder.getAttribute("data-spinner");
-    let startOffset = holder.getAttribute("data-start-offset");
-    let onFinishEvent = holder.getAttribute("data-on-finish-event");
+    const href = holder.getAttribute("data-href");
+    const idref = holder.getAttribute("data-idref");
+    const spinner = holder.getAttribute("data-spinner");
+    const startOffset = holder.getAttribute("data-start-offset");
+    const onFinishEvent = holder.getAttribute("data-on-finish-event");
 
-    var scroller = new AutoScroller(document.body);
+    const scroller = new AutoScroller(document.body);
+
     /*
-  fetches the latest update from the server
-  @param e
-      DOM node that gets the text appended to
-  @param href
-      Where to retrieve additional text from
-  */
+     * fetches the latest update from the server
+     * @param e DOM node that gets the text appended to
+     * @param href Where to retrieve additional text from
+     */
     function fetchNext(e, href, onFinishEvent) {
-      var headers = crumb.wrap({});
+      const headers = {};
       if (e.consoleAnnotator !== undefined) {
         headers["X-ConsoleAnnotator"] = e.consoleAnnotator;
       }
 
-      fetch(href, {
+      new Ajax.Request(href, {
         method: "post",
-        headers,
-        body: new URLSearchParams({
-          start: e.fetchedBytes,
-        }),
-      }).then((rsp) => {
-        if (rsp.status >= 500 || rsp.status === 0) {
-          setTimeout(function () {
-            fetchNext(e, href, onFinishEvent);
-          }, 1000);
-          return;
-        }
-        if (rsp.status === 403) {
-          // likely an expired crumb
-          location.reload();
-          return;
-        }
-        /* append text and do autoscroll if applicable */
-        var stickToBottom = scroller.isSticking();
-        rsp.text().then((responseText) => {
-          var text = responseText;
+        parameters: { start: e.fetchedBytes },
+        requestHeaders: headers,
+        onComplete: function (rsp) {
+          if (rsp.status >= 500 || rsp.status === 0) {
+            setTimeout(function () {
+              fetchNext(e, href, onFinishEvent);
+            }, 1000);
+            return;
+          }
+          if (rsp.status === 403) {
+            // likely an expired crumb
+            location.reload();
+            return;
+          }
+          /* append text and do autoscroll if applicable */
+          const stickToBottom = scroller.isSticking();
+          const text = rsp.responseText;
+
           if (text !== "") {
-            var p = document.createElement("DIV");
-            e.appendChild(p); // Needs to be first for IE
-            p.innerHTML = text;
-            Behaviour.applySubtree(p);
+            let index = document.querySelectorAll(".app-log-line").length;
+            let lines = text.split("\n");
+            lines = lines.slice(0, -1);
+
+            lines.forEach((line) => {
+              index++;
+              const p = document.createElement("DIV");
+              p.classList.add("app-log-line");
+              p.innerHTML = `<span data-line-number="${index}"></span><span>${line}</span>`;
+              e.appendChild(p);
+              Behaviour.applySubtree(p);
+            });
+
+            e.style.setProperty(
+              "--output-inset",
+              index.toString().length + "ch"
+            );
+          }
+
+          e.fetchedBytes = rsp.getResponseHeader("X-Text-Size");
+          e.consoleAnnotator = rsp.getResponseHeader("X-ConsoleAnnotator");
+          if (rsp.getResponseHeader("X-More-Data") === "true") {
             if (stickToBottom) {
               scroller.scrollToBottom();
             }
-          }
-
-          e.fetchedBytes = rsp.headers.get("X-Text-Size");
-          e.consoleAnnotator = rsp.headers.get("X-ConsoleAnnotator");
-          if (rsp.headers.get("X-More-Data") === "true") {
             setTimeout(function () {
               fetchNext(e, href, onFinishEvent);
             }, 1000);
@@ -66,10 +76,10 @@ Behaviour.specify(
               document.getElementById(spinner).style.display = "none";
             }
             if (onFinishEvent) {
-              window.dispatchEvent(new Event(onFinishEvent));
+              Event.fire(window, onFinishEvent);
             }
           }
-        });
+        },
       });
     }
     document.getElementById(idref).fetchedBytes =

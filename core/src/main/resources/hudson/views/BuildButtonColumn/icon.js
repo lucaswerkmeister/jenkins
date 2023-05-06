@@ -9,10 +9,7 @@ Behaviour.specify(
     var icon = document.getElementById(id);
 
     icon.onclick = function () {
-      fetch(url, {
-        method: "post",
-        headers: crumb.wrap({}),
-      });
+      new Ajax.Request(url);
       hoverNotification(message, this, -100);
       return false;
     };

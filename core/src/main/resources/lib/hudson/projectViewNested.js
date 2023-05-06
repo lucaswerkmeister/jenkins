@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2018, CloudBees, Inc.
+ * Copyright (c) 2004-2009, Sun Microsystems, Inc., Kohsuke Kawaguchi
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,29 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-window.resetSeed = function (button) {
-  var userSeedPanel = button.up(".user-seed-panel");
-  var confirmMessage = button.getAttribute("data-confirm");
-  var targetUrl = button.getAttribute("data-target-url");
-  var redirectAfterClick = button.getAttribute("data-redirect-url");
+Behaviour.specify(
+  "IMG.treeview-fold-control",
+  "projectViewNested",
+  0,
+  function (e) {
+    e.onexpanded = function () {
+      var img = this;
+      var tr = findAncestor(img, "TR");
+      var tail = tr.nextSibling;
 
-  var warningMessage = userSeedPanel.querySelector(".display-after-reset");
-  if (warningMessage.hasClassName("visible")) {
-    warningMessage.removeClassName("visible");
-  }
-
-  if (confirm(confirmMessage)) {
-    new Ajax.Request(targetUrl, {
-      method: "post",
-      onSuccess: function () {
-        if (redirectAfterClick) {
-          window.location.href = redirectAfterClick;
-        } else {
-          if (!warningMessage.hasClassName("visible")) {
-            warningMessage.addClassName("visible");
-          }
+      img.oncollapsed = function () {
+        while (tr.nextSibling != tail) {
+          tr.nextSibling.remove();
         }
-      },
-    });
+      };
+
+      // fetch the nested view and load it when it's ready
+      new Ajax.Request(img.getAttribute("url"), {
+        method: "post",
+        onComplete: function (x) {
+          var cont = document.createElement("div");
+          cont.innerHTML = x.responseText;
+          var rows = $A(cont.firstElementChild.rows);
+          var anim = { opacity: { from: 0, to: 1 } };
+          rows.reverse().each(function (r) {
+            YAHOO.util.Dom.setStyle(r, "opacity", 0); // hide
+            YAHOO.util.Dom.insertAfter(r, tr);
+            Behaviour.applySubtree(r);
+            new YAHOO.util.Anim(r, anim, 0.3).animate();
+          });
+        },
+      });
+    };
+    e = null;
   }
-};
+);

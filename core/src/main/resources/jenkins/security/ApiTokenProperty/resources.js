@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 window.revokeToken = function (anchorRevoke) {
-  var repeatedChunk = anchorRevoke.closest(".repeated-chunk");
-  var tokenList = repeatedChunk.closest(".token-list");
+  var repeatedChunk = anchorRevoke.up(".repeated-chunk");
+  var tokenList = repeatedChunk.up(".token-list");
   var confirmMessage = anchorRevoke.getAttribute("data-confirm");
   var targetUrl = anchorRevoke.getAttribute("data-target-url");
 
@@ -31,12 +31,10 @@ window.revokeToken = function (anchorRevoke) {
   var tokenUuid = inputUuid.value;
 
   if (confirm(confirmMessage)) {
-    fetch(targetUrl, {
-      body: new URLSearchParams({ tokenUuid: tokenUuid }),
+    new Ajax.Request(targetUrl, {
       method: "post",
-      headers: crumb.wrap({}),
-    }).then((rsp) => {
-      if (rsp.ok) {
+      parameters: { tokenUuid: tokenUuid },
+      onSuccess: function () {
         if (repeatedChunk.querySelectorAll(".legacy-token").length > 0) {
           // we are revoking the legacy token
           var messageIfLegacyRevoked = anchorRevoke.getAttribute(
@@ -48,7 +46,7 @@ window.revokeToken = function (anchorRevoke) {
         }
         repeatedChunk.remove();
         adjustTokenEmptyListMessage(tokenList);
-      }
+      },
     });
   }
 
@@ -56,73 +54,70 @@ window.revokeToken = function (anchorRevoke) {
 };
 
 window.saveApiToken = function (button) {
-  if (button.classList.contains("request-pending")) {
+  if (button.hasClassName("request-pending")) {
     // avoid multiple requests to be sent if user is clicking multiple times
     return;
   }
-  button.classList.add("request-pending");
+  button.addClassName("request-pending");
   var targetUrl = button.getAttribute("data-target-url");
-  var repeatedChunk = button.closest(".repeated-chunk ");
-  var tokenList = repeatedChunk.closest(".token-list");
+  var repeatedChunk = button.up(".repeated-chunk ");
+  var tokenList = repeatedChunk.up(".token-list");
   var nameInput = repeatedChunk.querySelector('[name="tokenName"]');
   var tokenName = nameInput.value;
 
-  fetch(targetUrl, {
-    body: new URLSearchParams({ newTokenName: tokenName }),
+  new Ajax.Request(targetUrl, {
     method: "post",
-    headers: crumb.wrap({}),
-  }).then((rsp) => {
-    if (rsp.ok) {
-      rsp.json().then((json) => {
-        var errorSpan = repeatedChunk.querySelector(".error");
-        if (json.status === "error") {
-          errorSpan.innerHTML = json.message;
-          errorSpan.classList.add("visible");
+    parameters: { newTokenName: tokenName },
+    onSuccess: function (rsp) {
+      var json = rsp.responseJSON;
+      var errorSpan = repeatedChunk.querySelector(".error");
+      if (json.status === "error") {
+        errorSpan.innerHTML = json.message;
+        errorSpan.addClassName("visible");
 
-          button.classList.remove("request-pending");
-        } else {
-          errorSpan.classList.remove("visible");
+        button.removeClassName("request-pending");
+      } else {
+        errorSpan.removeClassName("visible");
 
-          var tokenName = json.data.tokenName;
-          // in case the name was empty, the application will propose a default one
-          nameInput.value = tokenName;
+        var tokenName = json.data.tokenName;
+        // in case the name was empty, the application will propose a default one
+        nameInput.value = tokenName;
 
-          var tokenValue = json.data.tokenValue;
-          var tokenValueSpan = repeatedChunk.querySelector(".new-token-value");
-          tokenValueSpan.innerText = tokenValue;
-          tokenValueSpan.classList.add("visible");
+        var tokenValue = json.data.tokenValue;
+        var tokenValueSpan = repeatedChunk.querySelector(".new-token-value");
+        tokenValueSpan.innerText = tokenValue;
+        tokenValueSpan.addClassName("visible");
 
-          // show the copy button
-          var tokenCopyButton = repeatedChunk.querySelector(
-            ".jenkins-copy-button"
-          );
-          tokenCopyButton.setAttribute("text", tokenValue);
-          tokenCopyButton.classList.remove("jenkins-hidden");
+        // show the copy button
+        var tokenCopyButton = repeatedChunk.querySelector(
+          ".jenkins-copy-button"
+        );
+        tokenCopyButton.setAttribute("text", tokenValue);
+        tokenCopyButton.removeClassName("jenkins-hidden");
 
-          var tokenUuid = json.data.tokenUuid;
-          var uuidInput = repeatedChunk.querySelector('[name="tokenUuid"]');
-          uuidInput.value = tokenUuid;
+        var tokenUuid = json.data.tokenUuid;
+        var uuidInput = repeatedChunk.querySelector('[name="tokenUuid"]');
+        uuidInput.value = tokenUuid;
 
-          var warningMessage = repeatedChunk.querySelector(
-            ".display-after-generation"
-          );
-          warningMessage.classList.add("visible");
+        var warningMessage = repeatedChunk.querySelector(
+          ".display-after-generation"
+        );
+        warningMessage.addClassName("visible");
 
-          // we do not want to allow user to create twice a token using same name by mistake
-          button.remove();
+        // we do not want to allow user to create twice a token using same name by mistake
+        button.remove();
 
-          var revokeButton = repeatedChunk.querySelector(".token-revoke");
-          revokeButton.classList.remove("hidden-button");
+        var revokeButton = repeatedChunk.querySelector(".token-revoke");
+        revokeButton.removeClassName("hidden-button");
 
-          var cancelButton = repeatedChunk.querySelector(".token-cancel");
-          cancelButton.classList.add("hidden-button");
+        var cancelButton = repeatedChunk.querySelector(".token-cancel");
+        cancelButton.addClassName("hidden-button");
 
-          repeatedChunk.classList.add("token-list-fresh-item");
+        repeatedChunk.addClassName("token-list-fresh-item");
 
-          adjustTokenEmptyListMessage(tokenList);
-        }
-      });
-    }
+        adjustTokenEmptyListMessage(tokenList);
+      }
+    },
   });
 };
 
@@ -134,12 +129,12 @@ function adjustTokenEmptyListMessage(tokenList) {
     ".token-list-existing-item, .token-list-fresh-item"
   ).length;
   if (numOfToken >= 1) {
-    if (!emptyListMessage.classList.contains("hidden-message")) {
-      emptyListMessage.classList.add("hidden-message");
+    if (!emptyListMessage.hasClassName("hidden-message")) {
+      emptyListMessage.addClassName("hidden-message");
     }
   } else {
-    if (emptyListMessage.classList.contains("hidden-message")) {
-      emptyListMessage.classList.remove("hidden-message");
+    if (emptyListMessage.hasClassName("hidden-message")) {
+      emptyListMessage.removeClassName("hidden-message");
     }
   }
 }

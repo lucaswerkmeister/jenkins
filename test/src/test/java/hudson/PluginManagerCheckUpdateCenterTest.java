@@ -2,8 +2,12 @@ package hudson;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlElementUtil;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import hudson.model.DownloadService;
 import hudson.model.RootAction;
@@ -12,8 +16,10 @@ import hudson.model.UpdateSiteTest;
 import hudson.util.HttpResponses;
 import hudson.util.Retrier;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import jenkins.model.Jenkins;
 import org.junit.Assert;
@@ -102,6 +108,16 @@ public class PluginManagerCheckUpdateCenterTest {
         }
     }
 
+    private HtmlAnchor getCheckNow(HtmlPage page) {
+        List<HtmlElement> elements = page.getElementById("bottom-sticker")
+                .getElementsByTagName("a")
+                .stream()
+                .filter(link -> link.getAttribute("href").equals("checkUpdatesServer"))
+                .collect(Collectors.toList());
+        assertEquals(1, elements.size());
+        return (HtmlAnchor) elements.get(0);
+    }
+
     /**
      * Check the update site.
      * @param urlUpdateSite If null, use the default update site, otherwise, use this update site.
@@ -124,7 +140,7 @@ public class PluginManagerCheckUpdateCenterTest {
         JenkinsRule.WebClient wc = j.createWebClient();
         wc.getOptions().setThrowExceptionOnFailingStatusCode(false);
         HtmlPage p = wc.goTo("pluginManager");
-        Page pageAfterClick = PluginManagerUtil.getCheckForUpdatesButton(p).click();
+        Page pageAfterClick = HtmlElementUtil.click(getCheckNow(p));
         String page = pageAfterClick.getWebResponse().getContentAsString();
 
         // Check what is shown in the web page

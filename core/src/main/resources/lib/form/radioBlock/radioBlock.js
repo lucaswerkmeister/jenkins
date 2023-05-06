@@ -11,14 +11,15 @@ var radioBlockSupport = {
   // update one block based on the status of the given radio button
   updateSingleButton: function (radio, blockStart, blockEnd) {
     var show = radio.checked;
+    blockStart = $(blockStart);
 
     let n;
     if (blockStart.getAttribute("hasHelp") == "true") {
-      n = blockStart.nextElementSibling;
+      n = blockStart.next();
     } else {
       n = blockStart;
     }
-    while ((n = n.nextElementSibling) != blockEnd) {
+    while ((n = n.next()) != blockEnd) {
       if (show) {
         n.classList.remove("form-container--hidden");
         n.style.position = "";
@@ -63,11 +64,11 @@ Behaviour.specify(
       var e = s;
       var cnt = 1;
       while (cnt > 0) {
-        e = e.nextElementSibling;
-        if (e.classList.contains("radio-block-start")) {
+        e = $(e).next();
+        if (Element.hasClassName(e, "radio-block-start")) {
           cnt++;
         }
-        if (e.classList.contains("radio-block-end")) {
+        if (Element.hasClassName(e, "radio-block-end")) {
           cnt--;
         }
       }

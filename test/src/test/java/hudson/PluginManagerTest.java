@@ -38,6 +38,8 @@ import static org.junit.Assume.assumeFalse;
 import com.gargoylesoftware.htmlunit.AlertHandler;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlElementUtil;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import hudson.PluginManager.UberClassLoader;
@@ -82,6 +84,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import jenkins.ClassLoaderReflectionToolkit;
 import jenkins.RestartRequiredException;
@@ -773,11 +776,16 @@ public class PluginManagerTest {
 
         try (JenkinsRule.WebClient wc = r.createWebClient()) {
             HtmlPage p = wc.goTo("pluginManager");
-
+            List<HtmlElement> elements = p.getElementById("bottom-sticker")
+                    .getElementsByTagName("a")
+                    .stream()
+                    .filter(link -> link.getAttribute("href").equals("checkUpdatesServer"))
+                    .collect(Collectors.toList());
+            assertEquals(1, elements.size());
             AlertHandlerImpl alertHandler = new AlertHandlerImpl();
             wc.setAlertHandler(alertHandler);
 
-            PluginManagerUtil.getCheckForUpdatesButton(p).click();
+            HtmlElementUtil.click(elements.get(0));
             HtmlPage available = wc.goTo("pluginManager/available");
             assertTrue(available.querySelector(".alert-danger")
                     .getTextContent().contains("This plugin is built for Jenkins 2.999"));

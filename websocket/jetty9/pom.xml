@@ -32,9 +32,9 @@ THE SOFTWARE.
     <relativePath>../..</relativePath>
   </parent>
 
-  <artifactId>websocket-spi</artifactId>
-  <name>Internal SPI for WebSocket</name>
-  <description>An abstraction of how Jenkins can serve a WebSocket connection from its servlet container.</description>
+  <artifactId>websocket-jetty9</artifactId>
+  <name>Jetty 9 implementation for WebSocket</name>
+  <description>An implementation of the WebSocket handler that works with Jetty 9.</description>
 
   <dependencyManagement>
     <dependencies>
@@ -50,9 +50,23 @@ THE SOFTWARE.
 
   <dependencies>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
+      <groupId>org.jenkins-ci</groupId>
+      <artifactId>winstone</artifactId>
+      <version>5.25</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.main</groupId>
+      <artifactId>websocket-spi</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kohsuke</groupId>
+      <artifactId>access-modifier-annotation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kohsuke.metainf-services</groupId>
+      <artifactId>metainf-services</artifactId>
     </dependency>
   </dependencies>
 

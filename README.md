@@ -1,5 +1,8 @@
 <a href="https://jenkins.io">
-    <img width="400" src="https://www.jenkins.io/images/jenkins-logo-title-dark.svg">
+  <picture>
+    <source width="400" media="(prefers-color-scheme: dark)" srcset="https://www.jenkins.io/images/jenkins-logo-title-dark.svg">
+    <img width="400" src="https://www.jenkins.io/images/jenkins-logo-title.svg">
+  </picture>
 </a>
 
 # About

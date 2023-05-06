@@ -1,7 +1,7 @@
 <!--
 The MIT License
 
-Copyright (c) 2004-2009, Sun Microsystems, Inc., Kohsuke Kawaguchi, Simon Wiest
+Copyright (c) 2004-2009, Sun Microsystems, Inc., Kohsuke Kawaguchi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,30 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 
+<!--
+  Renders the nest view in <projectView />
+-->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:x="jelly:xml" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
          xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <div id="rss-bar" class="jenkins-buttons-row jenkins-buttons-row--invert">
-    <button class="jenkins-button jenkins-button--tertiary" id="button-icon-legend">
-      ${%legend}
-    </button>
-    <a href="rssAll" class="jenkins-button jenkins-button--tertiary">
-      <l:icon src="symbol-rss" />
-      <span>Atom feed ${%forAll}</span>
-    </a>
-    <a href="rssFailed" class="jenkins-button jenkins-button--tertiary">
-      <l:icon src="symbol-rss" />
-      <span>Atom feed ${%forFailures}</span>
-    </a>
-    <a href="rssLatest" class="jenkins-button jenkins-button--tertiary">
-      <l:icon src="symbol-rss" />
-      <span>Atom feed ${%justLatestBuilds}</span>
-    </a>
-  </div>
-
-  <template id="template-icon-legend">
-    <st:include page="_legend.jelly" it="${app}" />
-  </template>
-
-  <script src="${resURL}/jsbundles/pages/dashboard.js" type="text/javascript" defer="true" />
+  <tr>
+    <td colspan="2">
+      <div style="${indenter.getRelativeShift(job)}">
+        <j:choose>
+          <j:when test="${request.getView(v,'ajaxRows.jelly')==null}">
+            <img src="${imagesURL}/none.gif" state="plus" width="14" height="14" alt="" />
+          </j:when>
+          <j:otherwise>
+            <!-- if nested view supports ajaxRows -->
+            <a href="#">
+              <img src="${imagesURL}/tree/plus.png" state="plus" width="14" height="14" alt="" class="fold-control treeview-fold-control"
+                   url="${rootURL}/${v.url}/ajaxRows?depth=${depth!=null?depth+1:1}"/>
+              <st:adjunct includes="lib.hudson.projectViewNested" />
+            </a>
+          </j:otherwise>
+        </j:choose>
+        <l:icon class="icon-folder ${iconSizeClass}" style="margin-left:4px" />
+      </div>
+    </td>
+    <td colspan="5" style="${indenter.getCss(job)}">
+      <a href="${rootURL}/${v.url}" class="model-link inside">
+        ${v.viewName}
+      </a>
+    </td>
+  </tr>
 </j:jelly>

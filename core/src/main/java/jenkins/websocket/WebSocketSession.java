@@ -69,8 +69,7 @@ public abstract class WebSocketSession {
         if (PING_INTERVAL_SECONDS != 0) {
             pings = Timer.get().scheduleAtFixedRate(() -> {
                 try {
-                    Future<Void> f = handler.sendPing(ByteBuffer.wrap(new byte[0]));
-                    // TODO do something interesting with the future
+                    handler.sendPing(ByteBuffer.wrap(new byte[0]));
                 } catch (Exception x) {
                     error(x);
                     pings.cancel(true);

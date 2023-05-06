@@ -18,11 +18,12 @@ var repeatableSupport = {
 
   // do the initialization
   init: function (container, master, insertionPoint) {
-    this.container = container;
+    this.container = $(container);
     this.container.tag = this;
+    master = $(master);
     this.blockHTML = master.innerHTML;
     master.parentNode.removeChild(master);
-    this.insertionPoint = insertionPoint;
+    this.insertionPoint = $(insertionPoint);
     this.name = master.getAttribute("name");
     if (this.container.getAttribute("enableTopButton") == "true") {
       this.enableTopButton = true;
@@ -42,7 +43,7 @@ var repeatableSupport = {
 
     // importNode isn't supported in IE.
     // nc = document.importNode(node,true);
-    var nc = document.createElement("div");
+    var nc = $(document.createElement("div"));
     nc.className = "repeated-chunk";
     nc.setOpacity(0);
     nc.setAttribute("name", this.name);
@@ -50,9 +51,11 @@ var repeatableSupport = {
     if (!addOnTop) {
       this.insertionPoint.parentNode.insertBefore(nc, this.insertionPoint);
     } else if (this.enableTopButton) {
-      var children = Array.from(this.container.children).filter(function (n) {
-        return n.classList.contains("repeated-chunk");
-      });
+      var children = $(this.container)
+        .childElements()
+        .findAll(function (n) {
+          return n.hasClassName("repeated-chunk");
+        });
       this.container.insertBefore(nc, children[0]);
     }
     // Initialize drag & drop for this element
@@ -75,16 +78,18 @@ var repeatableSupport = {
 
   // update CSS classes associated with repeated items.
   update: function () {
-    var children = Array.from(this.container.children).filter(function (n) {
-      return n.classList.contains("repeated-chunk");
-    });
+    var children = $(this.container)
+      .childElements()
+      .findAll(function (n) {
+        return n.hasClassName("repeated-chunk");
+      });
 
     if (children.length == 0) {
-      var addButtonElements = Array.from(this.container.children).filter(
-        function (b) {
-          return b.classList.contains("repeatable-add");
-        }
-      );
+      var addButtonElements = $(this.container)
+        .childElements()
+        .findAll(function (b) {
+          return b.hasClassName("repeatable-add");
+        });
 
       if (addButtonElements.length == 2) {
         var buttonElement = addButtonElements[0];
@@ -93,11 +98,11 @@ var repeatableSupport = {
       }
     } else {
       if (children.length == 1) {
-        addButtonElements = Array.from(this.container.children).filter(
-          function (b) {
-            return b.classList.contains("repeatable-add");
-          }
-        );
+        addButtonElements = $(this.container)
+          .childElements()
+          .findAll(function (b) {
+            return b.hasClassName("repeatable-add");
+          });
 
         if (addButtonElements.length == 1 && this.enableTopButton) {
           buttonElement = addButtonElements[0];
@@ -151,7 +156,7 @@ var repeatableSupport = {
     var addOnTop = false;
     while (n.tag == null) {
       n = n.parentNode;
-      if (n.classList.contains("repeatable-add-top")) {
+      if (n.hasClassName("repeatable-add-top")) {
         addOnTop = true;
       }
     }
@@ -176,9 +181,9 @@ Behaviour.specify("DIV.repeated-container", "repeatable", -100, function (e) {
   }
 
   // compute the insertion point
-  var ip = e.lastElementChild;
-  while (!ip.classList.contains("repeatable-insertion-point")) {
-    ip = ip.previousElementSibling;
+  var ip = $(e.lastElementChild);
+  while (!ip.hasClassName("repeatable-insertion-point")) {
+    ip = ip.previous();
   }
   // set up the logic
   object(repeatableSupport).init(e, e.firstChild, ip);

@@ -15,14 +15,6 @@ export function showModal(contents, options = {}) {
   );
   modal.style.maxWidth = options.maxWidth;
 
-  if ("title" in options) {
-    const titleElement = createElementFromHtml(
-      `<h1 class="jenkins-modal__title"></h1>`
-    );
-    titleElement.append(options.title);
-    modal.prepend(titleElement);
-  }
-
   let closeButton;
   if (options.hideCloseButton !== true) {
     closeButton = createElementFromHtml(`
@@ -63,7 +55,7 @@ export function showModal(contents, options = {}) {
 
   modal.showModal();
 
-  if (closeButton !== undefined) {
+  if (closeButton !== null) {
     closeButton.blur();
   }
 }

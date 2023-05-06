@@ -8,21 +8,15 @@ Behaviour.specify(
       let expanded = button.dataset.expanded;
 
       if (expanded === undefined) {
-        let hiddenContent = parentContainer.nextElementSibling;
-        while (hiddenContent && !hiddenContent.matches("table.advancedBody")) {
-          hiddenContent = hiddenContent.nextElementSibling;
-        }
+        let hiddenContent = parentContainer.next("table.advancedBody");
         let tr;
 
         if (hiddenContent) {
-          hiddenContent = hiddenContent.firstElementChild; // TABLE -> TBODY
-          tr = parentContainer.closest("TR");
+          hiddenContent = hiddenContent.down(); // TABLE -> TBODY
+          tr = parentContainer.up("TR");
         } else {
-          hiddenContent = parentContainer.nextElementSibling;
-          while (hiddenContent && !hiddenContent.matches("div.advancedBody")) {
-            hiddenContent = hiddenContent.nextElementSibling;
-          }
-          tr = parentContainer.closest(".tr");
+          hiddenContent = parentContainer.next("div.advancedBody");
+          tr = parentContainer.up(".tr");
         }
 
         // move the contents of the advanced portion into the main table
@@ -33,7 +27,7 @@ Behaviour.specify(
           if (nameRef != null && row.getAttribute("nameref") == null) {
             row.setAttribute("nameref", nameRef);
           }
-          tr.parentNode.insertBefore(row, tr.nextElementSibling);
+          tr.parentNode.insertBefore(row, $(tr).next());
         }
 
         const oneOrMoreFieldsEditedNotice = parentContainer.querySelector(
@@ -92,7 +86,7 @@ Behaviour.specify(
   0,
   function (element) {
     const id = element.getAttribute("data-id");
-    const oneOrMoreFieldsEditedNotice = document.getElementById(id);
+    const oneOrMoreFieldsEditedNotice = $(id);
     if (oneOrMoreFieldsEditedNotice != null) {
       oneOrMoreFieldsEditedNotice.classList.remove("jenkins-hidden");
     } else if (console && console.log) {
