@@ -34,16 +34,38 @@ THE SOFTWARE.
      <l:breadcrumb title="${%Console Output}" />
     <l:main-panel>
       <div class="longhorn-container">
-        <t:buildCaption>${%Console Output}</t:buildCaption>
+
+      <div class="jenkins-app-bar">
+          <div class="jenkins-app-bar__content">
+              <t:buildCaption>${%Console Output}</t:buildCaption>
+          </div>
+          <div class="jenkins-app-bar__controls">
+              <j:invokeStatic className="java.time.LocalDateTime" method="now" var="now"/>
+              <a href="${buildUrl.baseUrl}/consoleText" download="${it.fullDisplayName} logs - ${now}.txt" class="jenkins-button">
+                  <l:icon src="symbol-download" />
+                  ${%Download}
+              </a>
+              <a href="${buildUrl.baseUrl}/consoleText" class="jenkins-button">
+                  ${%View as plain text}
+              </a>
+              <l:overflowButton>
+                  <button class="jenkins-dropdown__item">
+                      Go to line
+                  </button>
+              </l:overflowButton>
+          </div>
+      </div>
 
         <j:set var="threshold" value="${h.getSystemProperty('hudson.consoleTailKB')?:'150'}" />
         <!-- Show at most last 150KB (can override with system property) unless consoleFull is set -->
         <j:set var="offset" value="${empty(consoleFull) ? it.logText.length()-threshold*1024 : 0}" />
         <j:choose>
           <j:when test="${offset > 0}">
-            <a href="consoleFull" class="jenkins-button" style="width: 100%; margin-bottom: var(--section-padding)">
-              Skipped ${offset/1024}kb - view full log
-            </a>
+            <div class="lost-on-me">
+                <a href="consoleFull" class="jenkins-button">
+                    Skipped 300 lines - view full log
+                </a>
+            </div>
           </j:when>
           <j:otherwise>
             <j:set var="offset" value="${0}" />

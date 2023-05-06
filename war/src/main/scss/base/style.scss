@@ -242,9 +242,21 @@ pre {
 }
 
 .longhorn-container {
+  position: relative;
   --font-size-monospace: 15px;
   //background: black;
   //padding: 3rem;
+}
+
+.lost-on-me {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 5lh;
+  z-index: 1;
 }
 
 .longhorn-modern-output {
@@ -252,6 +264,31 @@ pre {
   border-radius: 0;
   background: transparent;
   font-weight: normal !important;
+
+  .app-log-line:nth-of-type(1) {
+    opacity: 0.3;
+    filter: blur(11px);
+  }
+
+  .app-log-line:nth-of-type(2) {
+    opacity: 0.2;
+    filter: blur(8px);
+  }
+
+  .app-log-line:nth-of-type(3) {
+    opacity: 0.4;
+    filter: blur(5px);
+  }
+
+  .app-log-line:nth-of-type(4) {
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+
+  .app-log-line:nth-of-type(5) {
+    opacity: 0.8;
+    filter: blur(1px);
+  }
 }
 
 .app-log-line {
