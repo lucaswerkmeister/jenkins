@@ -1265,12 +1265,11 @@ function rowvgStartEachRow(recursive, f) {
   );
 
   Behaviour.specify(
-    "A.jenkins-help-button",
+    ".jenkins-help-button",
     "a-jenkins-help-button",
     ++p,
     function (e) {
       e.onclick = helpButtonOnClick;
-      e.tabIndex = 9999; // make help link unnavigable from keyboard
       e.parentNode.parentNode.classList.add("has-help");
     }
   );
