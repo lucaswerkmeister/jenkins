@@ -29,15 +29,42 @@ THE SOFTWARE.
         <st:include page="sidepanel.jelly" />
         <!-- no need for additional breadcrumb here as we're on an index page already including breadcrumb -->
         <l:main-panel>
-          <st:include page="view-index-top.jelly" it="${it.owner}" optional="true">
-            <!-- allow the owner to take over the top section, but we also need the default to be backward compatible -->
-            <div id="view-message">
-                <div id="systemmessage">
-                  <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />
+          <l:app-bar title="Dashboard">
+            <a class="jenkins-button" href="${rootURL}/${it.viewUrl}newJob">
+              <l:icon src="symbol-add" />
+              ${%NewJob(it.newPronoun)}
+            </a>
+            <l:overflowButton>
+              <a class="jenkins-dropdown__item" href="${rootURL}/manage/about">
+                <div class="jenkins-dropdown__item__icon">
+                  <l:icon src="symbol-sun" />
                 </div>
-              <t:editableDescription permission="${it.CONFIGURE}"/>
-            </div>
-          </st:include>
+                ${%Icon legend}
+              </a>
+              <a class="jenkins-dropdown__item" href="${rootURL}/manage/about">
+                <div class="jenkins-dropdown__item__icon">
+                  <l:icon src="symbol-jenkins" />
+                </div>
+                ${%Icon size}
+              </a>
+              <a class="jenkins-dropdown__item" href="${rootURL}/manage/about">
+                <div class="jenkins-dropdown__item__icon">
+                  <l:icon src="symbol-rss" />
+                </div>
+                ${%Atom feed}
+              </a>
+            </l:overflowButton>
+          </l:app-bar>
+
+<!--          <st:include page="view-index-top.jelly" it="${it.owner}" optional="true">-->
+<!--            &lt;!&ndash; allow the owner to take over the top section, but we also need the default to be backward compatible &ndash;&gt;-->
+<!--            <div id="view-message">-->
+<!--                <div id="systemmessage">-->
+<!--                  <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />-->
+<!--                </div>-->
+<!--              <t:editableDescription permission="${it.CONFIGURE}"/>-->
+<!--            </div>-->
+<!--          </st:include>-->
 
           <j:set var="items" value="${it.items}"/>
           <st:include page="main.jelly" />
