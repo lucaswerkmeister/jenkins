@@ -48,7 +48,7 @@ module.exports = (env, argv) => ({
     "filter-build-history": [
       path.join(__dirname, "src/main/js/filter-build-history.js"),
     ],
-    "simple-page": [path.join(__dirname, "src/main/scss/simple-page.scss")],
+    "simple-page": [path.join(__dirname, "src/main/scss/pages/simple-page/simple-page.scss")],
     styles: [path.join(__dirname, "src/main/scss/styles.scss")],
   },
   output: {

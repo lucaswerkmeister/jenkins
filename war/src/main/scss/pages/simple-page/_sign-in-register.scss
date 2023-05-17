@@ -1,9 +1,9 @@
-@use "../abstracts/mixins";
-@use "../abstracts/theme";
-@use "../base/typography";
-@use "../form/checkbox";
-@use "../form/input";
-@use "../modules/buttons";
+@use "../../abstracts/mixins";
+@use "../../abstracts/theme";
+@use "../../base/typography";
+@use "../../components/form/checkbox";
+@use "../../components/form/input";
+@use "../../components/buttons";
 
 @property --opacity {
   syntax: "<angle>";
