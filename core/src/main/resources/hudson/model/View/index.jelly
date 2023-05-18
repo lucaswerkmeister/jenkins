@@ -35,7 +35,6 @@ THE SOFTWARE.
                 <div id="systemmessage">
                   <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />
                 </div>
-              <t:editableDescription permission="${it.CONFIGURE}"/>
             </div>
           </st:include>
 
