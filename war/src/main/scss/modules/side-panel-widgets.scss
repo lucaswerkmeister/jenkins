@@ -26,15 +26,15 @@
   padding: 0.5rem 1.25rem;
 }
 
-#side-panel .pane-header-title {
-  display: inline-block;
-  flex: 1;
-  font-weight: bold;
-
-  & > div {
-    font-weight: normal;
-  }
-}
+//#side-panel .pane-header-title {
+//  display: inline-block;
+//  flex: 1;
+//  font-weight: bold;
+//
+//  & > div {
+//    font-weight: normal;
+//  }
+//}
 
 #side-panel .pane-header .expand,
 #side-panel .pane-header .collapse {
@@ -54,18 +54,18 @@
   font-size: var(--font-size-xs);
 }
 
-#side-panel .pane-content .pane {
-  font-size: var(--font-size-xs);
-  padding: 0.5rem 0.25rem;
-
-  &:first-child {
-    padding-left: 1rem;
-  }
-
-  &:last-child {
-    padding-right: 1rem;
-  }
-}
+//#side-panel .pane-content .pane {
+//  font-size: var(--font-size-xs);
+//  padding: 0.5rem 0.25rem;
+//
+//  &:first-child {
+//    padding-left: 1rem;
+//  }
+//
+//  &:last-child {
+//    padding-right: 1rem;
+//  }
+//}
 
 #side-panel .pane-content > table {
   padding: 0 1.25rem;
@@ -91,13 +91,6 @@
 
 #side-panel .pane-content a {
   font-weight: 600;
-}
-
-/**
- * Build Queue
- */
-#buildQueue {
-  margin-bottom: 1.25rem;
 }
 
 /**
@@ -193,12 +186,12 @@
   width: 70%;
 }
 
-.build-row .build-row-cell .pane,
-#side-panel .build-row .build-row-cell .pane {
-  padding: 0 2px; /* Sync changes with func expandControlsTo50Percent in hudson-behavior.js */
-  display: inline-block;
-  overflow: hidden;
-}
+//.build-row .build-row-cell .pane,
+//#side-panel .build-row .build-row-cell .pane {
+//  padding: 0 2px; /* Sync changes with func expandControlsTo50Percent in hudson-behavior.js */
+//  display: inline-block;
+//  overflow: hidden;
+//}
 
 .build-row.multi-line .build-row-cell .block {
   display: block;

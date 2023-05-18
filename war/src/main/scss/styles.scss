@@ -64,3 +64,58 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+
+.card {
+  //background: var(--card-border-color);
+  margin-left: var(--section-padding);
+  border-radius: 1rem;
+  margin-bottom: calc(var(--section-padding) / 2);
+
+  background: hsl(240, 6%, 16%);
+  border: 2px solid hsl(240, 6%, 16.5%);
+
+  //background: white;
+  //border: 2px solid var(--card-border-color);
+}
+
+$padding: 16px;
+
+.card-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $padding;
+  font-size: var(--font-size-sm) !important;
+  font-weight: 500;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color-secondary);
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      transition: var(--standard-transition);
+    }
+
+    &:hover {
+      color: var(--text-color);
+    }
+  }
+
+  .pane-header-title {
+    display: block;
+    margin-block: -3px;
+  }
+}
+
+.card-content {
+  padding: 0 $padding $padding $padding;
+  color: var(--text-color-secondary);
+
+  &:empty {
+    display: none;
+  }
+}

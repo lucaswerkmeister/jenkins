@@ -138,7 +138,7 @@ THE SOFTWARE.
   <j:set var="computers" value="${attrs.computers?:app.computers}" />
   <j:set var="computersSize" value="${computers.size()}"/>
     <l:pane width="3" id="executors"
-        title="&lt;a href='${rootURL}/computer/'>${%Build Executor Status}&lt;/a>"
+        title="Running builds" expandable="${rootURL}/computer/"
         collapsedText="${%Computers(computersSize - 1, app.unlabeledLoad.computeTotalExecutors() - app.unlabeledLoad.computeIdleExecutors(), app.unlabeledLoad.computeTotalExecutors())}">
       <colgroup><col width="30"/><col width="200*"/><col width="24"/></colgroup>
 
