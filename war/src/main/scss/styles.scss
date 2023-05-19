@@ -152,15 +152,37 @@ $padding: 16px;
   font-size: var(--font-size-sm) !important;
   font-weight: 500;
 
-  a {
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .jenkins-button {
+    padding: 0;
+    min-height: 0;
+    color: var(--text-color-secondary) !important;
+
+    &:hover {
+      color: var(--text-color) !important;
+    }
+
+    &::before, &::after {
+      content: none;
+    }
+  }
+
+  a, button {
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-color-secondary);
+    cursor: pointer;
 
     svg {
-      width: 1rem;
-      height: 1rem;
+      width: 1.125rem;
+      height: 1.125rem;
       transition: var(--standard-transition);
     }
 
@@ -171,13 +193,14 @@ $padding: 16px;
 
   .pane-header-title {
     display: block;
-    margin-block: -3px;
   }
 }
 
 .card-content {
   padding: 0 $padding $padding $padding;
   color: var(--text-color-secondary);
+  max-height: 400px;
+  overflow-y: auto;
 
   &:empty {
     display: none;
