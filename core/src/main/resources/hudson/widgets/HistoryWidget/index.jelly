@@ -54,7 +54,7 @@ THE SOFTWARE.
       </a>
     </l:overflowButton>
     <a href="buildTimeTrend" tooltip="Trend graph">
-      <l:icon src="symbol-cube" />
+      <l:icon src="symbol-trending-up" />
     </a>
   </j:set>
 
