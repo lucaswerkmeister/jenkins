@@ -15,9 +15,9 @@
   border-right: none;
 }
 
-.pane {
-  color: var(--pane-text-color);
-}
+//.pane {
+//  color: var(--pane-text-color);
+//}
 
 .pane-header {
   border-top: none;
@@ -36,16 +36,16 @@
   vertical-align: middle;
 }
 
-table.pane {
-  width: 100%;
-  border-collapse: collapse;
-  border: var(--pane-border-width) solid var(--pane-border-color);
-}
-
-td.pane {
-  padding: 0.25rem;
-  vertical-align: middle;
-}
+//table.pane {
+//  width: 100%;
+//  border-collapse: collapse;
+//  border: var(--pane-border-width) solid var(--pane-border-color);
+//}
+//
+//td.pane {
+//  padding: 0.25rem;
+//  vertical-align: middle;
+//}
 
 table.stripped tr:nth-of-type(even) {
   background: var(--even-row-color);
@@ -75,9 +75,9 @@ div.pane-header .collapse {
   margin-left: 3px;
 }
 
-th.pane {
-  font-weight: var(--pane-header-font-weight);
-}
+//th.pane {
+//  font-weight: var(--pane-header-font-weight);
+//}
 
 /* Bigtable */
 
