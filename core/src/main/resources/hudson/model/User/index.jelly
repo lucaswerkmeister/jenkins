@@ -28,9 +28,8 @@ THE SOFTWARE.
     <!-- no need for additional breadcrumb here as we're on an index page already including breadcrumb -->
     <l:main-panel>
       <h1>
-        <span class="icon-lg">
-          <l:icon src="${h.getUserAvatar(it, '48x48')}" />
-        </span>
+        <l:avatar username="${it.fullname}" />
+        <l:avatar username="${it.fullname}" animated="true" />
         ${it.fullName}
       </h1>
       <t:editableDescription permission="${app.ADMINISTER}" />

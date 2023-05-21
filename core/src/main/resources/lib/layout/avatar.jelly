@@ -26,12 +26,20 @@ THE SOFTWARE.
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
   <st:documentation>
     <st:attribute name="username" />
+    <st:attribute name="size" />
+    <st:attribute name="animated" />
   </st:documentation>
 
-  <div class="jenkins-avatar">
+  <j:set var="initials" value="VK" />
+  <j:set var="style" value="VK" />
+
+  <div class="jenkins-avatar" style="--gradient-angle: 100deg; --gradient-1: var(--blue); --gradient-2: var(--orange);">
     <div class="jenkins-avatar__backplate"></div>
-    <span class="jenkins-avatar__initials">
-      JF
+    <j:if test="${attrs.animated}">
+      <div class="jenkins-avatar__animation"></div>
+    </j:if>
+    <span class="jenkins-avatar__initials" data-initials="${initials}">
+      ${initials}
     </span>
   </div>
 </j:jelly>
