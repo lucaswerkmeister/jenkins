@@ -1,0 +1,51 @@
+.jenkins-avatar {
+  --gradient-angle: 45deg;
+  --gradient-1: var(--blue);
+  --gradient-2: var(--red);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.95rem;
+  height: 1.95rem;
+  border-radius: 100%;
+  z-index: 0;
+
+  &__backplate {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0.25;
+    z-index: -1;
+    background: linear-gradient(var(--gradient-angle), var(--gradient-1), var(----gradient-2));
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: overlay;
+      border-radius: inherit;
+    }
+
+    &::before {
+      background: radial-gradient(var(--background), transparent);
+    }
+
+    &::after {
+      background: radial-gradient(var(--background), transparent);
+      border: 1px solid currentColor;
+      opacity: 0.125;
+    }
+  }
+
+  &__initials {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-weight: 600;
+    font-size: 0.8rem;
+    background: linear-gradient(var(--gradient-angle), var(--gradient-1), var(----gradient-2));
+  }
+}
