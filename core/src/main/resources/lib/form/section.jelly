@@ -38,19 +38,28 @@ THE SOFTWARE.
     <st:attribute name="name">
       Optional attribute to create a JSON object from this section.
     </st:attribute>
+    <st:attribute name="collapsible" since="TODO">
+      Optional attribute TODO. Requires title to be set.
+      Defaults to false.
+    </st:attribute>
   </st:documentation>
 
   <f:rowSet name="${attrs.name}">
     <section class="${attrs.title!=null ? 'jenkins-section' : ''}">
       <j:if test="${attrs.title!=null}">
-        <div class="jenkins-section__title">
+        <button class="jenkins-section__title ${attrs.collapsible ? 'jenkins-section__title--collapsible jenkins-section__title--collapsed' : ''}" type="button">
           <div class="jenkins-hidden">
             <l:icon src="${attrs.icon ?: 'symbol-settings'}" />
           </div>
           ${attrs.title}
-        </div>
+          <j:if test="${attrs.collapsible}">
+            <l:icon src="symbol-chevron-up" />
+          </j:if>
+        </button>
       </j:if>
-      <d:invokeBody />
+      <div class="section-body-hidden ${attrs.collapsible ? 'section-body-hidden--hidden' : ''}">
+        <d:invokeBody />
+      </div>
     </section>
   </f:rowSet>
 </j:jelly>
