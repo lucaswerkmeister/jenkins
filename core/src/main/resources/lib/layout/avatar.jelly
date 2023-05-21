@@ -23,23 +23,18 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
   <st:documentation>
-    <st:attribute name="username" />
+    <st:attribute name="fullName" />
     <st:attribute name="size" />
     <st:attribute name="animated" />
   </st:documentation>
 
-  <j:set var="initials" value="VK" />
-  <j:set var="style" value="VK" />
-
-  <div class="jenkins-avatar" style="--gradient-angle: 100deg; --gradient-1: var(--blue); --gradient-2: var(--orange);">
-    <div class="jenkins-avatar__backplate"></div>
+  <div class="jenkins-avatar" data-fullname="${attrs.fullName}">
+    <div class="jenkins-avatar__backplate" />
     <j:if test="${attrs.animated}">
-      <div class="jenkins-avatar__animation"></div>
+      <div class="jenkins-avatar__animation" />
     </j:if>
-    <span class="jenkins-avatar__initials" data-initials="${initials}">
-      ${initials}
-    </span>
+    <span class="jenkins-avatar__initials" />
   </div>
 </j:jelly>

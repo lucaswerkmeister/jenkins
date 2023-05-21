@@ -4,11 +4,11 @@
   --gradient-2: var(--red);
 
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 10rem;
-  height: 10rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 100%;
   z-index: 0;
   aspect-ratio: 1;
@@ -18,7 +18,11 @@
     inset: 0;
     border-radius: inherit;
     z-index: -1;
-    background: linear-gradient(var(--gradient-angle), var(--gradient-1), var(--gradient-2));
+    background: linear-gradient(
+      var(--gradient-angle),
+      var(--gradient-1),
+      var(--gradient-2)
+    );
 
     &::before,
     &::after {
@@ -45,14 +49,18 @@
     inset: 0;
     animation: rotate-bg 5s linear infinite;
     mix-blend-mode: overlay;
-    background: linear-gradient(var(--gradient-angle), var(--gradient-1), var(--gradient-2));
+    background: linear-gradient(
+      var(--gradient-angle),
+      var(--gradient-1),
+      var(--gradient-2)
+    );
     border-radius: 100%;
     aspect-ratio: 1;
   }
 
   &__initials {
     font-weight: 600;
-    font-size: 100%;
+    font-size: 0.8125rem;
     color: transparent;
 
     &::before,
@@ -73,6 +81,7 @@
     0% {
       rotate: 0deg;
     }
+
     100% {
       rotate: 360deg;
     }

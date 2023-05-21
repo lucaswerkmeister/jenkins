@@ -20,8 +20,17 @@ window.display = function (data) {
     var wrapper = document.createElement("div");
     wrapper.className = "jenkins-table__cell__button-wrapper";
     d.className = "jenkins-table__cell--tight jenkins-table__icon";
-    var icon = document.getElementById("person-circle");
-    wrapper.innerHTML = icon.children[0].outerHTML;
+    const icon = document.createElement("div");
+    icon.className = "jenkins-avatar";
+    icon.dataset.fullname = e.fullName;
+    const iconBackplate = document.createElement("div");
+    iconBackplate.className = "jenkins-avatar__backplate";
+    const iconInitials = document.createElement("span");
+    iconInitials.className = "jenkins-avatar__initials";
+    icon.appendChild(iconBackplate);
+    icon.appendChild(iconInitials);
+
+    wrapper.innerHTML = icon.outerHTML;
     d.appendChild(wrapper);
     r.appendChild(d);
 
@@ -51,6 +60,8 @@ window.display = function (data) {
       d.appendChild(a);
     }
     r.appendChild(d);
+
+    Behaviour.applySubtree(r);
 
     ts_refresh(p);
   }
