@@ -8,8 +8,8 @@ const primaryColors = [
   "pink",
   "brown",
   "cyan",
-  "indigo",
   "yellow",
+  "indigo",
   "purple",
 ];
 Array.from(primaryColors).forEach((color) => {
