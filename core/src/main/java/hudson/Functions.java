@@ -2455,8 +2455,4 @@ public class Functions {
     public static String generateItemId() {
         return String.valueOf(Math.floor(Math.random() * 3000));
     }
-
-    public static UserAvatar generateAvatar(String fullname) {
-        return UserAvatar.fromFullname(fullname);
-    }
 }

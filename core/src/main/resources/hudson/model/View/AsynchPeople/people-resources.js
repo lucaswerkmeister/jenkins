@@ -23,11 +23,8 @@ window.display = function (data) {
     const icon = document.createElement("div");
     icon.className = "jenkins-avatar";
     icon.dataset.fullname = e.fullName;
-    const iconBackplate = document.createElement("div");
-    iconBackplate.className = "jenkins-avatar__backplate";
     const iconInitials = document.createElement("span");
     iconInitials.className = "jenkins-avatar__initials";
-    icon.appendChild(iconBackplate);
     icon.appendChild(iconInitials);
 
     wrapper.innerHTML = icon.outerHTML;

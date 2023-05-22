@@ -26,12 +26,11 @@ THE SOFTWARE.
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
   <st:documentation>
     <st:attribute name="fullName" />
-    <st:attribute name="size" />
+    <st:attribute name="clazz" />
     <st:attribute name="animated" />
   </st:documentation>
 
-  <div class="jenkins-avatar" data-fullname="${attrs.fullName}">
-    <div class="jenkins-avatar__backplate" />
+  <div class="jenkins-avatar ${clazz}" data-fullname="${attrs.fullName}">
     <j:if test="${attrs.animated}">
       <div class="jenkins-avatar__animation" />
     </j:if>

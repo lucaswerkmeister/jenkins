@@ -72,7 +72,8 @@ function init() {
     avatar.style.setProperty("--gradient-angle", angle);
     avatar.style.setProperty("--gradient-1", primaryColor);
     avatar.style.setProperty("--gradient-2", secondaryColor);
-    initialsElement.dataset.initials = initials;
+    // initialsElement.dataset.initials = initials;
+    initialsElement.textContent = initials;
   });
 }
 

@@ -27,10 +27,11 @@ THE SOFTWARE.
     <st:include page="sidepanel.jelly" />
     <!-- no need for additional breadcrumb here as we're on an index page already including breadcrumb -->
     <l:main-panel>
-      <h1>
+      <div class="user-heading">
         <l:avatar fullName="${it.fullName}" animated="true" />
-        ${it.fullName}
-      </h1>
+        <h1>${it.fullName}</h1>
+      </div>
+
       <t:editableDescription permission="${app.ADMINISTER}" />
       <div>
         ${%Jenkins User ID}: ${it.id}
