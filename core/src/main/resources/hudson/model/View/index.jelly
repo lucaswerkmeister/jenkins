@@ -34,16 +34,53 @@ THE SOFTWARE.
               <l:icon src="symbol-add" />
               ${%NewJob(it.newPronoun)}
             </a>
+            <j:if test="${it.isEditable()}">
+              <a class="jenkins-button" href="${rootURL}/${it.viewUrl}configure">
+                ${%Configure}
+              </a>
+            </j:if>
             <l:overflowButton>
+              <st:include page="tasks-top.jelly" it="${it.owner}" optional="true" />
+
+              <st:include page="tasks-new.jelly" it="${it.owner}" optional="true">
+              </st:include>
+
+              <a href="${it.class.name=='hudson.model.AllView' ? rootURL + '/asynchPeople/' : rootURL + '/' + it.viewUrl + 'asynchPeople'}" class="jenkins-dropdown__item">
+                <div class="jenkins-dropdown__item__icon">
+                  <l:icon src="symbol-people" />
+                </div>
+                ${%People}
+              </a>
+
+              <a href="${rootURL}/${it.viewUrl}builds" class="jenkins-dropdown__item">
+                <div class="jenkins-dropdown__item__icon">
+                  <l:icon src="symbol-build-history" />
+                </div>
+                ${%Build History}
+              </a>
+
+              <j:if test="${app.fingerprintMap.ready}">
+                <l:task href="${rootURL}/projectRelationship" icon="symbol-project-relationship" title="${%Project Relationship}"/>
+                <l:task href="${rootURL}/fingerprintCheck" icon="icon-fingerprint icon-md" title="${%Check File Fingerprint}"/>
+              </j:if>
+
+              <!-- subtypes can put more stuff here -->
+              <st:include page="sidepanel2.jelly" optional="true"/>
+
+              <st:include page="tasks-bottom.jelly" it="${it.owner}" optional="true" />
+<!--              <t:actions />-->
+
+              <div class="jenkins-dropdown__separator"></div>
+
               <a class="jenkins-dropdown__item" href="${rootURL}/manage/about">
                 <div class="jenkins-dropdown__item__icon">
-                  <l:icon src="symbol-sun" />
+                  <l:icon src="symbol-icon-legend" />
                 </div>
                 ${%Icon legend}
               </a>
               <a class="jenkins-dropdown__item" href="${rootURL}/manage/about">
                 <div class="jenkins-dropdown__item__icon">
-                  <l:icon src="symbol-jenkins" />
+                  <l:icon src="symbol-icon-size" />
                 </div>
                 ${%Icon size}
               </a>
@@ -53,6 +90,16 @@ THE SOFTWARE.
                 </div>
                 ${%Atom feed}
               </a>
+
+              <j:if test="${it.owner.canDelete(it)}">
+                <div class="jenkins-dropdown__separator"></div>
+                <button class="jenkins-dropdown__item jenkins-!-destructive-color">
+                  <div class="jenkins-dropdown__item__icon">
+                    <l:icon src="symbol-trash" />
+                  </div>
+                  Delete view
+                </button>
+              </j:if>
             </l:overflowButton>
           </l:app-bar>
 
