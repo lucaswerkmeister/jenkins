@@ -51,7 +51,7 @@ THE SOFTWARE.
         </div>
       </div>
 
-      <p class="app-about-paragraph">${%blurb}</p>
+      <p class="jenkins-description">${%blurb}</p>
 
       <div class="jenkins-tab-pane">
         <h2 class="jenkins-tab-pane__title">${%maven.dependencies}</h2>

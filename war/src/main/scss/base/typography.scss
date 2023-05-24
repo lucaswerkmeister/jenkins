@@ -84,10 +84,19 @@ h6,
 }
 
 .jenkins-description {
+  font-size: var(--font-size-base);
   color: var(--text-color-secondary);
-  line-height: 1.66;
   margin-top: 0;
   margin-bottom: var(--section-padding);
+  line-height: 1.66;
+  font-weight: 450;
+
+  a {
+    font-weight: inherit;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    text-decoration-skip: none;
+  }
 }
 
 .jenkins-label {

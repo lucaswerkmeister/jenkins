@@ -12,7 +12,7 @@ l.layout(norefresh: true, permission: app.MANAGE, title: my.displayName) {
             text(Messages.ShutdownLink_DisplayName_prepare())
         }
 
-        p {
+        p(class: "jenkins-description") {
             text(my.description)
         }
 
