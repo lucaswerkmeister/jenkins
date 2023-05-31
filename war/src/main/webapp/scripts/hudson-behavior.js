@@ -1089,58 +1089,6 @@ function labelAttachPreviousOnClick() {
   }
 }
 
-function helpButtonOnClick() {
-  var tr =
-    findFollowingTR(this, "help-area", "help-sibling") ||
-    findFollowingTR(this, "help-area", "setting-help") ||
-    findFollowingTR(this, "help-area");
-  var div = tr.firstElementChild;
-  if (!div.classList.contains("help")) {
-    div = div.nextElementSibling.firstElementChild;
-  }
-
-  if (div.style.display != "block") {
-    div.style.display = "block";
-    // make it visible
-
-    fetch(this.getAttribute("helpURL")).then((rsp) => {
-      rsp.text().then((responseText) => {
-        if (rsp.ok) {
-          var from = rsp.headers.get("X-Plugin-From");
-          // Which plugin is this from?
-          div.innerHTML =
-            responseText +
-            (from ? "<div class='from-plugin'>" + from + "</div>" : "");
-
-          // Ensure links open in new window unless explicitly specified otherwise
-          var links = div.getElementsByTagName("a");
-          for (var i = 0; i < links.length; i++) {
-            var link = links[i];
-            if (link.hasAttribute("href")) {
-              // ignore document anchors
-              if (!link.hasAttribute("target")) {
-                link.setAttribute("target", "_blank");
-              }
-              if (!link.hasAttribute("rel")) {
-                link.setAttribute("rel", "noopener noreferrer");
-              }
-            }
-          }
-        } else {
-          div.innerHTML =
-            "<b>ERROR</b>: Failed to load help file: " + rsp.statusText;
-        }
-        layoutUpdateCallback.call();
-      });
-    });
-  } else {
-    div.style.display = "none";
-    layoutUpdateCallback.call();
-  }
-
-  return false;
-}
-
 function isCommandKey(event) {
   return event.key === "Meta";
 }
@@ -1359,23 +1307,6 @@ function rowvgStartEachRow(recursive, f) {
       };
     }
   );
-
-  Behaviour.specify(
-    ".jenkins-help-button",
-    "a-jenkins-help-button",
-    ++p,
-    function (e) {
-      e.onclick = helpButtonOnClick;
-      e.parentNode.parentNode.classList.add("has-help");
-    }
-  );
-
-  // legacy class name
-  Behaviour.specify("A.help-button", "a-help-button", ++p, function (e) {
-    e.onclick = helpButtonOnClick;
-    e.tabIndex = 9999; // make help link unnavigable from keyboard
-    e.parentNode.parentNode.classList.add("has-help");
-  });
 
   // Script Console : settings and shortcut key
   Behaviour.specify("TEXTAREA.script", "textarea-script", ++p, function (e) {
@@ -1860,7 +1791,7 @@ function rowvgStartEachRow(recursive, f) {
           : settingName.querySelector(".setting-help");
 
       if (helpLink) {
-        labelParent.classList.add("help-sibling");
+        // labelParent.classList.add("help-sibling");
         labelParent.classList.add("jenkins-checkbox-help-wrapper");
         labelParent.appendChild(helpLink);
       }
