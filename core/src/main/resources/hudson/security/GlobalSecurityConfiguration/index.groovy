@@ -83,6 +83,7 @@ l.layout(permission:app.SYSTEM_READ, title:my.displayName, cssclass:request.getP
             Functions.getSortedDescriptorsForGlobalConfigByDescriptor(my.FILTER).each { Descriptor descriptor ->
                 set("descriptor",descriptor)
                 set("instance",descriptor)
+                p(descriptor.jsonSafeClassName)
                 f.rowSet(name:descriptor.jsonSafeClassName) {
                     st.include(from:descriptor, page:descriptor.globalConfigPage)
                 }

@@ -84,8 +84,6 @@ body {
     --form-item-max-width: 100%;
   }
 
-  max-width: 85vw;
-
   #main-panel {
     width: 100vw;
   }
@@ -97,8 +95,6 @@ body {
   @media (max-width: 1200px) {
     max-width: unset;
   }
-
-  margin: auto;
 }
 
 body.two-column #main-panel {
@@ -113,6 +109,10 @@ body.full-screen {
 
 body.full-screen #main-panel {
   padding: 0;
+}
+
+#page-body, #breadcrumbBar {
+  margin-left: 75px;
 }
 
 @media (max-width: breakpoints.$tablet-breakpoint) {

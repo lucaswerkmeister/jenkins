@@ -19,6 +19,13 @@ function registerTooltip(element) {
     element._tippy.destroy();
   }
 
+  let type = {};
+  if (element.hasAttribute("data-tooltip-type")) {
+    type = {
+      placement: "right"
+    };
+  }
+
   if (
     element.hasAttribute("tooltip") &&
     !element.hasAttribute("data-html-tooltip")
@@ -39,7 +46,8 @@ function registerTooltip(element) {
             instance.reference.setAttribute("title", instance.props.content);
           },
         },
-        TOOLTIP_BASE
+        TOOLTIP_BASE,
+        type
       )
     );
   }
@@ -57,7 +65,8 @@ function registerTooltip(element) {
               "true";
           },
         },
-        TOOLTIP_BASE
+        TOOLTIP_BASE,
+        type
       )
     );
   }

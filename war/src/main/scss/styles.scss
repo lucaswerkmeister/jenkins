@@ -49,6 +49,7 @@
 @use "./pages/plugin-manager";
 @use "./pages/setupWizardFirstUser";
 @use "./pages/setupWizardConfigureInstance";
+@use "./modules/navigation";
 
 html {
   // Ensure that the 1rem size is 16px and scales with the browser zoom
@@ -64,3 +65,4 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+

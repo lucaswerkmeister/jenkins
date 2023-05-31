@@ -1,0 +1,183 @@
+@use "../abstracts/mixins";
+
+.newsidebar {
+  --sidebar-background: #16191d;
+  --sidebar-color: hsl(214, 14%, 90%);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 75px;
+  background: var(--sidebar-background);
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  &__item {
+    @include mixins.item;
+
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 3.125rem;
+    height: 3.125rem;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    svg {
+      width: 1.125rem;
+      height: 1.125rem;
+      color: var(--sidebar-color);
+    }
+
+    &--active {
+      --sidebar-color: hsl(214, 14%, 100%);
+
+      &::before {
+        background: var(--button-background--hover);
+      }
+    }
+  }
+}
+
+.jenkins-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: 100%;
+  z-index: 0;
+  aspect-ratio: 1;
+  font-size: 0.8125rem;
+  background: linear-gradient(
+                  var(--gradient-angle),
+                  var(--gradient-1),
+                  var(--gradient-2)
+  );
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    mix-blend-mode: overlay;
+  }
+
+  &::before {
+    background: radial-gradient(black, transparent 30%);
+    opacity: 0.2;
+  }
+
+  &::after {
+    box-shadow: inset 0 0 0 1px var(--text-color), inset 0 1px 4px white;
+    opacity: 0.35;
+  }
+
+  &__animation {
+    position: absolute;
+    inset: 0;
+    animation: rotate-bg 5s linear infinite;
+    mix-blend-mode: overlay;
+    opacity: 0.5;
+    background: linear-gradient(
+                    var(--gradient-angle),
+                    var(--gradient-1),
+                    var(--gradient-2)
+    );
+    border-radius: 100%;
+    aspect-ratio: 1;
+  }
+
+  &__initials {
+    position: relative;
+    font-weight: 600;
+    font-size: inherit;
+    color: transparent;
+    background: linear-gradient(
+                    var(--gradient-angle),
+                    var(--gradient-1),
+                    var(--gradient-2));
+    background-clip: text;
+    filter: contrast(0.4) saturate(3) brightness(2.25);
+  }
+
+  @keyframes rotate-bg {
+    0% {
+      rotate: 0deg;
+    }
+
+    100% {
+      rotate: 360deg;
+    }
+  }
+}
+
+.user-jumplist {
+  --gradient-angle: 38deg;
+  --gradient-1: var(--pink);
+  --gradient-2: var(--light-blue);
+
+  position: relative;
+  width: 250px;
+  margin: -0.45rem -0.8rem;
+  padding: 0.5rem;
+  z-index: 0;
+
+  display: flex;
+  justify-content: stretch;
+  flex-direction: column;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(var(--gradient-angle), var(--gradient-1), var(--gradient-2));
+    z-index: -1;
+    border-top-left-radius: 0.66rem;
+    border-top-right-radius: 0.66rem;
+    opacity: 0.15;
+    mask-image: linear-gradient(black, transparent);
+  }
+
+  .jenkins-button {
+    justify-content: flex-start;
+  }
+
+  .separator {
+    height: 2px;
+    background: currentColor;
+    opacity: 0.05;
+    margin-bottom: 0.5rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  .user-thing {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    margin: 0.6rem 0.6rem 0.9rem;
+    font-size: var(--font-size-sm);
+    gap: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .jenkins-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
