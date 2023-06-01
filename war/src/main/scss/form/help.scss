@@ -62,10 +62,6 @@ $help-area-padding: 1rem;
   background: var(--button-background);
   line-height: 1.66;
 
-  & > div {
-    max-width: 100ch;
-  }
-
   p {
     &:first-of-type {
       margin-top: 0;
