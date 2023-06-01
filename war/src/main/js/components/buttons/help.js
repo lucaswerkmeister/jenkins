@@ -1,6 +1,6 @@
 function init() {
   Behaviour.specify(
-    "A.jenkins-help-button",
+    ".jenkins-help-button",
     "a-jenkins-help-button",
     1000,
     function (e) {
@@ -18,13 +18,18 @@ function helpButtonOnClick() {
   const parent = this.closest(".jenkins-form-item");
   const helpArea = parent.querySelector(".help-area .help");
 
-  if (helpArea.style.display === "block") {
+  if (helpArea.style.display === "flex") {
     helpArea.style.display = "none";
     layoutUpdateCallback.call();
     return false;
   }
 
-  helpArea.style.display = "block";
+  helpArea.style.display = "flex";
+
+  // Skip loading the content if it's already been loaded
+  if (helpArea.dataset.loaded === "true") {
+    return;
+  }
 
   fetch(this.getAttribute("helpURL")).then((rsp) => {
     rsp.text().then((responseText) => {
@@ -53,6 +58,8 @@ function helpButtonOnClick() {
         helpArea.innerHTML =
           "<b>ERROR</b>: Failed to load help file: " + rsp.statusText;
       }
+
+      helpArea.dataset.loaded = "true";
       layoutUpdateCallback.call();
     });
   });

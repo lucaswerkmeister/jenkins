@@ -44,7 +44,7 @@ THE SOFTWARE.
   </st:documentation>
   <j:choose>
     <j:when test="${attrs.url!=null}">
-      <button class="jenkins-help-button" tooltip="${%Help}" helpURL="${rootURL}${attrs.url}">
+      <button type="button" class="jenkins-help-button" tooltip="${%Help}" helpURL="${rootURL}${attrs.url}">
         <!-- .jenkins-help-button span element is required as it's restyled in CSS -->
         <span>?</span>
       </button>
