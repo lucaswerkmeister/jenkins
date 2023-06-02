@@ -37,6 +37,44 @@ THE SOFTWARE.
     </l:app-bar>
 
     <f:form method="post" name="config" action="configSubmit">
+      <l:banner>
+        ${%fine_warning}
+      </l:banner>
+      <l:banner>
+        <div>Content!</div>
+        <div class="jenkins-buttons-row">
+          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
+          <a class="jenkins-button">Hello world :)</a>
+        </div>
+      </l:banner>
+      <l:banner type="info">
+        <div>Content!</div>
+        <div class="jenkins-buttons-row">
+          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
+          <a class="jenkins-button">Hello world :)</a>
+        </div>
+      </l:banner>
+      <l:banner type="success">
+        <div>Content!</div>
+        <div class="jenkins-buttons-row">
+          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
+          <a class="jenkins-button">Hello world :)</a>
+        </div>
+      </l:banner>
+      <l:banner type="warning">
+        <div>Content!</div>
+        <div class="jenkins-buttons-row">
+          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
+          <a class="jenkins-button">Hello world :)</a>
+        </div>
+      </l:banner>
+      <l:banner type="error">
+        <div>Content!</div>
+        <div class="jenkins-buttons-row">
+          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
+          <a class="jenkins-button">Hello world :)</a>
+        </div>
+      </l:banner>
       <div class="alert alert-info">
         ${%fine_warning}
       </div>

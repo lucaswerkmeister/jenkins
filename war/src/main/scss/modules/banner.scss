@@ -1,67 +1,194 @@
-.alert {
+//.alert {
+//
+//  position: relative;
+//  display: grid;
+//  grid-template-columns: auto 1fr;
+//  grid-gap: 1.5ch;
+//  padding: 0.8rem 1rem;
+//  border-radius: 0.66rem;
+//  margin-bottom: var(--section-padding);
+//  font-weight: 500;
+//  line-height: 1.66;
+//  color: var(--text-color);
+//
+//  &::selection {
+//    background: currentColor;
+//  }
+//
+//  svg {
+//    width: 1.4rem;
+//    height: 1.4rem;
+//  }
+//
+//  &::before {
+//    content: "";
+//    position: absolute;
+//    inset: 0;
+//    border-radius: inherit;
+//    z-index: -1;
+//    background: var(--background);
+//    opacity: 0.3;
+//  }
+//}
+//
+//.alert-success {
+//  color: var(--background);
+//
+//  &::after {
+//    background-color: var(--success-color);
+//    opacity: 1;
+//  }
+//}
+//
+//.alert-info {
+//  color: var(--background);
+//
+//  &::after {
+//    background-color: var(--blue);
+//    opacity: 1;
+//  }
+//}
+//
+//.alert-warning {
+//  color: var(--background);
+//
+//  &::after {
+//    background-color: var(--warning-color);
+//    opacity: 1;
+//  }
+//}
+//
+//.alert-danger {
+//  color: var(--background);
+//
+//  &::after {
+//    background-color: var(--error-color);
+//    opacity: 1;
+//  }
+//}
+
+.jenkins-banner {
+  --banner-background: var(--button-background);
+  --banner-color: var(--text-color);
+
   position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 1.5ch;
-  padding: 0.8rem 1rem;
+  padding: 0.9rem 1.2rem;
   border-radius: 0.66rem;
   margin-bottom: var(--section-padding);
   font-weight: 500;
   line-height: 1.66;
-  color: var(--text-color);
+  color: var(--banner-color);
 
   &::selection {
     background: currentColor;
   }
 
-  svg {
-    width: 1.4rem;
-    height: 1.4rem;
+  & > svg {
+    width: 1.375rem;
+    height: 1.375rem;
+    margin-top: 1px;
   }
 
-  &::after {
+  &::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     z-index: -1;
-    background: var(--background);
-    opacity: 0.3;
+    background: var(--banner-background);
   }
-}
 
-.alert-success {
-  color: var(--background);
-
-  &::after {
-    background-color: var(--success-color);
-    opacity: 1;
+  .jenkins-buttons-row {
+    margin-top: 0.5rem;
   }
-}
 
-.alert-info {
-  color: var(--background);
-
-  &::after {
-    background-color: var(--blue);
-    opacity: 1;
+  &--info {
+    --banner-background: var(--blue);
+    --banner-color: var(--background);
   }
-}
 
-.alert-warning {
-  color: var(--background);
-
-  &::after {
-    background-color: var(--warning-color);
-    opacity: 1;
+  &--success {
+    --banner-background: var(--success);
+    --banner-color: var(--background);
   }
-}
 
-.alert-danger {
-  color: var(--background);
+  &--error {
+    --banner-background: var(--error-color);
+    --banner-color: var(--background);
+  }
 
-  &::after {
-    background-color: var(--error-color);
-    opacity: 1;
+  &--warning {
+    --banner-background: var(--warning);
+    --banner-color: var(--background);
+  }
+
+  &[class*="jenkins-banner--"] {
+    .jenkins-button {
+      color: currentColor !important;
+      background: transparent;
+
+      &::before {
+        background: currentColor !important;
+        opacity: 0.15;
+      }
+
+      &::after {
+        box-shadow: 0 0 0 0.66rem currentColor;
+        opacity: 0;
+      }
+
+      &:hover {
+        &::before {
+          opacity: 0.2;
+        }
+      }
+
+      &:active,
+      &:focus {
+        &::before {
+          opacity: 0.25;
+        }
+
+        &::after {
+          box-shadow: 0 0 0 0.33rem currentColor;
+          opacity: 0.1;
+        }
+      }
+    }
+
+    .jenkins-button--primary {
+      color: var(--banner-background) !important;
+
+      &::before {
+        background: var(--banner-color) !important;
+        opacity: 1;
+      }
+
+      &::after {
+        box-shadow: 0 0 0 0.66rem var(--banner-color);
+        opacity: 0;
+      }
+
+      &:hover {
+        &::before {
+          opacity: 0.9;
+        }
+      }
+
+      &:active,
+      &:focus {
+        &::before {
+          opacity: 0.8;
+        }
+
+        &::after {
+          box-shadow: 0 0 0 0.33rem var(--banner-color);
+          opacity: 0.25;
+        }
+      }
+    }
   }
 }
