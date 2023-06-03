@@ -41,7 +41,7 @@ THE SOFTWARE.
       <script src="${resURL}/jsbundles/pages/manage-jenkins.js" type="text/javascript" />
 
       <section class="manage-messages">
-        <j:forEach var="am" items="${app.administrativeMonitors}">
+        <j:forEach var="am" items="${app.activeAdministrativeMonitors}">
           <st:include page="message.jelly" it="${am}" />
         </j:forEach>
         <st:include page="downgrade.jelly" it="${app}" />
