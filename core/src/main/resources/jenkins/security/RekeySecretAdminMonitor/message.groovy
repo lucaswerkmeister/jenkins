@@ -23,36 +23,38 @@ THE SOFTWARE.
 */
 package jenkins.security.RekeySecretAdminMonitor
 
+def l = namespace(lib.LayoutTagLib)
 def f = namespace(lib.FormTagLib)
 
 if (!my.isDone()) {
-    div(class:"alert alert-danger") {
-        raw _("pleaseRekeyAsap", app.rootDir, my.url)
+    l.banner(type: "error", dismissUrl: "${rootURL}/${my.url}/scan", dismissName: "dismiss") {
+        div {
+            raw _("pleaseRekeyAsap", app.rootDir, my.url)
+        }
+
+        form(class: "jenkins-banner__side-controls", method: "post", action: "${rootURL}/${my.url}/scan", name:"rekey") {
+            f.submit(name: "background", value:_("Re-key in background now"))
+            if (my.isScanOnBoot()) {
+                input(type: "button", class: "yui-button", disabled: "true", value:_("Re-keying currently scheduled during the next startup"))
+            } else {
+                f.submit(name: "schedule", value:_("Schedule a re-key during the next startup"))
+            }
+        }
     }
 }
 
 if (my.isFixingActive()) {
-    div(class:"alert alert-info") {
+    l.banner() {
         raw _("rekeyInProgress", my.url)
     }
 } else if (my.logFile.exists()) {
     if (my.isDone()) {
-        div(class:"alert alert-info") {
+        l.banner() {
             raw _("rekeySuccessful", my.url)
         }
     } else {
-        div(class:"alert alert-warning") {
+        l.banner(type: "warning") {
             raw _("rekeyHadProblems", my.url)
         }
     }
-}
-
-form(method: "post", action: "${rootURL}/${my.url}/scan", name:"rekey") {
-    f.submit(name: "background", value:_("Re-key in background now"))
-    if (my.isScanOnBoot()) {
-        input(type: "button", class: "yui-button", disabled: "true", value:_("Re-keying currently scheduled during the next startup"))
-    } else {
-        f.submit(name: "schedule", value:_("Schedule a re-key during the next startup"))
-    }
-    f.submit(name: "dismiss", value:_("Dismiss"))
 }

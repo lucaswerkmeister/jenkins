@@ -64,39 +64,39 @@ def listWarnings(warnings, boolean core) {
 def coreWarnings = my.activeCoreWarnings
 def pluginWarnings = my.activePluginWarningsByPlugin
 
-div(class: "alert alert-danger", role: "alert") {
+l.banner(type: "error") {
+    div {
+        text(_("blurb"))
 
+        if (!coreWarnings.isEmpty()) {
+            dl {
+                dt {
+                    text(_("coreTitle", jenkins.model.Jenkins.version))
+                }
+                listWarnings(coreWarnings, true)
+            }
+        }
+        if (!pluginWarnings.isEmpty()) {
+            dl {
+                pluginWarnings.each { plugin, warnings ->
+                    dt {
+                        a(_("pluginTitle", plugin.displayName, plugin.version), href: plugin.url, rel: 'noopener noreferrer', target: "_blank")
+                    }
+                    listWarnings(warnings, false)
+                }
+            }
+        }
+
+        if (my.hasApplicableHiddenWarnings()) {
+            text(_("more"))
+        }
+    }
     l.isAdmin() {
-        form(method: "post", action: "${rootURL}/${my.url}/forward") {
+        form(class: "jenkins-banner__side-controls", method: "post", action: "${rootURL}/${my.url}/forward") {
             if (!pluginWarnings.isEmpty()) {
                 f.submit(name: 'fix', value: _("pluginManager.link"))
             }
             f.submit(name: 'configure', value: _("configureSecurity.link"))
         }
-    }
-
-    text(_("blurb"))
-
-    if (!coreWarnings.isEmpty()) {
-        dl {
-            dt {
-                text(_("coreTitle", jenkins.model.Jenkins.version))
-            }
-            listWarnings(coreWarnings, true)
-        }
-    }
-    if (!pluginWarnings.isEmpty()) {
-        dl {
-            pluginWarnings.each { plugin, warnings ->
-                dt {
-                    a(_("pluginTitle", plugin.displayName, plugin.version), href: plugin.url, rel: 'noopener noreferrer', target: "_blank")
-                }
-                listWarnings(warnings, false)
-            }
-        }
-    }
-
-    if (my.hasApplicableHiddenWarnings()) {
-        text(_("more"))
     }
 }

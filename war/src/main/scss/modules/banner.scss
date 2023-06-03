@@ -1,86 +1,22 @@
-//.alert {
-//
-//  position: relative;
-//  display: grid;
-//  grid-template-columns: auto 1fr;
-//  grid-gap: 1.5ch;
-//  padding: 0.8rem 1rem;
-//  border-radius: 0.66rem;
-//  margin-bottom: var(--section-padding);
-//  font-weight: 500;
-//  line-height: 1.66;
-//  color: var(--text-color);
-//
-//  &::selection {
-//    background: currentColor;
-//  }
-//
-//  svg {
-//    width: 1.4rem;
-//    height: 1.4rem;
-//  }
-//
-//  &::before {
-//    content: "";
-//    position: absolute;
-//    inset: 0;
-//    border-radius: inherit;
-//    z-index: -1;
-//    background: var(--background);
-//    opacity: 0.3;
-//  }
-//}
-//
-//.alert-success {
-//  color: var(--background);
-//
-//  &::after {
-//    background-color: var(--success-color);
-//    opacity: 1;
-//  }
-//}
-//
-//.alert-info {
-//  color: var(--background);
-//
-//  &::after {
-//    background-color: var(--blue);
-//    opacity: 1;
-//  }
-//}
-//
-//.alert-warning {
-//  color: var(--background);
-//
-//  &::after {
-//    background-color: var(--warning-color);
-//    opacity: 1;
-//  }
-//}
-//
-//.alert-danger {
-//  color: var(--background);
-//
-//  &::after {
-//    background-color: var(--error-color);
-//    opacity: 1;
-//  }
-//}
-
 .jenkins-banner {
   --banner-background: var(--button-background);
   --banner-color: var(--text-color);
 
   position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-gap: 1.5ch;
-  padding: 0.9rem 1.2rem;
+  grid-template-columns: auto 1fr 36px;
+  grid-gap: 0.9rem;
+  padding: 0.9rem 0.7rem 0.9rem 1rem;
   border-radius: 0.66rem;
   margin-bottom: var(--section-padding);
   font-weight: 500;
   line-height: 1.66;
   color: var(--banner-color);
+  min-height: 53px;
+
+  &__content {
+    align-items: center;
+  }
 
   &::selection {
     background: currentColor;
@@ -89,7 +25,23 @@
   & > svg {
     width: 1.375rem;
     height: 1.375rem;
-    margin-top: 1px;
+    translate: 0 2px;
+  }
+
+  dl {
+    margin: 0;
+  }
+
+  p {
+    color: var(--banner-color);
+  }
+
+  a {
+    color: var(--banner-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+    text-decoration-skip: none;
   }
 
   &::before {
@@ -103,11 +55,6 @@
 
   .jenkins-buttons-row {
     margin-top: 0.5rem;
-  }
-
-  &--info {
-    --banner-background: var(--blue);
-    --banner-color: var(--background);
   }
 
   &--success {
@@ -132,7 +79,7 @@
 
       &::before {
         background: currentColor !important;
-        opacity: 0.15;
+        opacity: 0.1;
       }
 
       &::after {
@@ -191,4 +138,40 @@
       }
     }
   }
+
+  & + .jenkins-banner {
+    margin-top: calc(var(--section-padding) * -0.5);
+  }
+}
+
+.jenkins-banner__dismiss-button {
+  aspect-ratio: 1;
+  border-radius: 100% !important;
+  padding: 0 !important;
+  margin-top: -0.3rem !important;
+  margin-bottom: -0.3rem !important;
+
+  svg * {
+    stroke-width: 36px;
+  }
+}
+
+.jenkins-banner__side-controls {
+  display: flex;
+  gap: 0.9rem;
+  max-width: 300px;
+  flex-wrap: wrap;
+  justify-content: end;
+  margin-top: -5px;
+  margin-bottom: -50%;
+}
+
+.jenkins-banner__content:has(.jenkins-banner__side-controls) {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 3rem;
+}
+
+.jenkins-banner__side-controls {
+  align-self: start;
 }

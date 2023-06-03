@@ -22,15 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:d="jelly:define">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:d="jelly:define" xmlns:f="/lib/form">
     <st:documentation>
         <st:attribute name="type" use="optional" />
+        <st:attribute name="dismissUrl" use="optional" />
+        <st:attribute name="dismissName" use="optional" />
     </st:documentation>
 
+    <j:set var="icon" value="symbol-information-circle" />
+    <j:if test="${attrs.type == 'error'}">
+        <j:set var="icon" value="symbol-error-circle" />
+    </j:if>
+    <j:if test="${attrs.type == 'warning'}">
+        <j:set var="icon" value="symbol-warning" />
+    </j:if>
+    <j:if test="${attrs.type == 'success'}">
+        <j:set var="icon" value="symbol-check-circle" />
+    </j:if>
+
     <div class="jenkins-banner ${attrs.type != null ? 'jenkins-banner--' + attrs.type : ''}">
-        <l:icon src="symbol-information-circle" />
-        <div>
+        <l:icon src="${icon}" />
+        <div class="jenkins-banner__content">
             <d:invokeBody />
         </div>
+        <j:if test="${attrs.dismissUrl != null}">
+            <l:isAdmin>
+                <form method="post" action="${dismissUrl}" class="jenkins-!-display-contents">
+                    <button name="${dismissName}" class="jenkins-button jenkins-banner__dismiss-button" tooltip="${%Dismiss}">
+                        <l:icon src="symbol-close" />
+                    </button>
+                </form>
+            </l:isAdmin>
+        </j:if>
     </div>
 </j:jelly>

@@ -40,53 +40,6 @@ THE SOFTWARE.
       <l:banner>
         ${%fine_warning}
       </l:banner>
-      <l:banner>
-        <div>Content!</div>
-        <div class="jenkins-buttons-row">
-          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
-          <a class="jenkins-button">Hello world :)</a>
-        </div>
-      </l:banner>
-      <l:banner type="info">
-        <div>Content!</div>
-        <div class="jenkins-buttons-row">
-          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
-          <a class="jenkins-button">Hello world :)</a>
-        </div>
-      </l:banner>
-      <l:banner type="success">
-        <div>Content!</div>
-        <div class="jenkins-buttons-row">
-          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
-          <a class="jenkins-button">Hello world :)</a>
-        </div>
-      </l:banner>
-      <l:banner type="warning">
-        <div>Content!</div>
-        <div class="jenkins-buttons-row">
-          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
-          <a class="jenkins-button">Hello world :)</a>
-        </div>
-      </l:banner>
-      <l:banner type="error">
-        <div>Content!</div>
-        <div class="jenkins-buttons-row">
-          <a class="jenkins-button jenkins-button--primary">Hello world :)</a>
-          <a class="jenkins-button">Hello world :)</a>
-        </div>
-      </l:banner>
-      <div class="alert alert-info">
-        ${%fine_warning}
-      </div>
-      <div class="alert alert-danger">
-        ${%fine_warning}
-      </div>
-      <div class="alert alert-warning">
-        ${%fine_warning}
-      </div>
-      <div class="alert alert-success">
-        ${%fine_warning}
-      </div>
       <j:set var="instance" value="${it}" />
       <f:entry title="${%Name}" help="/help/LogRecorder/name.html">
         <f:textbox field="name"/>

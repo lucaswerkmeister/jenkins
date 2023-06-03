@@ -24,11 +24,10 @@ THE SOFTWARE.
 
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-<div class="alert alert-warning">
-  <form method="post" action="${rootURL}/${it.url}/act" name="${it.id}">
-    <f:submit name="yes" value="${%Tell me more}"/>
-    <f:submit name="no" value="${%Dismiss}"/>
-  </form>
-  ${%blurb(app.rootDir)}
-</div>
+  <l:banner type="warning" dismissUrl="${rootURL}/${it.url}/act" dismissName="no">
+    <div>${%blurb(app.rootDir)}</div>
+    <form class="jenkins-banner__side-controls" method="post" action="${rootURL}/${it.url}/act" name="${it.id}">
+      <f:submit name="yes" value="${%Tell me more}"/>
+    </form>
+  </l:banner>
 </j:jelly>

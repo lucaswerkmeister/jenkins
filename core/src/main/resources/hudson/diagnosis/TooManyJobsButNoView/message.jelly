@@ -24,13 +24,12 @@ THE SOFTWARE.
 
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <div id="tooManyJobsButNoView" class="alert alert-warning">
+  <l:banner type="warning" dismissUrl="${rootURL}/${it.url}/act" dismissName="no">
+    ${%blurb}
     <l:isAdmin>
-      <form method="post" action="${rootURL}/${it.url}/act" name="${it.id}">
+      <form class="jenkins-banner__side-controls" method="post" action="${rootURL}/${it.url}/act" name="${it.id}">
         <f:submit name="yes" value="${%Create a view now}"/>
-        <f:submit name="no" value="${%Dismiss}"/>
       </form>
     </l:isAdmin>
-    ${%blurb}
-  </div>
+  </l:banner>
 </j:jelly>
