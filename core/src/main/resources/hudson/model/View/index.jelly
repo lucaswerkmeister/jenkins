@@ -26,13 +26,15 @@ THE SOFTWARE.
 <st:compress xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
     <l:layout title="${(it.class.name=='hudson.model.AllView' and it.ownerItemGroup == app) ? '%Dashboard' : it.displayName}${not empty it.ownerItemGroup.fullDisplayName?' ['+it.ownerItemGroup.fullDisplayName+']':''}">
       <j:set var="view" value="${it}"/> <!-- expose view to the scripts we include from owner -->
+      <l:userExperimentalFlag var="dashboardRefresh" flagClassName="jenkins.model.experimentalflags.DashboardRefreshUserExperimentalFlag" />
         <st:include page="sidepanel.jelly" />
         <!-- no need for additional breadcrumb here as we're on an index page already including breadcrumb -->
         <l:main-panel>
-          <l:app-bar title="Dashboard">
+          <j:if test="${dashboardRefresh}">
+            <l:app-bar title="Dashboard">
             <a class="jenkins-button" href="${rootURL}/${it.viewUrl}newJob">
               <l:icon src="symbol-add" />
-              ${%NewJob(it.newPronoun)}
+              ${%New job}
             </a>
             <j:if test="${it.isEditable()}">
               <a class="jenkins-button" href="${rootURL}/${it.viewUrl}configure">
@@ -72,12 +74,12 @@ THE SOFTWARE.
 
               <div class="jenkins-dropdown__separator"></div>
 
-              <a class="jenkins-dropdown__item" href="${rootURL}/manage/about">
+              <button id="button-icon-legend" class="jenkins-dropdown__item">
                 <div class="jenkins-dropdown__item__icon">
                   <l:icon src="symbol-icon-legend" />
                 </div>
                 ${%Icon legend}
-              </a>
+              </button>
               <a class="jenkins-dropdown__item" href="${rootURL}/manage/about">
                 <div class="jenkins-dropdown__item__icon">
                   <l:icon src="symbol-icon-size" />
@@ -102,16 +104,17 @@ THE SOFTWARE.
               </j:if>
             </l:overflowButton>
           </l:app-bar>
+          </j:if>
 
-<!--          <st:include page="view-index-top.jelly" it="${it.owner}" optional="true">-->
-<!--            &lt;!&ndash; allow the owner to take over the top section, but we also need the default to be backward compatible &ndash;&gt;-->
-<!--            <div id="view-message">-->
-<!--                <div id="systemmessage">-->
-<!--                  <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />-->
-<!--                </div>-->
-<!--              <t:editableDescription permission="${it.CONFIGURE}"/>-->
-<!--            </div>-->
-<!--          </st:include>-->
+          <st:include page="view-index-top.jelly" it="${it.owner}" optional="true">
+            <!-- allow the owner to take over the top section, but we also need the default to be backward compatible -->
+            <div id="view-message">
+                <div id="systemmessage">
+                  <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />
+                </div>
+              <t:editableDescription permission="${it.CONFIGURE}"/>
+            </div>
+          </st:include>
 
           <j:set var="items" value="${it.items}"/>
           <st:include page="main.jelly" />
