@@ -44,100 +44,28 @@ body {
 
 /* -------------------------------------- */
 
+.app-page-body-thing {
+  width: calc(100vw - (var(--section-padding) * 4));
+  margin: 0 auto;
+  max-width: 2400px;
+}
+
 .app-page-body {
   display: flex;
-  justify-content: flex-start;
   align-items: stretch;
-  flex: 1 0 auto;
-}
+  justify-content: stretch;
+  flex-wrap: wrap-reverse;
+  gap: calc(var(--section-padding) * 2);
 
-.app-page-body__sidebar {
-  @media (min-width: breakpoints.$tablet-breakpoint) {
-    &--sticky {
-      position: sticky;
-      top: 44px;
-      align-self: flex-start;
-    }
-  }
-}
-
-#page-body.clear::after {
-  clear: both;
-  content: "";
-  display: table;
-}
-
-#side-panel {
-  flex-shrink: 0;
-}
-
-#main-panel {
-  padding: var(--section-padding);
-  display: inline-block;
-  width: 100%;
-}
-
-.app-page-body--one-column {
-  --form-item-max-width: calc(85vw - 4rem);
-
-  @media screen and (max-width: 1200px) {
-    --form-item-max-width: 100%;
+  &__sidebar {
+    min-width: 240px;
+    width: 18vw;
+    max-width: 300px;
+    flex-shrink: 0;
   }
 
-  max-width: 85vw;
-
-  #main-panel {
-    width: 100vw;
-  }
-
-  .jenkins-section {
-    max-width: unset;
-  }
-
-  @media (max-width: 1200px) {
-    max-width: unset;
-  }
-
-  margin: auto;
-}
-
-body.two-column #main-panel {
-  width: calc(100% - 320px);
-  flex: 1;
-  display: block;
-}
-
-body.full-screen {
-  padding: 0;
-}
-
-body.full-screen #main-panel {
-  padding: 0;
-}
-
-@media (max-width: breakpoints.$tablet-breakpoint) {
-  body.two-column #page-body {
-    flex-wrap: wrap;
-  }
-
-  body.two-column #side-panel {
-    width: 100%;
-    border-right: none;
-  }
-
-  body.two-column #main-panel {
-    margin-left: 0;
-    width: 100%;
-  }
-}
-
-@media (min-width: 1170px) {
-  body.two-column #side-panel {
-    width: 340px;
-  }
-
-  body.two-column #main-panel {
-    width: calc(100% - 370px);
+  &__content {
+    flex-grow: 1;
   }
 }
 

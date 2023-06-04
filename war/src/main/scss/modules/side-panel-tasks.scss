@@ -7,7 +7,7 @@ $background-outset: 0.7rem;
 .subtasks {
   display: flex;
   flex-direction: column;
-  margin: var(--section-padding);
+  //margin: var(--section-padding);
   gap: 5px;
 
   @media (min-width: breakpoints.$tablet-breakpoint) {
@@ -26,9 +26,9 @@ $background-outset: 0.7rem;
 
 #side-panel {
   .jenkins-app-bar {
-    margin-top: var(--section-padding);
-    margin-left: var(--section-padding);
-    margin-right: var(--section-padding);
+    //margin-top: var(--section-padding);
+    //margin-left: var(--section-padding);
+    //margin-right: var(--section-padding);
   }
 
   & > #tasks > .jenkins-search-container {

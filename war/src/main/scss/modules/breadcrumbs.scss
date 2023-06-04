@@ -6,10 +6,9 @@
   z-index: 999;
   display: flex;
   align-items: center;
-  padding: 0.55rem 0.7rem 0.55rem 0.75rem;
   backdrop-filter: blur(15px);
-  overflow-x: auto;
   background: var(--breadcrumbs-bar-background);
+  margin-left: -0.4rem;
 
   &__list {
     display: contents;
@@ -24,9 +23,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-color);
-      font-weight: 500;
-      font-size: 0.85rem;
+      color: var(--text-color-secondary);
+      font-weight: 550;
+      font-size: 0.9rem;
       padding: 0.2rem 0.4rem;
 
       & > a {
@@ -39,7 +38,7 @@
         font-size: inherit;
         margin: 0;
         padding: 0;
-        color: var(--text-color);
+        color: var(--text-color-secondary);
         text-decoration: none;
         margin-right: 0 !important;
         transition: var(--standard-transition);

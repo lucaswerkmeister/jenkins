@@ -169,3 +169,9 @@ $min-button-size: 36px;
     }
   }
 }
+
+.jenkins-widgets-view {
+  display: grid;
+  grid-template-columns: max(min(22.5vw, 400px), 300px) 1fr;
+  gap: var(--section-padding);
+}
