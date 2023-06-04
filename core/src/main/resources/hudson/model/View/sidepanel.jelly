@@ -35,6 +35,10 @@ THE SOFTWARE.
     <link rel="alternate" title="Jenkins:${it.viewName} (failed builds) (RSS 2.0)" href="${rootURL}/${it.url}rssFailed?flavor=rss20" type="application/rss+xml" />
   </l:header>
   <l:side-panel>
+    <j:if test="${dashboardRefresh}">
+      <l:app-bar title="Dashboard" />
+    </j:if>
+
     <l:tasks>
       <st:include page="tasks-top.jelly" it="${it.owner}" optional="true" />
 

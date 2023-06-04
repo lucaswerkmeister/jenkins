@@ -31,7 +31,7 @@ THE SOFTWARE.
         <!-- no need for additional breadcrumb here as we're on an index page already including breadcrumb -->
         <l:main-panel>
           <j:if test="${dashboardRefresh}">
-            <l:app-bar title="Dashboard">
+            <l:app-bar title="">
             <a class="jenkins-button" href="${rootURL}/${it.viewUrl}newJob">
               <l:icon src="symbol-add" />
               ${%New job}
