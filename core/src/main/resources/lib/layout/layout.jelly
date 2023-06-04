@@ -268,15 +268,27 @@ THE SOFTWARE.
             <j:set var="tooltip">
               <st:include it="${nav}" page="jumplist.jelly" optional="true"/>
             </j:set>
-            <j:set var="interactiveTooltip" value="${tooltip.length () != 0}" />
+
+            <j:if test="${tooltip.length () == 0}">
+              <j:set var="tooltip">
+                <div>${nav.displayName}</div>
+                <j:if test="${nav.badge != null}">
+                  <div style="color: var(--text-color-secondary)">${nav.badge.tooltip}</div>
+                </j:if>
+              </j:set>
+            </j:if>
 
             <a href="${rootURL}/${nav.url}"
                tooltip="${nav.displayName}"
-               data-html-tooltip="${interactiveTooltip ? tooltip : null}"
-               data-tooltip-interactive="${interactiveTooltip}"
+               data-html-tooltip="${tooltip}"
+               data-tooltip-interactive="true"
                data-tooltip-type="sidebar"
                class="newsidebar__item ${isCurrent ? 'newsidebar__item--active' : null}">
               <l:icon src="${nav.icon}" />
+              <span class="jenkins-visually-hidden">${nav.displayName}</span>
+              <j:if test="${nav.badge != null}">
+                <span class="badge-thing badge-thing--${nav.badge.severity}" />
+              </j:if>
             </a>
           </j:forEach>
         </j:if>

@@ -55,7 +55,8 @@ public class NavigationPageDecorator extends PageDecorator {
                 new CommandPaletteNavigationItem(),
                 new BuildHistoryNavigationItem(),
                 new UserNavigationItem(),
-                new SettingsNavigationItem()
+                new SettingsNavigationItem(),
+                new PluginsNavigationItem()
         );
     }
 }

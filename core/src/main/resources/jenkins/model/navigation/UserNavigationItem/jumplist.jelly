@@ -3,39 +3,42 @@
     <j:if test="${app.useSecurity}">
         <j:choose>
             <j:when test="${!h.isAnonymous()}">
-                <j:invokeStatic var="user" className="hudson.model.User" method="current" />
-                <j:choose>
-                    <j:when test="${user.fullName == null || user.fullName.trim().isEmpty()}">
-                        <j:set var="userName" value="${user.id}"/>
-                    </j:when>
-                    <j:otherwise>
-                        <j:set var="userName" value="${user.fullName}"/>
-                    </j:otherwise>
-                </j:choose>
-
                 <div class="user-jumplist">
-                    <a href="${rootURL}/${user.url}" class="user-thing">
+                    <a href="${rootURL}/${it.url}" class="user-thing">
+                        <j:invokeStatic var="user" className="hudson.model.User" method="current" />
+                        <j:choose>
+                            <j:when test="${user.fullName == null || user.fullName.trim().isEmpty()}">
+                                <j:set var="userName" value="${user.id}"/>
+                            </j:when>
+                            <j:otherwise>
+                                <j:set var="userName" value="${user.fullName}"/>
+                            </j:otherwise>
+                        </j:choose>
+
                         <div class="jenkins-avatar">
                             <div class="jenkins-avatar__animation"></div>
                             <span class="jenkins-avatar__initials">JF</span>
                         </div>
-                        <div>Jan Faracik</div>
+                        <div>${userName}</div>
                     </a>
                     <div class="separator"></div>
                     <a class="jenkins-button jenkins-button--tertiary" href="${rootURL}/${user.url}/configure">
                         <l:icon src="symbol-settings" />
-                        Configure
+                        ${%Configure}
                     </a>
                     <j:if test="${app.securityRealm.canLogOut()}">
                         <a class="jenkins-button jenkins-button--tertiary" href="${rootURL}/logout">
                             <l:icon src="symbol-log-out" />
-                            Logout
+                            ${%Logout}
                         </a>
                     </j:if>
                 </div>
             </j:when>
             <j:otherwise>
-                <st:include it="${app.securityRealm}" page="loginLink.jelly" />
+                <div class="user-jumplist">
+                    <j:set var="jumplist" value="${it}" />
+                    <st:include it="${app.securityRealm}" page="loginLink.jelly" />
+                </div>
             </j:otherwise>
         </j:choose>
     </j:if>

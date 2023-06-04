@@ -22,7 +22,10 @@ function registerTooltip(element) {
   let type = {};
   if (element.hasAttribute("data-tooltip-type")) {
     type = {
-      placement: "right"
+      theme: "sidebar",
+      animation: "sidebar",
+      placement: "right",
+      offset: [0, 7],
     };
   }
 

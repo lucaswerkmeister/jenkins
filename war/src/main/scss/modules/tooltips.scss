@@ -1,4 +1,4 @@
-.tippy-box[data-theme~="tooltip"] {
+.tippy-box[data-theme~="tooltip"], .tippy-box[data-theme~="sidebar"] {
   color: var(--tooltip-color);
   padding: 0.45rem 0.8rem;
   border-radius: 0.66rem;
@@ -43,6 +43,20 @@
   &[data-placement^="bottom"] {
     transform-origin: top;
     transform: translateY(-2px) scale(0.995);
+  }
+}
+
+.tippy-box[data-theme~="sidebar"] {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+.tippy-box[data-animation="sidebar"][data-state="hidden"] {
+  opacity: 0;
+
+  &[data-placement^="right"] {
+    transform-origin: left;
+    transform: translateX(-10px) scale(0.9);
   }
 }
 

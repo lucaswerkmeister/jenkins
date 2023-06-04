@@ -1,8 +1,41 @@
 @use "../abstracts/mixins";
 
+.badge-thing {
+  position: absolute;
+  top: 12px;
+  right: 11px;
+  width: 6px;
+  height: 6px;
+  display: block;
+  border-radius: 100%;
+  color: transparent;
+
+  &--info {
+    background: var(--text-color-secondary);
+  }
+
+  &--danger {
+    background: var(--error-color);
+  }
+
+  &--warning {
+    background: var(--warning);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(white, transparent);
+    mix-blend-mode: overlay;
+    opacity: 0.5;
+  }
+}
+
 .newsidebar {
   --sidebar-background: #16191d;
-  --sidebar-color: hsl(214, 14%, 90%);
+  --sidebar-color: hsl(214, 14%, 85%);
 
   position: fixed;
   top: 0;

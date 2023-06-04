@@ -23,10 +23,12 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
   <st:include page="/hudson/security/SecurityRealm/loginLink.jelly" />
   <j:if test="${it.allowsSignup()}">
-    |
-    <a href="${rootURL}/signup"><b>${%sign up}</b></a>
+    <a class="jenkins-button jenkins-button--tertiary" href="${rootURL}/signup">
+      <l:icon src="symbol-add-circle" />
+      ${%Register}
+    </a>
   </j:if>
 </j:jelly>

@@ -2,25 +2,25 @@ package jenkins.model.navigation;
 
 import jenkins.management.Badge;
 
-public class SettingsNavigationItem implements NavigationItem {
+public class PluginsNavigationItem implements NavigationItem {
 
     @Override
     public String getDisplayName() {
-        return "Settings";
+        return "Plugins";
     }
 
     @Override
     public String getIcon() {
-        return "symbol-settings";
+        return "symbol-plugins";
     }
 
     @Override
     public String getUrl() {
-        return "manage";
+        return "manage/pluginManager";
     }
 
     @Override
     public Badge getBadge() {
-        return new Badge("2", "2 notifications", Badge.Severity.DANGER);
+        return new Badge("3", "3 updates available", Badge.Severity.WARNING);
     }
 }

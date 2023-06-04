@@ -24,6 +24,10 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
-  <a href="${rootURL}/${app.securityRealm.loginUrl}?from=${app.securityRealm.from}"><b>${%login}</b></a>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
+  <a class="jenkins-button jenkins-button--tertiary"
+     href="${rootURL}/${jumplist.url}">
+    <l:icon src="symbol-person-circle" />
+    ${%login}
+  </a>
 </j:jelly>

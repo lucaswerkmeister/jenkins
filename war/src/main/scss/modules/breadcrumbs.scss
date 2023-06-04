@@ -2,14 +2,25 @@
 
 .jenkins-breadcrumbs {
   position: sticky;
-  top: 0;
+  top: var(--section-padding);
   z-index: 999;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 0.55rem 0.7rem 0.55rem 0.75rem;
-  backdrop-filter: blur(15px);
-  overflow-x: auto;
-  background: var(--breadcrumbs-bar-background);
+  align-self: start;
+  padding: 0 0 0 calc(var(--section-padding) - 0.37rem);
+  margin-top: 45px;
+  margin-bottom: -30px;
+  margin-left: var(--section-padding);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    left: calc(var(--section-padding) - 12px);
+    background: rgba(white, 0.5);
+    border-radius: 0.9rem;
+    backdrop-filter: blur(30px);
+  }
 
   &__list {
     display: contents;
@@ -24,9 +35,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-color);
-      font-weight: 500;
-      font-size: 0.85rem;
+      color: var(--text-color-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
       padding: 0.2rem 0.4rem;
 
       & > a {
@@ -39,7 +50,7 @@
         font-size: inherit;
         margin: 0;
         padding: 0;
-        color: var(--text-color);
+        color: var(--text-color-secondary);
         text-decoration: none;
         margin-right: 0 !important;
         transition: var(--standard-transition);
