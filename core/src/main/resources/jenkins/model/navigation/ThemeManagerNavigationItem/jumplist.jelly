@@ -1,0 +1,17 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
+    <div class="menu-jumplist">
+        <button class="jenkins-button jenkins-button--tertiary">
+            <l:icon src="symbol-theme-manager" />
+            ${%Light}
+        </button>
+        <button class="jenkins-button jenkins-button--tertiary">
+            <l:icon src="symbol-theme-manager" />
+            ${%Dark}
+        </button>
+        <button class="jenkins-button jenkins-button--tertiary">
+            <l:icon src="symbol-theme-manager" />
+            ${%Follow system}
+        </button>
+    </div>
+</j:jelly>

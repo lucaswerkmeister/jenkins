@@ -1,7 +1,33 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:l="/lib/layout">
     <f:section title="${%Navigation}">
-       It's fucking done
-        ${descriptor.findNavs()}
+        <div name="navigationExtensionList" class="navrows with-drag-drop" id="selectorthing">
+            <j:forEach var="e" items="${descriptor.findNavs()}">
+                <div class="navrow repeated-chunk">
+                    <div class="navrow__handle dd-handle">
+                        <l:icon src="symbol-handle" />
+                    </div>
+                    <div class="iconwrapper">
+                        <l:icon src="${e.icon}" />
+                    </div>
+                    ${e.displayName}
+                    <div class="jenkins-select">
+                        <j:set var="status" value="${descriptor.getStatus(e.class.name)}" />
+                        <select class="jenkins-select__input"
+                                name="${e.class.name.replace('.', '-')}">
+                            <option value="SHOW" selected="${status == 'SHOW' ? true : null}">
+                                Show
+                            </option>
+                            <option value="SHOW_IN_OVERFLOW" selected="${status == 'SHOW_IN_OVERFLOW' ? true : null}">
+                                Show in overflow
+                            </option>
+                            <option value="HIDE" selected="${status == 'HIDE' ? true : null}">
+                                Hide
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </j:forEach>
+        </div>
     </f:section>
 </j:jelly>

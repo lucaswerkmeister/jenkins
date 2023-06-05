@@ -15,9 +15,9 @@
   &::before {
     content: "";
     position: absolute;
-    inset: -7px;
+    inset: -5px -7px;
     left: calc(var(--section-padding) - 12px);
-    background: rgba(white, 0.5);
+    background: rgba(white, 0.75);
     border-radius: 0.9rem;
     backdrop-filter: blur(30px);
   }

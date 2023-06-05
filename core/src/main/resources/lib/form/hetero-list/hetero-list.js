@@ -199,3 +199,7 @@ Behaviour.specify("DIV.dd-handle", "hetero-list", -100, function (e) {
     this.closest(".repeated-chunk").classList.remove("hover");
   });
 });
+
+Behaviour.specify("#selectorthing", "aasdasda-list", -100, function (e) {
+  registerSortableDragDrop(e);
+})

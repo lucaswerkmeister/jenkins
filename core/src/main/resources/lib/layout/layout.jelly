@@ -263,7 +263,7 @@ THE SOFTWARE.
     <div class="newsidebar">
       <j:forEach var="pd" items="${h.pageDecorators}">
         <j:if test="${pd.class.getSimpleName() == 'NavigationPageDecorator'}">
-          <j:forEach var="nav" items="${pd.findNavs()}">
+          <j:forEach var="nav" items="${pd.getVisibleItems()}">
             <j:set var="isCurrent" value="${h.hyperlinkMatchesCurrentPage(nav.url)}" />
             <j:set var="tooltip">
               <st:include it="${nav}" page="jumplist.jelly" optional="true"/>

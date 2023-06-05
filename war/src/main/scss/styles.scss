@@ -66,3 +66,60 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
+.navrows {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--section-padding);
+  max-width: 800px;
+  background: var(--item-background--hover);
+  border-radius: 0.66rem;
+  padding: 4px;
+  gap: 4px;
+}
+
+.navrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 5px;
+  font-weight: 500;
+  background: var(--background);
+  padding: 6px;
+  border-radius: 0.5rem;
+
+  &__handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -6px;
+    margin-right: -1rem;
+    width: 34px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      color: var(--text-color-secondary);
+    }
+  }
+
+  .jenkins-select {
+    margin-left: auto;
+    width: 200px;
+  }
+}
+
+.iconwrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--item-background--hover);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}

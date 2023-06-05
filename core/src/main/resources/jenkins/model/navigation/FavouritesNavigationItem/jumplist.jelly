@@ -1,0 +1,21 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
+    <div class="menu-jumplist">
+        <button class="jenkins-button jenkins-button--tertiary">
+            <l:icon src="symbol-star" />
+            ${%Scalemate}
+        </button>
+        <button class="jenkins-button jenkins-button--tertiary">
+            <l:icon src="symbol-star" />
+            ${%Paleta}
+        </button>
+        <button class="jenkins-button jenkins-button--tertiary">
+            <l:icon src="symbol-star" />
+            ${%Jenkins}
+        </button>
+        <button class="jenkins-button jenkins-button--tertiary">
+            <l:icon src="symbol-star" />
+            ${%Design Library}
+        </button>
+    </div>
+</j:jelly>
