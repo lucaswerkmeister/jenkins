@@ -22,7 +22,7 @@ function registerSortableDragDrop(e) {
     handle: ".dd-handle",
     ghostClass: "repeated-chunk--sortable-ghost",
     chosenClass: "repeated-chunk--sortable-chosen",
-    forceFallback: true, // Do not use html5 drag & drop behaviour because it does not work with autoscroll
+    // forceFallback: true, // Do not use html5 drag & drop behaviour because it does not work with autoscroll
     scroll: true,
     bubbleScroll: true,
     onChoose: function (event) {

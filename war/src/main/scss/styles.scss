@@ -85,7 +85,17 @@ html {
   font-weight: 500;
   background: var(--background);
   padding: 6px;
-  border-radius: 0.5rem;
+  border-radius: 0.35rem;
+
+  &:first-of-type {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+
+  &:last-of-type {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
 
   &__handle {
     display: flex;
@@ -94,6 +104,7 @@ html {
     margin-left: -6px;
     margin-right: -1rem;
     width: 34px;
+    cursor: grab;
 
     svg {
       width: 18px;
