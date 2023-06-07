@@ -1,0 +1,48 @@
+.jenkins-previous-next-controls {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+
+  .jenkins-button {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 0.35rem 0.7rem;
+
+    svg {
+      transition: var(--standard-transition);
+    }
+
+    span:last-of-type {
+      color: var(--text-color-secondary);
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
+
+  .jdl-previous-button {
+    justify-items: start;
+
+    span:last-of-type {
+      grid-column: 2;
+    }
+
+    &:hover {
+      svg {
+        transform: translateX(-2px);
+      }
+    }
+  }
+
+  .jdl-next-button {
+    justify-items: end;
+    margin-left: auto;
+
+    &:hover {
+      svg {
+        transform: translateX(2px);
+      }
+    }
+  }
+}

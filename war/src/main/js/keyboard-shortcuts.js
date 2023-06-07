@@ -22,6 +22,26 @@ window.addEventListener("load", () => {
       return false;
     });
   }
+
+  const buttonPreviousPage = document.querySelector("#button-previous-page");
+  if (buttonPreviousPage) {
+    hotkeys("left", () => {
+      buttonPreviousPage.click();
+
+      // Returning false stops the event and prevents default browser events
+      return false;
+    });
+  }
+
+  const buttonNextPage = document.querySelector("#button-next-page");
+  if (buttonNextPage) {
+    hotkeys("right", () => {
+      buttonNextPage.click();
+
+      // Returning false stops the event and prevents default browser events
+      return false;
+    });
+  }
 });
 
 /**

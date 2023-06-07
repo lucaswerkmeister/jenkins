@@ -143,6 +143,12 @@ THE SOFTWARE.
           </j:forEach>
         </ul>
       </j:if>
+
+      <j:set var="buildUrl" value="${h.decompose(request)}" />
+      <l:previousNext previousUrl="${buildUrl.previousBuildUrl}"
+                      previousDescription="${it.getPreviousBuild().displayName}"
+                      nextUrl="${buildUrl.nextBuildUrl}"
+                      nextDescription="${it.getNextBuild().displayName}" />
     </l:main-panel>
   </l:layout>
 </j:jelly>
