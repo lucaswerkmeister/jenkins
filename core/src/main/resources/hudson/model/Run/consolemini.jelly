@@ -1,0 +1,35 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:t="/lib/hudson">
+  <j:set var="threshold" value="${h.getSystemProperty('hudson.consoleTailKB')?:'150'}" />
+  <!-- Show at most last 150KB (can override with system property) unless consoleFull is set -->
+  <j:set var="offset" value="${empty(consoleFull) ? it.logText.length()-threshold*1024 : 0}" />
+  <j:choose>
+    <j:when test="${offset > 0}">
+      ${%skipSome(offset/1024,"consoleFull")}
+    </j:when>
+    <j:otherwise>
+      <j:set var="offset" value="${0}" />
+    </j:otherwise>
+  </j:choose>
+
+  <j:out value="${h.generateConsoleAnnotationScriptAndStylesheet()}"/>
+
+<!--  <j:choose>-->
+<!--    &lt;!&ndash; Do progressive console output &ndash;&gt;-->
+<!--    <j:when test="${it.isLogUpdated()}">-->
+      <pre id="out" class="console-output" />
+      <div id="spinner">
+        <l:progressAnimation/>
+      </div>
+      <t:progressiveText href="logText/progressiveHtml" idref="out" spinner="spinner"
+                 startOffset="${offset}" onFinishEvent="jenkins:consoleFinished"/>
+<!--    </j:when>-->
+<!--    &lt;!&ndash; output is completed now. &ndash;&gt;-->
+<!--    <j:otherwise>-->
+<!--      <pre class="console-output">-->
+<!--        <st:getOutput var="output" />-->
+<!--        <j:whitespace>${it.writeLogTo(offset,output)}</j:whitespace>-->
+<!--      </pre>-->
+<!--    </j:otherwise>-->
+<!--  </j:choose>-->
+</j:jelly>

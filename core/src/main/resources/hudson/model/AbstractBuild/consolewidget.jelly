@@ -1,0 +1,18 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+  <div class="terminal">
+    <div class="terminaltitle">
+      <span>
+        ${%Console output}
+      </span>
+      <div class="terminaltitleactions">
+        <a href="console" tooltip="${%Expand}" class="buttthing">
+          <l:icon src="symbol-expand" />
+        </a>
+      </div>
+    </div>
+    <div class="terminalinside">
+      <st:include page="consolemini.jelly" />
+    </div>
+  </div>
+</j:jelly>

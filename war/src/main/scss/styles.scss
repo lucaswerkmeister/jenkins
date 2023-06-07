@@ -55,3 +55,106 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+
+.terminal {
+  --console-output-background: #000;
+  --console-output-color: #fff;
+  --card-padding-x: 1.2rem;
+  --card-padding-y: 1rem;
+
+  display: flex;
+  position: relative;
+  background: var(--console-output-background);
+  border-radius: 1rem;
+  overflow: hidden;
+  color-scheme: light;
+
+  &:hover {
+    .buttthing {
+      --color: var(--console-output-color);
+    }
+  }
+}
+
+.terminaltitle {
+  --opacity-thing: 0;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: var(--console-output-color);
+  padding: var(--card-padding-y) var(--card-padding-x) 0 var(--card-padding-x);
+  z-index: 0;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  -webkit-font-smoothing: subpixel-antialiased;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 calc(var(--card-padding-x) * -2) 0;
+    backdrop-filter: brightness(0.5) blur(10px);
+    mask-image: linear-gradient(var(--console-output-background) 25%, transparent);
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--opacity-thing);
+  }
+
+  .terminaltitleactions {
+    display: flex;
+    gap: 0.5rem;
+    margin: -3px -8px 0 0;
+  }
+
+  .buttthing {
+    --color: #73778c;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 1.625rem;
+    height: 1.625rem;
+    transition: var(--standard-transition);
+
+    svg {
+      width: 1.125rem;
+      height: 1.125rem;
+      color: var(--color);
+      transition: color var(--standard-transition);
+    }
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &:active {
+      opacity: 0.3;
+      scale: 0.9;
+    }
+  }
+}
+
+body {
+  min-height: 150vh;
+}
+
+.terminalinside {
+  min-height: 390px;
+  max-height: 390px;
+  overflow-y: auto;
+  width: 100%;
+
+  pre {
+    //width: 100%;
+    background: transparent;
+    margin: 0;
+    padding: calc(var(--card-padding-y) * 3) var(--card-padding-x) var(--card-padding-y) var(--card-padding-x);
+    line-height: 1.75;
+    color: var(--console-output-color);
+    font-size: var(--font-size-sm);
+  }
+}

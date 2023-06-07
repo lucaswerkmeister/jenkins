@@ -50,6 +50,8 @@ THE SOFTWARE.
 
       <t:buildCaption>${%Build} ${it.displayName} (<i:formatDate value="${it.timestamp.time}" type="both" dateStyle="medium" timeStyle="medium"/>)</t:buildCaption>
 
+      <st:include page="consolewidget.jelly" />
+
       <div>
         <t:editableDescription permission="${it.UPDATE}" />
       </div>
