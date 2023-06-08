@@ -55,3 +55,147 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+
+.buttonedup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  & > div {
+    display: contents;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 650;
+  }
+}
+
+@property --pos {
+  syntax: "<percentage>";
+  initial-value: 0%;
+  inherits: false;
+}
+
+.circlething {
+  --color: var(--success);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color);
+    opacity: 0;
+    transition: var(--standard-transition);
+    border-radius: 100%;
+  }
+
+  .circlething_progress {
+    position: absolute;
+    inset: 0;
+    border-radius: 100%;
+    z-index: 0;
+    mask-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='45' stroke='black' stroke-width='12'/%3E%3C/svg%3E%0A");
+    mask-size: contain;
+    transition: --pos var(--standard-transition);
+    background: conic-gradient(var(--color) var(--pos), transparent var(--pos));
+    //animation: pulsething 1s infinite linear;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--color);
+      opacity: 0.4;
+    }
+  }
+
+  svg {
+    position: absolute;
+    scale: 0.65;
+    opacity: 0;
+    filter: blur(2px);
+    width: 1.15rem;
+    height: 1.15rem;
+    transition: var(--elastic-transition);
+    color: var(--color);
+
+    * {
+      stroke-width: 60px;
+    }
+  }
+
+  &[data-complete='true'] {
+    &::before {
+      opacity: 0.2;
+    }
+
+    .circlething_progress {
+      opacity: 0;
+    }
+  }
+
+  &[data-type='icon-blue'] {
+    --color: var(--success);
+    
+    .dumbautomaticchitchat {
+      scale: 1;
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  &[data-type='icon-red'] {
+    --color: var(--error-color);
+
+    .closeheadsfeelingstrange {
+      scale: 1;
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+}
+
+@keyframes pulsething {
+  to {
+   rotate: 360deg;
+  }
+}
+
+.closethingbutton {
+  border-radius: 100%;
+  padding: 0 !important;
+  aspect-ratio: 1;
+  min-height: 1.5rem;
+
+  svg {
+    width: 0.875rem;
+    height: 0.875rem;
+
+    * {
+      stroke-width: 40px;
+    }
+  }
+
+  &--hidden {
+    animation: fade-out-button-thing 0.4s forwards;
+  }
+}
+
+@keyframes fade-out-button-thing {
+  to {
+    filter: blur(10px);
+    opacity: 0;
+    scale: 0.75;
+    display: none;
+  }
+}

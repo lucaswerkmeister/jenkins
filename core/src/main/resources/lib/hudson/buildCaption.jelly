@@ -27,26 +27,42 @@ THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-	<h1 class="build-caption page-headline">
-    <l:icon alt="${it.iconColor.description}" class="${it.buildStatusIconClassName} icon-xlg" tooltip="${it.iconColor.description}"/>
-    <span class="jenkins-icon-adjacent">
-      <d:invokeBody trim="true"/>
-    </span>
-	  <j:if test="${it.building}">
-	    <div class="build-caption-progress-container">
-	      <table class="middle-align"><tr>
-	        <td>
-	          ${%Progress}:
-	        </td><td class="build-caption-progress-bar">
-	          <t:buildProgressBar build="${it}"/>
-	        </td><td>
-            <j:if test="${it.parent.hasAbortPermission()}">
-              <l:stopButton href="stop" confirm="${%confirm(it.fullDisplayName)}" alt="[${%cancel}]"/>
-            </j:if>
-	        </td>
-	      </tr></table>
-	    </div>
-	  </j:if>
+
+	<div class="buttonedup">
+		<div>
+			<t:buildProgressBar build="${it}"/>
+		</div>
+		<h1>
+			<d:invokeBody trim="true" />
+		</h1>
+		<j:if test="${it.building and it.parent.hasAbortPermission()}">
+			<button id="button-cancel-build"
+					class="jenkins-button closethingbutton jenkins-!-destructive-color"
+					tooltip="${%Cancel build}">
+				<l:icon src="symbol-close" />
+			</button>
+		</j:if>
+	</div>
+
+<!--	<h1 class="build-caption page-headline">-->
+<!--    <l:icon alt="${it.iconColor.description}" class="${it.buildStatusIconClassName} icon-xlg" tooltip="${it.iconColor.description}"/>-->
+<!--    <span class="jenkins-icon-adjacent">-->
+<!--      <d:invokeBody trim="true"/>-->
+<!--    </span>-->
+<!--&lt;!&ndash;	  <j:if test="${it.building}">&ndash;&gt;-->
+<!--	    <div class="build-caption-progress-container">-->
+<!--	      <table class="middle-align"><tr>-->
+<!--	        <td>-->
+<!--	          ${%Progress}:-->
+<!--	        </td><td class="build-caption-progress-bar">-->
+<!--	        </td><td>-->
+<!--            <j:if test="${it.parent.hasAbortPermission()}">-->
+<!--              <l:stopButton href="stop" confirm="${%confirm(it.fullDisplayName)}" alt="[${%cancel}]"/>-->
+<!--            </j:if>-->
+<!--	        </td>-->
+<!--	      </tr></table>-->
+<!--	    </div>-->
+<!--	  </j:if>-->
     <st:adjunct includes="lib.hudson.build-caption"/>
-  </h1>
+<!--  </h1>-->
 </j:jelly>
