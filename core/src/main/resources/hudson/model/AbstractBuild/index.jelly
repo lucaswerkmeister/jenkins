@@ -42,8 +42,6 @@ THE SOFTWARE.
         </div>
       </div>
 
-
-
       <div style="float:right; z-index: 1; position:relative; margin-left: 1em">
         <div style="margin-top:1em">
           ${%startedAgo(it.timestampString)}
@@ -59,7 +57,6 @@ THE SOFTWARE.
           </j:if>
         </div>
       </div>
-
 
       <div>
         <t:editableDescription permission="${it.UPDATE}" />

@@ -186,6 +186,14 @@ $dropdown-padding: 0.4rem;
       mask-position: center;
       opacity: 0.6;
     }
+    
+    &:hover {
+      .jenkins-dropdown__item__toggle {
+        &::after {
+          width: 12px;
+        }
+      }
+    }
   }
 
   &:hover {
@@ -220,5 +228,47 @@ $dropdown-padding: 0.4rem;
     min-height: 0.3125rem;
     border: 1px solid currentColor;
     border-radius: 50%;
+  }
+}
+
+.jenkins-dropdown__item__toggle {
+  position: relative;
+  display: flex;
+  width: 22px;
+  height: 14px;
+  margin-left: 1.5rem;
+  margin-right: -1.15rem;
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    border-radius: 100px;
+  }
+
+  &::before {
+    inset: 0;
+    opacity: 0.4;
+    background: var(--text-color-secondary);
+  }
+
+  &::after {
+    inset: 2px;
+    width: 10px;
+    height: 10px;
+    transition: width var(--standard-transition);
+    background: white;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &--active {
+    &::before {
+      background: var(--link-color);
+      opacity: 1;
+    }
+
+    &::after {
+      background: var(--background);
+      margin-left: auto;
+    }
   }
 }
