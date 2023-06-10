@@ -186,6 +186,14 @@ $dropdown-padding: 0.4rem;
       mask-position: center;
       opacity: 0.6;
     }
+    
+    &:hover {
+      .jenkins-dropdown__item__toggle {
+        &::after {
+          width: 12px;
+        }
+      }
+    }
   }
 
   &:hover {
@@ -216,9 +224,54 @@ $dropdown-padding: 0.4rem;
   margin-inline: -0.1rem;
 
   span {
-    min-width: 5px;
-    min-height: 5px;
+    min-width: 0.3125rem;
+    min-height: 0.3125rem;
     border: 1px solid currentColor;
     border-radius: 50%;
+  }
+}
+
+.jenkins-dropdown__item__toggle {
+  position: relative;
+  display: flex;
+  width: 22px;
+  height: 14px;
+  margin-left: 1.5rem;
+  margin-right: -1.15rem;
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    border-radius: 100px;
+  }
+
+  &::before {
+    inset: 0;
+    opacity: 0.4;
+    background: var(--text-color-secondary);
+  }
+
+  &::after {
+    inset: 2px;
+    width: 10px;
+    height: 10px;
+    transition: width var(--standard-transition);
+    background: white;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &--active {
+    &::before {
+      background: var(--link-color);
+      opacity: 1;
+    }
+
+    &::after {
+      background: var(--background);
+      margin-left: auto;
+      mask-image: url("data:image/svg+xml,%3Csvg width='22' height='14' viewBox='0 0 22 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M22 0H0V14H22V0ZM15.1034 6.13362C15.4534 5.80035 15.4669 5.24649 15.1336 4.89655C14.8003 4.54661 14.2465 4.5331 13.8966 4.86638L10.3535 8.24072L9.40501 7.16984C9.0846 6.80809 8.5316 6.77457 8.16984 7.09499C7.80809 7.4154 7.77457 7.9684 8.09499 8.33016L9.64499 10.0802C9.80249 10.258 10.0255 10.3641 10.2629 10.3742C10.5002 10.3843 10.7314 10.2974 10.9034 10.1336L15.1034 6.13362Z' fill='white'/%3E%3C/svg%3E%0A");
+      mask-size: cover;
+      mask-position: center;
+    }
   }
 }
