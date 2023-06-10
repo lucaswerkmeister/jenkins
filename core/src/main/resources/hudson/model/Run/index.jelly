@@ -32,7 +32,7 @@ THE SOFTWARE.
     <l:main-panel>
       <div class="jenkins-app-bar">
         <div class="jenkins-app-bar__content">
-          <t:buildCaption>${%Build} ${it.displayName} (<i:formatDate value="${it.timestamp.time}" type="both" dateStyle="medium" timeStyle="medium"/>)</t:buildCaption>
+          <t:buildCaption>${%Build} ${it.displayName}</t:buildCaption>
         </div>
         <div class="jenkins-app-bar__controls">
           <l:overflowButton>
@@ -44,24 +44,68 @@ THE SOFTWARE.
         </div>
       </div>
 
-      <div style="float:right; z-index: 1; position:relative; margin-left: 1em">
-        <div style="margin-top:1em">
-          ${%startedAgo(it.timestampString)}
-          </div><div>
-          <j:if test="${it.building}">
-            ${%beingExecuted(it.executor.timestampString)}
-          </j:if>
-          <j:if test="${!it.building}">
-            ${%Took} <a href="${rootURL}/${it.parent.url}buildTimeTrend">${it.durationString}</a>
-          </j:if>
-          <j:if test="${!empty(app.nodes) or (it.builtOnStr != null and it.builtOnStr != '')}">
-            ${%on} <t:node value="${it.builtOn}" valueStr="${it.builtOnStr}"/>
-          </j:if>
-        </div>
-      </div>
-
       <div>
         <t:editableDescription permission="${it.UPDATE}" />
+      </div>
+
+      <div style="float: right; box-shadow: 0 0 0 2px rgba(0, 0, 100, 0.05); width: 360px; padding: 1rem; border-radius: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="font-weight: 550; margin-bottom: 6px">
+          ${%Details}
+        </div>
+
+        <div class="populism">
+          <st:include page="description.jelly" it="${it.causes.0}" />
+        </div>
+
+        <div class="populism">
+          <j:set var="minutes" value="${360 * (it.timestamp.time.minutes / 60)}" />
+          <i:formatDate var="hours" value="${it.timestamp.time}" pattern="h" />
+          <j:set var="hours" value="${360 * (hours / 12) + (30 * (it.timestamp.time.minutes / 60))}" />
+
+          <div class="populism__icon">
+            <div class="cssclock" style="--hours: ${hours}deg; --minutes: ${minutes}deg">
+              <span class="hours"></span>
+              <span class="minutes"></span>
+            </div>
+          </div>
+          <div class="hideything">
+            <span>${%startedAgo(it.timestampString)}</span>
+            <span class="jenkins-hidden">
+              Started <i:formatDate value="${it.timestamp.time}" type="both" dateStyle="long" timeStyle="medium" />
+            </span>
+          </div>
+        </div>
+
+        <script>
+          const hideything = document.querySelector(".hideything");
+          const firstSpan = hideything.querySelector("span:first-of-type");
+          const secondSpan = hideything.querySelector("span:last-of-type");
+
+          hideything.addEventListener("click", () => {
+            firstSpan.classList.toggle("jenkins-hidden");
+            secondSpan.classList.toggle("jenkins-hidden");
+          });
+        </script>
+
+
+
+          <div class="populism">
+            <div class="populism__icon">
+              <l:icon src="symbol-timer" />
+            </div>
+            <j:choose>
+              <j:when test="${it.building}">
+                ${%beingExecuted(it.executor.timestampString)}
+              </j:when>
+              <j:otherwise>
+                ${%Took} ${it.durationString}
+              </j:otherwise>
+            </j:choose>
+          </div>
+
+        <j:if test="${!empty(app.nodes) or (it.builtOnStr != null and it.builtOnStr != '')}">
+          ${%on} <t:node value="${it.builtOn}" valueStr="${it.builtOnStr}"/>
+        </j:if>
       </div>
 
       <table style="margin-top: 1em; margin-left:1em;">

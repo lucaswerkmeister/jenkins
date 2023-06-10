@@ -23,6 +23,10 @@ THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <div class="populism__icon">
+        <l:icon src="symbol-arrow-up" />
+    </div>
+
     <!-- upstreamUrl added in 1.284, so handle missing value; also JENKINS-14816 (job/build may have been deleted) -->
     <span>
       <j:choose>
@@ -42,7 +46,7 @@ THE SOFTWARE.
       </j:choose>
 
         <j:if test="${!it.upstreamCauses.isEmpty()}">
-            <br />${%caused_by}
+            ${%caused_by}
             <ul>
 	        <j:forEach var="c" items="${it.upstreamCauses}">
 	          <li><st:include page="description.jelly" it="${c}" /></li>
