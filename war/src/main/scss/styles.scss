@@ -1,5 +1,6 @@
 @use "./abstracts/colors";
 @use "./abstracts/theme";
+@use "./base/core";
 @use "./base/display";
 @use "./base/layout-commons";
 @use "./base/spacing";
@@ -49,12 +50,6 @@
 @use "./pages/plugin-manager";
 @use "./pages/setupWizardFirstUser";
 @use "./pages/setupWizardConfigureInstance";
-
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
 
 .terminal {
   --console-output-background: #000;
