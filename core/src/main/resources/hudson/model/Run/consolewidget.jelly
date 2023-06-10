@@ -6,6 +6,9 @@
         ${%Console output}
       </span>
       <div class="terminaltitleactions">
+        <a href="consoleText" download="${it.displayName}.txt" tooltip="${%Download}" class="buttthing">
+          <l:icon src="symbol-download" />
+        </a>
         <a href="console" tooltip="${%Expand}" class="buttthing">
           <l:icon src="symbol-expand" />
         </a>
