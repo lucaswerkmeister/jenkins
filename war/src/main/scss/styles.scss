@@ -80,7 +80,7 @@
   right: 0;
   color: var(--console-output-color);
   padding: var(--card-padding-y) var(--card-padding-x) 0 var(--card-padding-x);
-  z-index: 0;
+  z-index: 5;
   display: flex;
   justify-content: space-between;
   font-weight: 500;

@@ -44,6 +44,8 @@ THE SOFTWARE.
         </div>
       </div>
 
+      <st:include page="consolewidget.jelly" />
+
       <div style="float:right; z-index: 1; position:relative; margin-left: 1em">
         <div style="margin-top:1em">
           ${%startedAgo(it.timestampString)}
