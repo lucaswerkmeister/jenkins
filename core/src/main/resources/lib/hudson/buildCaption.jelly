@@ -34,27 +34,4 @@ THE SOFTWARE.
         <d:invokeBody trim="true"/>
       </h1>
     </div>
-    <div class="jenkins-app-bar__controls">
-<!--      <j:if test="${it.building}">-->
-<!--        <div class="build-caption-progress-container">-->
-<!--          <table class="middle-align">-->
-<!--            <tr>-->
-<!--              <td>-->
-<!--                ${%Progress}:-->
-<!--              </td>-->
-<!--              <td class="build-caption-progress-bar">-->
-<!--                <t:buildProgressBar build="${it}"/>-->
-<!--              </td>-->
-<!--              <td>-->
-<!--                <j:if test="${it.parent.hasAbortPermission()}">-->
-<!--                  <l:stopButton href="stop" confirm="${%confirm(it.fullDisplayName)}"-->
-<!--                          alt="[${%cancel}]"/>-->
-<!--                </j:if>-->
-<!--              </td>-->
-<!--            </tr>-->
-<!--          </table>-->
-<!--        </div>-->
-<!--      </j:if>-->
-      <st:adjunct includes="lib.hudson.build-caption"/>
-    </div>
 </j:jelly>
