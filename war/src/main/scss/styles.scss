@@ -133,6 +133,12 @@ $icon-size: 1.375rem;
       width: $icon-size;
       height: $icon-size;
     }
+
+    .jenkins-avatar {
+      width: calc($icon-size - 1px);
+      height: calc($icon-size - 1px);
+      font-size: 0.6rem !important;
+    }
   }
 
   a {

@@ -26,13 +26,13 @@ THE SOFTWARE.
     <j:choose>
       <j:when test="${it.userId != null}" >
           <div class="populism__icon">
-              <l:icon src="symbol-person-circle" />
+              <l:avatar fullName="${it.userName}" />
           </div>
         <span>${%started_by_user(it.userUrl, it.userName, rootURL)}</span>
       </j:when>
       <j:otherwise>
           <div class="populism__icon">
-              <l:icon src="symbol-person" />
+              <l:icon src="symbol-person-circle" />
           </div>
         <span>${%started_by_anonymous}</span>
       </j:otherwise>
