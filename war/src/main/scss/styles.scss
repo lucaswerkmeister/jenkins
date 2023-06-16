@@ -50,3 +50,85 @@
 @use "./pages/plugin-manager";
 @use "./pages/setupWizardFirstUser";
 @use "./pages/setupWizardConfigureInstance";
+
+@use "./abstracts/mixins";
+
+.newbuildhistory {
+  position: relative;
+  width: 340px;
+  height: 400px;
+  margin: 100px;
+  padding: 8px;
+  overflow-y: auto;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    background: var(--button-background--hover);
+    opacity: 0.4;
+  }
+
+  .buildsss {
+    font-weight: 550;
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+.charger {
+  @include mixins.item();
+
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  align-items: center;
+  gap: 0.3rem;
+  padding-inline: 0.4rem;
+
+  .alien {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.375rem;
+    height: 1.375rem;
+    color: var(--success);
+    border-radius: 100%;
+    z-index: 0;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 100%;
+      background: currentColor;
+      opacity: 0.25;
+    }
+
+    svg {
+      height: 0.8rem;
+      color: var(--success);
+
+      * {
+        stroke-width: 50px;
+      }
+    }
+  }
+
+  .clouds {
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+    font-weight: 550;
+    text-decoration: none;
+  }
+
+  .jenkins-button {
+    margin-right: -0.4rem;
+
+    &::before, &::after {
+      content: none;
+    }
+  }
+}

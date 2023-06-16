@@ -41,6 +41,11 @@ THE SOFTWARE.
       </j:if>
       <t:editableDescription permission="${it.CONFIGURE}"/>
 
+      <div class="newbuildhistory">
+
+
+      </div>
+
       <st:include page="jobpropertysummaries.jelly" />
       <!-- inject main part here -->
       <st:include page="main.jelly" />
