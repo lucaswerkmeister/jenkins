@@ -102,7 +102,7 @@ $icon-size: 1.375rem;
     rotate: var(--hours);
 
     &::after {
-      height: 8px;
+      height: 6px;
     }
   }
 
@@ -110,7 +110,7 @@ $icon-size: 1.375rem;
     rotate: var(--minutes);
 
     &::after {
-      height: 6px;
+      height: 8px;
     }
   }
 }
