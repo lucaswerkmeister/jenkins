@@ -27,10 +27,10 @@ THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-<l:layout title="${%Log Recorders}" type="one-column">
+<l:layout title="${%Logging}" type="one-column">
   <!-- no need for additional breadcrumb here as we're on an index page already including breadcrumb -->
   <l:main-panel xmlns:local="local">
-    <l:app-bar title="${%Log Recorders}">
+    <l:app-bar title="${%Logging}">
       <l:isAdmin>
         <a href="new" class="jenkins-button jenkins-button--primary">
           <l:icon src="symbol-add" />
